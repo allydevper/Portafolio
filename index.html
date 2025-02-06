@@ -22,16 +22,18 @@
     <!-- Sección de Encabezado -->
     <header class="bg-yellow-500 text-black px-8 py-6">
         <div class="flex justify-between items-center">
-            <h1 class="text-3xl font-bold text-white">
-                alama
-            </h1>
+            <a href="./index.html">
+                <h1 class="text-3xl font-bold text-white">
+                    alama
+                </h1>
+            </a>
             <nav>
                 <ul class="flex space-x-6">
-                    <li><a href="#home" class="hover:underline">Inicio</a></li>
-                    <li><a href="#about" class="hover:underline">Sobre Mí</a></li>
-                    <li><a href="#skills" class="hover:underline">Habilidades</a></li>
-                    <li><a href="#projects" class="hover:underline">Proyectos</a></li>
-                    <li><a href="#contact" class="hover:underline">Contacto</a></li>
+                    <li><a href="#home" class="link-custom hover:underline">Inicio</a></li>
+                    <li><a href="#about" class="link-custom hover:underline">Sobre Mí</a></li>
+                    <li><a href="#skills" class="link-custom hover:underline">Habilidades</a></li>
+                    <li><a href="#projects" class="link-custom hover:underline">Proyectos</a></li>
+                    <li><a href="#contact" class="link-custom hover:underline">Contacto</a></li>
                 </ul>
             </nav>
         </div>
@@ -41,11 +43,16 @@
     <section id="home" class="min-h-screen flex items-center justify-center text-center relative">
         <div class="absolute inset-0 bg-[url('background.jpg')] bg-cover bg-center opacity-10"></div>
         <div class="relative z-10">
-            <h2 class="text-4xl md:text-6xl font-bold">Hola, soy Alama, Wilmer</h2>
-            <p class="text-lg md:text-xl mt-4">Un desarrollador web apasionado creando diseños modernos y responsivos.
+            <h2 class="text-4xl md:text-6xl font-bold">Hola, soy Wilmer <span class="text-yellow-500">Alama</span></h2>
+            <p class="text-lg md:text-xl mt-4">Un desarrollador web apasionado creando diseños modernos y aplicaciones
+                diversas.
             </p>
-            <button class="mt-6 px-6 py-3 bg-yellow-500 text-black font-medium rounded-full hover:bg-yellow-400">Ver Mi
-                Trabajo</button>
+            <a href="#projects" class="link-custom">
+                <button
+                    class="mt-6 px-6 py-3 bg-yellow-500 text-black font-medium rounded-full hover:bg-white hover:text-black transition duration-300">Ver
+                    Mi
+                    Trabajo</button>
+            </a>
         </div>
     </section>
 
@@ -114,14 +121,32 @@
                 class="w-full mb-4 p-2 rounded-lg bg-gray-800 text-white">
             <textarea placeholder="Tu Mensaje" class="w-full mb-4 p-2 rounded-lg bg-gray-800 text-white"></textarea>
             <button type="submit"
-                class="w-full py-3 bg-yellow-500 text-black font-bold rounded-full hover:bg-yellow-400">Enviar</button>
+                class="w-full py-3 bg-yellow-500 text-black font-bold rounded-full hover:bg-white hover:text-black transition duration-300">Enviar</button>
         </form>
     </section>
 
     <!-- Sección de Pie de Página -->
     <footer class="bg-black text-gray-500 py-6 text-center">
-        <p>&copy; 2025 Alama, Wilmer. Todos los derechos reservados.</p>
+        <p>&copy; 2025 Wilmer Alama. Todos los derechos reservados.</p>
     </footer>
+
+    <script>
+        // Agregar desplazamiento suave a los enlaces del encabezado
+        const links = document.querySelectorAll('.link-custom');
+
+        links.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault(); // Evitar el comportamiento predeterminado
+                const targetId = this.getAttribute('href'); // Obtener el ID del destino
+                const targetElement = document.querySelector(targetId); // Seleccionar el elemento destino
+
+                // Desplazarse suavemente al elemento destino
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
