@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wilmer Alama's Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Fredoka:wght@300..700&family=Signika:wght@300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <style type="text/css">
+        body {
+            font-family: "Comfortaa", serif;
+        }
+    </style>
+</head>
+
+<body class="bg-black text-white">
+    <!-- Sección de Encabezado -->
+    <header class="bg-yellow-500 text-black px-8 py-6">
+        <div class="flex justify-between items-center">
+            <h1 class="text-3xl font-bold text-white">
+                alama
+            </h1>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#home" class="hover:underline">Inicio</a></li>
+                    <li><a href="#about" class="hover:underline">Sobre Mí</a></li>
+                    <li><a href="#skills" class="hover:underline">Habilidades</a></li>
+                    <li><a href="#projects" class="hover:underline">Proyectos</a></li>
+                    <li><a href="#contact" class="hover:underline">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Sección de Inicio -->
+    <section id="home" class="min-h-screen flex items-center justify-center text-center relative">
+        <div class="absolute inset-0 bg-[url('background.jpg')] bg-cover bg-center opacity-10"></div>
+        <div class="relative z-10">
+            <h2 class="text-4xl md:text-6xl font-bold">Hola, soy Alama, Wilmer</h2>
+            <p class="text-lg md:text-xl mt-4">Un desarrollador web apasionado creando diseños modernos y responsivos.
+            </p>
+            <button class="mt-6 px-6 py-3 bg-yellow-500 text-black font-medium rounded-full hover:bg-yellow-400">Ver Mi
+                Trabajo</button>
+        </div>
+    </section>
+
+    <!-- Sección Sobre Mí -->
+    <section id="about" class="px-8 py-12 bg-gray-900">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-4">Sobre Mí</h2>
+            <p class="text-lg">Soy un desarrollador web apasionado por crear aplicaciones modernas, funcionales y
+                centradas en la experiencia del usuario.
+                Desde siempre he dedicado mi tiempo a aprender, explorar y perfeccionar mis habilidades en tecnologías
+                web, escritorio y mobile.
+                Me encanta enfrentar nuevos desafíos, mantenerme actualizado con las últimas tendencias del sector y
+                construir soluciones innovadoras que marquen la diferencia.</p>
+        </div>
+    </section>
+
+    <!-- Sección de Habilidades -->
+    <section id="skills" class="px-8 py-12 bg-black">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-4 text-center">Habilidades</h2>
+            <ul class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <li class="bg-gray-800 p-4 rounded-lg text-center">HTML</li>
+                <li class="bg-gray-800 p-4 rounded-lg text-center">CSS</li>
+                <li class="bg-gray-800 p-4 rounded-lg text-center">JavaScript</li>
+                <li class="bg-gray-800 p-4 rounded-lg text-center">React</li>
+                <li class="bg-gray-800 p-4 rounded-lg text-center">Angular</li>
+                <li class="bg-gray-800 p-4 rounded-lg text-center">C#</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Sección de Herramientas y Tecnologías -->
+    <section class="px-8 py-12 bg-gray-900">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-4 text-center">Herramientas y Tecnologías</h2>
+            <p class="text-lg text-center">Trabajo con herramientas como Visual Studio, Git, Figma y más para dar vida a
+                las ideas.</p>
+        </div>
+    </section>
+
+    <!-- Sección de Proyectos -->
+    <section id="projects" class="px-8 py-12 bg-black">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-4 text-center">Proyectos</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-gray-800 p-6 rounded-lg">
+                    <h3 class="text-xl font-bold">Proyecto 1</h3>
+                    <p class="mt-2">Una breve descripción de este increíble proyecto.</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg">
+                    <h3 class="text-xl font-bold">Proyecto 2</h3>
+                    <p class="mt-2">Una breve descripción de otro gran proyecto.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Contacto -->
+    <section id="contact" class="px-8 py-12 bg-gray-900 text-center">
+        <h2 class="text-3xl font-bold mb-4">Contáctame</h2>
+        <p class="mb-4">No dudes en comunicarte por correo electrónico o usar el formulario de contacto a continuación.
+        </p>
+        <form class="max-w-lg mx-auto">
+            <input type="text" placeholder="Tu Nombre" class="w-full mb-4 p-2 rounded-lg bg-gray-800 text-white">
+            <input type="email" placeholder="Tu Correo Electrónico"
+                class="w-full mb-4 p-2 rounded-lg bg-gray-800 text-white">
+            <textarea placeholder="Tu Mensaje" class="w-full mb-4 p-2 rounded-lg bg-gray-800 text-white"></textarea>
+            <button type="submit"
+                class="w-full py-3 bg-yellow-500 text-black font-bold rounded-full hover:bg-yellow-400">Enviar</button>
+        </form>
+    </section>
+
+    <!-- Sección de Pie de Página -->
+    <footer class="bg-black text-gray-500 py-6 text-center">
+        <p>&copy; 2025 Alama, Wilmer. Todos los derechos reservados.</p>
+    </footer>
+</body>
+
+</html>
