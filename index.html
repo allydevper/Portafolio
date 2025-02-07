@@ -41,6 +41,37 @@
                 background-position: 40px;
             }
         }
+
+        #home {
+            overflow: hidden;
+        }
+
+        svg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            display: block;
+        }
+
+        .border-svg {
+            stroke: white;
+            stroke-width: 2px;
+            fill: none;
+            stroke-linecap: round;
+        }
+
+        .direc90 {
+            animation: grados90 9s infinite linear;
+        }
+
+        /* Animación para movimiento descendente */
+        @keyframes grados90 {
+            to {
+                transform: translate(0px, 95.8675px);
+                /* Movimiento hacia ABAJO (Y positivo) */
+            }
+        }
     </style>
 </head>
 
@@ -69,8 +100,28 @@
 
     <!-- Sección de Inicio -->
     <section id="home" class="min-h-screen flex items-center justify-center text-center relative"
-        style="background: linear-gradient(215deg, rgb(255 255 255 / 10%), rgba(0, 0, 0, 0.8));">
-        <div class="absolute inset-0 bg-[url('images/background.jpg')] bg-cover bg-center opacity-10"></div>
+        style="background: linear-gradient(225deg, rgba(255, 255, 255, 0.1) 10%, rgb(0 0 0 / 81%) 85%, rgb(0 0 0) 16%);">
+
+        <div class="absolute inset-0 bg-cover bg-center opacity-10">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 800 600"
+                class="absolute bg-cover bg-center opacity-50">
+                <defs>
+                    <pattern id="Hexagonos" x="0" y="0" width="55.3491" height="95.8675" patternUnits="userSpaceOnUse"
+                        patternTransform="yes">
+                        <g class="border-svg">
+                            <polyline points="12.6,-19.6 40.2,-3.6 67.9,-19.6 " />
+                            <polyline points="-15.1,28.4 12.6,44.4 40.2,28.4 67.9,44.4 " />
+                            <polyline points="-15.1,92.3 12.6,76.3 40.2,92.3 67.9,76.3 " />
+                            <line x1="12.6" y1="76.3" x2="12.6" y2="44.4" />
+                            <line x1="40.2" y1="92.3" x2="40.2" y2="124.2" />
+                            <line x1="40.2" y1="-3.6" x2="40.2" y2="28.4" />
+                        </g>
+                    </pattern>
+                    <rect id="Patron" fill="url(#Hexagonos)" width="1600" height="1200" x="-400" y="-300" />
+                </defs>
+                <use xlink:href="#Patron" class="direc90" />
+            </svg>
+        </div>
         <div class="relative z-10">
             <div class="w-52 h-52 rounded-full bg-white flex items-center justify-center mx-auto mb-4">
                 <div class="p-4 w-44 h-44 object-contain">
@@ -79,14 +130,12 @@
             </div>
             <h2 class="text-4xl md:text-6xl font-bold">Hola, soy Wilmer <span class="text-yellow-300">Alama</span></h2>
             <p class="text-lg md:text-xl mt-4">Soy un desarrollador web apasionado por crear diseños modernos y
-                aplicaciones
-                diversas.
+                aplicaciones diversas.
             </p>
             <a href="#projects" class="link-custom">
                 <button
                     class="mt-6 px-6 py-3 bg-yellow-300 text-black font-medium rounded-full hover:bg-white hover:text-black transition duration-300">Ver
-                    Mi
-                    Trabajo</button>
+                    Mi Trabajo</button>
             </a>
         </div>
     </section>
