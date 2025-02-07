@@ -148,7 +148,8 @@
                 </div>
                 <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
                     <div class="p-2 w-20 h-20 object-contain">
-                        <img src="images/technologies/normal/.NET-Framework.png" alt=".NET-Framework" class="rounded-lg">
+                        <img src="images/technologies/normal/.NET-Framework.png" alt=".NET-Framework"
+                            class="rounded-lg">
                     </div>
                 </div>
                 <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
@@ -287,11 +288,11 @@
                 </div>
                 <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
                     <div class="p-3 w-20 h-20 object-contain">
-                        <img src="images/technologies/small/Git.png" alt="Git" class="rounded-lg">
+                        <img id="dynamic-image" src="images/technologies/small/Git.png" alt="Git" class="rounded-lg">
                     </div>
                 </div>
             </div>
-            <div class="small-skills mb-2 flex justify-center">
+            <div class="small-skills mb-2 flex justify-center hidden">
                 <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
                     <div class="p-2 w-12 h-12 object-contain">
                         <img src="images/technologies/small/AdonisJS.png" alt="AdonisJS" class="rounded-lg">
@@ -408,6 +409,7 @@
                     </div>
                 </div>
                 <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
+
                     <div class="p-2 w-12 h-12 object-contain">
                         <img src="images/technologies/small/Solid.js.png" alt="Solid.js" class="rounded-lg">
                     </div>
@@ -445,7 +447,8 @@
     <section class="px-8 py-12 bg-zinc-800">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-3xl font-bold mb-4 text-center text-yellow-300">Herramientas y Tecnologías</h2>
-            <p class="text-lg text-center">Trabajo con herramientas como Visual Studio, Git, Wireframes y más para dar vida a
+            <p class="text-lg text-center">Trabajo con herramientas como Visual Studio, Git, Wireframes y más para dar
+                vida a
                 las ideas.</p>
         </div>
     </section>
@@ -503,6 +506,26 @@
                 });
             });
         });
+        function cambiarImagen() {
+            const targetImage = document.getElementById('dynamic-image');
+            const smallSkillsImages = document.querySelectorAll('.small-skills img');
+            const imageOptions = [];
+
+            smallSkillsImages.forEach(img => {
+                imageOptions.push({ src: img.src, alt: img.alt });
+            });
+
+            if (imageOptions.length > 0) {
+                const randomIndex = Math.floor(Math.random() * imageOptions.length);
+                const selectedImage = imageOptions[randomIndex];
+
+                targetImage.src = selectedImage.src;
+                targetImage.alt = selectedImage.alt;
+            }
+        }
+
+        setInterval(cambiarImagen, 1000)
+        cambiarImagen();
     </script>
 </body>
 
