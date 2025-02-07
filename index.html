@@ -29,7 +29,29 @@
 
             50% {
                 transform: translateY(-5px);
-                /* Ajusta la distancia del movimiento */
+            }
+        }
+
+        .hexagon {
+            position: relative;
+            width: 100px;
+            height: 110px;
+            background: #111;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            transition: background 0.5s;
+        }
+        .hexagon:hover {
+            background: rgb(255, 255, 255);
+            cursor: pointer;
+        }
+
+        @keyframes animate {
+            0% {
+                background-position: 0;
+            }
+
+            100% {
+                background-position: 40px;
             }
         }
     </style>
@@ -57,11 +79,21 @@
     </header>
 
     <!-- Sección de Inicio -->
-    <section id="home" class="min-h-screen flex items-center justify-center text-center relative">
+    <section id="home" class="min-h-screen flex items-center justify-center text-center relative" style="background: linear-gradient(215deg, rgb(255 255 255 / 10%), rgba(0, 0, 0, 0.8));">
         <div class="absolute inset-0 bg-[url('background.jpg')] bg-cover bg-center opacity-10"></div>
+        <div class="hexagon"></div>
+        <div class="hexagon"></div>
+        <div class="hexagon"></div>
+        <div class="hexagon"></div>
+        <div class="hexagon"></div>
+        <div class="hexagon"></div>
+        <div class="hexagon"></div>
+        <div class="hexagon"></div>
+        <div class="hexagon"></div>
+        <div class="hexagon"></div>
         <div class="relative z-10">
             <div class="w-52 h-52 rounded-full bg-white flex items-center justify-center mx-auto mb-4">
-                <div class="p-4 w-44 h-44  object-contain">
+                <div class="p-4 w-44 h-44 object-contain">
                     <img src="icon.png" alt="Wilmer Alama" class="rounded-lg bounce">
                 </div>
             </div>
