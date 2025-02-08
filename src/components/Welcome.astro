@@ -287,8 +287,9 @@ const defaultImageSmall = SmallTechImages[0];
 								class={"rounded-lg"}
 								title={m.title}
 								loading={"lazy"}
-								width={100}
-								height={100}
+								width={300}
+								height={300}
+								inferSize
 							/>
 						</div>
 					</div>
@@ -351,19 +352,25 @@ const defaultImageSmall = SmallTechImages[0];
 				</div>
 				<div class="w-full flex items-center justify-center bg-white">
 					<div class="p-1 w-10 h-10 mx-1">
-						<img
+						<Image
 							src="/src/assets/technologies/small/Solid.js.png"
 							alt="Solid.js"
 							title="Solid.js"
 							class="mx-auto"
+							loading={"lazy"}
+							width={100}
+							height={100}
 						/>
 					</div>
 					<div class="p-1 w-10 h-10 mx-1">
-						<img
+						<Image
 							src="/src/assets/technologies/small/Three.js.png"
 							alt="Three.js"
 							title="Three.js"
 							class="mx-auto"
+							loading={"lazy"}
+							width={100}
+							height={100}
 						/>
 					</div>
 				</div>
