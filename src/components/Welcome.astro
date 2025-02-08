@@ -1,188 +1,18 @@
 ---
 import { Image } from "astro:assets";
-import { type ImageModel } from "../models/ImageModel";
+import {
+	BigTechImages,
+	NormalTechImages_r1,
+	NormalTechImages_r2,
+	NormalTechImages_r3,
+	SmallTechImagesBase,
+} from "../constants/imagesPath";
 
-const bigTechImages: ImageModel[] = [
-	{
-		src: "/src/assets/technologies/big/C-(CSharp).png",
-		alt: "C Sharp",
-		title: "C Sharp",
-	},
-	{
-		src: "/src/assets/technologies/big/Java.png",
-		alt: "Java",
-		title: "Java",
-	},
-	{
-		src: "/src/assets/technologies/big/JavaScript.png",
-		alt: "JavaScript",
-		title: "JavaScript",
-	},
-	{
-		src: "/src/assets/technologies/big/TypeScript.png",
-		alt: "TypeScript",
-		title: "TypeScript",
-	},
-	{
-		src: "/src/assets/technologies/big/PHP.png",
-		alt: "PHP",
-		title: "PHP",
-	},
-	{
-		src: "/src/assets/technologies/big/Python.png",
-		alt: "Python",
-		title: "Python",
-	},
-];
-
-const normalTechImages_r1: ImageModel[] = [
-	{
-		src: "/src/assets/technologies/normal/.NET-core.png",
-		alt: ".NET Core",
-		title: ".NET Core",
-	},
-	{
-		src: "/src/assets/technologies/normal/.NET-Framework.png",
-		alt: ".NET Framework",
-		title: ".NET Framework",
-	},
-	{
-		src: "/src/assets/technologies/normal/.NET-MAUI.png",
-		alt: ".NET MAUI",
-		title: ".NET MAUI",
-	},
-	{
-		src: "/src/assets/technologies/normal/Astro.png",
-		alt: "Astro",
-		title: "Astro",
-	},
-	{
-		src: "/src/assets/technologies/normal/Angular.png",
-		alt: "Angular",
-		title: "Angular",
-	},
-	{
-		src: "/src/assets/technologies/normal/Django.png",
-		alt: "Django",
-		title: "Django",
-	},
-	{
-		src: "/src/assets/technologies/normal/FastAPI.png",
-		alt: "FastAPI",
-		title: "FastAPI",
-	},
-	{
-		src: "/src/assets/technologies/normal/Gatsby.png",
-		alt: "Gatsby",
-		title: "Gatsby",
-	},
-	{
-		src: "/src/assets/technologies/normal/jQuery.png",
-		alt: "jQuery",
-		title: "jQuery",
-	},
-	{
-		src: "/src/assets/technologies/normal/Spring.png",
-		alt: "Spring",
-		title: "Spring",
-	},
-];
-
-const normalTechImages_r2: ImageModel[] = [
-	{
-		src: "/src/assets/technologies/normal/MySQL.png",
-		alt: "MySQL",
-		title: "MySQL",
-	},
-	{
-		src: "/src/assets/technologies/normal/Nest.js.png",
-		alt: "Nest.js",
-		title: "Nest.js",
-	},
-	{
-		src: "/src/assets/technologies/normal/Next.js.png",
-		alt: "Next.js",
-		title: "Next.js",
-	},
-	{
-		src: "/src/assets/technologies/normal/Node.js.png",
-		alt: "Node.js",
-		title: "Node.js",
-	},
-	{
-		src: "/src/assets/technologies/normal/Nuxt-JS.png",
-		alt: "Nuxt-JS",
-		title: "Nuxt-JS",
-	},
-	{
-		src: "/src/assets/technologies/normal/PostgresSQL.png",
-		alt: "PostgresSQL",
-		title: "PostgresSQL",
-	},
-	{
-		src: "/src/assets/technologies/normal/React.png",
-		alt: "React",
-		title: "React",
-	},
-	{
-		src: "/src/assets/technologies/normal/Redux.png",
-		alt: "Redux",
-		title: "Redux",
-	},
-	{
-		src: "/src/assets/technologies/normal/Tailwind-CSS.png",
-		alt: "Tailwind CSS",
-		title: "Tailwind CSS",
-	},
-	{
-		src: "/src/assets/technologies/normal/Visual-Studio.png",
-		alt: "Visual Studio",
-		title: "Visual Studio",
-	},
-];
-
-const normalTechImages_r3: ImageModel[] = [
-	{
-		src: "/src/assets/technologies/normal/Vite.js.png",
-		alt: "Vite.js",
-		title: "Vite.js",
-	},
-	{
-		src: "/src/assets/technologies/normal/Vue.js.png",
-		alt: "Vue.js",
-		title: "Vue.js",
-	},
-	{
-		src: "/src/assets/technologies/normal/Xamarin.png",
-		alt: "Xamarin",
-		title: "Xamarin",
-	},
-	{
-		src: "/src/assets/technologies/normal/Laravel.png",
-		alt: "Laravel",
-		title: "Laravel",
-	},
-	{
-		src: "/src/assets/technologies/normal/Docker.png",
-		alt: "Docker",
-		title: "Docker",
-	},
-	{
-		src: "/src/assets/technologies/normal/CSS3.png",
-		alt: "CSS3",
-		title: "CSS3",
-	},
-	{
-		src: "/src/assets/technologies/normal/HTML5.png",
-		alt: "HTML5",
-		title: "HTML5",
-	},
-	{
-		src: "/src/assets/technologies/normal/Bootstrap.png",
-		alt: "Bootstrap",
-		title: "Bootstrap",
-	}
-];
+const bigTechImages = BigTechImages;
+const normalTechImages_r1 = NormalTechImages_r1;
+const normalTechImages_r2 = NormalTechImages_r2;
+const normalTechImages_r3 = NormalTechImages_r3;
+const smallTechImagesBase = SmallTechImagesBase;
 ---
 
 <style type="text/css">
@@ -476,11 +306,17 @@ const normalTechImages_r3: ImageModel[] = [
 				<div class="p-3 w-20 h-20 object-contain">
 					<img
 						id="dynamic-image"
+						src={smallTechImagesBase[0].src}
+						alt={smallTechImagesBase[0].alt}
+						title={smallTechImagesBase[0].title}
+					/>
+					<!-- <img
+						id="dynamic-image"
 						src="/src/assets/technologies/small/Git.png"
 						alt="Git"
 						title="Git"
 						class="rounded-lg"
-					/>
+					/> -->
 				</div>
 			</div>
 		</div>
@@ -939,36 +775,20 @@ const normalTechImages_r3: ImageModel[] = [
 	<p>&copy; 2025 Wilmer Alama. Todos los derechos reservados.</p>
 </footer>
 
-<script type="module">
-	// Agregar desplazamiento suave a los enlaces del encabezado
-	const links = document.querySelectorAll(".link-custom");
-
-	links.forEach((link) => {
-		link.addEventListener("click", (e) => {
-			e.preventDefault(); // Evitar el comportamiento predeterminado
-			const targetId = link.getAttribute("href"); // Obtener el ID del destino
-			const targetElement = document.querySelector(targetId); // Seleccionar el elemento destino
-
-			// Desplazarse suavemente al elemento destino
-			targetElement.scrollIntoView({
-				behavior: "smooth",
-			});
-		});
-	});
+<script type="module" is:inline>
+	const smallTechImages = JSON.parse(
+		`\${JSON.stringify(${JSON.stringify(smallTechImagesBase)})}`,
+	);
 
 	function cambiarImagen() {
+		debugger;
 		const targetImage = document.getElementById("dynamic-image");
-		const smallSkillsImages =
-			document.querySelectorAll(".small-skills img");
-		const imageOptions = [];
 
-		smallSkillsImages.forEach((img) => {
-			imageOptions.push({ src: img.src, alt: img.alt, title: img.title });
-		});
-
-		if (imageOptions.length > 0) {
-			const randomIndex = Math.floor(Math.random() * imageOptions.length);
-			const selectedImage = imageOptions[randomIndex];
+		if (smallTechImages.length > 0) {
+			const randomIndex = Math.floor(
+				Math.random() * smallTechImages.length,
+			);
+			const selectedImage = smallTechImages[randomIndex];
 
 			if (targetImage) {
 				targetImage.src = selectedImage.src;
