@@ -251,11 +251,14 @@ const bigTechImages: ImageModel[] = [
 				bigTechImages.map((m) => (
 					<div class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2">
 						<div class="p-6 w-36 h-36 object-contain">
-							<img
+							<Image
 								src={m.src}
 								alt={m.alt}
-								class="rounded-lg"
+								class={"rounded-lg"}
 								title={m.title}
+								width={300}
+								height={300}
+								loading={"lazy"}
 							/>
 						</div>
 					</div>
