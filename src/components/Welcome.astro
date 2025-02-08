@@ -2,626 +2,1130 @@
 
 ---
 
-		<style type="text/css">
-			body {
-				font-family: "Comfortaa", serif;
+<style type="text/css">
+	body {
+		font-family: "Comfortaa", serif;
+	}
+
+	.bounce {
+		animation: bounce 1.3s infinite;
+	}
+
+	@keyframes bounce {
+		0%,
+		100% {
+			transform: translateY(5px);
+		}
+
+		50% {
+			transform: translateY(-5px);
+		}
+	}
+
+	@keyframes animate {
+		0% {
+			background-position: 0;
+		}
+
+		100% {
+			background-position: 40px;
+		}
+	}
+
+	#home {
+		overflow: hidden;
+	}
+
+	svg {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: -1;
+		display: block;
+	}
+
+	.border-svg {
+		stroke: white;
+		stroke-width: 2px;
+		fill: none;
+		stroke-linecap: round;
+	}
+
+	.direc90 {
+		animation: grados90 9s infinite linear;
+	}
+
+	@keyframes grados90 {
+		to {
+			transform: translate(0px, 95.8675px);
+		}
+	}
+</style>
+<!-- Sección de Encabezado -->
+<header class="bg-yellow-300">
+	<div class="max-w-7xl mx-auto text-black px-8 py-6">
+		<div class="flex justify-between items-center">
+			<a href="./index.html">
+				<h1 class="text-3xl font-bold text-black">alama.com</h1>
+			</a>
+			<nav>
+				<ul class="flex space-x-6">
+					<li>
+						<a
+							href="#home"
+							class="link-custom hover:underline"
+							aria-label="Ir a Inicio">Inicio</a>
+					</li>
+					<li>
+						<a
+							href="#about"
+							class="link-custom hover:underline"
+							aria-label="Ir a Sobre Mí">Sobre Mí</a>
+					</li>
+					<li>
+						<a
+							href="#skills"
+							class="link-custom hover:underline"
+							aria-label="Ir a Habilidades">Habilidades</a>
+					</li>
+					<li>
+						<a
+							href="#projects"
+							class="link-custom hover:underline"
+							aria-label="Ir a Proyectos">Proyectos</a>
+					</li>
+					<li>
+						<a
+							href="#contact"
+							class="link-custom hover:underline"
+							aria-label="Ir a Contacto">Contacto</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</header>
+
+<!-- Sección de Inicio -->
+<section
+	id="home"
+	class="min-h-screen flex items-center justify-center text-center relative"
+	style="background: linear-gradient(225deg, rgba(255, 255, 255, 0.1) 10%, rgb(0 0 0 / 81%) 85%, rgb(0 0 0) 16%);"
+>
+	<div class="absolute inset-0 bg-cover bg-center opacity-10">
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			xmlns:xlink="http://www.w3.org/1999/xlink"
+			viewBox="0 0 800 600"
+			class="absolute bg-cover bg-center opacity-50"
+		>
+			<defs>
+				<pattern
+					id="Hexagonos"
+					x="0"
+					y="0"
+					width="55.3491"
+					height="95.8675"
+					patternUnits="userSpaceOnUse"
+				>
+					<g class="border-svg">
+						<polyline points="12.6,-19.6 40.2,-3.6 67.9,-19.6 "
+						></polyline>
+						<polyline
+							points="-15.1,28.4 12.6,44.4 40.2,28.4 67.9,44.4 "
+						></polyline>
+						<polyline
+							points="-15.1,92.3 12.6,76.3 40.2,92.3 67.9,76.3 "
+						></polyline>
+						<line x1="12.6" y1="76.3" x2="12.6" y2="44.4"></line>
+						<line x1="40.2" y1="92.3" x2="40.2" y2="124.2"></line>
+						<line x1="40.2" y1="-3.6" x2="40.2" y2="28.4"></line>
+					</g>
+				</pattern>
+				<rect
+					id="Patron"
+					fill="url(#Hexagonos)"
+					width="1600"
+					height="1200"
+					x="-400"
+					y="-300"></rect>
+			</defs>
+			<use xlink:href="#Patron" class="direc90"></use>
+		</svg>
+	</div>
+	<div class="relative z-10">
+		<div
+			class="w-52 h-52 rounded-full bg-white flex items-center justify-center mx-auto mb-4"
+		>
+			<div class="p-4 w-44 h-44 object-contain">
+				<img
+					src="/src/assets/icon.png"
+					alt="Wilmer Alama"
+					class="rounded-lg bounce"
+				/>
+			</div>
+		</div>
+		<h2 class="text-4xl md:text-6xl font-bold">
+			Hola, soy Wilmer <span class="text-yellow-300">Alama</span>
+		</h2>
+		<p class="text-lg md:text-xl mt-4">
+			Soy un desarrollador web apasionado por crear diseños modernos y
+			aplicaciones diversas.
+		</p>
+		<a href="#projects" class="link-custom">
+			<button
+				class="mt-6 px-6 py-3 bg-yellow-300 text-black font-medium rounded-full hover:bg-white hover:text-black transition duration-300"
+				>Ver Mi Trabajo</button
+			>
+		</a>
+	</div>
+</section>
+
+<!-- Sección Sobre Mí -->
+<section id="about" class="px-8 py-12 bg-zinc-800">
+	<div class="max-w-4xl mx-auto text-center">
+		<h2 class="text-3xl font-bold mb-4 text-yellow-300">Sobre Mí</h2>
+		<p class="text-lg">
+			Soy un desarrollador web apasionado por crear aplicaciones modernas,
+			funcionales y centradas en la experiencia del usuario. Desde siempre
+			he dedicado mi tiempo a aprender, explorar y perfeccionar mis
+			habilidades en tecnologías web, escritorio y mobile. Me encanta
+			enfrentar nuevos desafíos, mantenerme actualizado con las últimas
+			tendencias del sector y construir soluciones innovadoras que marquen
+			la diferencia.
+		</p>
+	</div>
+</section>
+
+<!-- Sección de Habilidades -->
+<section id="skills" class="px-8 py-12 bg-black">
+	<div class="max-w-4xl mx-auto">
+		<h2 class="text-3xl font-bold mb-4 text-center text-yellow-300">
+			Habilidades
+		</h2>
+		<div class="big-skills flex justify-center pb-2">
+			<div
+				class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-6 w-36 h-36 object-contain">
+					<img
+						src="/src/assets/technologies/big/C-(CSharp).png"
+						alt="C Sharp"
+						class="rounded-lg"
+						title="C Sharp"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-6 w-36 h-36 object-contain">
+					<img
+						src="/src/assets/technologies/big/Java.png"
+						alt="Java"
+						class="rounded-lg"
+						title="Java"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-6 w-36 h-36 object-contain">
+					<img
+						src="/src/assets/technologies/big/JavaScript.png"
+						alt="JavaScript"
+						class="rounded-lg"
+						title="JavaScript"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-6 w-36 h-36 object-contain">
+					<img
+						src="/src/assets/technologies/big/TypeScript.png"
+						alt="TypeScript"
+						class="rounded-lg"
+						title="TypeScript"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-6 w-36 h-36 object-contain">
+					<img
+						src="/src/assets/technologies/big/PHP.png"
+						alt="PHP"
+						class="rounded-lg"
+						title="PHP"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-6 w-36 h-36 object-contain">
+					<img
+						src="/src/assets/technologies/big/Python.png"
+						alt="Python"
+						class="rounded-lg"
+						title="Python"
+					/>
+				</div>
+			</div>
+		</div>
+		<div class="normal-skills mb-2 flex justify-center">
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/.NET-core.png"
+						alt=".NET-core"
+						class="rounded-lg"
+						title=".NET-core"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/.NET-Framework.png"
+						alt=".NET-Framework"
+						class="rounded-lg"
+						title=".NET-Framework"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/.NET-MAUI.png"
+						alt=".NET-MAUI"
+						class="rounded-lg"
+						title=".NET-MAUI"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/Astro.png"
+						alt="Astro"
+						class="rounded-lg"
+						title="Astro"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/Angular.png"
+						alt="Angular"
+						class="rounded-lg"
+						title="Angular"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/Django.png"
+						alt="Django"
+						class="rounded-lg"
+						title="Django"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/FastAPI.png"
+						alt="FastAPI"
+						class="rounded-lg"
+						title="FastAPI"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/Gatsby.png"
+						alt="Gatsby"
+						class="rounded-lg"
+						title="Gatsby"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/jQuery.png"
+						alt="jQuery"
+						class="rounded-lg"
+						title="jQuery"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/Spring.png"
+						alt="Spring"
+						class="rounded-lg"
+						title="Spring"
+					/>
+				</div>
+			</div>
+		</div>
+		<div class="normal-skills mb-2 flex justify-center">
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/MySQL.png"
+						alt="MySQL"
+						class="rounded-lg"
+						title="MySQL"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/Nest.js.png"
+						alt="Nest.js"
+						class="rounded-lg"
+						title="Nest.js"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/Next.js.png"
+						alt="Next.js"
+						class="rounded-lg"
+						title="Next.js"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/Node.js.png"
+						alt="Node.js"
+						class="rounded-lg"
+						title="Node.js"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/Nuxt-JS.png"
+						alt="Nuxt-JS"
+						class="rounded-lg"
+						title="Nuxt-JS"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/PostgresSQL.png"
+						alt="PostgresSQL"
+						class="rounded-lg"
+						title="PostgresSQL"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/React.png"
+						alt="React"
+						class="rounded-lg"
+						title="React"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-3 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/Redux.png"
+						alt="Redux"
+						class="rounded-lg"
+						title="Redux"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/Tailwind-CSS.png"
+						alt="Tailwind CSS"
+						class="rounded-lg"
+						title="Tailwind CSS"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-3 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/Visual-Studio.png"
+						alt="Visual Studio"
+						class="rounded-lg"
+						title="Visual Studio"
+					/>
+				</div>
+			</div>
+		</div>
+		<div class="normal-skills mb-4 flex justify-center">
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-3 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/Vite.js.png"
+						alt="Vite.js"
+						title="Vite.js"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-3 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/Vue.js.png"
+						alt="Vue.js"
+						title="Vue.js"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/Xamarin.png"
+						alt="Xamarin"
+						title="Xamarin"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-3 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/Laravel.png"
+						alt="Laravel"
+						title="Laravel"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-3 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/Docker.png"
+						alt="Docker"
+						title="Docker"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-3 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/CSS3.png"
+						alt="CSS3"
+						title="CSS3"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-3 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/HTML5.png"
+						alt="HTML5"
+						title="HTML5"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-3 w-20 h-20 object-contain">
+					<img
+						src="/src/assets/technologies/normal/Bootstrap.png"
+						alt="Bootstrap"
+						title="Bootstrap"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-3 w-20 h-20 object-contain">
+					<img
+						id="dynamic-image"
+						src="/src/assets/technologies/small/Git.png"
+						alt="Git"
+						title="Git"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+		</div>
+		<div class="small-skills mb-2 flex justify-center hidden">
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/AdonisJS.png"
+						alt="AdonisJS"
+						title="AdonisJS"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Alpine.js.png"
+						alt="Alpine.js"
+						title="Alpine.js"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Apache-Maven.png"
+						alt="Apache Maven"
+						title="Apache Maven"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Appwrite.png"
+						alt="Appwrite"
+						title="Appwrite"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Backbone.js.png"
+						alt="Backbone.js"
+						title="Backbone.js"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Bash.png"
+						alt="Bash"
+						title="Bash"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/CakePHP.png"
+						alt="CakePHP"
+						title="CakePHP"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Eclipse-IDE.png"
+						alt="Eclipse-IDE"
+						title="Eclipse-IDE"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Electron.png"
+						alt="Electron"
+						title="Electron"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Firebase.png"
+						alt="Firebase"
+						title="Firebase"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Flutter.png"
+						alt="Flutter"
+						title="Flutter"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/GitHub.png"
+						alt="GitHub"
+						title="GitHub"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Go.png"
+						alt="Go"
+						title="Go"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Grafana.png"
+						alt="Grafana"
+						title="Grafana"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Handlebars.png"
+						alt="Handlebars"
+						title="Handlebars"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Insomnia.png"
+						alt="Insomnia"
+						title="Insomnia"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Ionic.png"
+						alt="Ionic"
+						title="Ionic"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/JSON.png"
+						alt="JSON"
+						title="JSON"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Kotlin.png"
+						alt="Kotlin"
+						title="Kotlin"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Krakenjs.png"
+						alt="Krakenjs"
+						title="Krakenjs"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Postman.png"
+						alt="Postman"
+						title="Postman"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Yii-Framework.png"
+						alt="Yii Framework"
+						title="Yii Framework"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Sass.png"
+						alt="Sass"
+						title="Sass"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Solid.js.png"
+						alt="Solid.js"
+						title="Solid.js"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/SQL-Developer.png"
+						alt="SQL Developer"
+						title="SQL Developer"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/SQLite.png"
+						alt="SQLite"
+						title="SQLite"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Swagger.png"
+						alt="Swagger"
+						title="Swagger"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Three.js.png"
+						alt="Three.js"
+						title="Three.js"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+			<div
+				class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2"
+			>
+				<div class="p-2 w-12 h-12 object-contain">
+					<img
+						src="/src/assets/technologies/small/Ubuntu.png"
+						alt="Ubuntu"
+						title="Ubuntu"
+						class="rounded-lg"
+					/>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Sección de Herramientas y Tecnologías -->
+<section class="px-8 py-12 bg-zinc-800">
+	<div class="max-w-4xl mx-auto">
+		<h2 class="text-3xl font-bold mb-4 text-center text-yellow-300">
+			Herramientas y Tecnologías
+		</h2>
+		<p class="text-lg text-center">
+			Trabajo con herramientas como Visual Studio, Visual Studio Code,
+			Eclipse, Git, Balsamiq Mockups y más para dar vida a las ideas.
+		</p>
+	</div>
+</section>
+
+<!-- Sección de Proyectos -->
+<section id="projects" class="px-8 py-8 bg-black">
+	<div class="max-w-4xl mx-auto">
+		<h2 class="text-3xl font-bold mb-4 text-center text-yellow-300">
+			Ultimos Proyectos
+		</h2>
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+			<div class="bg-gray-800 rounded-2xl flex flex-col">
+				<img
+					src="https://raw.githubusercontent.com/ritaxcorreia/react-profile-card/master/src/images/desktop-screenshot.png"
+					alt="Proyecto 1"
+					class="w-full h-32 object-cover rounded-t-2xl"
+				/>
+				<div class="p-6">
+					<h3 class="text-xl font-bold">Proyecto 1</h3>
+					<p class="mt-2">
+						Una breve descripción de este increíble proyecto.
+					</p>
+				</div>
+				<div class="w-full flex items-center justify-center bg-white">
+					<div class="p-1 w-10 h-10 mx-1">
+						<img
+							src="/src/assets/technologies/small/Solid.js.png"
+							alt="Solid.js"
+							title="Solid.js"
+							class="mx-auto"
+						/>
+					</div>
+					<div class="p-1 w-10 h-10 mx-1">
+						<img
+							src="/src/assets/technologies/small/Three.js.png"
+							alt="Three.js"
+							title="Three.js"
+							class="mx-auto"
+						/>
+					</div>
+				</div>
+				<div class="p-6 flex justify-end">
+					<button
+						class="px-4 py-2 bg-yellow-300 text-black font-bold rounded-full hover:bg-white hover:text-black transition duration-300"
+						>Ver Demo</button
+					>
+				</div>
+			</div>
+		</div>
+		<div class="mt-8 flex justify-center">
+			<button
+				type="button"
+				class="px-4 py-3 bg-yellow-300 text-black font-bold rounded-full hover:bg-white hover:text-black transition duration-300"
+				>Ver todos los proyectos</button
+			>
+		</div>
+	</div>
+</section>
+
+<!-- Sección de Contacto -->
+<section id="contact" class="px-8 py-12 bg-zinc-800 text-center">
+	<h2 class="text-3xl font-bold mb-4 text-yellow-300">Contáctame</h2>
+	<p class="mb-4">
+		No dudes en comunicarte por correo electrónico o usar el formulario de
+		contacto a continuación.
+	</p>
+	<form class="max-w-lg mx-auto">
+		<input
+			type="text"
+			placeholder="Tu Nombre"
+			class="w-full mb-4 p-2 rounded-lg bg-white text-black"
+		/>
+		<input
+			type="email"
+			placeholder="Tu Correo Electrónico"
+			class="w-full mb-4 p-2 rounded-lg bg-white text-black"
+		/>
+		<textarea
+			placeholder="Tu Mensaje"
+			class="w-full mb-4 p-2 rounded-lg bg-white text-black"></textarea>
+		<button
+			type="submit"
+			class="w-full py-3 bg-yellow-300 text-black font-bold rounded-full hover:bg-white hover:text-black transition duration-300"
+			aria-label="Enviar mensaje">Enviar</button
+		>
+	</form>
+</section>
+
+<!-- Sección de Pie de Página -->
+<footer class="bg-black text-gray-500 py-6 text-center">
+	<p>&copy; 2025 Wilmer Alama. Todos los derechos reservados.</p>
+</footer>
+
+<script type="module">
+	// Agregar desplazamiento suave a los enlaces del encabezado
+	const links = document.querySelectorAll(".link-custom");
+
+	links.forEach((link) => {
+		link.addEventListener("click", (e) => {
+			e.preventDefault(); // Evitar el comportamiento predeterminado
+			const targetId = link.getAttribute("href"); // Obtener el ID del destino
+			const targetElement = document.querySelector(targetId); // Seleccionar el elemento destino
+
+			// Desplazarse suavemente al elemento destino
+			targetElement.scrollIntoView({
+				behavior: "smooth",
+			});
+		});
+	});
+
+	function cambiarImagen() {
+		const targetImage = document.getElementById("dynamic-image");
+		const smallSkillsImages =
+			document.querySelectorAll(".small-skills img");
+		const imageOptions = [];
+
+		smallSkillsImages.forEach((img) => {
+			imageOptions.push({ src: img.src, alt: img.alt, title: img.title });
+		});
+
+		if (imageOptions.length > 0) {
+			const randomIndex = Math.floor(Math.random() * imageOptions.length);
+			const selectedImage = imageOptions[randomIndex];
+
+			if (targetImage) {
+				targetImage.src = selectedImage.src;
+				targetImage.alt = selectedImage.alt;
+				targetImage.title = selectedImage.title;
 			}
-	
-			.bounce {
-				animation: bounce 1.3s infinite;
-			}
-	
-			@keyframes bounce {
-	
-				0%,
-				100% {
-					transform: translateY(5px);
-				}
-	
-				50% {
-					transform: translateY(-5px);
-				}
-			}
-	
-			@keyframes animate {
-				0% {
-					background-position: 0;
-				}
-	
-				100% {
-					background-position: 40px;
-				}
-			}
-	
-			#home {
-				overflow: hidden;
-			}
-	
-			svg {
-				position: fixed;
-				top: 0;
-				left: 0;
-				z-index: -1;
-				display: block;
-			}
-	
-			.border-svg {
-				stroke: white;
-				stroke-width: 2px;
-				fill: none;
-				stroke-linecap: round;
-			}
-	
-			.direc90 {
-				animation: grados90 9s infinite linear;
-			}
-	
-			@keyframes grados90 {
-				to {
-					transform: translate(0px, 95.8675px);
-				}
-			}
-		</style>
-    <!-- Sección de Encabezado -->
-    <header class="bg-yellow-300">
-        <div class="max-w-7xl mx-auto text-black px-8 py-6">
-            <div class="flex justify-between items-center">
-                <a href="./index.html">
-                    <h1 class="text-3xl font-bold text-black">
-                        alama.com
-                    </h1>
-                </a>
-                <nav>
-                    <ul class="flex space-x-6">
-                        <li><a href="#home" class="link-custom hover:underline" aria-label="Ir a Inicio">Inicio</a></li>
-                        <li><a href="#about" class="link-custom hover:underline" aria-label="Ir a Sobre Mí">Sobre Mí</a></li>
-                        <li><a href="#skills" class="link-custom hover:underline" aria-label="Ir a Habilidades">Habilidades</a></li>
-                        <li><a href="#projects" class="link-custom hover:underline" aria-label="Ir a Proyectos">Proyectos</a></li>
-                        <li><a href="#contact" class="link-custom hover:underline" aria-label="Ir a Contacto">Contacto</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
+		}
+	}
 
-    <!-- Sección de Inicio -->
-    <section id="home" class="min-h-screen flex items-center justify-center text-center relative"
-        style="background: linear-gradient(225deg, rgba(255, 255, 255, 0.1) 10%, rgb(0 0 0 / 81%) 85%, rgb(0 0 0) 16%);">
-
-        <div class="absolute inset-0 bg-cover bg-center opacity-10">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 800 600"
-                class="absolute bg-cover bg-center opacity-50">
-                <defs>
-                    <pattern id="Hexagonos" x="0" y="0" width="55.3491" height="95.8675" patternUnits="userSpaceOnUse">
-                        <g class="border-svg">
-                            <polyline points="12.6,-19.6 40.2,-3.6 67.9,-19.6 " />
-                            <polyline points="-15.1,28.4 12.6,44.4 40.2,28.4 67.9,44.4 " />
-                            <polyline points="-15.1,92.3 12.6,76.3 40.2,92.3 67.9,76.3 " />
-                            <line x1="12.6" y1="76.3" x2="12.6" y2="44.4" />
-                            <line x1="40.2" y1="92.3" x2="40.2" y2="124.2" />
-                            <line x1="40.2" y1="-3.6" x2="40.2" y2="28.4" />
-                        </g>
-                    </pattern>
-                    <rect id="Patron" fill="url(#Hexagonos)" width="1600" height="1200" x="-400" y="-300" />
-                </defs>
-                <use xlink:href="#Patron" class="direc90" />
-            </svg>
-        </div>
-        <div class="relative z-10">
-            <div class="w-52 h-52 rounded-full bg-white flex items-center justify-center mx-auto mb-4">
-                <div class="p-4 w-44 h-44 object-contain">
-                    <img src="/src/assets/icon.png" alt="Wilmer Alama" class="rounded-lg bounce">
-                </div>
-            </div>
-            <h2 class="text-4xl md:text-6xl font-bold">Hola, soy Wilmer <span class="text-yellow-300">Alama</span></h2>
-            <p class="text-lg md:text-xl mt-4">Soy un desarrollador web apasionado por crear diseños modernos y
-                aplicaciones diversas.
-            </p>
-            <a href="#projects" class="link-custom">
-                <button
-                    class="mt-6 px-6 py-3 bg-yellow-300 text-black font-medium rounded-full hover:bg-white hover:text-black transition duration-300">Ver
-                    Mi Trabajo</button>
-            </a>
-        </div>
-    </section>
-
-    <!-- Sección Sobre Mí -->
-    <section id="about" class="px-8 py-12 bg-zinc-800">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-4 text-yellow-300">Sobre Mí</h2>
-            <p class="text-lg">Soy un desarrollador web apasionado por crear aplicaciones modernas, funcionales y
-                centradas en la experiencia del usuario.
-                Desde siempre he dedicado mi tiempo a aprender, explorar y perfeccionar mis habilidades en tecnologías
-                web, escritorio y mobile.
-                Me encanta enfrentar nuevos desafíos, mantenerme actualizado con las últimas tendencias del sector y
-                construir soluciones innovadoras que marquen la diferencia.</p>
-        </div>
-    </section>
-
-    <!-- Sección de Habilidades -->
-    <section id="skills" class="px-8 py-12 bg-black">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold mb-4 text-center text-yellow-300">Habilidades</h2>
-            <div class="big-skills flex justify-center pb-2">
-                <div class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-6 w-36 h-36 object-contain">
-                        <img src="/src/assets/technologies/big/C-(CSharp).png" alt="C Sharp" class="rounded-lg"
-                            title="C Sharp">
-                    </div>
-                </div>
-                <div class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-6 w-36 h-36 object-contain">
-                        <img src="/src/assets/technologies/big/Java.png" alt="Java" class="rounded-lg" title="Java">
-                    </div>
-                </div>
-                <div class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-6 w-36 h-36 object-contain">
-                        <img src="/src/assets/technologies/big/JavaScript.png" alt="JavaScript" class="rounded-lg"
-                            title="JavaScript">
-                    </div>
-                </div>
-                <div class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-6 w-36 h-36 object-contain">
-                        <img src="/src/assets/technologies/big/TypeScript.png" alt="TypeScript" class="rounded-lg"
-                            title="TypeScript">
-                    </div>
-                </div>
-                <div class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-6 w-36 h-36 object-contain">
-                        <img src="/src/assets/technologies/big/PHP.png" alt="PHP" class="rounded-lg" title="PHP">
-                    </div>
-                </div>
-                <div class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-6 w-36 h-36 object-contain">
-                        <img src="/src/assets/technologies/big/Python.png" alt="Python" class="rounded-lg" title="Python">
-                    </div>
-                </div>
-            </div>
-            <div class="normal-skills mb-2 flex justify-center">
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/.NET-core.png" alt=".NET-core" class="rounded-lg"
-                            title=".NET-core">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/.NET-Framework.png" alt=".NET-Framework" class="rounded-lg"
-                            title=".NET-Framework">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/.NET-MAUI.png" alt=".NET-MAUI" class="rounded-lg"
-                            title=".NET-MAUI">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/Astro.png" alt="Astro" class="rounded-lg" title="Astro">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/Angular.png" alt="Angular" class="rounded-lg"
-                            title="Angular">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/Django.png" alt="Django" class="rounded-lg" title="Django">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/FastAPI.png" alt="FastAPI" class="rounded-lg"
-                            title="FastAPI">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/Gatsby.png" alt="Gatsby" class="rounded-lg" title="Gatsby">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/jQuery.png" alt="jQuery" class="rounded-lg" title="jQuery">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/Spring.png" alt="Spring" class="rounded-lg" title="Spring">
-                    </div>
-                </div>
-            </div>
-            <div class="normal-skills mb-2 flex justify-center">
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/MySQL.png" alt="MySQL" class="rounded-lg" title="MySQL">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/Nest.js.png" alt="Nest.js" class="rounded-lg"
-                            title="Nest.js">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/Next.js.png" alt="Next.js" class="rounded-lg"
-                            title="Next.js">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/Node.js.png" alt="Node.js" class="rounded-lg"
-                            title="Node.js">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/Nuxt-JS.png" alt="Nuxt-JS" class="rounded-lg"
-                            title="Nuxt-JS">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/PostgresSQL.png" alt="PostgresSQL" class="rounded-lg"
-                            title="PostgresSQL">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/React.png" alt="React" class="rounded-lg" title="React">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-3 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/Redux.png" alt="Redux" class="rounded-lg" title="Redux">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/Tailwind-CSS.png" alt="Tailwind CSS" class="rounded-lg"
-                            title="Tailwind CSS">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-3 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/Visual-Studio.png" alt="Visual Studio" class="rounded-lg"
-                            title="Visual Studio">
-                    </div>
-                </div>
-            </div>
-            <div class="normal-skills mb-4 flex justify-center">
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-3 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/Vite.js.png" alt="Vite.js" title="Vite.js"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-3 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/Vue.js.png" alt="Vue.js" title="Vue.js" class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/Xamarin.png" alt="Xamarin" title="Xamarin"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-3 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/Laravel.png" alt="Laravel" title="Laravel"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-3 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/Docker.png" alt="Docker" title="Docker" class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-3 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/CSS3.png" alt="CSS3" title="CSS3" class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-3 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/HTML5.png" alt="HTML5" title="HTML5" class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-3 w-20 h-20 object-contain">
-                        <img src="/src/assets/technologies/normal/Bootstrap.png" alt="Bootstrap" title="Bootstrap"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-3 w-20 h-20 object-contain">
-                        <img id="dynamic-image" src="/src/assets/technologies/small/Git.png" alt="Git" title="Git"
-                            class="rounded-lg">
-                    </div>
-                </div>
-            </div>
-            <div class="small-skills mb-2 flex justify-center hidden">
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/AdonisJS.png" alt="AdonisJS" title="AdonisJS"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Alpine.js.png" alt="Alpine.js" title="Alpine.js"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Apache-Maven.png" alt="Apache Maven" title="Apache Maven"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Appwrite.png" alt="Appwrite" title="Appwrite"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Backbone.js.png" alt="Backbone.js" title="Backbone.js"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Bash.png" alt="Bash" title="Bash" class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/CakePHP.png" alt="CakePHP" title="CakePHP"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Eclipse-IDE.png" alt="Eclipse-IDE" title="Eclipse-IDE"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Electron.png" alt="Electron" title="Electron"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Firebase.png" alt="Firebase" title="Firebase"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Flutter.png" alt="Flutter" title="Flutter"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/GitHub.png" alt="GitHub" title="GitHub" class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Go.png" alt="Go" title="Go" class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Grafana.png" alt="Grafana" title="Grafana"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Handlebars.png" alt="Handlebars" title="Handlebars"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Insomnia.png" alt="Insomnia" title="Insomnia"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Ionic.png" alt="Ionic" title="Ionic" class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/JSON.png" alt="JSON" title="JSON" class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Kotlin.png" alt="Kotlin" title="Kotlin" class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Krakenjs.png" alt="Krakenjs" title="Krakenjs"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Postman.png" alt="Postman" title="Postman"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Yii-Framework.png" alt="Yii Framework" title="Yii Framework"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Sass.png" alt="Sass" title="Sass" class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Solid.js.png" alt="Solid.js" title="Solid.js"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/SQL-Developer.png" alt="SQL Developer" title="SQL Developer"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/SQLite.png" alt="SQLite" title="SQLite" class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Swagger.png" alt="Swagger" title="Swagger"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Three.js.png" alt="Three.js" title="Three.js"
-                            class="rounded-lg">
-                    </div>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-                    <div class="p-2 w-12 h-12 object-contain">
-                        <img src="/src/assets/technologies/small/Ubuntu.png" alt="Ubuntu" title="Ubuntu" class="rounded-lg">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección de Herramientas y Tecnologías -->
-    <section class="px-8 py-12 bg-zinc-800">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold mb-4 text-center text-yellow-300">Herramientas y Tecnologías</h2>
-            <p class="text-lg text-center">Trabajo con herramientas como Visual Studio, Visual Studio Code, Eclipse,
-                Git, Balsamiq Mockups y más para dar
-                vida a
-                las ideas.</p>
-        </div>
-    </section>
-
-    <!-- Sección de Proyectos -->
-    <section id="projects" class="px-8 py-8 bg-black">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold mb-4 text-center text-yellow-300">Ultimos Proyectos</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-gray-800 rounded-2xl flex flex-col">
-                    <img src="https://raw.githubusercontent.com/ritaxcorreia/react-profile-card/master/src/images/desktop-screenshot.png"
-                        alt="Proyecto 1" class="w-full h-32 object-cover rounded-t-2xl">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold">Proyecto 1</h3>
-                        <p class="mt-2">Una breve descripción de este increíble proyecto.</p>
-                    </div>
-                    <div class="w-full flex items-center justify-center bg-white">
-                        <div class="p-1 w-10 h-10 mx-1">
-                            <img src="/src/assets/technologies/small/Solid.js.png" alt="Solid.js" title="Solid.js"
-                                class="mx-auto">
-                        </div>
-                        <div class="p-1 w-10 h-10 mx-1">
-                            <img src="/src/assets/technologies/small/Three.js.png" alt="Three.js" title="Three.js"
-                                class="mx-auto">
-                        </div>
-                    </div>
-                    <div class="p-6 flex justify-end">
-                        <button
-                            class="px-4 py-2 bg-yellow-300 text-black font-bold rounded-full hover:bg-white hover:text-black transition duration-300">Ver
-                            Demo</button>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-8 flex justify-center">
-                <button type="button"
-                    class="px-4 py-3 bg-yellow-300 text-black font-bold rounded-full hover:bg-white hover:text-black transition duration-300">Ver
-                    todos los proyectos</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección de Contacto -->
-    <section id="contact" class="px-8 py-12 bg-zinc-800 text-center">
-        <h2 class="text-3xl font-bold mb-4 text-yellow-300">Contáctame</h2>
-        <p class="mb-4">No dudes en comunicarte por correo electrónico o usar el formulario de contacto a continuación.
-        </p>
-        <form class="max-w-lg mx-auto">
-            <input type="text" placeholder="Tu Nombre" class="w-full mb-4 p-2 rounded-lg bg-white text-black">
-            <input type="email" placeholder="Tu Correo Electrónico"
-                class="w-full mb-4 p-2 rounded-lg bg-white text-black">
-            <textarea placeholder="Tu Mensaje" class="w-full mb-4 p-2 rounded-lg bg-white text-black"></textarea>
-            <button type="submit"
-                class="w-full py-3 bg-yellow-300 text-black font-bold rounded-full hover:bg-white hover:text-black transition duration-300"
-                aria-label="Enviar mensaje">Enviar</button>
-        </form>
-    </section>
-
-    <!-- Sección de Pie de Página -->
-    <footer class="bg-black text-gray-500 py-6 text-center">
-        <p>&copy; 2025 Wilmer Alama. Todos los derechos reservados.</p>
-    </footer>
-
-    <script type="module">
-        // Agregar desplazamiento suave a los enlaces del encabezado
-        const links = document.querySelectorAll('.link-custom');
-
-        links.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault(); // Evitar el comportamiento predeterminado
-                const targetId = link.getAttribute('href'); // Obtener el ID del destino
-                const targetElement = document.querySelector(targetId); // Seleccionar el elemento destino
-
-                // Desplazarse suavemente al elemento destino
-                targetElement.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        function cambiarImagen() {
-            const targetImage = document.getElementById('dynamic-image');
-            const smallSkillsImages = document.querySelectorAll('.small-skills img');
-            const imageOptions = [];
-
-            smallSkillsImages.forEach(img => {
-                imageOptions.push({ src: img.src, alt: img.alt, title: img.title });
-            });
-
-            if (imageOptions.length > 0) {
-                const randomIndex = Math.floor(Math.random() * imageOptions.length);
-                const selectedImage = imageOptions[randomIndex];
-
-                if (targetImage) {
-                    targetImage.src = selectedImage.src;
-                    targetImage.alt = selectedImage.alt;
-                    targetImage.title = selectedImage.title;
-                }
-            }
-        }
-
-        setInterval(cambiarImagen, 1000);
-        cambiarImagen();
-    </script>
+	setInterval(cambiarImagen, 1000);
+	cambiarImagen();
+</script>
