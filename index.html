@@ -87,11 +87,11 @@
                 </a>
                 <nav>
                     <ul class="flex space-x-6">
-                        <li><a href="#home" class="link-custom hover:underline">Inicio</a></li>
-                        <li><a href="#about" class="link-custom hover:underline">Sobre Mí</a></li>
-                        <li><a href="#skills" class="link-custom hover:underline">Habilidades</a></li>
-                        <li><a href="#projects" class="link-custom hover:underline">Proyectos</a></li>
-                        <li><a href="#contact" class="link-custom hover:underline">Contacto</a></li>
+                        <li><a href="#home" class="link-custom hover:underline" aria-label="Ir a Inicio">Inicio</a></li>
+                        <li><a href="#about" class="link-custom hover:underline" aria-label="Ir a Sobre Mí">Sobre Mí</a></li>
+                        <li><a href="#skills" class="link-custom hover:underline" aria-label="Ir a Habilidades">Habilidades</a></li>
+                        <li><a href="#projects" class="link-custom hover:underline" aria-label="Ir a Proyectos">Proyectos</a></li>
+                        <li><a href="#contact" class="link-custom hover:underline" aria-label="Ir a Contacto">Contacto</a></li>
                     </ul>
                 </nav>
             </div>
@@ -583,12 +583,13 @@
         <p class="mb-4">No dudes en comunicarte por correo electrónico o usar el formulario de contacto a continuación.
         </p>
         <form class="max-w-lg mx-auto">
-            <input type="text" placeholder="Tu Nombre" class="w-full mb-4 p-2 rounded-lg bg-white-600 text-white">
+            <input type="text" placeholder="Tu Nombre" class="w-full mb-4 p-2 rounded-lg bg-white text-black">
             <input type="email" placeholder="Tu Correo Electrónico"
-                class="w-full mb-4 p-2 rounded-lg bg-white-600 text-white">
-            <textarea placeholder="Tu Mensaje" class="w-full mb-4 p-2 rounded-lg bg-white-600 text-white"></textarea>
+                class="w-full mb-4 p-2 rounded-lg bg-white text-black">
+            <textarea placeholder="Tu Mensaje" class="w-full mb-4 p-2 rounded-lg bg-white text-black"></textarea>
             <button type="submit"
-                class="w-full py-3 bg-yellow-300 text-black font-bold rounded-full hover:bg-white hover:text-black transition duration-300">Enviar</button>
+                class="w-full py-3 bg-yellow-300 text-black font-bold rounded-full hover:bg-white hover:text-black transition duration-300"
+                aria-label="Enviar mensaje">Enviar</button>
         </form>
     </section>
 
