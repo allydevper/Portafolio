@@ -34,6 +34,59 @@ const bigTechImages: ImageModel[] = [
 		title: "Python",
 	},
 ];
+
+const normalTechImages_r1: ImageModel[] = [
+	{
+		src: "/src/assets/technologies/normal/.NET-core.png",
+		alt: ".NET Core",
+		title: ".NET Core",
+	},
+	{
+		src: "/src/assets/technologies/normal/.NET-Framework.png",
+		alt: ".NET Framework",
+		title: ".NET Framework",
+	},
+	{
+		src: "/src/assets/technologies/normal/.NET-MAUI.png",
+		alt: ".NET MAUI",
+		title: ".NET MAUI",
+	},
+	{
+		src: "/src/assets/technologies/normal/Astro.png",
+		alt: "Astro",
+		title: "Astro",
+	},
+	{
+		src: "/src/assets/technologies/normal/Angular.png",
+		alt: "Angular",
+		title: "Angular",
+	},
+	{
+		src: "/src/assets/technologies/normal/Django.png",
+		alt: "Django",
+		title: "Django",
+	},
+	{
+		src: "/src/assets/technologies/normal/FastAPI.png",
+		alt: "FastAPI",
+		title: "FastAPI",
+	},
+	{
+		src: "/src/assets/technologies/normal/Gatsby.png",
+		alt: "Gatsby",
+		title: "Gatsby",
+	},
+	{
+		src: "/src/assets/technologies/normal/jQuery.png",
+		alt: "jQuery",
+		title: "jQuery",
+	},
+	{
+		src: "/src/assets/technologies/normal/Spring.png",
+		alt: "Spring",
+		title: "Spring",
+	},
+];
 ---
 
 <style type="text/css">
@@ -266,126 +319,23 @@ const bigTechImages: ImageModel[] = [
 			}
 		</div>
 		<div class="normal-skills mb-2 flex justify-center">
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-2 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/.NET-core.png"
-						alt=".NET-core"
-						class="rounded-lg"
-						title=".NET-core"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-2 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/.NET-Framework.png"
-						alt=".NET-Framework"
-						class="rounded-lg"
-						title=".NET-Framework"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-2 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/.NET-MAUI.png"
-						alt=".NET-MAUI"
-						class="rounded-lg"
-						title=".NET-MAUI"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-2 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/Astro.png"
-						alt="Astro"
-						class="rounded-lg"
-						title="Astro"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-2 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/Angular.png"
-						alt="Angular"
-						class="rounded-lg"
-						title="Angular"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-2 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/Django.png"
-						alt="Django"
-						class="rounded-lg"
-						title="Django"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-2 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/FastAPI.png"
-						alt="FastAPI"
-						class="rounded-lg"
-						title="FastAPI"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-2 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/Gatsby.png"
-						alt="Gatsby"
-						class="rounded-lg"
-						title="Gatsby"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-2 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/jQuery.png"
-						alt="jQuery"
-						class="rounded-lg"
-						title="jQuery"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-2 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/Spring.png"
-						alt="Spring"
-						class="rounded-lg"
-						title="Spring"
-					/>
-				</div>
-			</div>
+			{
+				normalTechImages_r1.map((m) => (
+					<div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
+						<div class="p-2 w-20 h-20 object-contain">
+							<Image
+								src={m.src}
+								alt={m.alt}
+								class={"rounded-lg"}
+								title={m.title}
+								width={300}
+								height={300}
+								loading={"lazy"}
+							/>
+						</div>
+					</div>
+				))
+			}
 		</div>
 		<div class="normal-skills mb-2 flex justify-center">
 			<div
