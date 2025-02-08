@@ -1,5 +1,39 @@
 ---
 import { Image } from "astro:assets";
+import { type ImageModel } from "../models/ImageModel";
+
+const bigTechImages: ImageModel[] = [
+	{
+		src: "/src/assets/technologies/big/C-(CSharp).png",
+		alt: "C Sharp",
+		title: "C Sharp",
+	},
+	{
+		src: "/src/assets/technologies/big/Java.png",
+		alt: "Java",
+		title: "Java",
+	},
+	{
+		src: "/src/assets/technologies/big/JavaScript.png",
+		alt: "JavaScript",
+		title: "JavaScript",
+	},
+	{
+		src: "/src/assets/technologies/big/TypeScript.png",
+		alt: "TypeScript",
+		title: "TypeScript",
+	},
+	{
+		src: "/src/assets/technologies/big/PHP.png",
+		alt: "PHP",
+		title: "PHP",
+	},
+	{
+		src: "/src/assets/technologies/big/Python.png",
+		alt: "Python",
+		title: "Python",
+	},
+];
 ---
 
 <style type="text/css">
@@ -61,6 +95,7 @@ import { Image } from "astro:assets";
 		}
 	}
 </style>
+
 <!-- Sección de Encabezado -->
 <header class="bg-yellow-300">
 	<div class="max-w-7xl mx-auto text-black px-8 py-6">
@@ -163,13 +198,13 @@ import { Image } from "astro:assets";
 			class="w-52 h-52 rounded-full bg-white flex items-center justify-center mx-auto mb-4"
 		>
 			<div class="p-4 w-44 h-44 object-contain">
-				<Image 
-				  src={'/src/assets/icon.png'}
-				  alt="Wilmer Alama"
-				  class={"rounded-lg bounce"}
-				  width={300}
-				  height={300}
-				  loading={"eager"}
+				<Image
+					src={"/src/assets/icon.png"}
+					alt="Wilmer Alama"
+					class={"rounded-lg bounce"}
+					width={300}
+					height={300}
+					loading={"eager"}
 				/>
 			</div>
 		</div>
@@ -212,78 +247,20 @@ import { Image } from "astro:assets";
 			Habilidades
 		</h2>
 		<div class="big-skills flex justify-center pb-2">
-			<div
-				class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-6 w-36 h-36 object-contain">
-					<img
-						src="/src/assets/technologies/big/C-(CSharp).png"
-						alt="C Sharp"
-						class="rounded-lg"
-						title="C Sharp"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-6 w-36 h-36 object-contain">
-					<img
-						src="/src/assets/technologies/big/Java.png"
-						alt="Java"
-						class="rounded-lg"
-						title="Java"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-6 w-36 h-36 object-contain">
-					<img
-						src="/src/assets/technologies/big/JavaScript.png"
-						alt="JavaScript"
-						class="rounded-lg"
-						title="JavaScript"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-6 w-36 h-36 object-contain">
-					<img
-						src="/src/assets/technologies/big/TypeScript.png"
-						alt="TypeScript"
-						class="rounded-lg"
-						title="TypeScript"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-6 w-36 h-36 object-contain">
-					<img
-						src="/src/assets/technologies/big/PHP.png"
-						alt="PHP"
-						class="rounded-lg"
-						title="PHP"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-6 w-36 h-36 object-contain">
-					<img
-						src="/src/assets/technologies/big/Python.png"
-						alt="Python"
-						class="rounded-lg"
-						title="Python"
-					/>
-				</div>
-			</div>
+			{
+				bigTechImages.map((m) => (
+					<div class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2">
+						<div class="p-6 w-36 h-36 object-contain">
+							<img
+								src={m.src}
+								alt={m.alt}
+								class="rounded-lg"
+								title={m.title}
+							/>
+						</div>
+					</div>
+				))
+			}
 		</div>
 		<div class="normal-skills mb-2 flex justify-center">
 			<div
