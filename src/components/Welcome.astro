@@ -1,5 +1,5 @@
 ---
-
+import { Image } from "astro:assets";
 ---
 
 <style type="text/css">
@@ -163,10 +163,13 @@
 			class="w-52 h-52 rounded-full bg-white flex items-center justify-center mx-auto mb-4"
 		>
 			<div class="p-4 w-44 h-44 object-contain">
-				<img
-					src="/src/assets/icon.png"
-					alt="Wilmer Alama"
-					class="rounded-lg bounce"
+				<Image 
+				  src={'/src/assets/icon.png'}
+				  alt="Wilmer Alama"
+				  class={"rounded-lg bounce"}
+				  width={300}
+				  height={300}
+				  loading={"eager"}
 				/>
 			</div>
 		</div>
@@ -179,7 +182,8 @@
 		</p>
 		<a href="#projects" class="link-custom">
 			<button
-				class="mt-6 px-6 py-3 bg-yellow-300 text-black font-medium rounded-full hover:bg-white hover:text-black transition duration-300 cursor-pointer">Ver Mi Trabajo</button
+				class="mt-6 px-6 py-3 bg-yellow-300 text-black font-medium rounded-full hover:bg-white hover:text-black transition duration-300 cursor-pointer"
+				>Ver Mi Trabajo</button
 			>
 		</a>
 	</div>
@@ -1041,7 +1045,8 @@
 				</div>
 				<div class="p-6 flex justify-end">
 					<button
-						class="px-4 py-2 bg-yellow-300 text-black font-bold rounded-full hover:bg-white hover:text-black transition duration-300 cursor-pointer">Ver Demo</button
+						class="px-4 py-2 bg-yellow-300 text-black font-bold rounded-full hover:bg-white hover:text-black transition duration-300 cursor-pointer"
+						>Ver Demo</button
 					>
 				</div>
 			</div>
@@ -1049,7 +1054,8 @@
 		<div class="mt-8 flex justify-center">
 			<button
 				type="button"
-				class="px-4 py-3 bg-yellow-300 text-black font-bold rounded-full hover:bg-white hover:text-black transition duration-300 cursor-pointer">Ver todos los proyectos</button
+				class="px-4 py-3 bg-yellow-300 text-black font-bold rounded-full hover:bg-white hover:text-black transition duration-300 cursor-pointer"
+				>Ver todos los proyectos</button
 			>
 		</div>
 	</div>
