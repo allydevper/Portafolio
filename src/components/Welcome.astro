@@ -8,10 +8,10 @@
 	}
 
 	.bounce {
-		animation: bounce 1.3s infinite;
+		animation: bounce-custom 1.3s infinite;
 	}
 
-	@keyframes bounce {
+	@keyframes bounce-custom {
 		0%,
 		100% {
 			transform: translateY(5px);
@@ -65,7 +65,7 @@
 <header class="bg-yellow-300">
 	<div class="max-w-7xl mx-auto text-black px-8 py-6">
 		<div class="flex justify-between items-center">
-			<a href="./index.html">
+			<a href="/" aria-label="Ir a la página principal">
 				<h1 class="text-3xl font-bold text-black">alama.com</h1>
 			</a>
 			<nav>
@@ -74,31 +74,36 @@
 						<a
 							href="#home"
 							class="link-custom hover:underline"
-							aria-label="Ir a Inicio">Inicio</a>
+							aria-label="Ir a Inicio">Inicio</a
+						>
 					</li>
 					<li>
 						<a
 							href="#about"
 							class="link-custom hover:underline"
-							aria-label="Ir a Sobre Mí">Sobre Mí</a>
+							aria-label="Ir a Sobre Mí">Sobre Mí</a
+						>
 					</li>
 					<li>
 						<a
 							href="#skills"
 							class="link-custom hover:underline"
-							aria-label="Ir a Habilidades">Habilidades</a>
+							aria-label="Ir a Habilidades">Habilidades</a
+						>
 					</li>
 					<li>
 						<a
 							href="#projects"
 							class="link-custom hover:underline"
-							aria-label="Ir a Proyectos">Proyectos</a>
+							aria-label="Ir a Proyectos">Proyectos</a
+						>
 					</li>
 					<li>
 						<a
 							href="#contact"
 							class="link-custom hover:underline"
-							aria-label="Ir a Contacto">Contacto</a>
+							aria-label="Ir a Contacto">Contacto</a
+						>
 					</li>
 				</ul>
 			</nav>
@@ -112,12 +117,12 @@
 	class="min-h-screen flex items-center justify-center text-center relative"
 	style="background: linear-gradient(225deg, rgba(255, 255, 255, 0.1) 10%, rgb(0 0 0 / 81%) 85%, rgb(0 0 0) 16%);"
 >
-	<div class="absolute inset-0 bg-cover bg-center opacity-10">
+	<div>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			xmlns:xlink="http://www.w3.org/1999/xlink"
 			viewBox="0 0 800 600"
-			class="absolute bg-cover bg-center opacity-50"
+			class="absolute bg-cover bg-center opacity-10"
 		>
 			<defs>
 				<pattern
@@ -175,7 +180,7 @@
 		<a href="#projects" class="link-custom">
 			<button
 				class="mt-6 px-6 py-3 bg-yellow-300 text-black font-medium rounded-full hover:bg-white hover:text-black transition duration-300"
-				>Ver Mi Trabajo</button
+				style="cursor: pointer;">Ver Mi Trabajo</button
 			>
 		</a>
 	</div>
@@ -1038,7 +1043,7 @@
 				<div class="p-6 flex justify-end">
 					<button
 						class="px-4 py-2 bg-yellow-300 text-black font-bold rounded-full hover:bg-white hover:text-black transition duration-300"
-						>Ver Demo</button
+						style="cursor: pointer;">Ver Demo</button
 					>
 				</div>
 			</div>
@@ -1047,7 +1052,7 @@
 			<button
 				type="button"
 				class="px-4 py-3 bg-yellow-300 text-black font-bold rounded-full hover:bg-white hover:text-black transition duration-300"
-				>Ver todos los proyectos</button
+				style="cursor: pointer;">Ver todos los proyectos</button
 			>
 		</div>
 	</div>
@@ -1076,6 +1081,7 @@
 			class="w-full mb-4 p-2 rounded-lg bg-white text-black"></textarea>
 		<button
 			type="submit"
+			style="cursor: pointer;"
 			class="w-full py-3 bg-yellow-300 text-black font-bold rounded-full hover:bg-white hover:text-black transition duration-300"
 			aria-label="Enviar mensaje">Enviar</button
 		>
