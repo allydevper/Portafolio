@@ -87,6 +87,59 @@ const normalTechImages_r1: ImageModel[] = [
 		title: "Spring",
 	},
 ];
+
+const normalTechImages_r2: ImageModel[] = [
+	{
+		src: "/src/assets/technologies/normal/MySQL.png",
+		alt: "MySQL",
+		title: "MySQL",
+	},
+	{
+		src: "/src/assets/technologies/normal/Nest.js.png",
+		alt: "Nest.js",
+		title: "Nest.js",
+	},
+	{
+		src: "/src/assets/technologies/normal/Next.js.png",
+		alt: "Next.js",
+		title: "Next.js",
+	},
+	{
+		src: "/src/assets/technologies/normal/Node.js.png",
+		alt: "Node.js",
+		title: "Node.js",
+	},
+	{
+		src: "/src/assets/technologies/normal/Nuxt-JS.png",
+		alt: "Nuxt-JS",
+		title: "Nuxt-JS",
+	},
+	{
+		src: "/src/assets/technologies/normal/PostgresSQL.png",
+		alt: "PostgresSQL",
+		title: "PostgresSQL",
+	},
+	{
+		src: "/src/assets/technologies/normal/React.png",
+		alt: "React",
+		title: "React",
+	},
+	{
+		src: "/src/assets/technologies/normal/Redux.png",
+		alt: "Redux",
+		title: "Redux",
+	},
+	{
+		src: "/src/assets/technologies/normal/Tailwind-CSS.png",
+		alt: "Tailwind CSS",
+		title: "Tailwind CSS",
+	},
+	{
+		src: "/src/assets/technologies/normal/Visual-Studio.png",
+		alt: "Visual Studio",
+		title: "Visual Studio",
+	},
+];
 ---
 
 <style type="text/css">
@@ -338,126 +391,23 @@ const normalTechImages_r1: ImageModel[] = [
 			}
 		</div>
 		<div class="normal-skills mb-2 flex justify-center">
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-2 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/MySQL.png"
-						alt="MySQL"
-						class="rounded-lg"
-						title="MySQL"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-2 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/Nest.js.png"
-						alt="Nest.js"
-						class="rounded-lg"
-						title="Nest.js"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-2 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/Next.js.png"
-						alt="Next.js"
-						class="rounded-lg"
-						title="Next.js"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-2 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/Node.js.png"
-						alt="Node.js"
-						class="rounded-lg"
-						title="Node.js"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-2 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/Nuxt-JS.png"
-						alt="Nuxt-JS"
-						class="rounded-lg"
-						title="Nuxt-JS"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-2 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/PostgresSQL.png"
-						alt="PostgresSQL"
-						class="rounded-lg"
-						title="PostgresSQL"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-2 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/React.png"
-						alt="React"
-						class="rounded-lg"
-						title="React"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-3 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/Redux.png"
-						alt="Redux"
-						class="rounded-lg"
-						title="Redux"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-2 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/Tailwind-CSS.png"
-						alt="Tailwind CSS"
-						class="rounded-lg"
-						title="Tailwind CSS"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-3 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/Visual-Studio.png"
-						alt="Visual Studio"
-						class="rounded-lg"
-						title="Visual Studio"
-					/>
-				</div>
-			</div>
+			{
+				normalTechImages_r2.map((m) => (
+					<div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
+						<div class="p-2 w-20 h-20 object-contain">
+							<Image
+								src={m.src}
+								alt={m.alt}
+								class={"rounded-lg"}
+								title={m.title}
+								width={300}
+								height={300}
+								loading={"lazy"}
+							/>
+						</div>
+					</div>
+				))
+			}
 		</div>
 		<div class="normal-skills mb-4 flex justify-center">
 			<div
