@@ -140,6 +140,49 @@ const normalTechImages_r2: ImageModel[] = [
 		title: "Visual Studio",
 	},
 ];
+
+const normalTechImages_r3: ImageModel[] = [
+	{
+		src: "/src/assets/technologies/normal/Vite.js.png",
+		alt: "Vite.js",
+		title: "Vite.js",
+	},
+	{
+		src: "/src/assets/technologies/normal/Vue.js.png",
+		alt: "Vue.js",
+		title: "Vue.js",
+	},
+	{
+		src: "/src/assets/technologies/normal/Xamarin.png",
+		alt: "Xamarin",
+		title: "Xamarin",
+	},
+	{
+		src: "/src/assets/technologies/normal/Laravel.png",
+		alt: "Laravel",
+		title: "Laravel",
+	},
+	{
+		src: "/src/assets/technologies/normal/Docker.png",
+		alt: "Docker",
+		title: "Docker",
+	},
+	{
+		src: "/src/assets/technologies/normal/CSS3.png",
+		alt: "CSS3",
+		title: "CSS3",
+	},
+	{
+		src: "/src/assets/technologies/normal/HTML5.png",
+		alt: "HTML5",
+		title: "HTML5",
+	},
+	{
+		src: "/src/assets/technologies/normal/Bootstrap.png",
+		alt: "Bootstrap",
+		title: "Bootstrap",
+	}
+];
 ---
 
 <style type="text/css">
@@ -410,102 +453,23 @@ const normalTechImages_r2: ImageModel[] = [
 			}
 		</div>
 		<div class="normal-skills mb-4 flex justify-center">
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-3 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/Vite.js.png"
-						alt="Vite.js"
-						title="Vite.js"
-						class="rounded-lg"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-3 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/Vue.js.png"
-						alt="Vue.js"
-						title="Vue.js"
-						class="rounded-lg"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-2 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/Xamarin.png"
-						alt="Xamarin"
-						title="Xamarin"
-						class="rounded-lg"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-3 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/Laravel.png"
-						alt="Laravel"
-						title="Laravel"
-						class="rounded-lg"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-3 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/Docker.png"
-						alt="Docker"
-						title="Docker"
-						class="rounded-lg"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-3 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/CSS3.png"
-						alt="CSS3"
-						title="CSS3"
-						class="rounded-lg"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-3 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/HTML5.png"
-						alt="HTML5"
-						title="HTML5"
-						class="rounded-lg"
-					/>
-				</div>
-			</div>
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-3 w-20 h-20 object-contain">
-					<img
-						src="/src/assets/technologies/normal/Bootstrap.png"
-						alt="Bootstrap"
-						title="Bootstrap"
-						class="rounded-lg"
-					/>
-				</div>
-			</div>
+			{
+				normalTechImages_r3.map((m) => (
+					<div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
+						<div class="p-2 w-20 h-20 object-contain">
+							<Image
+								src={m.src}
+								alt={m.alt}
+								class={"rounded-lg"}
+								title={m.title}
+								width={300}
+								height={300}
+								loading={"lazy"}
+							/>
+						</div>
+					</div>
+				))
+			}
 			<div
 				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
 			>
