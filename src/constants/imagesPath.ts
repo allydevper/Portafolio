@@ -176,7 +176,7 @@ export const NormalTechImages: ImageModel[] = [
     },
 ];
 
-export const SmallTechImagesBase: ImageModel[] = [
+export const SmallTechImages: ImageModel[] = [
     {
         src: "/src/assets/technologies/small/AdonisJS.png",
         alt: "AdonisJS",
