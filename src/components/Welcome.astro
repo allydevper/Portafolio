@@ -2,17 +2,9 @@
 import { Image } from "astro:assets";
 import {
 	BigTechImages,
-	NormalTechImages_r1,
-	NormalTechImages_r2,
-	NormalTechImages_r3,
+	NormalTechImages,
 	SmallTechImagesBase,
 } from "../constants/imagesPath";
-
-const bigTechImages = BigTechImages;
-const normalTechImages_r1 = NormalTechImages_r1;
-const normalTechImages_r2 = NormalTechImages_r2;
-const normalTechImages_r3 = NormalTechImages_r3;
-const smallTechImagesBase = SmallTechImagesBase;
 ---
 
 <style type="text/css">
@@ -227,7 +219,7 @@ const smallTechImagesBase = SmallTechImagesBase;
 		</h2>
 		<div class="big-skills flex justify-center pb-2">
 			{
-				bigTechImages.map((m) => (
+				BigTechImages.map((m) => (
 					<div class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2">
 						<div class="p-6 w-36 h-36 object-contain">
 							<Image
@@ -246,7 +238,7 @@ const smallTechImagesBase = SmallTechImagesBase;
 		</div>
 		<div class="normal-skills mb-2 flex justify-center">
 			{
-				normalTechImages_r1.map((m) => (
+				NormalTechImages.slice(0, 10).map((m) => (
 					<div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
 						<div class="p-2 w-20 h-20 object-contain">
 							<Image
@@ -265,7 +257,7 @@ const smallTechImagesBase = SmallTechImagesBase;
 		</div>
 		<div class="normal-skills mb-2 flex justify-center">
 			{
-				normalTechImages_r2.map((m) => (
+				NormalTechImages.slice(10, 20).map((m) => (
 					<div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
 						<div class="p-2 w-20 h-20 object-contain">
 							<Image
@@ -284,7 +276,7 @@ const smallTechImagesBase = SmallTechImagesBase;
 		</div>
 		<div class="normal-skills mb-4 flex justify-center">
 			{
-				normalTechImages_r3.map((m) => (
+				NormalTechImages.slice(20, 30).map((m) => (
 					<div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
 						<div class="p-2 w-20 h-20 object-contain">
 							<Image
@@ -306,9 +298,9 @@ const smallTechImagesBase = SmallTechImagesBase;
 				<div class="p-3 w-20 h-20 object-contain">
 					<img
 						id="dynamic-image"
-						src={smallTechImagesBase[0].src}
-						alt={smallTechImagesBase[0].alt}
-						title={smallTechImagesBase[0].title}
+						src={SmallTechImagesBase[0].src}
+						alt={SmallTechImagesBase[0].alt}
+						title={SmallTechImagesBase[0].title}
 					/>
 					<!-- <img
 						id="dynamic-image"
@@ -776,9 +768,13 @@ const smallTechImagesBase = SmallTechImagesBase;
 </footer>
 
 <script type="module" is:inline>
-	const smallTechImages = JSON.parse(
-		`\${JSON.stringify(${JSON.stringify(smallTechImagesBase)})}`,
-	);
+	// import('../constants/imagesPath').then((module) => {
+	// 	console.log(module);
+	// });
+
+	const response = await fetch("../constants/imagesPath.ts");
+	const smallTechImages = await response.json();
+	console.log(smallTechImages);
 
 	function cambiarImagen() {
 		debugger;

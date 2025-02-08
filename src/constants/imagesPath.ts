@@ -33,7 +33,7 @@ export const BigTechImages: ImageModel[] = [
     },
 ];
 
-export const NormalTechImages_r1: ImageModel[] = [
+export const NormalTechImages: ImageModel[] = [
     {
         src: "/src/assets/technologies/normal/.NET-core.png",
         alt: ".NET Core",
@@ -84,9 +84,6 @@ export const NormalTechImages_r1: ImageModel[] = [
         alt: "Spring",
         title: "Spring",
     },
-];
-
-export const NormalTechImages_r2: ImageModel[] = [
     {
         src: "/src/assets/technologies/normal/MySQL.png",
         alt: "MySQL",
@@ -137,9 +134,6 @@ export const NormalTechImages_r2: ImageModel[] = [
         alt: "Visual Studio",
         title: "Visual Studio",
     },
-];
-
-export const NormalTechImages_r3: ImageModel[] = [
     {
         src: "/src/assets/technologies/normal/Vite.js.png",
         alt: "Vite.js",
