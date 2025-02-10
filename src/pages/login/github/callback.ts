@@ -2,6 +2,7 @@ import { github, lucia } from "../../../lib/auth";
 import { OAuth2RequestError } from "arctic";
 import { db } from "../../../lib/db";
 import { generateId } from "lucia";
+import { allowedUsers } from "../../../lib/allowedUsers";
 
 import type { APIContext } from "astro";
 import type { DatabaseUser } from "../../../lib/db";
@@ -25,8 +26,15 @@ export async function GET(context: APIContext): Promise<Response> {
                 Authorization: `Bearer ${token.access_token}`
             }
         });
-        
+
         const githubUser: GitHubUser = await githubUserResponse.json();
+
+        if (!allowedUsers.includes(githubUser.login)) {
+            return new Response("Acceso denegado", {
+                status: 403
+            });
+        }
+
         const existingUser = db.prepare("SELECT * FROM user WHERE github_id = ?").get(githubUser.id) as
             | DatabaseUser
             | undefined;
@@ -35,7 +43,7 @@ export async function GET(context: APIContext): Promise<Response> {
             const session = await lucia.createSession(existingUser.id, {});
             const sessionCookie = lucia.createSessionCookie(session.id);
             context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-            return context.redirect("/");
+            return context.redirect("/admin");
         }
 
         const userId = generateId(15);
@@ -47,7 +55,7 @@ export async function GET(context: APIContext): Promise<Response> {
         const session = await lucia.createSession(userId, {});
         const sessionCookie = lucia.createSessionCookie(session.id);
         context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-        return context.redirect("/");
+        return context.redirect("/admin");
     } catch (e) {
         if (e instanceof OAuth2RequestError) {
             if (e.message === "bad_verification_code") {

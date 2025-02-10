@@ -1,6 +1,6 @@
 ---
-if (Astro.locals.user) {
-	return Astro.redirect("/admin");
+if (!Astro.locals.user) {
+	return Astro.redirect("/login");
 }
 ---
 
@@ -12,7 +12,6 @@ if (Astro.locals.user) {
 		<title>Lucia example</title>
 	</head>
 	<body>
-		<h1>Sign in</h1>
-		<a href="/login/github">Sign in with GitHub</a>
+		<h1>List Auth</h1>
 	</body>
 </html>
