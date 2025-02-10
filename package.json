@@ -6,8 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "cloudflare": "npx wrangler pages deploy dist"
+    "astro": "astro"
   },
   "dependencies": {
     "@astrojs/node": "^9.0.2",
@@ -16,11 +15,12 @@
     "arctic": "^3.2.4",
     "astro": "^5.2.5",
     "better-sqlite3": "^11.8.1",
-    "lucia": "^3.2.2",
-    "tailwindcss": "^4.0.4"
+    "lucia": "^3.2.2"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.12",
-    "wrangler": "^3.107.3"
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^4.0.5"
   }
 }

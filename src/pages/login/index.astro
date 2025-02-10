@@ -12,28 +12,24 @@ if (Astro.locals.user) {
 		<meta name="generator" content={Astro.generator} />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Login Page</title>
+		<script type="module" is:inline>
+			(() => {
+				const savedTheme = localStorage.getItem("theme");
+				const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+				const theme = savedTheme || (prefersDark ? 'dark' : 'light'); // Obtener tema o 'light' por defecto
+	
+				if (theme === 'dark') {
+					document.documentElement.classList.add('dark');
+				}
+			})();
+		</script>
 	</head>
-	<script>
-		(function () {
-			const isDarkMode =
-				localStorage.getItem("theme") === "dark" ||
-				(!("theme" in localStorage) &&
-					window.matchMedia("(prefers-color-scheme: dark)").matches);
-
-			document.documentElement.classList.toggle("dark", isDarkMode);
-		})();
-
-		function toggleTheme() {
-			const isDark = document.documentElement.classList.toggle("dark");
-			localStorage.setItem("theme", isDark ? "dark" : "light");
-		}
-	</script>
 	<body
 		class="bg-gray-50 dark:bg-gray-900 flex items-center justify-center min-h-screen relative transition-colors duration-300"
 	>
 		<!-- Botón de tema mejorado -->
 		<button
-			onclick="toggleTheme()"
+			id="changeTheme"
 			aria-label="Toggle dark mode"
 			class="fixed top-4 right-4 p-2 rounded-full bg-white dark:bg-gray-700 shadow-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-300"
 			style="cursor: pointer;"
@@ -85,5 +81,17 @@ if (Astro.locals.user) {
 				Login with GitHub
 			</a>
 		</div>
+		<script type="module" is:inline>
+			document
+				.getElementById("changeTheme")
+				.addEventListener("click", function () {
+					const isDarkMode =
+						document.documentElement.classList.toggle("dark");
+					localStorage.setItem(
+						"theme",
+						isDarkMode ? "dark" : "light",
+					);
+				});
+		</script>
 	</body>
 </html>
