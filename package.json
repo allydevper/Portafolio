@@ -13,12 +13,14 @@
     "@astrojs/react": "^4.2.0",
     "@lucia-auth/adapter-sqlite": "^3.0.2",
     "@tailwindcss/vite": "^4.0.4",
+    "@types/react-select": "^5.0.1",
     "arctic": "^3.2.4",
     "astro": "^5.2.5",
     "better-sqlite3": "^11.8.1",
     "lucia": "^3.2.2",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-select": "^5.10.0"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.12",

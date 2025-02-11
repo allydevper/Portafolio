@@ -1,15 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { ProjectModel } from '../../models/ProjectModel';
+import Select from 'react-select';
+import { colourOptions } from '../../models/data';
 
 interface ProjectFormProps {
     handSetProjects: (project: ProjectModel) => void;
 }
 
 const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
+    const [selectedTechnologies, setSelectedTechnologies] = useState<any[]>([]);
+
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         //handSetProjects();
     };
+
+    const options = [
+        { value: 'chocolate', label: 'Chocolate' },
+        { value: 'strawberry', label: 'Strawberry' },
+        { value: 'vanilla', label: 'Vanilla' }
+    ]
+
+    const customStyles = {
+        control: (provided: any) => ({
+          ...provided,
+          padding: '4px',
+          borderRadius: '8px',
+          borderColor: 'gray',
+          boxShadow: 'none',
+          '&:hover': { borderColor: 'black' },
+        }),
+      };
 
     return (
         <div className="bg-gray-800 dark:bg-gray-800 shadow-xl rounded-lg overflow-hidden lg:col-span-1">
@@ -35,29 +56,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
                     </div>
                     <div>
                         <label htmlFor="projectTechnologies" className="block text-sm font-medium text-gray-300 dark:text-gray-300">Tecnologías</label>
-                        <select id="projectTechnologies" multiple className="mt-1 p-2 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm bg-gray-700 dark:bg-gray-700 text-white dark:text-white custom-select">
-                            {/* Opciones de tecnologías */}
-                            <option>HTML</option>
-                            <option>CSS</option>
-                            <option>JavaScript</option>
-                            <option>React</option>
-                            <option>Node.js</option>
-                            <option>Tailwind CSS</option>
-                            <option>Vue.js</option>
-                            <option>Angular</option>
-                            <option>Python</option>
-                            <option>Django</option>
-                            <option>Flask</option>
-                            <option>Ruby on Rails</option>
-                            <option>PHP</option>
-                            <option>Laravel</option>
-                            <option>SQL</option>
-                            <option>MongoDB</option>
-                            <option>Firebase</option>
-                            <option>Next.js</option>
-                            <option>Gatsby</option>
-                            <option>Svelte</option>
-                        </select>
+                        <Select options={options} className="mt-1 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 bg-gray-700 dark:bg-gray-700 text-white dark:text-white" />
                         <p className="mt-1 text-sm text-gray-400 dark:text-gray-500">Selecciona una de las tecnologías aplicables.</p>
                     </div>
                     <div className="mt-6">
