@@ -1,5 +1,5 @@
 import React from 'react';
-import type { ProjectModel } from '../models/ProjectModel';
+import type { ProjectModel } from '../../models/ProjectModel';
 
 interface ProjectFormProps {
     handSetProjects: (project: ProjectModel) => void;
@@ -12,7 +12,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
     };
 
     return (
-        <div className="bg-gray-800 dark:bg-gray-800 shadow-xl rounded-lg overflow-hidden">
+        <div className="bg-gray-800 dark:bg-gray-800 shadow-xl rounded-lg overflow-hidden lg:col-span-1">
             <div className="px-6 py-4 bg-gray-700 dark:bg-gray-700">
                 <h3 className="text-xl font-semibold text-pink-400 dark:text-pink-300">
                     Añadir Proyecto Nuevo
