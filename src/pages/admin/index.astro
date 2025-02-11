@@ -1,11 +1,33 @@
 ---
 import "../../styles/global.css";
-import ProjectForm from '../../components/ProjectForm';
-import ProjectTable from '../../components/ProjectTable';
+import ProjectForm from "../../components/ProjectForm";
+import ProjectTable from "../../components/ProjectTable";
+import { useState } from "react";
 
 if (!Astro.locals.user) {
 	return Astro.redirect("/login");
 }
+
+const [projects, setProjects] = useState([
+	{
+		name: "Proyecto Alfa",
+		url: "https://alpha.ejemplo.com",
+		technologies: "JavaScript, React, Node.js",
+		description: "Breve descripción del proyecto alfa.",
+		creationDate: "2023-08-01",
+	},
+	{
+		name: "Proyecto Beta",
+		url: "https://beta.ejemplo.com",
+		technologies: "Python, Django, SQL",
+		description: "Otro proyecto, esta vez construido con Python.",
+		creationDate: "2023-08-15",
+	},
+]);
+
+const handSetProjects = () => {
+	setProjects([...projects]);
+};
 ---
 
 <html lang="en">
@@ -33,8 +55,8 @@ if (!Astro.locals.user) {
 				</p>
 			</div>
 			<div class="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-3">
-				<ProjectForm />
-				<ProjectTable />
+				<ProjectForm handSetProjects={handSetProjects} />
+				<ProjectTable projects={projects} />
 			</div>
 		</div>
 	</body>

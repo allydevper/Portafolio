@@ -1,6 +1,18 @@
 import React from 'react';
 
-const ProjectTable: React.FC = () => {
+interface Project {
+    name: string;
+    url: string;
+    technologies: string;
+    description: string;
+    creationDate: string;
+}
+
+interface ProjectTableProps {
+    projects: Project[];
+}
+
+const ProjectTable: React.FC<ProjectTableProps> = ({ projects }) => {
     return (
         <div className="bg-gray-800 dark:bg-gray-800 shadow-xl rounded-lg overflow-hidden lg:col-span-2">
             <div className="px-6 py-4 bg-gray-700 dark:bg-gray-700">
@@ -24,15 +36,15 @@ const ProjectTable: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* Aquí se pueden agregar filas dinámicamente */}
-                        <tr className="hover:bg-gray-700 dark:hover:bg-gray-700 border-b border-gray-600 dark:border-gray-700">
-                            <td className="py-4 px-4 font-medium text-white dark:text-white">Proyecto Alfa <span className="text-sm text-pink-400 dark:text-pink-300">(Personal)</span></td>
-                            <td className="py-4 px-4"><a href="#" className="text-pink-400 dark:text-pink-300 hover:underline">https://alpha.ejemplo.com</a></td>
-                            <td className="py-4 px-4 text-gray-400 dark:text-gray-400">JavaScript, React, Node.js</td>
-                            <td className="py-4 px-4 text-gray-400 dark:text-gray-400">Breve descripción del proyecto alfa.</td>
-                            <td className="py-4 px-4 text-gray-400 dark:text-gray-400">2023-08-01</td>
-                        </tr>
-                        {/* Más filas pueden ser añadidas aquí */}
+                        {projects.map((project, index) => (
+                            <tr key={index} className="hover:bg-gray-700 dark:hover:bg-gray-700 border-b border-gray-600 dark:border-gray-700">
+                                <td className="py-4 px-4 font-medium text-white dark:text-white">{project.name}</td>
+                                <td className="py-4 px-4"><a href={project.url} className="text-pink-400 dark:text-pink-300 hover:underline">{project.url}</a></td>
+                                <td className="py-4 px-4 text-gray-400 dark:text-gray-400">{project.technologies}</td>
+                                <td className="py-4 px-4 text-gray-400 dark:text-gray-400">{project.description}</td>
+                                <td className="py-4 px-4 text-gray-400 dark:text-gray-400">{project.creationDate}</td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

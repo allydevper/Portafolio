@@ -1,6 +1,16 @@
 import React from 'react';
+import type { ProjectModel } from '../models/ProjectModel';
 
-const ProjectForm: React.FC = () => {
+interface ProjectFormProps {
+    handSetProjects: (project: ProjectModel) => void;
+}
+
+const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
+    const handleSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+        //handSetProjects();
+    };
+
     return (
         <div className="bg-gray-800 dark:bg-gray-800 shadow-xl rounded-lg overflow-hidden">
             <div className="px-6 py-4 bg-gray-700 dark:bg-gray-700">
@@ -9,7 +19,7 @@ const ProjectForm: React.FC = () => {
                 </h3>
             </div>
             <div className="px-6 py-6">
-                <form id="projectForm" className="space-y-5">
+                <form id="projectForm" className="space-y-5" onSubmit={handleSubmit}>
                     {/* Campos del formulario */}
                     <div>
                         <label htmlFor="projectName" className="block text-sm font-medium text-gray-300 dark:text-gray-300">Nombre del Proyecto</label>
