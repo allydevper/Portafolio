@@ -10,8 +10,20 @@ if (Astro.locals.user) {
 	<head>
 		<meta charset="utf-8" />
 		<meta name="generator" content={Astro.generator} />
+		<link rel="icon" type="image/svg+xml" href="/images/icon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Login Page</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Fredoka:wght@300..700&family=Signika:wght@300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+			rel="stylesheet"
+		/>
+		<style type="text/css">
+			body {
+				font-family: "Comfortaa", serif;
+			}
+		</style>
 		<script type="module" is:inline>
 			(() => {
 				const savedTheme = localStorage.getItem("theme");
