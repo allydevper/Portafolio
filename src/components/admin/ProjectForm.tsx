@@ -21,17 +21,6 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
         { value: 'vanilla', label: 'Vanilla' }
     ]
 
-    const customStyles = {
-        control: (provided: any) => ({
-          ...provided,
-          padding: '4px',
-          borderRadius: '8px',
-          borderColor: 'gray',
-          boxShadow: 'none',
-          '&:hover': { borderColor: 'black' },
-        }),
-      };
-
     return (
         <div className="bg-gray-800 dark:bg-gray-800 shadow-xl rounded-lg overflow-hidden lg:col-span-1">
             <div className="px-6 py-4 bg-gray-700 dark:bg-gray-700">
@@ -56,7 +45,19 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
                     </div>
                     <div>
                         <label htmlFor="projectTechnologies" className="block text-sm font-medium text-gray-300 dark:text-gray-300">Tecnologías</label>
-                        <Select options={options} className="mt-1 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 bg-gray-700 dark:bg-gray-700 text-white dark:text-white" />
+
+                        <Select
+                            id="projectCategory"
+                            options={options}
+                            instanceId="projectCategory"
+                            classNamePrefix="react-select"
+                            styles={{
+                                control: () => ({}),
+                                menu: () => ({}),
+                                option: () => ({}),
+                                input: () => ({})
+                            }}
+                        />
                         <p className="mt-1 text-sm text-gray-400 dark:text-gray-500">Selecciona una de las tecnologías aplicables.</p>
                     </div>
                     <div className="mt-6">

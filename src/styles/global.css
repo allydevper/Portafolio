@@ -1,2 +1,30 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+
+.react-select__control {
+    @apply mt-1 flex rounded-md border-gray-600 bg-gray-700 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 dark:bg-gray-700 text-white dark:text-white;
+}
+
+.react-select__menu {
+    @apply bg-gray-700 dark:bg-gray-700 text-white dark:text-white rounded-md shadow-lg mt-1;
+}
+
+.react-select__option {
+    @apply cursor-pointer hover:bg-gray-600 px-2 p-1;
+}
+
+.react-select__option--is-selected {
+    @apply bg-pink-500 text-white;
+}
+
+.react-select__option--is-focused {
+    @apply bg-gray-600;
+}
+
+.react-select__single-value {
+    @apply !text-white dark:text-white;
+}
+
+.react-select__value-container{
+    @apply !flex
+}
