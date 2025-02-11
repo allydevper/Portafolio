@@ -28,3 +28,7 @@
 .react-select__value-container{
     @apply !flex
 }
+
+.react-select__menu {
+  @apply !bg-gray-700 dark:bg-gray-700 text-white dark:text-white rounded-md shadow-lg mt-1 z-50;
+}

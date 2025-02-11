@@ -51,11 +51,13 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
                             options={options}
                             instanceId="projectCategory"
                             classNamePrefix="react-select"
+                            closeMenuOnSelect={false}
+                            placeholder="Seleccionar"
                             styles={{
                                 control: () => ({}),
-                                menu: () => ({}),
                                 option: () => ({}),
-                                input: () => ({})
+                                input: () => ({}),
+                                menu: (base) => ({ ...base, zIndex: 9999 }),
                             }}
                         />
                         <p className="mt-1 text-sm text-gray-400 dark:text-gray-500">Selecciona una de las tecnologías aplicables.</p>
