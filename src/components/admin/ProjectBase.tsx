@@ -25,9 +25,10 @@ const ProjectBase: React.FC = () => {
         setProjects([...projects]);
     };
 
-    return (<div>
-        <ProjectForm handSetProjects={handSetProjects} />
-        <ProjectTable projects={projects} />
-    </div>)
+    return (
+        <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-3">
+            <ProjectForm handSetProjects={handSetProjects} />
+            <ProjectTable projects={projects} />
+        </div>)
 };
 export default ProjectBase; 
