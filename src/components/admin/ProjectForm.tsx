@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { ProjectModel } from '../../models/ProjectModel';
-import Select from 'react-select';
+import Select, { type MultiValue } from 'react-select';
 import {
     AllTechImages,
 } from "../../constants/imagesPath";
@@ -9,15 +9,34 @@ interface ProjectFormProps {
     handSetProjects: (project: ProjectModel) => void;
 }
 
+interface Option {
+    value: string;
+    label: string;
+}
+
 const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
-    const [selectedTechnologies, setSelectedTechnologies] = useState<any[]>([]);
+    const [projectName, setProjectName] = useState<string>('');
+    const [projectUrl, setProjectUrl] = useState<string>('');
+    const [projectDescription, setProjectDescription] = useState<string>('');
+    const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>([]);
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        //handSetProjects();
+        const newProject: ProjectModel = {
+            name: projectName,
+            url: projectUrl,
+            description: projectDescription,
+            technologies: selectedTechnologies,
+        };
+        handSetProjects(newProject);
+        console.log(newProject);
     };
 
     const optionSelect = AllTechImages.map(m => { return { value: m.title, label: m.title } });
+
+    const handleChange = (values: MultiValue<Option>) => {
+        setSelectedTechnologies([...values.map(m => m.value)]);
+    };
 
     return (
         <div className="bg-gray-800 dark:bg-gray-800 shadow-xl rounded-lg lg:col-span-1">
@@ -30,15 +49,24 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
                 <form id="projectForm" className="space-y-5" onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="projectName" className="block text-sm font-medium text-gray-300 dark:text-gray-300">Nombre del Proyecto</label>
-                        <input type="text" id="projectName" required placeholder="Nombre del proyecto" className="mt-1 p-2 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm bg-gray-700 dark:bg-gray-700 text-white dark:text-white" />
+                        <input type="text" id="projectName" required placeholder="Nombre del proyecto"
+                            value={projectName}
+                            onChange={(e) => setProjectName(e.target.value)}
+                            className="mt-1 p-2 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm bg-gray-700 dark:bg-gray-700 text-white dark:text-white" />
                     </div>
                     <div>
                         <label htmlFor="projectUrl" className="block text-sm font-medium text-gray-300 dark:text-gray-300">URL del Proyecto</label>
-                        <input type="url" id="projectUrl" placeholder="https://github.com/allydevper/Portafolio" className="mt-1 p-2 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm bg-gray-700 dark:bg-gray-700 text-white dark:text-white" />
+                        <input type="url" id="projectUrl" required placeholder="https://github.com/allydevper/Portafolio"
+                            value={projectUrl}
+                            onChange={(e) => setProjectUrl(e.target.value)}
+                            className="mt-1 p-2 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm bg-gray-700 dark:bg-gray-700 text-white dark:text-white" />
                     </div>
                     <div>
                         <label htmlFor="projectDescription" className="block text-sm font-medium text-gray-300 dark:text-gray-300">Descripción</label>
-                        <textarea id="projectDescription" placeholder="Breve descripción del proyecto" rows={3} className="mt-1 p-2 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm bg-gray-700 dark:bg-gray-700 text-white dark:text-white"></textarea>
+                        <textarea id="projectDescription" required placeholder="Breve descripción del proyecto" rows={3}
+                            value={projectDescription}
+                            onChange={(e) => setProjectDescription(e.target.value)}
+                            className="mt-1 p-2 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm bg-gray-700 dark:bg-gray-700 text-white dark:text-white"></textarea>
                     </div>
                     <div>
                         <label htmlFor="projectTechnologies" className="block text-sm font-medium text-gray-300 dark:text-gray-300">Tecnologías</label>
@@ -51,6 +79,8 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
                             classNamePrefix="react-select"
                             closeMenuOnSelect={false}
                             placeholder="Seleccionar"
+                            onChange={handleChange}
+                            required
                             styles={{
                                 control: () => ({}),
                                 option: () => ({}),

@@ -3,5 +3,5 @@ export interface ProjectModel {
     url: string;
     description: string;
     technologies: string[];
-    create_date: Date;
+    create_date?: Date;
 } 
