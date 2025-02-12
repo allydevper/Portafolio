@@ -1,6 +1,6 @@
 import type { ProjectModel } from "../models/project.model";
 
-export async function getProjects() {
+export async function getProjects(): Promise<ProjectModel[]> {
 
     const response = await fetch(`${import.meta.env.PUBLIC_API_PORTAFOLIO_URL}/projects`, {
         method: 'GET'
@@ -14,7 +14,10 @@ export async function getProjects() {
     return await response.json();
 }
 
-export async function createProject(project: ProjectModel) {
+export async function createProject(project: ProjectModel): Promise<any> {
+    
+    delete project.id;
+
     const response = await fetch(`${import.meta.env.PUBLIC_API_PORTAFOLIO_URL}/projects`, {
         method: 'POST',
         headers: {
@@ -31,7 +34,7 @@ export async function createProject(project: ProjectModel) {
     return await response.json();
 }
 
-export async function updateProject(id: number, project: ProjectModel) {
+export async function updateProject(id: number, project: ProjectModel): Promise<any> {
     const response = await fetch(`${import.meta.env.PUBLIC_API_PORTAFOLIO_URL}/projects/${id}`, {
         method: 'PUT',
         headers: {
@@ -48,7 +51,7 @@ export async function updateProject(id: number, project: ProjectModel) {
     return await response.json();
 }
 
-export async function deleteProject(id: number) {
+export async function deleteProject(id: number): Promise<any> {
     const response = await fetch(`${import.meta.env.PUBLIC_API_PORTAFOLIO_URL}/projects/${id}`, {
         method: 'DELETE'
     });

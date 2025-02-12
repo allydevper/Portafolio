@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import type { ProjectModel } from '../../models/project.model';
 import Select, { type MultiValue } from 'react-select';
 import { AllTechImages } from "../../constants/imagesPath";
-import { toast } from 'sonner';
 import { showToast } from '../../lib/customToast';
+import { createProject } from '../../services/project.service';
 
 interface ProjectFormProps {
     handSetProjects: (project: ProjectModel) => void;
@@ -34,18 +34,29 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
 
     const handleChange = (values: MultiValue<Option>) => {
         setSelectedOptions([...values]);
+        setFormData({ ...formData, technologies: [...values.map(m => m.value)] });
     };
 
-    const handleSubmit = (event: React.FormEvent) => {
-        event.preventDefault();
-        handSetProjects({ ...formData, technologies: selectedOptions.map(m => m.value) });
-        setFormData({
-            name: '',
-            url: '',
-            description: '',
-            technologies: [],
-        });
-        setSelectedOptions([]);
+    const handleSubmit = async (event: React.FormEvent) => {
+        try {
+            event.preventDefault();
+
+            await createProject(formData);
+
+            handSetProjects(formData);
+
+            setFormData({
+                name: '',
+                url: '',
+                description: '',
+                technologies: [],
+            });
+            setSelectedOptions([]);
+        }
+        catch (error: Error | any) {
+            console.error('Error adding projects:', error);
+            showToast(error?.message, 'danger');
+        }
     };
 
     return (
