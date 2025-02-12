@@ -36,7 +36,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        handSetProjects({...formData, technologies: selectedOptions.map(m => m.value)});
+        handSetProjects({ ...formData, technologies: selectedOptions.map(m => m.value) });
         setFormData({
             name: '',
             url: '',
