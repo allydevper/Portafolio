@@ -7,7 +7,7 @@ interface ProjectTableProps {
 
 const ProjectTable: React.FC<ProjectTableProps> = ({ projects }) => {
     return (
-        <div className="bg-gray-800 dark:bg-gray-800 shadow-xl rounded-lg overflow-hidden lg:col-span-2">
+        <div className="bg-gray-800 dark:bg-gray-800 shadow-xl rounded-lg lg:col-span-2">
             <div className="px-6 py-4 bg-gray-700 dark:bg-gray-700">
                 <div className="flex justify-between items-center">
                     <h3 className="text-xl font-semibold text-pink-400 dark:text-pink-300">Proyectos Existentes</h3>
@@ -17,7 +17,7 @@ const ProjectTable: React.FC<ProjectTableProps> = ({ projects }) => {
                     </div>
                 </div>
             </div>
-            <div className="px-6 py-6 overflow-x-auto">
+            <div className="px-6 py-6 overflow-x-auto h-120">
                 <table id="projectTable" className="min-w-full table-auto">
                     <thead className="bg-gray-600 dark:bg-gray-700 border-b border-gray-600 dark:border-gray-700">
                         <tr className="text-gray-300 dark:text-gray-300">
