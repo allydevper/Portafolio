@@ -17,7 +17,7 @@ if (Astro.locals.user) {
 			(() => {
 				const savedTheme = localStorage.getItem("theme");
 				const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-				const theme = savedTheme || (prefersDark ? 'dark' : 'light'); // Obtener tema o 'light' por defecto
+				const theme = savedTheme || (prefersDark ? 'dark' : 'light');
 	
 				if (theme === 'dark') {
 					document.documentElement.classList.add('dark');
@@ -28,7 +28,6 @@ if (Astro.locals.user) {
 	<body
 		class="bg-gray-50 dark:bg-gray-900 flex items-center justify-center min-h-screen relative transition-colors duration-300"
 	>
-		<!-- Botón de tema mejorado -->
 		<button
 			id="changeTheme"
 			aria-label="Toggle dark mode"
@@ -50,11 +49,9 @@ if (Astro.locals.user) {
 			</svg>
 		</button>
 
-		<!-- Contenedor principal mejorado -->
 		<div
 			class="bg-white dark:bg-gray-800 shadow-xl rounded-xl p-8 w-full max-w-sm space-y-6 relative overflow-hidden"
 		>
-			<!-- Efecto de acento decorativo -->
 			<div
 				class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-purple-500"
 			>

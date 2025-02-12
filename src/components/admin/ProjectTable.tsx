@@ -3,9 +3,14 @@ import type { ProjectModel } from '../../models/project.model';
 
 interface ProjectTableProps {
     projects: ProjectModel[];
+    loading: boolean;
 }
 
-const ProjectTable: React.FC<ProjectTableProps> = ({ projects }) => {
+const ProjectTable: React.FC<ProjectTableProps> = ({ projects, loading }) => {
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <div className="bg-gray-800 dark:bg-gray-800 shadow-xl rounded-lg lg:col-span-2">
             <div className="px-6 py-4 bg-gray-700 dark:bg-gray-700">
@@ -43,4 +48,4 @@ const ProjectTable: React.FC<ProjectTableProps> = ({ projects }) => {
     );
 };
 
-export default ProjectTable; 
+export default ProjectTable;
