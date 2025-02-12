@@ -1,4 +1,4 @@
-import type { ImageModel } from "../models/ImageModel";
+import type { ImageModel } from "../models/image.model";
 
 export const BigTechImages: ImageModel[] = [
     {

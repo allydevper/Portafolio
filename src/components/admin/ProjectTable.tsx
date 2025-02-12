@@ -1,5 +1,5 @@
 import React from 'react';
-import type { ProjectModel } from '../../models/ProjectModel';
+import type { ProjectModel } from '../../models/project.model';
 
 interface ProjectTableProps {
     projects: ProjectModel[];

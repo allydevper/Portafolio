@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { ProjectModel } from '../../models/ProjectModel';
+import type { ProjectModel } from '../../models/project.model';
 import Select, { type MultiValue } from 'react-select';
 import { AllTechImages } from "../../constants/imagesPath";
 

@@ -1,6 +1,6 @@
 import ProjectForm from "./ProjectForm";
 import ProjectTable from "./ProjectTable";
-import type { ProjectModel } from '../../models/ProjectModel';
+import type { ProjectModel } from '../../models/project.model';
 import React, { useState } from 'react';
 
 const ProjectBase: React.FC = () => {
