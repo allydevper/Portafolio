@@ -4,6 +4,7 @@ import type { ProjectModel } from '../../models/project.model';
 import React, { useState, useEffect } from 'react';
 import { getProjects } from '../../services/project.service';
 import { Toaster } from "sonner";
+import { showToast } from "../../lib/customToast";
 
 const ProjectBase: React.FC = () => {
 
@@ -14,8 +15,9 @@ const ProjectBase: React.FC = () => {
             try {
                 const projects = await getProjects();
                 setProjects(projects);
-            } catch (error) {
+            } catch (error: Error | any) {
                 console.error('Error fetching projects:', error);
+                showToast(error?.message, 'danger');
             }
         }
 
