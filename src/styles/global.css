@@ -40,3 +40,18 @@
 .react-select__placeholder {
     @apply absolute;
 }
+.react-select__indicators {
+    @apply flex items-center;
+}
+
+.react-select__indicator {
+    @apply flex items-center justify-center w-8 h-8 text-gray-400 hover:text-white;
+}
+
+.react-select__clear-indicator {
+    @apply cursor-pointer;
+}
+
+.react-select__dropdown-indicator {
+    @apply cursor-pointer;
+}
