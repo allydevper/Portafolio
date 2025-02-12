@@ -13,6 +13,9 @@ interface Option {
 }
 
 const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
+
+    const optionSelect = AllTechImages.map(m => ({ value: m.title, label: m.title }));
+
     const [formData, setFormData] = useState<{
         name: string;
         url: string;
@@ -25,21 +28,22 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
         technologies: [],
     });
 
+    const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
+
+    const handleChange = (values: MultiValue<Option>) => {
+        setSelectedOptions([...values]);
+    };
+
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        handSetProjects(formData);
+        handSetProjects({...formData, technologies: selectedOptions.map(m => m.value)});
         setFormData({
             name: '',
             url: '',
             description: '',
             technologies: [],
         });
-    };
-
-    const optionSelect = AllTechImages.map(m => ({ value: m.title, label: m.title }));
-
-    const handleChange = (values: MultiValue<Option>) => {
-        setFormData(prev => ({ ...prev, technologies: values.map(m => m.value) }));
+        setSelectedOptions([]);
     };
 
     return (
@@ -83,6 +87,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
                             closeMenuOnSelect={false}
                             placeholder="Seleccionar"
                             onChange={handleChange}
+                            value={selectedOptions}
                             required
                             styles={{
                                 control: () => ({}),

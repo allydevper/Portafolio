@@ -25,7 +25,6 @@ const ProjectTable: React.FC<ProjectTableProps> = ({ projects }) => {
                             <th className="py-3 px-4 font-semibold text-left">URL</th>
                             <th className="py-3 px-4 font-semibold text-left">TECNOLOGÍAS</th>
                             <th className="py-3 px-4 font-semibold text-left">DESCRIPCIÓN</th>
-                            <th className="py-3 px-4 font-semibold text-left">FECHA CREACIÓN</th>
                         </tr>
                     </thead>
                     <tbody>
