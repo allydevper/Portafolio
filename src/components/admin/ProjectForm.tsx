@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import type { ProjectModel } from '../../models/ProjectModel';
 import Select from 'react-select';
-import { colourOptions } from '../../models/data';
+import {
+    AllTechImages,
+} from "../../constants/imagesPath";
 
 interface ProjectFormProps {
     handSetProjects: (project: ProjectModel) => void;
@@ -15,11 +17,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
         //handSetProjects();
     };
 
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' }
-    ]
+    const optionSelect = AllTechImages.map(m => { return { value: m.title, label: m.title } });
 
     return (
         <div className="bg-gray-800 dark:bg-gray-800 shadow-xl rounded-lg overflow-hidden lg:col-span-1">
@@ -30,7 +28,6 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
             </div>
             <div className="px-6 py-6">
                 <form id="projectForm" className="space-y-5" onSubmit={handleSubmit}>
-                    {/* Campos del formulario */}
                     <div>
                         <label htmlFor="projectName" className="block text-sm font-medium text-gray-300 dark:text-gray-300">Nombre del Proyecto</label>
                         <input type="text" id="projectName" required placeholder="Nombre del proyecto" className="mt-1 p-2 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm bg-gray-700 dark:bg-gray-700 text-white dark:text-white" />
@@ -48,13 +45,12 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
 
                         <Select
                             isMulti
-                            id="projectTechnologies"
-                            options={options}
+                            inputId="projectTechnologies"
                             instanceId="projectTechnologies"
+                            options={optionSelect}
                             classNamePrefix="react-select"
                             closeMenuOnSelect={false}
                             placeholder="Seleccionar"
-                            aria-controls="projectTechnologies-menu"
                             styles={{
                                 control: () => ({}),
                                 option: () => ({}),

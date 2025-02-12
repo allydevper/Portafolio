@@ -3,8 +3,8 @@ import type { ImageModel } from "../models/ImageModel";
 export const BigTechImages: ImageModel[] = [
     {
         src: "/images/technologies/big/C-(CSharp).png",
-        alt: "C Sharp",
-        title: "C Sharp",
+        alt: "C#",
+        title: "C#",
     },
     {
         src: "/images/technologies/big/Java.png",
@@ -323,3 +323,5 @@ export const SmallTechImages: ImageModel[] = [
         title: "Ubuntu",
     },
 ];
+
+export const AllTechImages: ImageModel[] = [...BigTechImages, ...NormalTechImages, ...SmallTechImages];
