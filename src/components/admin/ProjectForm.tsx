@@ -20,7 +20,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
     const optionSelect = AllTechImages.map(m => { return { value: m.title, label: m.title } });
 
     return (
-        <div className="bg-gray-800 dark:bg-gray-800 shadow-xl rounded-lg overflow-hidden lg:col-span-1">
+        <div className="bg-gray-800 dark:bg-gray-800 shadow-xl rounded-lg lg:col-span-1">
             <div className="px-6 py-4 bg-gray-700 dark:bg-gray-700">
                 <h3 className="text-xl font-semibold text-pink-400 dark:text-pink-300">
                     Añadir Proyecto Nuevo
@@ -55,14 +55,6 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
                                 control: () => ({}),
                                 option: () => ({}),
                                 input: () => ({}),
-                                menu: (provided: any) => ({
-                                    ...provided,
-                                    position: 'relative',
-                                }),
-                                menuList: (provided: any) => ({
-                                    ...provided,
-                                    position: 'fixed',
-                                }),
                             }}
                         />
                         <p className="mt-1 text-sm text-gray-400 dark:text-gray-500">Selecciona una de las tecnologías aplicables.</p>
