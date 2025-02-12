@@ -6,7 +6,8 @@ export async function getProjects() {
     });
 
     if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const text = await response.text();
+        throw new Error(`HTTP error! status: ${response.status} ${text}`);
     }
 
     return await response.json();
@@ -22,7 +23,8 @@ export async function createProject(project: ProjectModel) {
     });
 
     if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const text = await response.text();
+        throw new Error(`HTTP error! status: ${response.status} ${text}`);
     }
 
     return await response.json();
@@ -38,7 +40,8 @@ export async function updateProject(id: number, project: ProjectModel) {
     });
 
     if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const text = await response.text();
+        throw new Error(`HTTP error! status: ${response.status} ${text}`);
     }
 
     return await response.json();
@@ -50,7 +53,8 @@ export async function deleteProject(id: number) {
     });
 
     if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const text = await response.text();
+        throw new Error(`HTTP error! status: ${response.status} ${text}`);
     }
 
     return await response.json();

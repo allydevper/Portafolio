@@ -3,6 +3,7 @@ import ProjectTable from "./ProjectTable";
 import type { ProjectModel } from '../../models/project.model';
 import React, { useState, useEffect } from 'react';
 import { getProjects } from '../../services/project.service';
+import { Toaster } from "sonner";
 
 const ProjectBase: React.FC = () => {
 
@@ -25,10 +26,12 @@ const ProjectBase: React.FC = () => {
         setProjects([project, ...projects]);
     };
 
-    return (
+    return (<span>
+        <Toaster />
         <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-3">
             <ProjectForm handSetProjects={handSetProjects} />
             <ProjectTable projects={projects} />
-        </div>)
+        </div>
+    </span>)
 };
 export default ProjectBase;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import type { ProjectModel } from '../../models/project.model';
 import Select, { type MultiValue } from 'react-select';
 import { AllTechImages } from "../../constants/imagesPath";
+import { toast } from 'sonner';
 
 interface ProjectFormProps {
     handSetProjects: (project: ProjectModel) => void;
@@ -102,6 +103,9 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
                             <span className="relative px-5 py-2.5 transition-all ease-in duration-75 rounded-md group-hover:bg-opacity-0 text-white">
                                 Crear Proyecto
                             </span>
+                        </button>
+                        <button type="button" onClick={() => toast('My first toast')} className="cursor-pointer relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-purple-800 w-full">
+                            test
                         </button>
                     </div>
                 </form>
