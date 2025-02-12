@@ -47,12 +47,14 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
                         <label htmlFor="projectTechnologies" className="block text-sm font-medium text-gray-300 dark:text-gray-300">Tecnologías</label>
 
                         <Select
-                            id="projectCategory"
+                            isMulti
+                            id="projectTechnologies"
                             options={options}
-                            instanceId="projectCategory"
+                            instanceId="projectTechnologies"
                             classNamePrefix="react-select"
                             closeMenuOnSelect={false}
                             placeholder="Seleccionar"
+                            aria-controls="projectTechnologies-menu"
                             styles={{
                                 control: () => ({}),
                                 option: () => ({}),
@@ -63,7 +65,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
                         <p className="mt-1 text-sm text-gray-400 dark:text-gray-500">Selecciona una de las tecnologías aplicables.</p>
                     </div>
                     <div className="mt-6">
-                        <button type="submit"  style={{ cursor: 'pointer' }} className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-purple-800 w-full">
+                        <button type="submit" style={{ cursor: 'pointer' }} className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-purple-800 w-full">
                             <span className="relative px-5 py-2.5 transition-all ease-in duration-75 rounded-md group-hover:bg-opacity-0 text-white">
                                 Crear Proyecto
                             </span>

@@ -21,10 +21,22 @@
     @apply !text-white dark:text-white;
 }
 
-.react-select__value-container{
-    @apply !flex
+.react-select__value-container {
+    @apply !flex flex-wrap; /* Permitir que los valores se envuelvan */
+}
+
+.react-select__multi-value {
+    @apply bg-white dark:bg-gray-800 text-gray-800 dark:text-white rounded-md flex items-center; /* Estilo para los valores múltiples */
+}
+
+.react-select__multi-value__remove {
+    @apply cursor-pointer p-1 m-px; /* Estilo para el botón de eliminar */
 }
 
 .react-select__menu {
-  @apply !bg-gray-700 dark:bg-gray-700 text-white dark:text-white rounded-md shadow-lg mt-1 z-50;
+    @apply !bg-gray-700 dark:bg-gray-700 text-white dark:text-white rounded-md shadow-lg mt-1 z-50;
+}
+
+.react-select__placeholder {
+    @apply absolute;
 }
