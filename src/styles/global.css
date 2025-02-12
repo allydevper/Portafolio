@@ -2,11 +2,15 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 .react-select__control {
-    @apply mt-1 p-0.5 sm:text-sm dark:bg-gray-700 text-white dark:text-white flex rounded-md border-gray-600 bg-gray-700 dark:border-gray-600 shadow-sm dark:bg-gray-700 text-white dark:text-white;
+    @apply mt-1 p-0.5 sm:text-sm dark:bg-gray-700 text-white dark:text-white flex rounded-md border-gray-600 bg-gray-700 dark:border-gray-600 shadow-sm dark:bg-gray-700 text-white dark:text-white !placeholder-white;
 }
 
 .react-select__menu {
     @apply bg-gray-700 dark:bg-gray-700 text-white dark:text-white rounded-md shadow-lg mt-1;
+}
+
+.react-select__input{
+    @apply p-1 !placeholder-white;
 }
 
 .react-select__option {
