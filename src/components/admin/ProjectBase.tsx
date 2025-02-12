@@ -7,8 +7,8 @@ const ProjectBase: React.FC = () => {
 
     const [projects, setProjects] = useState<ProjectModel[]>([]);
 
-    const handSetProjects = () => {
-        setProjects([...projects]);
+    const handSetProjects = (project: ProjectModel) => {
+        setProjects([project, ...projects]);
     };
 
     return (

@@ -13,27 +13,33 @@ interface Option {
 }
 
 const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
-    const [projectName, setProjectName] = useState<string>('');
-    const [projectUrl, setProjectUrl] = useState<string>('');
-    const [projectDescription, setProjectDescription] = useState<string>('');
-    const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>([]);
+    const [formData, setFormData] = useState<{
+        name: string;
+        url: string;
+        description: string;
+        technologies: string[];
+    }>({
+        name: '',
+        url: '',
+        description: '',
+        technologies: [],
+    });
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        const newProject: ProjectModel = {
-            name: projectName,
-            url: projectUrl,
-            description: projectDescription,
-            technologies: selectedTechnologies,
-        };
-        handSetProjects(newProject);
-        console.log(newProject);
+        handSetProjects(formData);
+        setFormData({
+            name: '',
+            url: '',
+            description: '',
+            technologies: [],
+        });
     };
 
     const optionSelect = AllTechImages.map(m => ({ value: m.title, label: m.title }));
 
     const handleChange = (values: MultiValue<Option>) => {
-        setSelectedTechnologies(values.map(m => m.value));
+        setFormData(prev => ({ ...prev, technologies: values.map(m => m.value) }));
     };
 
     return (
@@ -48,22 +54,22 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
                     <div>
                         <label htmlFor="projectName" className="block text-sm font-medium text-gray-300 dark:text-gray-300">Nombre del Proyecto</label>
                         <input type="text" id="projectName" required placeholder="Nombre del proyecto"
-                            value={projectName}
-                            onChange={(e) => setProjectName(e.target.value)}
+                            value={formData.name}
+                            onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                             className="mt-1 p-2 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm bg-gray-700 dark:bg-gray-700 text-white dark:text-white" />
                     </div>
                     <div>
                         <label htmlFor="projectUrl" className="block text-sm font-medium text-gray-300 dark:text-gray-300">URL del Proyecto</label>
                         <input type="url" id="projectUrl" required placeholder="https://github.com/allydevper/Portafolio"
-                            value={projectUrl}
-                            onChange={(e) => setProjectUrl(e.target.value)}
+                            value={formData.url}
+                            onChange={(e) => setFormData(prev => ({ ...prev, url: e.target.value }))}
                             className="mt-1 p-2 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm bg-gray-700 dark:bg-gray-700 text-white dark:text-white" />
                     </div>
                     <div>
                         <label htmlFor="projectDescription" className="block text-sm font-medium text-gray-300 dark:text-gray-300">Descripción</label>
                         <textarea id="projectDescription" required placeholder="Breve descripción del proyecto" rows={3}
-                            value={projectDescription}
-                            onChange={(e) => setProjectDescription(e.target.value)}
+                            value={formData.description}
+                            onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
                             className="mt-1 p-2 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm bg-gray-700 dark:bg-gray-700 text-white dark:text-white"></textarea>
                     </div>
                     <div>
