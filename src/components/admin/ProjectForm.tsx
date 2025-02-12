@@ -55,7 +55,6 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
                                 control: () => ({}),
                                 option: () => ({}),
                                 input: () => ({}),
-                                menu: (base) => ({ ...base, zIndex: 9999 }),
                             }}
                         />
                         <p className="mt-1 text-sm text-gray-400 dark:text-gray-500">Selecciona una de las tecnologías aplicables.</p>
