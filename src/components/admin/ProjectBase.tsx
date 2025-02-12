@@ -1,10 +1,11 @@
 import ProjectForm from "./ProjectForm";
 import ProjectTable from "./ProjectTable";
+import type { ProjectModel } from '../../models/ProjectModel';
 import React, { useState } from 'react';
 
 const ProjectBase: React.FC = () => {
 
-    const [projects, setProjects] = useState([]);
+    const [projects, setProjects] = useState<ProjectModel[]>([]);
 
     const handSetProjects = () => {
         setProjects([...projects]);

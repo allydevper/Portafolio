@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import type { ProjectModel } from '../../models/ProjectModel';
 import Select, { type MultiValue } from 'react-select';
-import {
-    AllTechImages,
-} from "../../constants/imagesPath";
+import { AllTechImages } from "../../constants/imagesPath";
 
 interface ProjectFormProps {
     handSetProjects: (project: ProjectModel) => void;
@@ -32,10 +30,10 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
         console.log(newProject);
     };
 
-    const optionSelect = AllTechImages.map(m => { return { value: m.title, label: m.title } });
+    const optionSelect = AllTechImages.map(m => ({ value: m.title, label: m.title }));
 
     const handleChange = (values: MultiValue<Option>) => {
-        setSelectedTechnologies([...values.map(m => m.value)]);
+        setSelectedTechnologies(values.map(m => m.value));
     };
 
     return (
@@ -70,7 +68,6 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
                     </div>
                     <div>
                         <label htmlFor="projectTechnologies" className="block text-sm font-medium text-gray-300 dark:text-gray-300">Tecnologías</label>
-
                         <Select
                             isMulti
                             inputId="projectTechnologies"
@@ -87,10 +84,10 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
                                 input: () => ({}),
                             }}
                         />
-                        <p className="mt-1 text-sm text-gray-400 dark:text-gray-500">Selecciona una de las tecnologías aplicables.</p>
+                        <p className="mt-1 text-sm text-gray-400 dark:text-gray-500">Selecciona una o más tecnologías aplicables.</p>
                     </div>
                     <div className="mt-6">
-                        <button type="submit" style={{ cursor: 'pointer' }} className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-purple-800 w-full">
+                        <button type="submit" className="cursor-pointer relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-purple-800 w-full">
                             <span className="relative px-5 py-2.5 transition-all ease-in duration-75 rounded-md group-hover:bg-opacity-0 text-white">
                                 Crear Proyecto
                             </span>

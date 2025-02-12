@@ -1,15 +1,8 @@
 import React from 'react';
-
-interface Project {
-    name: string;
-    url: string;
-    technologies: string;
-    description: string;
-    creationDate: string;
-}
+import type { ProjectModel } from '../../models/ProjectModel';
 
 interface ProjectTableProps {
-    projects: Project[];
+    projects: ProjectModel[];
 }
 
 const ProjectTable: React.FC<ProjectTableProps> = ({ projects }) => {
@@ -40,9 +33,8 @@ const ProjectTable: React.FC<ProjectTableProps> = ({ projects }) => {
                             <tr key={index} className="hover:bg-gray-700 dark:hover:bg-gray-700 border-b border-gray-600 dark:border-gray-700">
                                 <td className="py-4 px-4 font-medium text-white dark:text-white">{project.name}</td>
                                 <td className="py-4 px-4"><a href={project.url} className="text-pink-400 dark:text-pink-300 hover:underline">{project.url}</a></td>
-                                <td className="py-4 px-4 text-gray-400 dark:text-gray-400">{project.technologies}</td>
+                                <td className="py-4 px-4 text-gray-400 dark:text-gray-400">{project.technologies.join(', ')}</td>
                                 <td className="py-4 px-4 text-gray-400 dark:text-gray-400">{project.description}</td>
-                                <td className="py-4 px-4 text-gray-400 dark:text-gray-400">{project.creationDate}</td>
                             </tr>
                         ))}
                     </tbody>
