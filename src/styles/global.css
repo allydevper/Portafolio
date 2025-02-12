@@ -34,7 +34,7 @@
 }
 
 .react-select__menu {
-    @apply !bg-gray-700 !sticky !z-50 dark:bg-gray-700 text-white dark:text-white rounded-md shadow-lg mt-1 z-50;
+    @apply !bg-gray-700 dark:bg-gray-700 text-white dark:text-white rounded-md shadow-lg mt-1 z-50;
 }
 
 .react-select__placeholder {
