@@ -1,5 +1,8 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 .react-select__control {
     @apply mt-1 p-0.5 sm:text-sm dark:bg-gray-700 text-white dark:text-white flex rounded-md border-gray-600 bg-gray-700 dark:border-gray-600 shadow-sm dark:bg-gray-700 text-white dark:text-white !placeholder-white;
