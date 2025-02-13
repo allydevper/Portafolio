@@ -18,14 +18,10 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
 
     const optionSelect = AllTechImages.map(m => ({ value: m.title, label: m.title }));
 
-    const [formData, setFormData] = useState<{
-        name: string;
-        url: string;
-        description: string;
-        technologies: string[];
-    }>({
+    const [formData, setFormData] = useState<ProjectModel>({
         name: '',
-        url: '',
+        url_project: '',
+        url_demo: '',
         description: '',
         technologies: [],
     });
@@ -47,7 +43,8 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
 
             setFormData({
                 name: '',
-                url: '',
+                url_project: '',
+                url_demo: '',
                 description: '',
                 technologies: [],
             });
@@ -78,8 +75,15 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
                     <div>
                         <label htmlFor="projectUrl" className="block text-sm font-medium text-gray-300 dark:text-gray-300">URL del Proyecto</label>
                         <input type="url" id="projectUrl" required placeholder="https://github.com/allydevper/Portafolio"
-                            value={formData.url}
-                            onChange={(e) => setFormData(prev => ({ ...prev, url: e.target.value }))}
+                            value={formData.url_project}
+                            onChange={(e) => setFormData(prev => ({ ...prev, url_project: e.target.value }))}
+                            className="mt-1 p-2 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm bg-gray-700 dark:bg-gray-700 text-white dark:text-white" />
+                    </div>
+                    <div>
+                        <label htmlFor="demoUrl" className="block text-sm font-medium text-gray-300 dark:text-gray-300">URL del Proyecto</label>
+                        <input type="url" id="demoUrl" required placeholder="https://demo.com"
+                            value={formData.url_demo}
+                            onChange={(e) => setFormData(prev => ({ ...prev, url_demo: e.target.value }))}
                             className="mt-1 p-2 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm bg-gray-700 dark:bg-gray-700 text-white dark:text-white" />
                     </div>
                     <div>
