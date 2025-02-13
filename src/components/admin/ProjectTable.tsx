@@ -2,16 +2,12 @@ import React from 'react';
 import type { ProjectModel } from '../../models/project.model';
 
 interface ProjectTableProps {
+    handleDelete: (id: number) => void;
     projects: ProjectModel[];
     loading: boolean;
 }
 
-const ProjectTable: React.FC<ProjectTableProps> = ({ projects, loading }) => {
-
-    const handleDelete = (id: number) => {
-        // Implement delete functionality here
-        console.log(`Deleting project with id: ${id}`);
-    };
+const ProjectTable: React.FC<ProjectTableProps> = ({ projects, loading, handleDelete }) => {
 
     return (
         <div className="bg-gray-800 dark:bg-gray-800 shadow-xl rounded-lg lg:col-span-2">
@@ -31,24 +27,24 @@ const ProjectTable: React.FC<ProjectTableProps> = ({ projects, loading }) => {
                         <table id="projectTable" className="min-w-full table-auto">
                             <thead className="bg-gray-600 dark:bg-gray-700 border-b border-gray-600 dark:border-gray-700">
                                 <tr className="text-gray-300 dark:text-gray-300">
+                                    <th className="py-3 px-4 font-semibold text-left"></th>
                                     <th className="py-3 px-4 font-semibold text-left">NOMBRE</th>
                                     <th className="py-3 px-4 font-semibold text-left">URL</th>
                                     <th className="py-3 px-4 font-semibold text-left">TECNOLOGÍAS</th>
                                     <th className="py-3 px-4 font-semibold text-left">DESCRIPCIÓN</th>
-                                    <th className="py-3 px-4 font-semibold text-left">ACCIONES</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {projects.length > 0 ? (
                                     projects.map((project, index) => (
                                         <tr key={index} className="hover:bg-gray-700 dark:hover:bg-gray-700 border-b border-gray-600 dark:border-gray-700">
+                                            <td className="py-4 px-4">
+                                                <button onClick={() => handleDelete(project.id ?? 0)} className="text-red-500 hover:text-red-700">Eliminar</button>
+                                            </td>
                                             <td className="py-4 px-4 font-medium text-white dark:text-white">{project.name}</td>
                                             <td className="py-4 px-4"><a href={project.url_project} className="text-pink-400 dark:text-pink-300 hover:underline">{project.url_project}</a></td>
                                             <td className="py-4 px-4 text-gray-400 dark:text-gray-400">{project.technologies.join(', ')}</td>
                                             <td className="py-4 px-4 text-gray-400 dark:text-gray-400">{project.description}</td>
-                                            <td className="py-4 px-4">
-                                                <button onClick={() => handleDelete(project.id ?? 0)} className="text-red-500 hover:text-red-700">Eliminar</button>
-                                            </td>
                                         </tr>
                                     ))
                                 ) : (

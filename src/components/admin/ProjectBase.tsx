@@ -2,7 +2,7 @@ import ProjectForm from "./ProjectForm";
 import ProjectTable from "./ProjectTable";
 import type { ProjectModel } from '../../models/project.model';
 import React, { useState, useEffect } from 'react';
-import { getProjects } from '../../services/project.service';
+import { deleteProject, getProjects } from '../../services/project.service';
 import { Toaster } from "sonner";
 import { showToast } from "../../lib/customToast";
 
@@ -31,11 +31,24 @@ const ProjectBase: React.FC = () => {
         setProjects([project, ...projects]);
     };
 
+    const handleDelete = async (id: number) => {
+        try {
+            setLoading(true);
+            await deleteProject(id);
+            setProjects(projects.filter(p => p.id !== id));
+        } catch (error: Error | any) {
+            console.error('Error fetching projects:', error);
+            showToast(error?.message, 'danger');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (<span>
         <Toaster />
         <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-3">
             <ProjectForm handSetProjects={handSetProjects} />
-            <ProjectTable projects={projects} loading={loading} />
+            <ProjectTable projects={projects} loading={loading} handleDelete={handleDelete} />
         </div>
     </span>)
 };
