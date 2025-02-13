@@ -15,7 +15,7 @@ const ProjectBase: React.FC = () => {
         async function fetchProjects() {
             try {
                 const projects = await getProjects();
-                setProjects(projects);
+                setProjects(projects.sort((a, b) => (a?.id ?? 0) - (b?.id ?? 0)));
             } catch (error: Error | any) {
                 console.error('Error fetching projects:', error);
                 showToast(error?.message, 'danger');
