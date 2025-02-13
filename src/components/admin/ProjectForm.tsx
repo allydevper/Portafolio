@@ -81,7 +81,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
                     </div>
                     <div>
                         <label htmlFor="demoUrl" className="block text-sm font-medium text-gray-300 dark:text-gray-300">URL del Proyecto</label>
-                        <input type="url" id="demoUrl" required placeholder="https://demo.com"
+                        <input type="url" id="demoUrl" placeholder="https://demo.com"
                             value={formData.url_demo}
                             onChange={(e) => setFormData(prev => ({ ...prev, url_demo: e.target.value }))}
                             className="mt-1 p-2 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm bg-gray-700 dark:bg-gray-700 text-white dark:text-white" />

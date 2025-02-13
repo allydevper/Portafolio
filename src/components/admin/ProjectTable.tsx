@@ -8,6 +8,11 @@ interface ProjectTableProps {
 
 const ProjectTable: React.FC<ProjectTableProps> = ({ projects, loading }) => {
 
+    const handleDelete = (id: number) => {
+        // Implement delete functionality here
+        console.log(`Deleting project with id: ${id}`);
+    };
+
     return (
         <div className="bg-gray-800 dark:bg-gray-800 shadow-xl rounded-lg lg:col-span-2">
             <div className="px-6 py-4 bg-gray-700 dark:bg-gray-700">
@@ -16,6 +21,7 @@ const ProjectTable: React.FC<ProjectTableProps> = ({ projects, loading }) => {
                     <div className="inline-flex gap-2">
                         <button className="hover:bg-gray-600 dark:hover:bg-gray-700 text-gray-300 dark:text-gray-300 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 px-3 py-2 transition-colors duration-200">Refrescar</button>
                         <button className="hover:bg-gray-600 dark:hover:bg-gray-700 text-gray-300 dark:text-gray-300 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 px-3 py-2 transition-colors duration-200">Ver Todos</button>
+                        <button className="hover:bg-gray-600 dark:hover:bg-gray-700 text-gray-300 dark:text-gray-300 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 px-3 py-2 transition-colors duration-200">Eliminar</button>
                     </div>
                 </div>
             </div>
@@ -29,6 +35,7 @@ const ProjectTable: React.FC<ProjectTableProps> = ({ projects, loading }) => {
                                     <th className="py-3 px-4 font-semibold text-left">URL</th>
                                     <th className="py-3 px-4 font-semibold text-left">TECNOLOGÍAS</th>
                                     <th className="py-3 px-4 font-semibold text-left">DESCRIPCIÓN</th>
+                                    <th className="py-3 px-4 font-semibold text-left">ACCIONES</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,11 +46,14 @@ const ProjectTable: React.FC<ProjectTableProps> = ({ projects, loading }) => {
                                             <td className="py-4 px-4"><a href={project.url_project} className="text-pink-400 dark:text-pink-300 hover:underline">{project.url_project}</a></td>
                                             <td className="py-4 px-4 text-gray-400 dark:text-gray-400">{project.technologies.join(', ')}</td>
                                             <td className="py-4 px-4 text-gray-400 dark:text-gray-400">{project.description}</td>
+                                            <td className="py-4 px-4">
+                                                <button onClick={() => handleDelete(project.id ?? 0)} className="text-red-500 hover:text-red-700">Eliminar</button>
+                                            </td>
                                         </tr>
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan={4} className="py-4 px-4 text-center text-gray-400 dark:text-gray-400">No projects available</td>
+                                        <td colSpan={5} className="py-4 px-4 text-center text-gray-400 dark:text-gray-400">No projects available</td>
                                     </tr>
                                 )}
                             </tbody>
