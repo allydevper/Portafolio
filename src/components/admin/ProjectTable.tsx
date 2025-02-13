@@ -15,9 +15,8 @@ const ProjectTable: React.FC<ProjectTableProps> = ({ projects, loading, handleDe
                 <div className="flex justify-between items-center">
                     <h3 className="text-xl font-semibold text-pink-400 dark:text-pink-300">Proyectos Existentes</h3>
                     <div className="inline-flex gap-2">
-                        <button className="hover:bg-gray-600 dark:hover:bg-gray-700 text-gray-300 dark:text-gray-300 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 px-3 py-2 transition-colors duration-200">Refrescar</button>
-                        <button className="hover:bg-gray-600 dark:hover:bg-gray-700 text-gray-300 dark:text-gray-300 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 px-3 py-2 transition-colors duration-200">Ver Todos</button>
-                        <button className="hover:bg-gray-600 dark:hover:bg-gray-700 text-gray-300 dark:text-gray-300 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 px-3 py-2 transition-colors duration-200">Eliminar</button>
+                        <button className="cursor-pointer hover:bg-gray-600 dark:hover:bg-gray-700 text-gray-300 dark:text-gray-300 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 px-3 py-2 transition-colors duration-200">Refrescar</button>
+                        <button className="cursor-pointer hover:bg-gray-600 dark:hover:bg-gray-700 text-gray-300 dark:text-gray-300 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 px-3 py-2 transition-colors duration-200">Ver Todos</button>
                     </div>
                 </div>
             </div>

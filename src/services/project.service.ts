@@ -1,7 +1,6 @@
 import type { ProjectModel } from "../models/project.model";
 
 export async function getProjects(): Promise<ProjectModel[]> {
-
     const response = await fetch(`${import.meta.env.PUBLIC_API_PORTAFOLIO_URL}/projects`, {
         method: 'GET'
     });
@@ -15,7 +14,6 @@ export async function getProjects(): Promise<ProjectModel[]> {
 }
 
 export async function createProject(project: ProjectModel): Promise<any> {
-    
     delete project.id;
 
     const response = await fetch(`${import.meta.env.PUBLIC_API_PORTAFOLIO_URL}/projects`, {
@@ -51,7 +49,7 @@ export async function updateProject(id: number, project: ProjectModel): Promise<
     return await response.json();
 }
 
-export async function deleteProject(id: number): Promise<any> {
+export async function deleteProject(id: number): Promise<void> {
     const response = await fetch(`${import.meta.env.PUBLIC_API_PORTAFOLIO_URL}/projects/${id}`, {
         method: 'DELETE'
     });
@@ -60,6 +58,4 @@ export async function deleteProject(id: number): Promise<any> {
         const text = await response.text();
         throw new Error(`HTTP error! status: ${response.status} ${text}`);
     }
-
-    return await response.json();
 }
