@@ -48,21 +48,13 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects, project }) =
             event.preventDefault();
 
             if (formData.id > 0) {
-                await createProject(formData);
-            } else {
                 await updateProject(formData);
+            } else {
+                await createProject(formData);
             }
             handSetProjects(formData);
 
-            setFormData({
-                id: 0,
-                name: '',
-                url_project: '',
-                url_demo: '',
-                description: '',
-                technologies: [],
-            });
-            setSelectedOptions([]);
+            handleResetForm();
         }
         catch (error: Error | any) {
             console.error('Error adding projects:', error);
@@ -70,12 +62,28 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects, project }) =
         }
     };
 
+    const handleResetForm = () => {
+        setFormData({
+            id: 0,
+            name: '',
+            url_project: '',
+            url_demo: '',
+            description: '',
+            technologies: [],
+        });
+        setSelectedOptions([]);
+    }
+
     return (
         <div className="bg-gray-800 dark:bg-gray-800 shadow-xl rounded-lg lg:col-span-1">
-            <div className="px-6 py-4 bg-gray-700 dark:bg-gray-700">
+            <div className="px-6 py-4 bg-gray-700 dark:bg-gray-700 flex justify-between items-center">
                 <h3 className="text-xl font-semibold text-pink-400 dark:text-pink-300">
-                    Añadir Proyecto Nuevo
+                    {formData.id > 0 ? 'Actualizar Proyecto' : 'Añadir Proyecto Nuevo'}
                 </h3>
+                <button type="button" className="cursor-pointer hover:bg-gray-600 dark:hover:bg-gray-700 text-gray-300 dark:text-gray-300 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 px-3 py-2 transition-colors duration-200"
+                    onClick={() => handleResetForm()}>
+                    Nuevo
+                </button>
             </div>
             <div className="px-6 py-6">
                 <form id="projectForm" className="space-y-5" onSubmit={handleSubmit}>
@@ -131,7 +139,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects, project }) =
                     <div className="mt-6">
                         <button type="submit" className="cursor-pointer relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-purple-800 w-full">
                             <span className="relative px-5 py-2.5 transition-all ease-in duration-75 rounded-md group-hover:bg-opacity-0 text-white">
-                                Crear Proyecto
+                                {formData.id > 0 ? 'Actualizar' : 'Crear'} Proyecto
                             </span>
                         </button>
                     </div>
