@@ -44,6 +44,7 @@ const ProjectBase: React.FC = () => {
             setLoading(true);
             await deleteProject(id);
             setProjects(projects.filter(p => p.id !== id));
+            setProject(undefined)
         } catch (error: Error | any) {
             console.error('Error fetching projects:', error);
             showToast(error?.message, 'danger');

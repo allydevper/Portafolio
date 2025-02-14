@@ -35,6 +35,16 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects, project }) =
         if (project && project.id !== 0) {
             setFormData(project);
             setSelectedOptions(project.technologies.map(m => ({ value: m, label: m })));
+        }else{
+            setFormData({
+                id: 0,
+                name: '',
+                url_project: '',
+                url_demo: '',
+                description: '',
+                technologies: [],
+            });
+            setSelectedOptions([]);
         }
     }, [project]);
 
