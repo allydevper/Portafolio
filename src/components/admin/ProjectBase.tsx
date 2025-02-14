@@ -8,6 +8,7 @@ import { showToast } from "../../lib/customToast";
 
 const ProjectBase: React.FC = () => {
 
+    const [project, setProject] = useState<ProjectModel>();
     const [projects, setProjects] = useState<ProjectModel[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -15,7 +16,7 @@ const ProjectBase: React.FC = () => {
         async function fetchProjects() {
             try {
                 const projects = await getProjects();
-                setProjects(projects.sort((a, b) => (b?.id ?? 0) - (a?.id ?? 0)));
+                setProjects(projects.sort((a, b) => (b.id) - (a.id)));
             } catch (error: Error | any) {
                 console.error('Error fetching projects:', error);
                 showToast(error?.message, 'danger');
@@ -44,11 +45,15 @@ const ProjectBase: React.FC = () => {
         }
     };
 
+    const handleEdit = (project: ProjectModel) => {
+        setProject(project);
+    }
+
     return (<span>
         <Toaster />
         <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-3">
-            <ProjectForm handSetProjects={handSetProjects} />
-            <ProjectTable projects={projects} loading={loading} handleDelete={handleDelete} />
+            <ProjectForm handSetProjects={handSetProjects} project={project} />
+            <ProjectTable projects={projects} loading={loading} handleDelete={handleDelete} handleEdit={handleEdit} />
         </div>
     </span>)
 };

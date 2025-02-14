@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { ProjectModel } from '../../models/project.model';
 import Select, { type MultiValue } from 'react-select';
 import { AllTechImages } from "../../constants/imagesPath";
@@ -7,6 +7,7 @@ import { createProject } from '../../services/project.service';
 
 interface ProjectFormProps {
     handSetProjects: (project: ProjectModel) => void;
+    project: ProjectModel | undefined;
 }
 
 interface Option {
@@ -14,17 +15,25 @@ interface Option {
     label: string;
 }
 
-const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
+const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects, project }) => {
 
     const optionSelect = AllTechImages.map(m => ({ value: m.title, label: m.title }));
 
     const [formData, setFormData] = useState<ProjectModel>({
+        id: 0,
         name: '',
         url_project: '',
         url_demo: '',
         description: '',
         technologies: [],
     });
+
+    useEffect(() => {
+
+        if (project && project.id !== 0) {
+            setFormData(project);
+        }
+    }, [project]);
 
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
 
@@ -42,6 +51,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
             handSetProjects(formData);
 
             setFormData({
+                id: 0,
                 name: '',
                 url_project: '',
                 url_demo: '',
@@ -127,4 +137,4 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects }) => {
     );
 };
 
-export default ProjectForm; 
+export default ProjectForm;

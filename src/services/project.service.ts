@@ -14,7 +14,6 @@ export async function getProjects(): Promise<ProjectModel[]> {
 }
 
 export async function createProject(project: ProjectModel): Promise<any> {
-    delete project.id;
 
     const response = await fetch(`${import.meta.env.PUBLIC_API_PORTAFOLIO_URL}/projects`, {
         method: 'POST',
