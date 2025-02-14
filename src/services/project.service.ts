@@ -15,12 +15,14 @@ export async function getProjects(): Promise<ProjectModel[]> {
 
 export async function createProject(project: ProjectModel): Promise<any> {
 
+    const { id, ...rest } = project;
+
     const response = await fetch(`${import.meta.env.PUBLIC_API_PORTAFOLIO_URL}/projects`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(project)
+        body: JSON.stringify(rest)
     });
 
     if (!response.ok) {
@@ -31,13 +33,16 @@ export async function createProject(project: ProjectModel): Promise<any> {
     return await response.json();
 }
 
-export async function updateProject(id: number, project: ProjectModel): Promise<any> {
+export async function updateProject(project: ProjectModel): Promise<any> {
+
+    const { id, ...rest } = project;
+
     const response = await fetch(`${import.meta.env.PUBLIC_API_PORTAFOLIO_URL}/projects/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(project)
+        body: JSON.stringify(rest)
     });
 
     if (!response.ok) {

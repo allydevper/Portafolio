@@ -3,7 +3,7 @@ import type { ProjectModel } from '../../models/project.model';
 import Select, { type MultiValue } from 'react-select';
 import { AllTechImages } from "../../constants/imagesPath";
 import { showToast } from '../../lib/customToast';
-import { createProject } from '../../services/project.service';
+import { createProject, updateProject } from '../../services/project.service';
 
 interface ProjectFormProps {
     handSetProjects: (project: ProjectModel) => void;
@@ -28,14 +28,15 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects, project }) =
         technologies: [],
     });
 
+    const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
+
     useEffect(() => {
 
         if (project && project.id !== 0) {
             setFormData(project);
+            setSelectedOptions(project.technologies.map(m => ({ value: m, label: m })));
         }
     }, [project]);
-
-    const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
 
     const handleChange = (values: MultiValue<Option>) => {
         setSelectedOptions([...values]);
@@ -46,8 +47,11 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects, project }) =
         try {
             event.preventDefault();
 
-            await createProject(formData);
-
+            if (formData.id > 0) {
+                await createProject(formData);
+            } else {
+                await updateProject(formData);
+            }
             handSetProjects(formData);
 
             setFormData({

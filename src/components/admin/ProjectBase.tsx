@@ -29,7 +29,14 @@ const ProjectBase: React.FC = () => {
     }, []);
 
     const handSetProjects = (project: ProjectModel) => {
-        setProjects([project, ...projects]);
+        if (project.id > 0) {
+            const index = projects.findIndex(p => p.id === project.id);
+            projects[index] = project;
+            setProjects([...projects]);
+            return;
+        } else {
+            setProjects([project, ...projects]);
+        }
     };
 
     const handleDelete = async (id: number) => {
