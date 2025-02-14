@@ -13,7 +13,7 @@ export async function getProjects(): Promise<ProjectModel[]> {
     return await response.json();
 }
 
-export async function createProject(project: ProjectModel): Promise<any> {
+export async function createProject(project: ProjectModel): Promise<ProjectModel> {
 
     const { id, ...rest } = project;
 
@@ -29,7 +29,6 @@ export async function createProject(project: ProjectModel): Promise<any> {
         const text = await response.text();
         throw new Error(`HTTP error! status: ${response.status} ${text}`);
     }
-
     return await response.json();
 }
 

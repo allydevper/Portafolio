@@ -28,14 +28,14 @@ const ProjectBase: React.FC = () => {
         fetchProjects();
     }, []);
 
-    const handSetProjects = (project: ProjectModel) => {
-        if (project.id > 0) {
+    const handSetProjects = (project: ProjectModel, id?: number) => {
+        if (!id) {
             const index = projects.findIndex(p => p.id === project.id);
-            projects[index] = project;
+            projects[index] = { ...project };
             setProjects([...projects]);
             return;
         } else {
-            setProjects([project, ...projects]);
+            setProjects([{ ...project, id }, ...projects]);
         }
     };
 

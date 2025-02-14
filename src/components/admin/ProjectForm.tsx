@@ -6,7 +6,7 @@ import { showToast } from '../../lib/customToast';
 import { createProject, updateProject } from '../../services/project.service';
 
 interface ProjectFormProps {
-    handSetProjects: (project: ProjectModel) => void;
+    handSetProjects: (project: ProjectModel, id?: number) => void;
     project: ProjectModel | undefined;
 }
 
@@ -35,7 +35,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects, project }) =
         if (project && project.id !== 0) {
             setFormData(project);
             setSelectedOptions(project.technologies.map(m => ({ value: m, label: m })));
-        }else{
+        } else {
             setFormData({
                 id: 0,
                 name: '',
@@ -59,10 +59,11 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects, project }) =
 
             if (formData.id > 0) {
                 await updateProject(formData);
+                handSetProjects(formData);
             } else {
-                await createProject(formData);
+                const response = await createProject(formData);
+                handSetProjects(formData, response.id);
             }
-            handSetProjects(formData);
 
             handleResetForm();
         }
