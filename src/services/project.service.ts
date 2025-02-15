@@ -13,6 +13,19 @@ export async function getProjects(): Promise<ProjectModel[]> {
     return await response.json();
 }
 
+export async function getLastestsProjects(): Promise<ProjectModel[]> {
+    const response = await fetch(`${import.meta.env.PUBLIC_API_PORTAFOLIO_URL}/projects/lastests`, {
+        method: 'GET'
+    });
+
+    if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`HTTP error! status: ${response.status} ${text}`);
+    }
+
+    return await response.json();
+}
+
 export async function createProject(project: ProjectModel): Promise<ProjectModel> {
 
     const { id, ...rest } = project;
