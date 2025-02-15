@@ -1,8 +1,11 @@
-import { showToast } from '@/lib/customToast';
+import { showToastFront } from '@/lib/customToast';
 import React, { useState } from 'react';
 import { Toaster } from 'sonner';
 
 const ContactForm: React.FC = () => {
+
+    const email = 'alamaswilmer@gmail.com';
+
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -18,7 +21,7 @@ const ContactForm: React.FC = () => {
 
         const formDataObj = new FormData(e.currentTarget);
         try {
-            const response = await fetch("https://formsubmit.co/ajax/alamaswilmer@gmail.com", {
+            const response = await fetch(`https://formsubmit.co/ajax/${email}`, {
                 method: "POST",
                 body: formDataObj,
                 headers: {
@@ -28,12 +31,12 @@ const ContactForm: React.FC = () => {
 
             if (response.ok) {
                 setFormData({ name: '', email: '', message: '' });
-                showToast("Mensaje enviado con éxito!", 'success');
+                showToastFront("Mensaje enviado con éxito!", 'success');
             } else {
-                showToast("Hubo un error al enviar el mensaje.", 'danger');
+                showToastFront("Hubo un error al enviar el mensaje.", 'danger');
             }
         } catch (error) {
-            showToast("Hubo un error de conexión.", 'danger');
+            showToastFront("Hubo un error de conexión.", 'danger');
         } finally {
             setIsSubmitting(false);
         }
@@ -44,7 +47,7 @@ const ContactForm: React.FC = () => {
             <Toaster />
             <h2 className="text-3xl font-bold mb-4 text-yellow-300">Contáctame</h2>
             <p className="mb-4">
-                No dudes en comunicarte por correo electrónico <span className="font-bold">(alamaswilmer@gmail.com)</span> o usar el formulario de contacto a continuación.
+                No dudes en comunicarte por correo electrónico <span className="font-bold">({email})</span> o usar el formulario de contacto a continuación.
             </p>
             <form id="contact-form" className="max-w-lg mx-auto" onSubmit={handleSubmit}>
                 <input

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getLastestsProjects } from '../services/project.service';
 import type { ProjectModel } from '@/models/project.model';
 import { AllTechImages } from '@/constants/imagesPath';
-import { showToast } from '@/lib/customToast';
+import { showToastBackend } from '@/lib/customToast';
 
 const ProjectsSection = () => {
     const [projects, setProjects] = useState<ProjectModel[]>([]);
@@ -14,7 +14,7 @@ const ProjectsSection = () => {
                 setProjects(data);
             } catch (error: Error | any) {
                 console.error('Error fetching lastests projects:', error);
-                showToast(error?.message, 'danger');
+                showToastBackend(error?.message, 'danger');
             }
         };
 

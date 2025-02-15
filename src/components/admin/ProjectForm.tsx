@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import type { ProjectModel } from '../../models/project.model';
 import Select, { type MultiValue } from 'react-select';
 import { AllTechImages } from "../../constants/imagesPath";
-import { showToast } from '../../lib/customToast';
+import { showToastBackend } from '../../lib/customToast';
 import { createProject, updateProject } from '../../services/project.service';
 
 interface ProjectFormProps {
@@ -71,7 +71,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects, project }) =
         }
         catch (error: Error | any) {
             console.error('Error adding projects:', error);
-            showToast(error?.message, 'danger');
+            showToastBackend(error?.message, 'danger');
         }
     };
 
