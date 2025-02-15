@@ -6,4 +6,5 @@ export interface ProjectModel {
     description: string;
     technologies: string[];
     create_date?: Date;
-} 
+    url_cover_image?: string;
+}

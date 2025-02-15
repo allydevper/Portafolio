@@ -26,6 +26,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects, project }) =
         url_demo: '',
         description: '',
         technologies: [],
+        url_cover_image: '',
     });
 
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
@@ -43,6 +44,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects, project }) =
                 url_demo: '',
                 description: '',
                 technologies: [],
+                url_cover_image: '',
             });
             setSelectedOptions([]);
         }
@@ -81,6 +83,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects, project }) =
             url_demo: '',
             description: '',
             technologies: [],
+            url_cover_image: '',
         });
         setSelectedOptions([]);
     }
@@ -101,28 +104,35 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ handSetProjects, project }) =
                     <div>
                         <label htmlFor="projectName" className="block text-sm font-medium text-gray-300 dark:text-gray-300">Nombre del Proyecto</label>
                         <input type="text" id="projectName" required placeholder="Nombre del proyecto"
-                            value={formData.name}
+                            value={formData.name || ''}
                             onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                             className="mt-1 p-2 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm bg-gray-700 dark:bg-gray-700 text-white dark:text-white" />
                     </div>
                     <div>
                         <label htmlFor="projectUrl" className="block text-sm font-medium text-gray-300 dark:text-gray-300">URL del Proyecto</label>
                         <input type="url" id="projectUrl" required placeholder="https://github.com/allydevper/Portafolio"
-                            value={formData.url_project}
+                            value={formData.url_project || ''}
                             onChange={(e) => setFormData(prev => ({ ...prev, url_project: e.target.value }))}
                             className="mt-1 p-2 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm bg-gray-700 dark:bg-gray-700 text-white dark:text-white" />
                     </div>
                     <div>
                         <label htmlFor="demoUrl" className="block text-sm font-medium text-gray-300 dark:text-gray-300">URL de la demo</label>
                         <input type="url" id="demoUrl" placeholder="https://demo.com"
-                            value={formData.url_demo}
+                            value={formData.url_demo || ''}
                             onChange={(e) => setFormData(prev => ({ ...prev, url_demo: e.target.value }))}
+                            className="mt-1 p-2 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm bg-gray-700 dark:bg-gray-700 text-white dark:text-white" />
+                    </div>
+                    <div>
+                        <label htmlFor="coverImageUrl" className="block text-sm font-medium text-gray-300 dark:text-gray-300">URL de la Imagen de Portada</label>
+                        <input type="url" id="coverImageUrl" placeholder="https://imageurl.com"
+                            value={formData?.url_cover_image || ''}
+                            onChange={(e) => setFormData(prev => ({ ...prev, url_cover_image: e.target.value }))}
                             className="mt-1 p-2 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm bg-gray-700 dark:bg-gray-700 text-white dark:text-white" />
                     </div>
                     <div>
                         <label htmlFor="projectDescription" className="block text-sm font-medium text-gray-300 dark:text-gray-300">Descripción</label>
                         <textarea id="projectDescription" required placeholder="Breve descripción del proyecto" rows={3}
-                            value={formData.description}
+                            value={formData.description || ''}
                             onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
                             className="mt-1 p-2 block w-full rounded-md border-gray-600 dark:border-gray-600 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm bg-gray-700 dark:bg-gray-700 text-white dark:text-white"></textarea>
                     </div>

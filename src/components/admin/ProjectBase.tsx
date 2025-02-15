@@ -54,6 +54,7 @@ const ProjectBase: React.FC = () => {
     };
 
     const handleEdit = (project: ProjectModel) => {
+        console.log("Edit project", project);
         setProject(project);
     }
 
