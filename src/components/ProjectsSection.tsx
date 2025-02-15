@@ -29,11 +29,14 @@ const ProjectsSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projects.map((project) => (
                 <div key={project.id} className="bg-gray-800 rounded-2xl flex flex-col">
-                    {/* <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-32 object-cover rounded-t-2xl"
-                    /> */}
+                    {
+                        project.url_cover_image &&
+                        <img
+                            src={project.url_cover_image}
+                            alt={project.name}
+                            className="w-full h-60 object-cover rounded-t-2xl"
+                        />
+                    }
                     <div className="p-6">
                         <h3 className="text-xl font-bold">{project.name}</h3>
                         <p className="mt-2">{project.description}</p>
