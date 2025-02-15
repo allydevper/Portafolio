@@ -11,7 +11,6 @@ const defaultImageSmall = SmallTechImages[0];
 ---
 
 <style type="text/css">
-
 	.bounce {
 		animation: bounce-custom 1.3s infinite;
 	}
@@ -329,7 +328,22 @@ const defaultImageSmall = SmallTechImages[0];
 </section>
 
 <!-- Sección de Proyectos -->
-<ProjectsSection/>
+<section id="projects" class="px-8 py-8 bg-black">
+	<div class="max-w-4xl mx-auto">
+		<h2 class="text-3xl font-bold mb-4 text-center text-yellow-300">
+			Ultimos Proyectos
+		</h2>
+		<ProjectsSection client:load />
+		<div class="mt-8 flex justify-center">
+			<button
+				type="button"
+				class="px-4 py-3 bg-yellow-300 text-black font-bold rounded-full hover:bg-white hover:text-black transition duration-300 cursor-pointer"
+			>
+				Ver todos los proyectos
+			</button>
+		</div>
+	</div>
+</section>
 
 <!-- Sección de Contacto -->
 <section id="contact" class="px-8 py-12 bg-zinc-800 text-center">
