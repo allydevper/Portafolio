@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { getLastestsProjects } from '../services/project.service';
+import type { ProjectModel } from '@/models/project.model';
+import { AllTechImages } from '@/constants/imagesPath';
 
 const ProjectsSection = () => {
-    const [projects, setProjects] = useState([]);
+    const [projects, setProjects] = useState<ProjectModel[]>([]);
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -18,33 +20,40 @@ const ProjectsSection = () => {
         fetchProjects();
     }, []);
 
+    const getImagePath = (tech: string) => {
+        return AllTechImages.filter((img) => img.title === tech)[0].src;
+    }
+
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projects.map((project) => (
                 <div key={project.id} className="bg-gray-800 rounded-2xl flex flex-col">
-                    <img
+                    {/* <img
                         src={project.image}
                         alt={project.title}
                         className="w-full h-32 object-cover rounded-t-2xl"
-                    />
+                    /> */}
                     <div className="p-6">
-                        <h3 className="text-xl font-bold">{project.title}</h3>
+                        <h3 className="text-xl font-bold">{project.name}</h3>
                         <p className="mt-2">{project.description}</p>
                     </div>
                     <div className="w-full flex items-center justify-center bg-white">
-                        {project.technologies.map((tech) => (
-                            <div key={tech.name} className="p-1 w-10 h-10 mx-1">
-                                <img
-                                    src={"/public/images/technologies/" + tech.image}
-                                    alt={tech.name}
-                                    title={tech.name}
-                                    className="mx-auto"
-                                    loading="lazy"
-                                    width={100}
-                                    height={100}
-                                />
-                            </div>
-                        ))}
+                        {project.technologies.map((tech) => {
+                            const imagePath = getImagePath(tech);
+                            return (
+                                <div key={tech} className="p-1 w-10 h-10 mx-1">
+                                    <img
+                                        src={imagePath}
+                                        alt={tech}
+                                        title={tech}
+                                        className="mx-auto"
+                                        loading="lazy"
+                                        width={100}
+                                        height={100}
+                                    />
+                                </div>
+                            );
+                        })}
                     </div>
                     <div className="p-6 flex justify-end">
                         <button
