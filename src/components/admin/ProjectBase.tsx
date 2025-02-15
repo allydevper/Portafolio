@@ -4,7 +4,7 @@ import type { ProjectModel } from '../../models/project.model';
 import React, { useState, useEffect } from 'react';
 import { deleteProject, getProjects } from '../../services/project.service';
 import { Toaster } from "sonner";
-import { showToast } from "../../lib/customToast";
+import { showToastBackend } from "@/lib/customToast";
 
 const ProjectBase: React.FC = () => {
 
@@ -19,7 +19,7 @@ const ProjectBase: React.FC = () => {
                 setProjects(projects.sort((a, b) => (b.id) - (a.id)));
             } catch (error: Error | any) {
                 console.error('Error fetching projects:', error);
-                showToast(error?.message, 'danger');
+                showToastBackend(error?.message, 'danger');
             } finally {
                 setLoading(false);
             }
@@ -47,7 +47,7 @@ const ProjectBase: React.FC = () => {
             setProject(undefined)
         } catch (error: Error | any) {
             console.error('Error fetching projects:', error);
-            showToast(error?.message, 'danger');
+            showToastBackend(error?.message, 'danger');
         } finally {
             setLoading(false);
         }
