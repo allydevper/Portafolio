@@ -22,7 +22,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-select": "^5.10.0",
-    "sonner": "^1.7.4"
+    "sonner": "^1.7.4",
+    "ts-cacheable": "^1.0.10"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.12",
