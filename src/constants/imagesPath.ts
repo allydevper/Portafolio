@@ -35,17 +35,17 @@ export const BigTechImages: ImageModel[] = [
 
 export const NormalTechImages: ImageModel[] = [
     {
-        src: "/images/technologies/.NET-core.png",
+        src: "/images/technologies/NET-core.png",
         alt: ".NET Core",
         title: ".NET Core",
     },
     {
-        src: "/images/technologies/.NET-Framework.png",
+        src: "/images/technologies/NET-Framework.png",
         alt: ".NET Framework",
         title: ".NET Framework",
     },
     {
-        src: "/images/technologies/.NET-MAUI.png",
+        src: "/images/technologies/NET-MAUI.png",
         alt: ".NET MAUI",
         title: ".NET MAUI",
     },
