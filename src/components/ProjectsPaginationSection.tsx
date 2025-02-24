@@ -3,9 +3,12 @@ import { getLastestsProjects } from '../services/project.service';
 import type { ProjectModel } from '@/models/project.model';
 import { AllTechImages } from '@/constants/imagesPath';
 import { showToastBackend } from '@/lib/customToast';
+import Pagination from './Pagination';
 
 const ProjectsPaginationSection = () => {
     const [projects, setProjects] = useState<ProjectModel[]>([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [projectsPerPage] = useState(5);
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -21,14 +24,22 @@ const ProjectsPaginationSection = () => {
         fetchProjects();
     }, []);
 
+    // Get current projects
+    const indexOfLastProject = currentPage * projectsPerPage;
+    const indexOfFirstProject = indexOfLastProject - projectsPerPage;
+    const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
+
+    // Change page
+    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
     const getImagePath = (tech: string) => {
         return AllTechImages.filter((img) => img.title === tech)[0].src;
     }
 
     return (
         <span>
-            <div className="max-w-3xl mx-auto space-y-4">
-                {projects.map((project) => (
+            <div className="max-w-3xl mx-auto space-y-4 text-left">
+                {currentProjects.map((project) => (
                     <div key={project.id} className="bg-white rounded-xl shadow-md p-4 flex items-center space-x-4">
                         {project.url_cover_image && (
                             <img
@@ -38,7 +49,7 @@ const ProjectsPaginationSection = () => {
                             />
                         )}
                         <div className="flex-1 flex flex-col">
-                            <h2 className="text-lg font-semibold">{project.name}</h2>
+                            <h2 className="text-black text-lg font-semibold">{project.name}</h2>
                             <p className="text-gray-600 text-sm line-clamp-2">{project.description}</p>
                             <div className="flex items-center justify-between mt-2">
                                 <div className="flex space-x-2">
@@ -80,14 +91,12 @@ const ProjectsPaginationSection = () => {
                 ))}
             </div>
             <div className="mt-8 flex justify-center">
-                <a href="/" className="link-custom">
-                    <button
-                        type="button"
-                        className="px-4 py-3 bg-yellow-300 text-black font-bold rounded-full hover:bg-white hover:text-black transition duration-300 cursor-pointer"
-                    >
-                        Volver al Inicio
-                    </button>
-                </a>
+                <Pagination
+                    projectsPerPage={projectsPerPage}
+                    totalProjects={projects.length}
+                    paginate={paginate}
+                    currentPage={currentPage}
+                />
             </div>
         </span>
     );
