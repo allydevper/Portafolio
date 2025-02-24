@@ -27,7 +27,7 @@ const ProjectTable: React.FC<ProjectTableProps> = ({ projects, loading, handleDe
                     </div>
                 </div>
             </div>
-            <div className="px-6 py-6 overflow-x-auto h-120">
+            <div className="px-6 py-6 overflow-x-auto h-[42rem]">
                 {
                     (loading) ? <div>Cargando...</div> :
                         <table id="projectTable" className="min-w-full table-auto">
