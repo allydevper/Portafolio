@@ -5,12 +5,18 @@ import Header from "@/components/Header.astro";
 ---
 
 <Layout>
-	<Header />
-    <section id="projects" class="px-8 py-8 bg-black">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold mb-4 text-center text-yellow-300">
-                Ultimos Proyectos
+    <Header />
+    <section id="projects" class="px-8 py-12 bg-zinc-800">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-4 text-yellow-300">
+                Proyectos Realizados
             </h2>
+            <p class="text-lg mb-4">
+                Estos proyectos fueron realizados en mi tiempo libre ya que mis
+                proyectos laborales son de propiedad del cliente. Asi que aqui
+                puedes ver una demostracion general de todas las tecnologías que puedo
+                manejar.
+            </p>
             <ProjectsSection client:load />
             <div class="mt-8 flex justify-center">
                 <a href="/" class="link-custom">
