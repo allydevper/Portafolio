@@ -1,35 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { getLastestsProjects } from '../services/project.service';
+import { getProjectsByPage } from '../services/project.service';
 import type { ProjectModel } from '@/models/project.model';
 import { AllTechImages } from '@/constants/imagesPath';
-import { showToastBackend } from '@/lib/customToast';
+import { showToastFront } from '@/lib/customToast';
 import Pagination from './Pagination';
 
 const ProjectsPaginationSection = () => {
     const [projects, setProjects] = useState<ProjectModel[]>([]);
+    const [totalProjects, setTotalProjects] = useState<number>(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const [projectsPerPage] = useState(5);
+    const [projectsPerPage] = useState(4);
 
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const data = await getLastestsProjects();
-                setProjects(data);
+                const response = await getProjectsByPage(currentPage, projectsPerPage);
+                setProjects(response.data);
+                setTotalProjects(response.count);
             } catch (error: Error | any) {
                 console.error('Error fetching lastests projects:', error);
-                showToastBackend(error?.message, 'danger');
+                showToastFront(error?.message, 'danger');
             }
         };
 
         fetchProjects();
-    }, []);
+    }, [currentPage]);
 
-    // Get current projects
-    const indexOfLastProject = currentPage * projectsPerPage;
-    const indexOfFirstProject = indexOfLastProject - projectsPerPage;
-    const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
-
-    // Change page
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
     const getImagePath = (tech: string) => {
@@ -39,7 +35,7 @@ const ProjectsPaginationSection = () => {
     return (
         <span>
             <div className="max-w-3xl mx-auto space-y-4 text-left">
-                {currentProjects.map((project) => (
+                {projects.map((project) => (
                     <div key={project.id} className="bg-white rounded-xl shadow-md p-4 flex items-center space-x-4">
                         {project.url_cover_image && (
                             <img
@@ -93,7 +89,7 @@ const ProjectsPaginationSection = () => {
             <div className="mt-8 flex justify-center">
                 <Pagination
                     projectsPerPage={projectsPerPage}
-                    totalProjects={projects.length}
+                    totalProjects={totalProjects}
                     paginate={paginate}
                     currentPage={currentPage}
                 />

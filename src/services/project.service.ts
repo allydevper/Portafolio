@@ -26,6 +26,19 @@ export async function getLastestsProjects(): Promise<ProjectModel[]> {
     return await response.json();
 }
 
+export async function getProjectsByPage(page: number, pageSize: number): Promise<{ data: ProjectModel[]; count: number }> {
+    const response = await fetch(`${import.meta.env.PUBLIC_API_PORTAFOLIO_URL}/projects/page/${page}/${pageSize}`, {
+        method: 'GET'
+    });
+
+    if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`HTTP error! status: ${response.status} ${text}`);
+    }
+
+    return await response.json();
+}
+
 export async function createProject(project: ProjectModel): Promise<ProjectModel> {
 
     const { id, ...rest } = project;
