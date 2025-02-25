@@ -18,8 +18,8 @@ const Pagination: React.FC<PaginationProps> = ({ projectsPerPage, totalProjects,
         <nav>
             <ul className="flex space-x-2">
                 {pageNumbers.map(number => (
-                    <li key={number} className={`page-item ${currentPage === number ? 'active' : ''}`}>
-                        <button onClick={() => paginate(number)} className="px-3 py-1 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition">
+                    <li key={number} className={`page-item ${currentPage === number ? 'bg-yellow-300' : 'bg-white'} rounded-md`}>
+                        <button onClick={() => paginate(number)} className="cursor-pointer px-3 py-1 text-gray-800 rounded-md hover:bg-gray-400 transition">
                             {number}
                         </button>
                     </li>
