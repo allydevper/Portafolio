@@ -97,7 +97,7 @@ const ProjectsPaginationSection = () => {
                                                 href={project.url_demo}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="bg-blue-500 text-white px-3 py-1 text-sm rounded-md hover:bg-blue-600 transition"
+                                                className="px-4 py-2 bg-yellow-300 text-black font-bold rounded-md transition duration-300 cursor-pointer"
                                             >
                                                 Ver
                                             </a>
@@ -106,9 +106,13 @@ const ProjectsPaginationSection = () => {
                                             href={project.url_project}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="bg-gray-300 text-gray-800 px-3 py-1 text-sm rounded-md hover:bg-gray-400 transition"
+                                            className="p-2 bg-gray-200 text-black font-bold rounded-md hover:bg-yellow-300 transition duration-300 cursor-pointer flex items-center space-x-2"
                                         >
-                                            Código
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-brand-github">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+                                            </svg>
+                                            <span>Código</span>
                                         </a>
                                     </div>
                                 </div>
