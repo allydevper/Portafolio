@@ -99,7 +99,7 @@ const ProjectsPaginationSection = () => {
                                                 rel="noopener noreferrer"
                                                 className="px-4 py-2 bg-yellow-300 text-black font-bold rounded-md transition duration-300 cursor-pointer"
                                             >
-                                                Ver
+                                                Demo
                                             </a>
                                         )}
                                         <a
