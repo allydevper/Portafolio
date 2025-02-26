@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import 'react-loading-skeleton/dist/skeleton.css';
 @custom-variant dark (&:where(.dark, .dark *));
 @tailwind base;
 @tailwind components;

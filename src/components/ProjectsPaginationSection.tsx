@@ -4,6 +4,7 @@ import type { ProjectModel } from '@/models/project.model';
 import { AllTechImages } from '@/constants/imagesPath';
 import { showToastFront } from '@/lib/customToast';
 import Pagination from './Pagination';
+import Skeleton from 'react-loading-skeleton';
 
 const ProjectsPaginationSection = () => {
     const [projects, setProjects] = useState<ProjectModel[]>([]);
@@ -40,7 +41,28 @@ const ProjectsPaginationSection = () => {
         <span>
             <div className="max-w-4xl mx-auto space-y-4 text-left">
                 {loading ? (
-                    <p>Loading...</p>
+                    <div className="space-y-4">
+                        {[...Array(projectsPerPage)].map((_, index) => (
+                            <div key={index} className="bg-white rounded-xl shadow-md p-4 flex items-center space-x-4">
+                                <Skeleton height={96} width={192} />
+                                <div className="flex-1 flex flex-col space-y-2">
+                                    <Skeleton height={24} width="60%" />
+                                    <Skeleton height={16} count={2} />
+                                    <div className="flex items-center justify-between mt-2">
+                                        <div className="flex space-x-2">
+                                            {[...Array(3)].map((_, i) => (
+                                                <Skeleton key={i} circle={true} height={24} width={24} />
+                                            ))}
+                                        </div>
+                                        <div className="ml-auto flex space-x-2">
+                                            <Skeleton height={32} width={64} />
+                                            <Skeleton height={32} width={64} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 ) : (
                     projects.map((project) => (
                         <div key={project.id} className="bg-white rounded-xl shadow-md p-4 flex items-center space-x-4">

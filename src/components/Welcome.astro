@@ -7,6 +7,7 @@ import {
 } from "../constants/imagesPath";
 import ProjectsSection from "./ProjectsSection";
 import ContactForm from "./ContactForm";
+import Footer from "./Footer.astro";
 
 const defaultImageSmall = SmallTechImages[0];
 ---
@@ -338,9 +339,7 @@ const defaultImageSmall = SmallTechImages[0];
 </section>
 
 <!-- Sección de Pie de Página -->
-<footer class="bg-black text-gray-500 py-6 text-center">
-	<p>&copy; 2025 Wilmer Alama. Todos los derechos reservados.</p>
-</footer>
+<Footer />
 
 <div id="image-data" style="display: none;">
 	{JSON.stringify(SmallTechImages)}

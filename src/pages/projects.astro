@@ -1,12 +1,12 @@
 ---
+import Footer from "@/components/Footer.astro";
 import Layout from "../layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import ProjectsPaginationSection from "@/components/ProjectsPaginationSection";
 ---
-
 <Layout>
     <Header />
-    <section id="projects" class="px-8 py-12 bg-zinc-800">
+    <section id="projects" class="flex-grow px-8 py-12 bg-zinc-800">
         <div class="max-w-4xl mx-auto text-center">
             <h2 class="text-3xl font-bold mb-4 text-yellow-300">
                 Proyectos Realizados
@@ -20,4 +20,7 @@ import ProjectsPaginationSection from "@/components/ProjectsPaginationSection";
             <ProjectsPaginationSection client:load />
         </div>
     </section>
+    <footer class="bg-black text-gray-500 py-6 text-center">
+        <p>&copy; 2025 Wilmer Alama. Todos los derechos reservados.</p>
+    </footer>
 </Layout>
