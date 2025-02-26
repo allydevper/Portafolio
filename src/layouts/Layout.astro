@@ -20,11 +20,19 @@ import "../styles/global.css";
 			rel="stylesheet"
 		/>
 		<style type="text/css">
-			body {
+			body, html {
 				font-family: "Comfortaa", serif;
 				height: 100%;
-				display: flex;
-				flex-direction: column;
+			}
+			@media (max-width: 768px) {
+				body, html {
+					font-size: 14px;
+				}
+			}
+			@media (max-width: 480px) {
+				body, html {
+					font-size: 12px;
+				}
 			}
 		</style>
 	</head>
