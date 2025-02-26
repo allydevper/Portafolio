@@ -199,16 +199,16 @@ const defaultImageSmall = SmallTechImages[0];
 </section>
 
 <!-- Sección de Habilidades -->
-<section id="skills" class="px-8 py-12 bg-black">
+<section id="skills" class="px-4 py-12 bg-black">
 	<div class="max-w-4xl mx-auto">
 		<h2 class="text-3xl font-bold mb-4 text-center text-yellow-300">
 			Habilidades
 		</h2>
-		<div class="big-skills flex justify-center pb-2">
+		<div class="big-skills flex flex-wrap justify-center gap-3 pb-4">
 			{
 				BigTechImages.map((m) => (
-					<div class="w-36 h-36 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-						<div class="p-6 w-36 h-36 object-contain">
+					<div class="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 lg:w-40 lg:h-40 rounded-full bg-gray-100 flex items-center justify-center mx-1">
+						<div class="p-6 w-full h-full object-contain">
 							<Image
 								src={m.src}
 								alt={m.alt}
@@ -223,11 +223,11 @@ const defaultImageSmall = SmallTechImages[0];
 				))
 			}
 		</div>
-		<div class="normal-skills mb-2 flex justify-center">
+		<div class="normal-skills flex flex-wrap justify-center gap-2">
 			{
-				NormalTechImages.slice(0, 10).map((m) => (
-					<div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-						<div class="p-2 w-20 h-20 object-contain">
+				NormalTechImages.map((m, index) => (
+					<div class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-gray-100 flex items-center justify-center mx-1">
+						<div class="p-2 w-full h-full object-contain">
 							<Image
 								src={m.src}
 								alt={m.alt}
@@ -241,61 +241,17 @@ const defaultImageSmall = SmallTechImages[0];
 					</div>
 				))
 			}
-		</div>
-		<div class="normal-skills mb-2 flex justify-center">
-			{
-				NormalTechImages.slice(10, 20).map((m) => (
-					<div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-						<div class="p-2 w-20 h-20 object-contain">
-							<Image
-								src={m.src}
-								alt={m.alt}
-								class={"rounded-lg"}
-								title={m.title}
-								width={300}
-								height={300}
-								loading={"lazy"}
-							/>
-						</div>
-					</div>
-				))
-			}
-		</div>
-		<div class="normal-skills mb-4 flex justify-center">
-			{
-				NormalTechImages.slice(20, 30).map((m) => (
-					<div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2">
-						<div class="p-2 w-20 h-20 object-contain">
-							<Image
-								src={m.src}
-								alt={m.alt}
-								class={"rounded-lg"}
-								title={m.title}
-								loading={"lazy"}
-								width={300}
-								height={300}
-								inferSize
-							/>
-						</div>
-					</div>
-				))
-			}
-			<div
-				class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-2"
-			>
-				<div class="p-3 w-20 h-20 object-contain">
-					{
-						(
-							<Image
-								id="dynamic-image"
-								src={defaultImageSmall.src}
-								alt={defaultImageSmall.alt}
-								title={defaultImageSmall.title}
-								width={100}
-								height={100}
-							/>
-						)
-					}
+			{/* Imagen dinámica */}
+			<div class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-gray-100 flex items-center justify-center mx-1">
+				<div class="p-2 w-full h-full object-contain">
+					<Image
+						id="dynamic-image"
+						src={defaultImageSmall.src}
+						alt={defaultImageSmall.alt}
+						title={defaultImageSmall.title}
+						width={100}
+						height={100}
+					/>
 				</div>
 			</div>
 		</div>

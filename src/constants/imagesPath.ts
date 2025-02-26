@@ -22,11 +22,6 @@ export const BigTechImages: ImageModel[] = [
         title: "TypeScript",
     },
     {
-        src: "/images/technologies/PHP.png",
-        alt: "PHP",
-        title: "PHP",
-    },
-    {
         src: "/images/technologies/Python.png",
         alt: "Python",
         title: "Python",
@@ -48,6 +43,11 @@ export const NormalTechImages: ImageModel[] = [
         src: "/images/technologies/NET-MAUI.png",
         alt: ".NET MAUI",
         title: ".NET MAUI",
+    },
+    {
+        src: "/images/technologies/PHP.png",
+        alt: "PHP",
+        title: "PHP",
     },
     {
         src: "/images/technologies/Astro.png",
