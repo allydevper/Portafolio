@@ -28,26 +28,17 @@ const defaultImageSmall = SmallTechImages[0];
 		}
 	}
 
-	@keyframes animate {
-		0% {
-			background-position: 0;
-		}
-
-		100% {
-			background-position: 40px;
-		}
-	}
-
 	#home {
 		overflow: hidden;
 	}
 
 	#custom-back {
-		position: fixed;
+		position: absolute;
 		top: 0;
 		left: 0;
+		width: 100%;
+		height: 100%;
 		z-index: -1;
-		display: block;
 	}
 
 	.border-svg {
@@ -58,7 +49,7 @@ const defaultImageSmall = SmallTechImages[0];
 	}
 
 	.direc90 {
-		animation: grados90 9s infinite linear;
+		animation: grados90 1s infinite linear;
 	}
 
 	@keyframes grados90 {
@@ -80,6 +71,8 @@ const defaultImageSmall = SmallTechImages[0];
 			xmlns="http://www.w3.org/2000/svg"
 			xmlns:xlink="http://www.w3.org/1999/xlink"
 			viewBox="0 0 800 600"
+					width="1600"
+					height="1200"
 			class="absolute bg-cover bg-center opacity-10"
 		>
 			<defs>
@@ -242,7 +235,9 @@ const defaultImageSmall = SmallTechImages[0];
 				))
 			}
 			{/* Imagen dinámica */}
-			<div class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-gray-100 flex items-center justify-center mx-1">
+			<div
+				class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-gray-100 flex items-center justify-center mx-1"
+			>
 				<div class="p-2 w-full h-full object-contain">
 					<Image
 						id="dynamic-image"
