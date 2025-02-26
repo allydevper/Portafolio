@@ -1,21 +1,63 @@
-<header class="bg-yellow-300">
-    <div class="max-w-7xl mx-auto text-black px-8 py-6">
-        <div class="flex flex-row justify-between items-center">
-            <div class="flex flex-row justify-between w-full">
-                <a href="/" aria-label="Ir a la página principal" class="mr-6">
-                    <h1 class="text-3xl font-bold text-black">alamadev.com</h1>
-                </a>
+<header class="bg-yellow-300 sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto text-black px-4 sm:px-8 py-4">
+        <div class="flex justify-between items-center">
+            <a
+                href="/"
+                aria-label="Ir a la página principal"
+                class="flex items-center"
+            >
+                <h1 class="text-2xl sm:text-3xl font-bold text-black">
+                    alamadev.com
+                </h1>
+            </a>
+
+            <div class="flex items-center gap-4">
+                <nav class="hidden md:block">
+                    <ul class="flex items-center gap-6">
+                        <li>
+                            <a
+                                href="#home"
+                                class="hover:underline py-2"
+                                aria-label="Ir a Inicio">Inicio</a>
+                        </li>
+                        <li>
+                            <a
+                                href="#about"
+                                class="hover:underline py-2"
+                                aria-label="Ir a Sobre Mí">Sobre Mí</a>
+                        </li>
+                        <li>
+                            <a
+                                href="#skills"
+                                class="hover:underline py-2"
+                                aria-label="Ir a Habilidades">Habilidades</a>
+                        </li>
+                        <li>
+                            <a
+                                href="/projects"
+                                class="hover:underline py-2"
+                                aria-label="Ir a Proyectos">Proyectos</a>
+                        </li>
+                        <li>
+                            <a
+                                href="#contact"
+                                class="hover:underline py-2"
+                                aria-label="Ir a Contacto">Contacto</a>
+                        </li>
+                    </ul>
+                </nav>
+
                 <button
-                    class="md:hidden"
                     id="menu-button"
+                    class="md:hidden p-2 rounded-lg hover:bg-yellow-400 transition-colors"
                     aria-label="Toggle menu"
+                    aria-expanded="false"
                 >
                     <svg
                         class="w-6 h-6"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
                     >
                         <path
                             stroke-linecap="round"
@@ -25,56 +67,69 @@
                     </svg>
                 </button>
             </div>
-            <nav id="menu" class="hidden md:flex flex-col md:flex-row mt-4 md:mt-0 text-end">
-                <ul
-                    class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8"
-                >
-                    <li>
-                        <a
-                            href="#home"
-                            class="hover:underline"
-                            aria-label="Ir a Inicio">Inicio</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#about"
-                            class="hover:underline"
-                            aria-label="Ir a Sobre Mí">Sobre Mí</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#skills"
-                            class="hover:underline"
-                            aria-label="Ir a Habilidades">Habilidades</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="/projects"
-                            class="hover:underline"
-                            aria-label="Ir a Proyectos">Proyectos</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#contact"
-                            class="hover:underline"
-                            aria-label="Ir a Contacto">Contacto</a
-                        >
-                    </li>
-                </ul>
-            </nav>
+        </div>
+
+        <div
+            id="mobile-menu"
+            class="md:hidden absolute top-full left-0 right-0 bg-yellow-300 bg-opacity-10 shadow-lg hidden text-end"
+        >
+            <ul class="px-4 py-4 space-y-4">
+                <li>
+                    <a
+                        href="#home"
+                        class="block py-2 px-4 hover:bg-yellow-400 bg-opacity-10 rounded"
+                        aria-label="Ir a Inicio">Inicio</a>
+                </li>
+                <li>
+                    <a
+                        href="#about"
+                        class="block py-2 px-4 hover:bg-yellow-400 rounded"
+                        aria-label="Ir a Sobre Mí">Sobre Mí</a>
+                </li>
+                <li>
+                    <a
+                        href="#skills"
+                        class="block py-2 px-4 hover:bg-yellow-400 rounded"
+                        aria-label="Ir a Habilidades">Habilidades</a>
+                </li>
+                <li>
+                    <a
+                        href="/projects"
+                        class="block py-2 px-4 hover:bg-yellow-400 rounded"
+                        aria-label="Ir a Proyectos">Proyectos</a>
+                </li>
+                <li>
+                    <a
+                        href="#contact"
+                        class="block py-2 px-4 hover:bg-yellow-400 rounded"
+                        aria-label="Ir a Contacto">Contacto</a>
+                </li>
+            </ul>
         </div>
     </div>
 </header>
 
 <script type="module" is:inline>
-    document
-        .getElementById("menu-button")
-        .addEventListener("click", function () {
-            const menu = document.getElementById("menu");
-            menu.classList.toggle("hidden");
+    const menuButton = document.getElementById("menu-button");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    menuButton.addEventListener("click", () => {
+        const isExpanded = menuButton.getAttribute("aria-expanded") === "true";
+        menuButton.setAttribute("aria-expanded", !isExpanded);
+        mobileMenu.classList.toggle("hidden");
+    });
+
+    document.addEventListener("click", (e) => {
+        if (!menuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+            mobileMenu.classList.add("hidden");
+            menuButton.setAttribute("aria-expanded", "false");
+        }
+    });
+
+    mobileMenu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+            mobileMenu.classList.add("hidden");
+            menuButton.setAttribute("aria-expanded", "false");
         });
+    });
 </script>
