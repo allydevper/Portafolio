@@ -145,11 +145,6 @@ export const NormalTechImages: ImageModel[] = [
         title: "Vue.js",
     },
     {
-        src: "/images/technologies/Xamarin.png",
-        alt: "Xamarin",
-        title: "Xamarin",
-    },
-    {
         src: "/images/technologies/Laravel.png",
         alt: "Laravel",
         title: "Laravel",
@@ -188,11 +183,6 @@ export const SmallTechImages: ImageModel[] = [
         title: "Alpine.js",
     },
     {
-        src: "/images/technologies/Apache-Maven.png",
-        alt: "Apache Maven",
-        title: "Apache Maven",
-    },
-    {
         src: "/images/technologies/Appwrite.png",
         alt: "Appwrite",
         title: "Appwrite",
@@ -201,11 +191,6 @@ export const SmallTechImages: ImageModel[] = [
         src: "/images/technologies/Backbone.js.png",
         alt: "Backbone.js",
         title: "Backbone.js",
-    },
-    {
-        src: "/images/technologies/Bash.png",
-        alt: "Bash",
-        title: "Bash",
     },
     {
         src: "/images/technologies/CakePHP.png",
@@ -223,11 +208,6 @@ export const SmallTechImages: ImageModel[] = [
         title: "Electron",
     },
     {
-        src: "/images/technologies/Firebase.png",
-        alt: "Firebase",
-        title: "Firebase",
-    },
-    {
         src: "/images/technologies/Flutter.png",
         alt: "Flutter",
         title: "Flutter",
@@ -238,14 +218,14 @@ export const SmallTechImages: ImageModel[] = [
         title: "GitHub",
     },
     {
+        src: "/images/technologies/Git.png",
+        alt: "Git",
+        title: "Git",
+    },
+    {
         src: "/images/technologies/Go.png",
         alt: "Go",
         title: "Go",
-    },
-    {
-        src: "/images/technologies/Grafana.png",
-        alt: "Grafana",
-        title: "Grafana",
     },
     {
         src: "/images/technologies/Handlebars.png",
@@ -256,11 +236,6 @@ export const SmallTechImages: ImageModel[] = [
         src: "/images/technologies/Insomnia.png",
         alt: "Insomnia",
         title: "Insomnia",
-    },
-    {
-        src: "/images/technologies/Ionic.png",
-        alt: "Ionic",
-        title: "Ionic",
     },
     {
         src: "/images/technologies/JSON.png",
@@ -281,11 +256,6 @@ export const SmallTechImages: ImageModel[] = [
         src: "/images/technologies/Postman.png",
         alt: "Postman",
         title: "Postman",
-    },
-    {
-        src: "/images/technologies/Yii-Framework.png",
-        alt: "Yii Framework",
-        title: "Yii Framework",
     },
     {
         src: "/images/technologies/Sass.png",
