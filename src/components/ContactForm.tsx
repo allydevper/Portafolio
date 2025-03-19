@@ -43,10 +43,10 @@ const ContactForm: React.FC = () => {
     };
 
     return (
-        <div>
+        <div className='max-w-4xl mx-auto'>
             <Toaster />
             <h2 className="text-3xl font-bold mb-4 text-yellow-300">Contáctame</h2>
-            <p className="mb-4">
+            <p className="mb-4 text-justify">
                 No dudes en comunicarte por correo electrónico <span className="font-bold">({email})</span> o usar el formulario de contacto a continuación.
             </p>
             <form id="contact-form" className="max-w-lg mx-auto" onSubmit={handleSubmit}>

@@ -70,7 +70,7 @@ const ProjectsPaginationSection = () => {
                                 <img
                                     src={project.url_cover_image}
                                     alt={project.name}
-                                    className="rounded-lg w-48 h-24 object-cover"
+                                    className="rounded-lg w-24 h-24 object-cover"
                                 />
                             )}
                             <div className="flex-1 flex flex-col">
@@ -108,7 +108,7 @@ const ProjectsPaginationSection = () => {
                                                 href={project.url_demo}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="px-4 py-2 bg-black text-white font-bold rounded-md transition duration-300 cursor-pointer"
+                                                className="px-4 py-2 bg-black flex items-center text-white font-bold rounded-md transition duration-300 cursor-pointer"
                                             >
                                                 Demo
                                             </a>
