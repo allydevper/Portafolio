@@ -44,7 +44,7 @@ const ProjectsPaginationSection = () => {
                     <div className="space-y-4">
                         {[...Array(projectsPerPage)].map((_, index) => (
                             <div key={index} className="bg-white rounded-xl shadow-md p-4 flex items-center space-x-4">
-                                <Skeleton height={96} width={40} />
+                                <Skeleton height={96} width="50%" />
                                 <div className="flex-1 flex flex-col space-y-2">
                                     <Skeleton height={24} width="40%" />
                                     <Skeleton height={16} count={2} />
