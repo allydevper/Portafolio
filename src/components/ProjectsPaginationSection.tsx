@@ -46,7 +46,7 @@ const ProjectsPaginationSection = () => {
                             <div key={index} className="bg-white rounded-xl shadow-md p-4 flex items-center space-x-4">
                                 <Skeleton height={96} width={192} />
                                 <div className="flex-1 flex flex-col space-y-2">
-                                    <Skeleton height={24} width="60%" />
+                                    <Skeleton height={24} width="40%" />
                                     <Skeleton height={16} count={2} />
                                     <div className="flex items-center justify-between mt-2">
                                         <div className="flex space-x-2">
@@ -70,7 +70,7 @@ const ProjectsPaginationSection = () => {
                                 <img
                                     src={project.url_cover_image}
                                     alt={project.name}
-                                    className="rounded-lg w-24 h-24 object-cover"
+                                    className="rounded-lg w-48 h-24 object-cover"
                                 />
                             )}
                             <div className="flex-1 flex flex-col">
