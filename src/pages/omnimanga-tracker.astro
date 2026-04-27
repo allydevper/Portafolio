@@ -5,753 +5,1740 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 const features = [
-  { title: "Deteccion automatica", description: "Reconoce mangas en webs compatibles y prepara el registro sin pasos manuales.", icon: "✦" },
-  { title: "Biblioteca inteligente", description: "Buscador, filtros por estado y orden por actividad para una gestion rapida.", icon: "▦" },
-  { title: "Detalle por obra", description: "Edita metadata, portada, notas y progreso desde una sola vista clara.", icon: "✎" },
-  { title: "Listas personalizadas", description: "Agrupa por objetivo, genero o prioridad sin duplicar obras en tu biblioteca.", icon: "◫" },
-  { title: "Actualizacion masiva", description: "Ejecuta refresh por lotes y revisa el resumen final por resultado.", icon: "↻" },
-  { title: "Export / Import JSON", description: "Haz respaldo completo y restaura datos cuando cambies de equipo o perfil.", icon: "◉" }
+	{
+		title: "Deteccion automatica",
+		description:
+			"Reconoce mangas en webs compatibles y prepara el registro sin pasos manuales.",
+		icon: "✦",
+	},
+	{
+		title: "Biblioteca inteligente",
+		description:
+			"Buscador, filtros por estado y orden por actividad para una gestion rapida.",
+		icon: "▦",
+	},
+	{
+		title: "Detalle por obra",
+		description:
+			"Edita metadata, portada, notas y progreso desde una sola vista clara.",
+		icon: "✎",
+	},
+	{
+		title: "Listas personalizadas",
+		description:
+			"Agrupa por objetivo, genero o prioridad sin duplicar obras en tu biblioteca.",
+		icon: "◫",
+	},
+	{
+		title: "Actualizacion masiva",
+		description:
+			"Ejecuta refresh por lotes y revisa el resumen final por resultado.",
+		icon: "↻",
+	},
+	{
+		title: "Export / Import JSON",
+		description:
+			"Haz respaldo completo y restaura datos cuando cambies de equipo o perfil.",
+		icon: "◉",
+	},
 ];
 
 const faqs = [
-  { question: "Que sitios soporta OmniManga Tracker?", answer: "Incluye compatibilidad con MangaDex, Webtoon, Manga Plus y decenas de parsers integrados." },
-  { question: "Puedo migrar toda mi biblioteca?", answer: "Si. Puedes exportar un JSON de respaldo e importarlo en cualquier momento." },
-  { question: "Como evita duplicados?", answer: "Durante el agregado detecta coincidencias y permite fusionar, vincular o crear un registro nuevo." }
+	{
+		question: "Que sitios soporta OmniManga Tracker?",
+		answer: "Incluye compatibilidad con MangaDex, Webtoon, Manga Plus y decenas de parsers integrados.",
+	},
+	{
+		question: "Puedo migrar toda mi biblioteca?",
+		answer: "Si. Puedes exportar un JSON de respaldo e importarlo en cualquier momento.",
+	},
+	{
+		question: "Como evita duplicados?",
+		answer: "Durante el agregado detecta coincidencias y permite fusionar, vincular o crear un registro nuevo.",
+	},
 ];
 
 const sliderImages = [
-  "/omnimanga/slider/1.png",
-  "/omnimanga/slider/2.png",
-  "/omnimanga/slider/3.png",
-  "/omnimanga/slider/4.png",
-  "/omnimanga/slider/5.png"
+	"/omnimanga/slider/1.png",
+	"/omnimanga/slider/2.png",
+	"/omnimanga/slider/3.png",
+	"/omnimanga/slider/4.png",
+	"/omnimanga/slider/5.png",
 ];
 
 const sliderCaptions = [
-  { title: "Biblioteca central", subtitle: "Vista principal con progreso y estados" },
-  { title: "Busqueda y filtros", subtitle: "Encuentra obras rapido por criterios" },
-  { title: "Detalle de lectura", subtitle: "Capitulos, metadata y control manual" },
-  { title: "Listas personalizadas", subtitle: "Organiza por prioridad o categoria" },
-  { title: "Ajustes y respaldo", subtitle: "Exporta e importa tu backup JSON" }
+	{
+		title: "Biblioteca central",
+		subtitle: "Vista principal con progreso y estados",
+	},
+	{
+		title: "Busqueda y filtros",
+		subtitle: "Encuentra obras rapido por criterios",
+	},
+	{
+		title: "Detalle de lectura",
+		subtitle: "Capitulos, metadata y control manual",
+	},
+	{
+		title: "Listas personalizadas",
+		subtitle: "Organiza por prioridad o categoria",
+	},
+	{
+		title: "Ajustes y respaldo",
+		subtitle: "Exporta e importa tu backup JSON",
+	},
 ];
 
 const featureCaptures = [
-  {
-    file: "con el boton actualizar puedes revisar si hay nuevos capitulos en tu lectura.png",
-    title: "Actualizar novedades",
-    caption: "Comprueba si hay capítulos nuevos con un solo botón."
-  },
-  {
-    file: "marca el capitulo en que te quedaste.png",
-    title: "Progreso por capítulo",
-    caption: "Marca dónde te quedaste y mantén el seguimiento al día."
-  },
-  {
-    file: "acceso a la fuente de tu lectura y actulizar el capitulo con un solo boton.png",
-    title: "Fuente y capítulo",
-    caption: "Abre la fuente de la lectura y actualiza el capítulo con un solo clic."
-  },
-  {
-    file: "grabaste un duplicado. puedes fusionar ambas y juntar tu obra.png",
-    title: "Fusionar duplicados",
-    caption: "Si registraste la misma obra dos veces, unifica registros sin perder datos."
-  },
-  {
-    file: "gestion_generos_de_obras.png",
-    title: "Géneros en la biblioteca",
-    caption: "Filtra, edita o fusiona etiquetas y ve cuántas obras usan cada género."
-  },
-  {
-    file: "organiza tu lectura en grupos para que puedas organizar mejor.png",
-    title: "Grupos de lectura",
-    caption: "Agrupa obras para ordenar listas largas con más claridad."
-  },
-  {
-    file: "anota referencias y detalles que puedas necesitar.png",
-    title: "Notas y personajes",
-    caption: "Guarda notas personales y referencias de personajes junto a cada obra."
-  },
-  {
-    file: "importar-exportar-config-json.png",
-    title: "Copia de seguridad",
-    caption: "Exporta o importa un JSON para respaldar datos y restaurarlos en otro perfil o equipo."
-  },
-  {
-    title: "Y muchas más opciones a descubrir",
-    caption: "",
-    teaser: true
-  }
+	{
+		file: "con el boton actualizar puedes revisar si hay nuevos capitulos en tu lectura.png",
+		title: "Actualizar novedades",
+		caption: "Comprueba si hay capítulos nuevos con un solo botón.",
+	},
+	{
+		file: "marca el capitulo en que te quedaste.png",
+		title: "Progreso por capítulo",
+		caption: "Marca dónde te quedaste y mantén el seguimiento al día.",
+	},
+	{
+		file: "acceso a la fuente de tu lectura y actulizar el capitulo con un solo boton.png",
+		title: "Fuente y capítulo",
+		caption:
+			"Abre la fuente de la lectura y actualiza el capítulo con un solo clic.",
+	},
+	{
+		file: "grabaste un duplicado. puedes fusionar ambas y juntar tu obra.png",
+		title: "Fusionar duplicados",
+		caption:
+			"Si registraste la misma obra dos veces, unifica registros sin perder datos.",
+	},
+	{
+		file: "gestion_generos_de_obras.png",
+		title: "Géneros en la biblioteca",
+		caption:
+			"Filtra, edita o fusiona etiquetas y ve cuántas obras usan cada género.",
+	},
+	{
+		file: "organiza tu lectura en grupos para que puedas organizar mejor.png",
+		title: "Grupos de lectura",
+		caption: "Agrupa obras para ordenar listas largas con más claridad.",
+	},
+	{
+		file: "anota referencias y detalles que puedas necesitar.png",
+		title: "Notas y personajes",
+		caption:
+			"Guarda notas personales y referencias de personajes junto a cada obra.",
+	},
+	{
+		file: "importar-exportar-config-json.png",
+		title: "Copia de seguridad",
+		caption:
+			"Exporta o importa un JSON para respaldar datos y restaurarlos en otro perfil o equipo.",
+	},
+	{
+		title: "Y muchas más opciones a descubrir",
+		caption: "",
+		teaser: true,
+	},
 ].map((item) => ({
-  ...item,
-  src: "file" in item && item.file ? encodeURI(`/omnimanga/features/${item.file}`) : undefined
+	...item,
+	src:
+		"file" in item && item.file
+			? encodeURI(`/omnimanga/features/${item.file}`)
+			: undefined,
 }));
 
 const howItWorksSteps = [
-  {
-    index: "01",
-    title: "Registra o usa una web compatible",
-    text: "Agrega un lector, scan o cualquier url, si no se puede leer informanos para que la agreguemos.",
-    image: encodeURI(
-      "/omnimanga/features/Agrega tu web para acceso; si tiene parse, úsala, si no, usa las predeterminadas o pide actualizaciónv2.png"
-    ),
-    imageAlt:
-      "Sitios integrados (MangaDex, Webtoon, Manga Plus) y formulario para solicitar nuevas webs con indicador de parser"
-  },
-  {
-    index: "02",
-    title: "Detecta una obra",
-    text: "Visita una web compatible y deja que el parser identifique la lectura.",
-    image: "/omnimanga/features/quickAdd.png",
-    imageAlt: "Vista rápida: resultado de búsqueda en MangaDex con opciones para ver o añadir la obra"
-  },
-  {
-    index: "03",
-    title: "Actualiza progreso",
-    text: "Marca capitulos, ejecuta refresh por lotes y exporta respaldo.",
-    image: encodeURI("/omnimanga/features/marca el capitulo en que te quedastev2.png"),
-    imageAlt:
-      "Sección Capítulos: barra de progreso, marcar o desmarcar todos y rejilla de capítulos leídos y pendientes"
-  }
+	{
+		index: "01",
+		title: "Registra o usa una web compatible",
+		text: "Agrega un lector, scan o cualquier url, si no se puede leer informanos para que la agreguemos.",
+		image: encodeURI(
+			"/omnimanga/features/Agrega tu web para acceso; si tiene parse, úsala, si no, usa las predeterminadas o pide actualizaciónv2.png",
+		),
+		imageAlt:
+			"Sitios integrados (MangaDex, Webtoon, Manga Plus) y formulario para solicitar nuevas webs con indicador de parser",
+	},
+	{
+		index: "02",
+		title: "Detecta una obra",
+		text: "Visita una web compatible y deja que el parser identifique la lectura.",
+		image: "/omnimanga/features/quickAdd.png",
+		imageAlt:
+			"Vista rápida: resultado de búsqueda en MangaDex con opciones para ver o añadir la obra",
+	},
+	{
+		index: "03",
+		title: "Actualiza progreso",
+		text: "Marca capitulos, ejecuta refresh por lotes y exporta respaldo.",
+		image: encodeURI(
+			"/omnimanga/features/marca el capitulo en que te quedastev2.png",
+		),
+		imageAlt:
+			"Sección Capítulos: barra de progreso, marcar o desmarcar todos y rejilla de capítulos leídos y pendientes",
+	},
 ];
 ---
 
 <Layout>
-  <main class="omni-page text-[#E8E5DE]">
-    <div class="ambient ambient-top"></div>
-    <div class="ambient ambient-bottom"></div>
+	<main class="omni-page text-[#E8E5DE]">
+		<div class="ambient ambient-top"></div>
+		<div class="ambient ambient-bottom"></div>
 
-    <header class="nav-wrap">
-      <div class="container nav-inner">
-        <a href="/omnimanga-tracker" class="brand">
-          <img src="/omnimanga/app-logo-home.png" alt="OmniManga Tracker" class="brand-wordmark" />
-        </a>
-        <nav class="desktop-nav" aria-label="Secciones">
-          <a href="#features">Features</a>
-          <a href="#capturas">Capturas</a>
-          <a href="#como-funciona">Como funciona</a>
-          <a href="#faq">FAQ</a>
-        </nav>
-        <button
-          type="button"
-          class="nav-toggle"
-          id="nav-toggle"
-          aria-expanded="false"
-          aria-controls="mobile-nav-dropdown"
-        >
-          <span class="nav-toggle-bars" aria-hidden="true"></span>
-          <span class="sr-only">Menú de navegación</span>
-        </button>
-      </div>
-      <div id="mobile-nav-dropdown" class="mobile-nav-dropdown" hidden>
-        <div class="container mobile-nav-inner">
-          <nav class="mobile-nav" aria-label="Secciones">
-            <a href="#features">Features</a>
-            <a href="#capturas">Capturas</a>
-            <a href="#como-funciona">Como funciona</a>
-            <a href="#faq">FAQ</a>
-          </nav>
-        </div>
-      </div>
-    </header>
+		<header class="nav-wrap">
+			<div class="container nav-inner">
+				<a href="/omnimanga-tracker" class="brand">
+					<img
+						src="/omnimanga/app-logo-home.png"
+						alt="OmniManga Tracker"
+						class="brand-wordmark"
+					/>
+				</a>
+				<nav class="desktop-nav" aria-label="Secciones">
+					<a href="#features">Features</a>
+					<a href="#capturas">Capturas</a>
+					<a href="#como-funciona">Como funciona</a>
+					<a href="#faq">FAQ</a>
+				</nav>
+				<button
+					type="button"
+					class="nav-toggle"
+					id="nav-toggle"
+					aria-expanded="false"
+					aria-controls="mobile-nav-dropdown"
+				>
+					<span class="nav-toggle-bars" aria-hidden="true"></span>
+					<span class="sr-only">Menú de navegación</span>
+				</button>
+			</div>
+			<div id="mobile-nav-dropdown" class="mobile-nav-dropdown" hidden>
+				<div class="container mobile-nav-inner">
+					<nav class="mobile-nav" aria-label="Secciones">
+						<a href="#features">Features</a>
+						<a href="#capturas">Capturas</a>
+						<a href="#como-funciona">Como funciona</a>
+						<a href="#faq">FAQ</a>
+					</nav>
+				</div>
+			</div>
+		</header>
 
-    <section class="container hero">
-      <div class="hero-copy">
-        <p class="eyebrow">Chrome Extension</p>
-        <h1>Centraliza tus mangas en un solo lugar.</h1>
-        <p class="lead">OmniManga Tracker detecta lecturas en webs compatibles y las organiza en una biblioteca lateral con progreso, listas y actualizaciones en lote.</p>
-        <div class="hero-actions">
-          <a href="#" class="btn btn-primary"><span aria-hidden="true" class="chrome-icon"></span>Instalar extension</a>
-          <a href="#features" class="btn btn-secondary">Ver funcionalidades</a>
-        </div>
-        <div class="badge-row">
-          <span class="status-badge badge-blue">MangaDex</span>
-          <span class="status-badge badge-purple">Webtoon</span>
-          <span class="status-badge badge-green">Manga Plus</span>
-          <span class="status-badge">+37 parsers</span>
-        </div>
-      </div>
+		<section class="container hero">
+			<div class="hero-copy">
+				<p class="eyebrow">Chrome Extension</p>
+				<h1
+					class="hero-title"
+					aria-label="Centraliza tu manga, manhwa, manhua o novela en un solo lugar."
+				>
+					<span class="hero-title-inner" aria-hidden="true">
+						<span class="hero-title-chunk">Centraliza tu</span>
+						<span id="hero-morph" class="hero-morph">
+							<span class="hero-morph-viewport">
+								<span
+									id="hero-morph-track"
+									class="hero-morph-track"
+								>
+									<span class="hero-morph-line">manga</span>
+									<span class="hero-morph-line">manhwa</span>
+									<span class="hero-morph-line">manhua</span>
+									<span class="hero-morph-line">novela</span>
+									<span
+										class="hero-morph-line hero-morph-line--clone"
+										aria-hidden="true">manga</span
+									>
+								</span>
+							</span>
+						</span>
+						<span class="hero-title-chunk">en un solo lugar.</span>
+					</span>
+				</h1>
+				<p class="lead">
+					OmniManga Tracker detecta lecturas en webs compatibles y las
+					organiza en una biblioteca lateral con progreso, listas y
+					actualizaciones en lote.
+				</p>
+				<div class="hero-actions">
+					<a href="#" class="btn btn-primary"
+						><span aria-hidden="true" class="chrome-icon"
+						></span>Instalar extension</a
+					>
+					<a href="#features" class="btn btn-secondary"
+						>Ver funcionalidades</a
+					>
+				</div>
+				<div class="badge-row">
+					<span class="status-badge badge-blue">MangaDex</span>
+					<span class="status-badge badge-purple">Webtoon</span>
+					<span class="status-badge badge-green">Manga Plus</span>
+					<span class="status-badge">+37 parsers</span>
+				</div>
+			</div>
 
-      <div class="hero-visual">
-        <div class="mockup-screen">
-          <div class="hero-swiper-wrap">
-            <div class="swiper hero-swiper" id="hero-swiper">
-              <div class="swiper-wrapper">
-                {sliderImages.map((image, index) => (
-                  <div class="swiper-slide" aria-label={`Captura ${index + 1}`}>
-                    <button type="button" class="hero-slide-zoom" aria-label={`Ampliar captura ${index + 1}`}>
-                      <img src={image} alt={`Captura de OmniManga Tracker ${index + 1}`} loading={index === 0 ? "eager" : "lazy"} />
-                    </button>
-                  </div>
-                ))}
-              </div>
-              <div class="swiper-pagination"></div>
-            </div>
-            <div class="swiper-button-prev hero-swiper-nav-out" aria-label="Slide anterior">
-              <span class="hero-swiper-nav-icon" aria-hidden="true">&lsaquo;</span>
-            </div>
-            <div class="swiper-button-next hero-swiper-nav-out" aria-label="Slide siguiente">
-              <span class="hero-swiper-nav-icon" aria-hidden="true">&rsaquo;</span>
-            </div>
-          </div>
-          <div class="slider-meta">
-            <p id="slider-title" class="mockup-label">{sliderCaptions[0].title}</p>
-            <p id="slider-subtitle" class="mockup-help">{sliderCaptions[0].subtitle}</p>
-          </div>
-        </div>
-        <div class="mockup-chip left-chip logo-chip">
-          <img src="/omnimanga/app-logo.png" alt="OmniManga Tracker logo" />
-        </div>
-      </div>
-    </section>
+			<div class="hero-visual">
+				<div class="mockup-screen">
+					<div class="hero-swiper-wrap">
+						<div class="swiper hero-swiper" id="hero-swiper">
+							<div class="swiper-wrapper">
+								{
+									sliderImages.map((image, index) => (
+										<div
+											class="swiper-slide"
+											aria-label={`Captura ${index + 1}`}
+										>
+											<button
+												type="button"
+												class="hero-slide-zoom"
+												aria-label={`Ampliar captura ${index + 1}`}
+											>
+												<img
+													src={image}
+													alt={`Captura de OmniManga Tracker ${index + 1}`}
+													loading={
+														index === 0
+															? "eager"
+															: "lazy"
+													}
+												/>
+											</button>
+										</div>
+									))
+								}
+							</div>
+							<div class="swiper-pagination"></div>
+						</div>
+						<div
+							class="swiper-button-prev hero-swiper-nav-out"
+							aria-label="Slide anterior"
+						>
+							<span
+								class="hero-swiper-nav-icon"
+								aria-hidden="true">&lsaquo;</span
+							>
+						</div>
+						<div
+							class="swiper-button-next hero-swiper-nav-out"
+							aria-label="Slide siguiente"
+						>
+							<span
+								class="hero-swiper-nav-icon"
+								aria-hidden="true">&rsaquo;</span
+							>
+						</div>
+					</div>
+					<div class="slider-meta">
+						<p id="slider-title" class="mockup-label">
+							{sliderCaptions[0].title}
+						</p>
+						<p id="slider-subtitle" class="mockup-help">
+							{sliderCaptions[0].subtitle}
+						</p>
+					</div>
+				</div>
+				<div class="mockup-chip left-chip logo-chip">
+					<img
+						src="/omnimanga/app-logo.png"
+						alt="OmniManga Tracker logo"
+					/>
+				</div>
+			</div>
+		</section>
 
-    <section class="container trust">
-      <p class="eyebrow">Problema / Solucion</p>
-      <div class="split">
-        <article class="panel">
-          <h2>Tus lecturas estan dispersas entre sitios</h2>
-          <p>El progreso se pierde entre pestanas, marcadores y listas no conectadas.</p>
-        </article>
-        <article class="panel">
-          <h2>Unifica todo en un flujo simple</h2>
-          <p>OmniManga concentra deteccion, organizacion y seguimiento en un solo panel lateral.</p>
-        </article>
-      </div>
-    </section>
+		<section class="container trust">
+			<p class="eyebrow">Problema / Solucion</p>
+			<div class="split">
+				<article class="panel">
+					<h2>Tus lecturas estan dispersas entre sitios</h2>
+					<p>
+						El progreso se pierde entre pestanas, marcadores y
+						listas no conectadas.
+					</p>
+				</article>
+				<article class="panel">
+					<h2>Unifica todo en un flujo simple</h2>
+					<p>
+						OmniManga concentra deteccion, organizacion y
+						seguimiento en un solo panel lateral.
+					</p>
+				</article>
+			</div>
+		</section>
 
-    <section id="features" class="container section">
-      <div class="section-head">
-        <p class="eyebrow">Funcionalidades</p>
-        <h2>Todo lo necesario para gestionar tus lecturas</h2>
-      </div>
-      <div class="feature-grid">
-        {features.map((feature) => (
-          <article class="feature-card">
-            <div class="feature-icon" aria-hidden="true">{feature.icon}</div>
-            <h3>{feature.title}</h3>
-            <p>{feature.description}</p>
-          </article>
-        ))}
-      </div>
-    </section>
+		<section id="features" class="container section">
+			<div class="section-head">
+				<p class="eyebrow">Funcionalidades</p>
+				<h2>Todo lo necesario para gestionar tus lecturas</h2>
+			</div>
+			<div class="feature-grid">
+				{
+					features.map((feature) => (
+						<article class="feature-card">
+							<div class="feature-icon" aria-hidden="true">
+								{feature.icon}
+							</div>
+							<h3>{feature.title}</h3>
+							<p>{feature.description}</p>
+						</article>
+					))
+				}
+			</div>
+		</section>
 
-    <section id="capturas" class="container section">
-      <div class="section-head">
-        <p class="eyebrow">Capacidades</p>
-        <h2>Funciones de la extensión en capturas reales</h2>
-      </div>
-      <div class="feature-capture-grid">
-        {featureCaptures.map((item) => (
-          <article class:list={["feature-capture-card", item.teaser && "feature-capture-card--teaser"]}>
-            {item.teaser ? (
-              <div class="feature-capture-teaser">
-                <h3>{item.title}</h3>
-                {item.caption ? <p>{item.caption}</p> : null}
-              </div>
-            ) : (
-              <>
-                <div class="feature-capture-media">
-                  <img
-                    src={item.src}
-                    alt={item.title}
-                    loading="lazy"
-                    decoding="async"
-                    class="feature-capture-img"
-                  />
-                </div>
-                <div class="feature-capture-text">
-                  <h3>{item.title}</h3>
-                  {item.caption ? <p>{item.caption}</p> : null}
-                </div>
-              </>
-            )}
-          </article>
-        ))}
-      </div>
-    </section>
+		<section id="capturas" class="container section">
+			<div class="section-head">
+				<p class="eyebrow">Capacidades</p>
+				<h2>Funciones de la extensión en capturas reales</h2>
+			</div>
+			<div class="feature-capture-grid">
+				{
+					featureCaptures.map((item) => (
+						<article
+							class:list={[
+								"feature-capture-card",
+								item.teaser && "feature-capture-card--teaser",
+							]}
+						>
+							{item.teaser ? (
+								<div class="feature-capture-teaser">
+									<h3>{item.title}</h3>
+									{item.caption ? (
+										<p>{item.caption}</p>
+									) : null}
+								</div>
+							) : (
+								<>
+									<div class="feature-capture-media">
+										<img
+											src={item.src}
+											alt={item.title}
+											loading="lazy"
+											decoding="async"
+											class="feature-capture-img"
+										/>
+									</div>
+									<div class="feature-capture-text">
+										<h3>{item.title}</h3>
+										{item.caption ? (
+											<p>{item.caption}</p>
+										) : null}
+									</div>
+								</>
+							)}
+						</article>
+					))
+				}
+			</div>
+		</section>
 
-    <section id="como-funciona" class="container section">
-      <div class="section-head">
-        <p class="eyebrow">Como funciona</p>
-        <h2>Tres pasos para empezar rapido</h2>
-      </div>
-      <div class="steps">
-        {howItWorksSteps.map((step) => (
-          <article class="step-card">
-            {step.image ? (
-              <div class="step-card-media">
-                <img src={step.image} alt={step.imageAlt} loading="lazy" decoding="async" class="step-card-img" />
-              </div>
-            ) : null}
-            <span class="step-index">{step.index}</span>
-            <h3>{step.title}</h3>
-            <p>{step.text}</p>
-          </article>
-        ))}
-      </div>
-    </section>
+		<section id="como-funciona" class="container section">
+			<div class="section-head">
+				<p class="eyebrow">Como funciona</p>
+				<h2>Tres pasos para empezar rapido</h2>
+			</div>
+			<div class="steps">
+				{
+					howItWorksSteps.map((step) => (
+						<article class="step-card">
+							{step.image ? (
+								<div class="step-card-media">
+									<img
+										src={step.image}
+										alt={step.imageAlt}
+										loading="lazy"
+										decoding="async"
+										class="step-card-img"
+									/>
+								</div>
+							) : null}
+							<span class="step-index">{step.index}</span>
+							<h3>{step.title}</h3>
+							<p>{step.text}</p>
+						</article>
+					))
+				}
+			</div>
+		</section>
 
-    <section id="faq" class="container section">
-      <div class="section-head"><p class="eyebrow">FAQ</p><h2>Preguntas frecuentes</h2></div>
-      <div class="faq-list">
-        {faqs.map((faq) => (
-          <details class="faq-item">
-            <summary>{faq.question}</summary>
-            <p>{faq.answer}</p>
-          </details>
-        ))}
-      </div>
-    </section>
+		<section id="faq" class="container section">
+			<div class="section-head">
+				<p class="eyebrow">FAQ</p><h2>Preguntas frecuentes</h2>
+			</div>
+			<div class="faq-list">
+				{
+					faqs.map((faq) => (
+						<details class="faq-item">
+							<summary>{faq.question}</summary>
+							<p>{faq.answer}</p>
+						</details>
+					))
+				}
+			</div>
+		</section>
 
-    <section class="container section final-cta">
-      <div class="panel final-panel">
-        <p class="eyebrow">Empieza hoy</p>
-        <h2>Organiza tu lectura sin friccion</h2>
-        <p>Pasa de pestanas dispersas a una biblioteca centralizada con progreso y listas claras.</p>
-        <div class="hero-actions">
-          <a href="#" class="btn btn-primary"><span aria-hidden="true" class="chrome-icon"></span>Instalar extension</a>
-          <a href="#capturas" class="btn btn-secondary">Ver capturas</a>
-        </div>
-      </div>
-    </section>
+		<section class="container section final-cta">
+			<div class="panel final-panel">
+				<p class="eyebrow">Empieza hoy</p>
+				<h2>Organiza tu lectura sin friccion</h2>
+				<p>
+					Pasa de pestanas dispersas a una biblioteca centralizada con
+					progreso y listas claras.
+				</p>
+				<div class="hero-actions">
+					<a href="#" class="btn btn-primary"
+						><span aria-hidden="true" class="chrome-icon"
+						></span>Instalar extension</a
+					>
+					<a href="#capturas" class="btn btn-secondary"
+						>Ver capturas</a
+					>
+				</div>
+			</div>
+		</section>
 
-    <footer class="container footer">OmniManga Tracker - MangaTracker v1.0.0</footer>
-  </main>
+		<footer class="container footer">
+			OmniManga Tracker - MangaTracker v1.0.0
+		</footer>
+	</main>
 
-  <div id="hero-lightbox" class="hero-lightbox" role="dialog" aria-modal="true" aria-label="Captura ampliada" hidden>
-    <button type="button" class="hero-lightbox-close" aria-label="Cerrar">&times;</button>
-    <img class="hero-lightbox-img" alt="" decoding="async" />
-  </div>
+	<div
+		id="hero-lightbox"
+		class="hero-lightbox"
+		role="dialog"
+		aria-modal="true"
+		aria-label="Captura ampliada"
+		hidden
+	>
+		<button type="button" class="hero-lightbox-close" aria-label="Cerrar"
+			>&times;</button
+		>
+		<img class="hero-lightbox-img" alt="" decoding="async" />
+	</div>
 </Layout>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
-.omni-page {
-  position: relative;
-  min-height: 100vh;
-  background-color: #0a0512;
-  background-image:
-    linear-gradient(180deg, rgba(22, 11, 38, 0.9) 0%, rgba(14, 7, 24, 0.97) 1%, rgba(10, 5, 18, 0.95) 100%),
-    url("/omnimanga/back2.jpg");
-  background-size: cover, cover;
-  background-position: center, center;
-  background-repeat: no-repeat;
-  font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  overflow-x: hidden;
-  padding-bottom: 40px;
-}
-.container { width: min(1120px, calc(100% - 2.5rem)); margin-inline: auto; }
-.ambient { position: fixed; pointer-events: none; filter: blur(56px); opacity: .35; z-index: 0; }
-.ambient-top { width: 360px; height: 360px; top: -120px; left: -80px; background: radial-gradient(circle, #7b3fbf 0%, rgba(123,63,191,0) 72%); }
-.ambient-bottom { width: 440px; height: 440px; right: -120px; bottom: -200px; background: radial-gradient(circle, #b089ec 0%, rgba(176,137,236,0) 74%); }
-.nav-wrap { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); background: rgba(7,4,14,.55); border-bottom: 1px solid rgba(255,255,255,.09); }
-.nav-inner { display: flex; align-items: center; justify-content: space-between; padding-block: 14px; }
-.brand { display: flex; align-items: center; gap: 10px; }
-.brand-icon { width: 34px; height: 34px; border-radius: 10px; border: 1px solid rgba(255,255,255,.18); }
-.brand-wordmark { height: 18px; width: auto; opacity: .95; }
-.desktop-nav { display: flex; gap: 22px; font-size: 14px; color: #bfbab0; }
-.desktop-nav a:hover { color: #fff; }
-.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-.nav-toggle {
-  display: none;
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  margin: 0;
-  padding: 0;
-  border: 1px solid rgba(255,255,255,.14);
-  border-radius: 12px;
-  background: rgba(255,255,255,.06);
-  color: #e8e5de;
-  cursor: pointer;
-}
-.nav-toggle:hover { background: rgba(255,255,255,.1); }
-.nav-toggle:focus-visible { outline: 2px solid #c9a8f5; outline-offset: 2px; }
-.nav-toggle-bars {
-  display: block;
-  width: 20px;
-  height: 2px;
-  border-radius: 1px;
-  background: currentColor;
-  box-shadow: 0 -6px 0 currentColor, 0 6px 0 currentColor;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-}
-.nav-toggle.is-open .nav-toggle-bars {
-  box-shadow: none;
-  background:
-    linear-gradient(currentColor, currentColor) 50% 50% / 100% 2px no-repeat,
-    linear-gradient(currentColor, currentColor) 50% 50% / 2px 20px no-repeat;
-  transform: rotate(45deg);
-}
-.mobile-nav-dropdown {
-  border-top: 1px solid rgba(255,255,255,.08);
-  background: rgba(7,4,14,.92);
-  backdrop-filter: blur(12px);
-}
-.mobile-nav-dropdown[hidden] { display: none !important; }
-.mobile-nav-inner { padding-block: 12px 16px; }
-.mobile-nav { display: flex; flex-direction: column; gap: 4px; }
-.mobile-nav a {
-  display: block;
-  padding: 12px 14px;
-  border-radius: 12px;
-  font-size: 15px;
-  font-weight: 500;
-  color: #e8e5de;
-  text-decoration: none;
-  border: 1px solid transparent;
-}
-.mobile-nav a:hover { background: rgba(255,255,255,.06); color: #fff; }
-.mobile-nav a:focus-visible { outline: 2px solid #c9a8f5; outline-offset: 2px; }
-.hero { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 42px; padding-top: 68px; padding-bottom: 72px; align-items: center; }
-.eyebrow { font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: #8f8a81; margin-bottom: 14px; }
-.hero-copy h1 { font-size: clamp(2.1rem, 4.4vw, 3.35rem); line-height: 1.08; font-weight: 600; max-width: 16ch; }
-.lead { margin-top: 20px; font-size: 15px; line-height: 1.65; color: #c8c2b7; max-width: 56ch; }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-.btn { display: inline-flex; align-items: center; gap: 8px; border-radius: 12px; padding: 12px 18px; font-size: 14px; font-weight: 500; }
-.btn-primary { color: #f8f3ff; background: #7b3fbf; box-shadow: 0 1px 0 rgba(255,255,255,.1) inset, 0 2px 10px rgba(49,19,78,.45), 0 0 0 1px rgba(123,63,191,.45); }
-.btn-primary:hover { background: #6d31b1; }
-.btn-secondary { color: #e8e5de; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); }
-.btn-secondary:hover { background: rgba(255,255,255,.08); }
-.chrome-icon { width: 14px; height: 14px; border-radius: 999px; background: conic-gradient(from 45deg, #fbbc04 0deg 120deg, #34a853 120deg 240deg, #ea4335 240deg 360deg); position: relative; display: inline-block; }
-.chrome-icon::after { content: ""; position: absolute; inset: 3px; border-radius: 999px; background: #4285f4; }
-.badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
-.status-badge { display: inline-flex; align-items: center; border-radius: 10px; padding: 4px 10px; font-size: 12px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06); color: #bfbab0; }
-.badge-green { border-color: rgba(74,200,130,.35); background: rgba(74,200,130,.14); color: #6be3a1; }
-.badge-blue { border-color: rgba(90,140,255,.35); background: rgba(90,140,255,.14); color: #9bb4ff; }
-.badge-purple { border-color: rgba(138,80,200,.5); background: rgba(123,63,191,.18); color: #c9a8f5; }
-.hero-visual { position: relative; max-width: 370px; width: 100%; justify-self: end; }
-.mockup-screen { position: relative; z-index: 0; border-radius: 16px; border: 1px solid rgba(255,255,255,.14); background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02)), radial-gradient(circle at 20% 10%, rgba(201,168,245,.18), rgba(201,168,245,0)); text-align: center; padding: 0; overflow: visible; }
-.hero-swiper-wrap { position: relative; --hero-swiper-nav-gap: 10px; }
-.hero-swiper { width: 100%; height: auto; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.12); background: #0d0717; --swiper-navigation-size: 18px; --swiper-navigation-color: #e8e5de; --swiper-pagination-color: #c9a8f5; --swiper-pagination-bullet-inactive-color: rgba(255,255,255,.45); --swiper-pagination-bullet-inactive-opacity: 1; }
-.hero-swiper .swiper-slide { display: grid; place-items: center; background: #0d0717; box-sizing: border-box; }
-.hero-slide-zoom { display: block; width: 100%; padding: 0; margin: 0; border: 0; background: none; cursor: pointer; color: inherit; font: inherit; text-align: inherit; }
-.hero-slide-zoom:focus-visible { outline: 2px solid #c9a8f5; outline-offset: 2px; border-radius: 4px; }
-.hero-slide-zoom img { width: 100%; height: auto; object-fit: contain; object-position: center; display: block; pointer-events: none; }
-.hero-lightbox { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; padding: clamp(16px, 4vw, 40px); background: rgba(5, 3, 12, 0.94); backdrop-filter: blur(6px); cursor: pointer; }
-.hero-lightbox[hidden] { display: none !important; }
-.hero-lightbox-img { max-width: min(96vw, 1280px); max-height: min(90vh, 900px); width: auto; height: auto; object-fit: contain; border-radius: 10px; box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55); cursor: default; }
-.hero-lightbox-close { position: fixed; top: 16px; right: 16px; z-index: 101; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(15, 8, 27, 0.85); color: #e8e5de; font-size: 28px; line-height: 1; cursor: pointer; }
-.hero-lightbox-close:hover { background: rgba(123, 63, 191, 0.35); border-color: rgba(201, 168, 245, 0.45); }
-.hero-lightbox-close:focus-visible { outline: 2px solid #c9a8f5; outline-offset: 2px; }
-.hero-swiper-wrap .hero-swiper-nav-out.swiper-button-prev,
-.hero-swiper-wrap .hero-swiper-nav-out.swiper-button-next { width: 32px; height: 32px; margin-top: 0; top: 50%; transform: translateY(-50%); background: rgba(12, 7, 22, 0.72); border: 1px solid rgba(255,255,255,.16); border-radius: 999px; z-index: 2; }
-.hero-swiper-wrap .hero-swiper-nav-out.swiper-button-prev { left: auto; right: calc(100% + var(--hero-swiper-nav-gap)); }
-.hero-swiper-wrap .hero-swiper-nav-out.swiper-button-next { right: auto; left: calc(100% + var(--hero-swiper-nav-gap)); }
-.hero-swiper-wrap .hero-swiper-nav-out.swiper-button-prev::after,
-.hero-swiper-wrap .hero-swiper-nav-out.swiper-button-next::after { content: ""; }
-.hero-swiper-nav-icon { font-size: 20px; line-height: 1; font-weight: 600; color: #e8e5de; display: block; transform: translateY(-1px); }
-.hero-swiper .swiper-pagination { bottom: 6px !important; }
-.slider-meta { padding: 12px 14px 14px; border-top: 1px solid rgba(255,255,255,.08); }
-.mockup-label { font-size: 12px; letter-spacing: .14em; color: #c9a8f5; }
-.mockup-help { margin-top: 8px; font-size: 13px; color: #9e988d; }
-.mockup-chip { position: absolute; font-size: 11px; padding: 7px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); background: rgba(15,8,27,.7); color: #d7cfbf; }
-.logo-chip { z-index: 2; padding: 4px; width: 60px; height: 60px; display: grid; place-items: center; border-radius: 12px; }
-.logo-chip img { width: 100%; height: 100%; object-fit: cover; border-radius: 9px; display: block; }
-.left-chip { right: -20px; top: -18px; }
-.right-chip { right: -8px; bottom: 16px; }
-.section { position: relative; z-index: 1; padding-top: 24px; padding-bottom: 38px; }
-.trust { position: relative; z-index: 1; padding-bottom: 30px; }
-.split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.panel { border-radius: 16px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); padding: 26px; }
-.panel h2 { font-size: 1.45rem; line-height: 1.25; }
-.panel p { margin-top: 11px; font-size: 14px; line-height: 1.6; color: #c2bcae; }
-.section-head h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); max-width: 24ch; line-height: 1.2; }
-.feature-grid { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
-.feature-card { border-radius: 14px; border: 1px solid rgba(255,255,255,.09); background: rgba(255,255,255,.03); padding: 20px; }
-.feature-icon { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 10px; background: rgba(123,63,191,.18); color: #d9bcff; font-size: 16px; }
-.feature-card h3 { margin-top: 14px; font-size: 1rem; }
-.feature-card p { margin-top: 8px; font-size: 14px; line-height: 1.55; color: #b9b3a8; }
-.feature-capture-grid { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
-.feature-capture-card { border-radius: 16px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.03); overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
-.feature-capture-media { background: #0d0717; border-bottom: 1px solid rgba(255,255,255,.08); padding: 12px; }
-.feature-capture-img { width: 100%; height: auto; max-height: min(520px, 70vh); display: block; object-fit: contain; object-position: center; border-radius: 12px; vertical-align: middle; }
-.feature-capture-text { padding: 18px 20px 20px; }
-.feature-capture-text h3 { font-size: 1rem; font-weight: 600; line-height: 1.3; }
-.feature-capture-text p { margin-top: 8px; font-size: 14px; line-height: 1.55; color: #b9b3a8; }
-.feature-capture-card--teaser { display: flex; min-height: 0; }
-.feature-capture-teaser {
-  flex: 1;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding: 28px 20px;
-  margin: 12px;
-  border-radius: 12px;
-  border: 1px dashed rgba(201, 168, 245, 0.45);
-  background: rgba(123, 63, 191, 0.08);
-  min-height: min(200px, 28vw);
-}
-.feature-capture-teaser h3 {
-  font-size: clamp(1rem, 2.5vw, 1.15rem);
-  font-weight: 600;
-  line-height: 1.35;
-  color: #e8e5de;
-  margin: 0;
-}
-.feature-capture-teaser p { margin-top: 8px; font-size: 14px; line-height: 1.55; color: #b9b3a8; }
-.steps { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; align-items: start; }
-.step-card { border-radius: 14px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.03); padding: 20px; display: flex; flex-direction: column; min-width: 0; }
-.step-card-media { margin: -20px -20px 14px -20px; border-radius: 14px 14px 0 0; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,.08); background: #0d0717; }
-.step-card-img { width: 100%; height: auto; display: block; object-fit: contain; object-position: center; }
-.step-index { font-size: 12px; letter-spacing: .14em; color: #c9a8f5; }
-.step-card h3 { margin-top: 10px; font-size: 1rem; }
-.step-card p { margin-top: 8px; font-size: 14px; line-height: 1.55; color: #b9b3a8; }
-.faq-list { margin-top: 22px; display: grid; gap: 10px; }
-.faq-item { border-radius: 14px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.03); padding: 18px; }
-.faq-item summary { cursor: pointer; font-size: 15px; font-weight: 500; }
-.faq-item p { margin-top: 10px; font-size: 14px; color: #bab4aa; line-height: 1.6; }
-.final-cta { padding-top: 18px; }
-.final-panel { text-align: center; }
-.final-panel h2 { font-size: clamp(1.8rem, 3.2vw, 2.4rem); }
-.final-panel p { margin-inline: auto; max-width: 56ch; }
-.final-panel .hero-actions { justify-content: center; }
-.footer { position: relative; z-index: 1; margin-top: 16px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.1); color: #8a8478; font-size: 13px; text-align: center; }
-@media (max-width: 1024px) {
-  .hero { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-top: 44px; align-items: start; }
-  .hero-copy { min-width: 0; }
-  .hero-copy h1 { max-width: 22ch; }
-  .hero-visual { justify-self: center; width: 100%; max-width: min(100%, 440px); min-width: 0; }
-  .feature-grid,.steps { grid-template-columns: repeat(2,minmax(0,1fr)); }
-  .feature-capture-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .split { grid-template-columns: 1fr; }
-}
-@media (max-width: 740px) {
-  .container { width: min(1120px, calc(100% - 1.4rem)); }
-  .nav-inner { padding-block: 12px; }
-  .desktop-nav { display: none; }
-  .nav-toggle { display: inline-flex; }
-  .hero {
-    padding-top: 28px;
-    padding-bottom: 40px;
-    gap: 24px;
-    align-items: stretch;
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .hero-copy {
-    min-width: 0;
-    text-align: center;
-  }
-  .hero-copy .eyebrow { margin-inline: auto; }
-  .hero-copy h1 { font-size: clamp(1.85rem, 8.2vw, 2.35rem); line-height: 1.12; max-width: 18ch; margin-inline: auto; }
-  .lead { font-size: 14px; line-height: 1.6; margin-top: 14px; max-width: 36ch; margin-inline: auto; }
-  .feature-grid,.steps { grid-template-columns: 1fr; }
-  .hero-actions { width: 100%; margin-top: 20px; justify-content: center; }
-  .btn { justify-content: center; width: 100%; max-width: 320px; padding: 11px 14px; }
-  .badge-row { justify-content: center; margin-top: 16px; }
-  .hero-visual {
-    width: 100%;
-    max-width: 100%;
-    justify-self: stretch;
-    text-align: center;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-  .mockup-screen {
-    width: 100%;
-    max-width: 100%;
-    border-radius: 14px;
-    overflow: hidden;
-  }
-  .hero-swiper-wrap { width: 100%; --hero-swiper-nav-gap: 0px; }
-  .hero-swiper-wrap .hero-swiper-nav-out.swiper-button-prev,
-  .hero-swiper-wrap .hero-swiper-nav-out.swiper-button-next {
-    width: 30px;
-    height: 30px;
-    top: 50%;
-    bottom: auto;
-    transform: translateY(-50%);
-    background: rgba(12, 7, 22, 0.82);
-  }
-  .hero-swiper-wrap .hero-swiper-nav-out.swiper-button-prev { left: 8px; right: auto; }
-  .hero-swiper-wrap .hero-swiper-nav-out.swiper-button-next { right: 8px; left: auto; }
-  .hero-swiper .swiper-pagination { bottom: 8px !important; }
-  .slider-meta { padding: 10px 12px 12px; text-align: center; }
-  .mockup-label { letter-spacing: 0.1em; }
-  .left-chip,.right-chip { position: static; display: inline-flex; margin-top: 4px; margin-inline: 4px; }
-  .logo-chip { width: 52px; height: 52px; margin-top: 2px; }
-  .section { padding-top: 18px; padding-bottom: 30px; }
-  .panel { padding: 20px; }
-  .feature-capture-grid { grid-template-columns: 1fr; }
-  .feature-capture-img { max-height: min(440px, 62vh); }
-}
-@media (max-width: 420px) {
-  .container { width: min(1120px, calc(100% - 1rem)); }
-  .hero-copy h1 { font-size: clamp(1.7rem, 8.8vw, 2.1rem); max-width: 100%; }
-  .lead { max-width: 100%; }
-  .mockup-help { font-size: 12px; }
-  .btn { max-width: none; }
-}
+	@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+	.omni-page {
+		position: relative;
+		min-height: 100vh;
+		background-color: #0a0512;
+		background-image:
+			linear-gradient(
+				180deg,
+				rgba(22, 11, 38, 0.9) 0%,
+				rgba(14, 7, 24, 0.97) 1%,
+				rgba(10, 5, 18, 0.95) 100%
+			),
+			url("/omnimanga/back2.jpg");
+		background-size: cover, cover;
+		background-position: center, center;
+		background-repeat: no-repeat;
+		font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+		overflow-x: hidden;
+		padding-bottom: 40px;
+	}
+	.container {
+		width: min(1120px, calc(100% - 2.5rem));
+		margin-inline: auto;
+	}
+	.ambient {
+		position: fixed;
+		pointer-events: none;
+		filter: blur(56px);
+		opacity: 0.35;
+		z-index: 0;
+	}
+	.ambient-top {
+		width: 360px;
+		height: 360px;
+		top: -120px;
+		left: -80px;
+		background: radial-gradient(
+			circle,
+			#7b3fbf 0%,
+			rgba(123, 63, 191, 0) 72%
+		);
+	}
+	.ambient-bottom {
+		width: 440px;
+		height: 440px;
+		right: -120px;
+		bottom: -200px;
+		background: radial-gradient(
+			circle,
+			#b089ec 0%,
+			rgba(176, 137, 236, 0) 74%
+		);
+	}
+	.nav-wrap {
+		position: sticky;
+		top: 0;
+		z-index: 20;
+		backdrop-filter: blur(10px);
+		background: rgba(7, 4, 14, 0.55);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+	}
+	.nav-inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding-block: 14px;
+	}
+	.brand {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+	.brand-icon {
+		width: 34px;
+		height: 34px;
+		border-radius: 10px;
+		border: 1px solid rgba(255, 255, 255, 0.18);
+	}
+	.brand-wordmark {
+		height: 18px;
+		width: auto;
+		opacity: 0.95;
+	}
+	.desktop-nav {
+		display: flex;
+		gap: 22px;
+		font-size: 14px;
+		color: #bfbab0;
+	}
+	.desktop-nav a:hover {
+		color: #fff;
+	}
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+	.nav-toggle {
+		display: none;
+		position: relative;
+		align-items: center;
+		justify-content: center;
+		width: 44px;
+		height: 44px;
+		margin: 0;
+		padding: 0;
+		border: 1px solid rgba(255, 255, 255, 0.14);
+		border-radius: 12px;
+		background: rgba(255, 255, 255, 0.06);
+		color: #e8e5de;
+		cursor: pointer;
+	}
+	.nav-toggle:hover {
+		background: rgba(255, 255, 255, 0.1);
+	}
+	.nav-toggle:focus-visible {
+		outline: 2px solid #c9a8f5;
+		outline-offset: 2px;
+	}
+	.nav-toggle-bars {
+		display: block;
+		width: 20px;
+		height: 2px;
+		border-radius: 1px;
+		background: currentColor;
+		box-shadow:
+			0 -6px 0 currentColor,
+			0 6px 0 currentColor;
+		transition:
+			transform 0.2s ease,
+			box-shadow 0.2s ease,
+			background 0.2s ease;
+	}
+	.nav-toggle.is-open .nav-toggle-bars {
+		box-shadow: none;
+		background:
+			linear-gradient(currentColor, currentColor) 50% 50% / 100% 2px
+				no-repeat,
+			linear-gradient(currentColor, currentColor) 50% 50% / 2px 20px
+				no-repeat;
+		transform: rotate(45deg);
+	}
+	.mobile-nav-dropdown {
+		border-top: 1px solid rgba(255, 255, 255, 0.08);
+		background: rgba(7, 4, 14, 0.92);
+		backdrop-filter: blur(12px);
+	}
+	.mobile-nav-dropdown[hidden] {
+		display: none !important;
+	}
+	.mobile-nav-inner {
+		padding-block: 12px 16px;
+	}
+	.mobile-nav {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+	.mobile-nav a {
+		display: block;
+		padding: 12px 14px;
+		border-radius: 12px;
+		font-size: 15px;
+		font-weight: 500;
+		color: #e8e5de;
+		text-decoration: none;
+		border: 1px solid transparent;
+	}
+	.mobile-nav a:hover {
+		background: rgba(255, 255, 255, 0.06);
+		color: #fff;
+	}
+	.mobile-nav a:focus-visible {
+		outline: 2px solid #c9a8f5;
+		outline-offset: 2px;
+	}
+	.hero {
+		position: relative;
+		z-index: 1;
+		display: grid;
+		grid-template-columns: 1.15fr 0.85fr;
+		gap: 42px;
+		padding-top: 68px;
+		padding-bottom: 72px;
+		align-items: center;
+	}
+	.eyebrow {
+		font-size: 10.5px;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: #8f8a81;
+		margin-bottom: 14px;
+	}
+	.hero-copy h1 {
+		font-size: clamp(2.1rem, 4.4vw, 3.35rem);
+		line-height: 1.08;
+		font-weight: 600;
+		max-width: 22ch;
+	}
+	.hero-title-inner {
+		display: inline-flex;
+		flex-wrap: wrap;
+		align-items: center;
+		column-gap: 0.2em;
+		row-gap: 0.2em;
+	}
+	.hero-title-chunk {
+		display: inline;
+	}
+	.hero-morph {
+		display: inline-block;
+		position: relative;
+		top: 0.08em;
+		flex-shrink: 0;
+	}
+	.hero-morph-viewport {
+		display: inline-block;
+		overflow: hidden;
+		min-width: 7.4ch;
+		text-align: left;
+		line-height: 0;
+		height: calc(1.25em + 0.1em);
+		padding: 0.04em 0 0.06em;
+		box-sizing: border-box;
+	}
+	.hero-morph-track {
+		display: block;
+		will-change: transform;
+		transition: transform 0.72s cubic-bezier(0.32, 0.92, 0.28, 1);
+	}
+	.hero-morph-line {
+		display: block;
+		height: 1.3em;
+		line-height: 1.25;
+		font-weight: 600;
+		white-space: nowrap;
+		padding: 0 0 0.1em;
+		box-sizing: border-box;
+		background: linear-gradient(
+			125deg,
+			#f5ecff 0%,
+			#c9a8f5 38%,
+			#7b3fbf 100%
+		);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+		-webkit-text-fill-color: transparent;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.hero-morph-track {
+			transition: none !important;
+		}
+	}
+	.lead {
+		margin-top: 20px;
+		font-size: 15px;
+		line-height: 1.65;
+		color: #c8c2b7;
+		max-width: 56ch;
+	}
+	.hero-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+		margin-top: 28px;
+	}
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		border-radius: 12px;
+		padding: 12px 18px;
+		font-size: 14px;
+		font-weight: 500;
+	}
+	.btn-primary {
+		color: #f8f3ff;
+		background: #7b3fbf;
+		box-shadow:
+			0 1px 0 rgba(255, 255, 255, 0.1) inset,
+			0 2px 10px rgba(49, 19, 78, 0.45),
+			0 0 0 1px rgba(123, 63, 191, 0.45);
+	}
+	.btn-primary:hover {
+		background: #6d31b1;
+	}
+	.btn-secondary {
+		color: #e8e5de;
+		background: rgba(255, 255, 255, 0.04);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+	}
+	.btn-secondary:hover {
+		background: rgba(255, 255, 255, 0.08);
+	}
+	.chrome-icon {
+		width: 14px;
+		height: 14px;
+		border-radius: 999px;
+		background: conic-gradient(
+			from 45deg,
+			#fbbc04 0deg 120deg,
+			#34a853 120deg 240deg,
+			#ea4335 240deg 360deg
+		);
+		position: relative;
+		display: inline-block;
+	}
+	.chrome-icon::after {
+		content: "";
+		position: absolute;
+		inset: 3px;
+		border-radius: 999px;
+		background: #4285f4;
+	}
+	.badge-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-top: 18px;
+	}
+	.status-badge {
+		display: inline-flex;
+		align-items: center;
+		border-radius: 10px;
+		padding: 4px 10px;
+		font-size: 12px;
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		background: rgba(255, 255, 255, 0.06);
+		color: #bfbab0;
+	}
+	.badge-green {
+		border-color: rgba(74, 200, 130, 0.35);
+		background: rgba(74, 200, 130, 0.14);
+		color: #6be3a1;
+	}
+	.badge-blue {
+		border-color: rgba(90, 140, 255, 0.35);
+		background: rgba(90, 140, 255, 0.14);
+		color: #9bb4ff;
+	}
+	.badge-purple {
+		border-color: rgba(138, 80, 200, 0.5);
+		background: rgba(123, 63, 191, 0.18);
+		color: #c9a8f5;
+	}
+	.hero-visual {
+		position: relative;
+		max-width: 370px;
+		width: 100%;
+		justify-self: end;
+	}
+	.mockup-screen {
+		position: relative;
+		z-index: 0;
+		border-radius: 16px;
+		border: 1px solid rgba(255, 255, 255, 0.14);
+		background:
+			linear-gradient(
+				180deg,
+				rgba(255, 255, 255, 0.07),
+				rgba(255, 255, 255, 0.02)
+			),
+			radial-gradient(
+				circle at 20% 10%,
+				rgba(201, 168, 245, 0.18),
+				rgba(201, 168, 245, 0)
+			);
+		text-align: center;
+		padding: 0;
+		overflow: visible;
+	}
+	.hero-swiper-wrap {
+		position: relative;
+		--hero-swiper-nav-gap: 10px;
+	}
+	.hero-swiper {
+		width: 100%;
+		height: auto;
+		border-radius: 12px;
+		overflow: hidden;
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		background: #0d0717;
+		--swiper-navigation-size: 18px;
+		--swiper-navigation-color: #e8e5de;
+		--swiper-pagination-color: #c9a8f5;
+		--swiper-pagination-bullet-inactive-color: rgba(255, 255, 255, 0.45);
+		--swiper-pagination-bullet-inactive-opacity: 1;
+	}
+	.hero-swiper .swiper-slide {
+		display: grid;
+		place-items: center;
+		background: #0d0717;
+		box-sizing: border-box;
+	}
+	.hero-slide-zoom {
+		display: block;
+		width: 100%;
+		padding: 0;
+		margin: 0;
+		border: 0;
+		background: none;
+		cursor: pointer;
+		color: inherit;
+		font: inherit;
+		text-align: inherit;
+	}
+	.hero-slide-zoom:focus-visible {
+		outline: 2px solid #c9a8f5;
+		outline-offset: 2px;
+		border-radius: 4px;
+	}
+	.hero-slide-zoom img {
+		width: 100%;
+		height: auto;
+		object-fit: contain;
+		object-position: center;
+		display: block;
+		pointer-events: none;
+	}
+	.hero-lightbox {
+		position: fixed;
+		inset: 0;
+		z-index: 100;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: clamp(16px, 4vw, 40px);
+		background: rgba(5, 3, 12, 0.94);
+		backdrop-filter: blur(6px);
+		cursor: pointer;
+	}
+	.hero-lightbox[hidden] {
+		display: none !important;
+	}
+	.hero-lightbox-img {
+		max-width: min(96vw, 1280px);
+		max-height: min(90vh, 900px);
+		width: auto;
+		height: auto;
+		object-fit: contain;
+		border-radius: 10px;
+		box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+		cursor: default;
+	}
+	.hero-lightbox-close {
+		position: fixed;
+		top: 16px;
+		right: 16px;
+		z-index: 101;
+		width: 44px;
+		height: 44px;
+		display: grid;
+		place-items: center;
+		border-radius: 999px;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		background: rgba(15, 8, 27, 0.85);
+		color: #e8e5de;
+		font-size: 28px;
+		line-height: 1;
+		cursor: pointer;
+	}
+	.hero-lightbox-close:hover {
+		background: rgba(123, 63, 191, 0.35);
+		border-color: rgba(201, 168, 245, 0.45);
+	}
+	.hero-lightbox-close:focus-visible {
+		outline: 2px solid #c9a8f5;
+		outline-offset: 2px;
+	}
+	.hero-swiper-wrap .hero-swiper-nav-out.swiper-button-prev,
+	.hero-swiper-wrap .hero-swiper-nav-out.swiper-button-next {
+		width: 32px;
+		height: 32px;
+		margin-top: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		background: rgba(12, 7, 22, 0.72);
+		border: 1px solid rgba(255, 255, 255, 0.16);
+		border-radius: 999px;
+		z-index: 2;
+	}
+	.hero-swiper-wrap .hero-swiper-nav-out.swiper-button-prev {
+		left: auto;
+		right: calc(100% + var(--hero-swiper-nav-gap));
+	}
+	.hero-swiper-wrap .hero-swiper-nav-out.swiper-button-next {
+		right: auto;
+		left: calc(100% + var(--hero-swiper-nav-gap));
+	}
+	.hero-swiper-wrap .hero-swiper-nav-out.swiper-button-prev::after,
+	.hero-swiper-wrap .hero-swiper-nav-out.swiper-button-next::after {
+		content: "";
+	}
+	.hero-swiper-nav-icon {
+		font-size: 20px;
+		line-height: 1;
+		font-weight: 600;
+		color: #e8e5de;
+		display: block;
+		transform: translateY(-1px);
+	}
+	.hero-swiper .swiper-pagination {
+		bottom: 6px !important;
+	}
+	.slider-meta {
+		padding: 12px 14px 14px;
+		border-top: 1px solid rgba(255, 255, 255, 0.08);
+	}
+	.mockup-label {
+		font-size: 12px;
+		letter-spacing: 0.14em;
+		color: #c9a8f5;
+	}
+	.mockup-help {
+		margin-top: 8px;
+		font-size: 13px;
+		color: #9e988d;
+	}
+	.mockup-chip {
+		position: absolute;
+		font-size: 11px;
+		padding: 7px 10px;
+		border-radius: 999px;
+		border: 1px solid rgba(255, 255, 255, 0.14);
+		background: rgba(15, 8, 27, 0.7);
+		color: #d7cfbf;
+	}
+	.logo-chip {
+		z-index: 2;
+		padding: 4px;
+		width: 60px;
+		height: 60px;
+		display: grid;
+		place-items: center;
+		border-radius: 12px;
+	}
+	.logo-chip img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 9px;
+		display: block;
+	}
+	.left-chip {
+		right: -20px;
+		top: -18px;
+	}
+	.right-chip {
+		right: -8px;
+		bottom: 16px;
+	}
+	.section {
+		position: relative;
+		z-index: 1;
+		padding-top: 24px;
+		padding-bottom: 38px;
+	}
+	.trust {
+		position: relative;
+		z-index: 1;
+		padding-bottom: 30px;
+	}
+	.split {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 16px;
+	}
+	.panel {
+		border-radius: 16px;
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		background: rgba(255, 255, 255, 0.04);
+		padding: 26px;
+	}
+	.panel h2 {
+		font-size: 1.45rem;
+		line-height: 1.25;
+	}
+	.panel p {
+		margin-top: 11px;
+		font-size: 14px;
+		line-height: 1.6;
+		color: #c2bcae;
+	}
+	.section-head h2 {
+		font-size: clamp(1.6rem, 3vw, 2.2rem);
+		max-width: 24ch;
+		line-height: 1.2;
+	}
+	.feature-grid {
+		margin-top: 22px;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 12px;
+	}
+	.feature-card {
+		border-radius: 14px;
+		border: 1px solid rgba(255, 255, 255, 0.09);
+		background: rgba(255, 255, 255, 0.03);
+		padding: 20px;
+	}
+	.feature-icon {
+		width: 30px;
+		height: 30px;
+		display: grid;
+		place-items: center;
+		border-radius: 10px;
+		background: rgba(123, 63, 191, 0.18);
+		color: #d9bcff;
+		font-size: 16px;
+	}
+	.feature-card h3 {
+		margin-top: 14px;
+		font-size: 1rem;
+	}
+	.feature-card p {
+		margin-top: 8px;
+		font-size: 14px;
+		line-height: 1.55;
+		color: #b9b3a8;
+	}
+	.feature-capture-grid {
+		margin-top: 22px;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 16px;
+		align-items: start;
+	}
+	.feature-capture-card {
+		border-radius: 16px;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		background: rgba(255, 255, 255, 0.03);
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+	.feature-capture-media {
+		background: #0d0717;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+		padding: 12px;
+	}
+	.feature-capture-img {
+		width: 100%;
+		height: auto;
+		max-height: min(520px, 70vh);
+		display: block;
+		object-fit: contain;
+		object-position: center;
+		border-radius: 12px;
+		vertical-align: middle;
+	}
+	.feature-capture-text {
+		padding: 18px 20px 20px;
+	}
+	.feature-capture-text h3 {
+		font-size: 1rem;
+		font-weight: 600;
+		line-height: 1.3;
+	}
+	.feature-capture-text p {
+		margin-top: 8px;
+		font-size: 14px;
+		line-height: 1.55;
+		color: #b9b3a8;
+	}
+	.feature-capture-card--teaser {
+		display: flex;
+		min-height: 0;
+	}
+	.feature-capture-teaser {
+		flex: 1;
+		display: grid;
+		place-items: center;
+		text-align: center;
+		padding: 28px 20px;
+		margin: 12px;
+		border-radius: 12px;
+		border: 1px dashed rgba(201, 168, 245, 0.45);
+		background: rgba(123, 63, 191, 0.08);
+		min-height: min(200px, 28vw);
+	}
+	.feature-capture-teaser h3 {
+		font-size: clamp(1rem, 2.5vw, 1.15rem);
+		font-weight: 600;
+		line-height: 1.35;
+		color: #e8e5de;
+		margin: 0;
+	}
+	.feature-capture-teaser p {
+		margin-top: 8px;
+		font-size: 14px;
+		line-height: 1.55;
+		color: #b9b3a8;
+	}
+	.steps {
+		margin-top: 22px;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 12px;
+		align-items: start;
+	}
+	.step-card {
+		border-radius: 14px;
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		background: rgba(255, 255, 255, 0.03);
+		padding: 20px;
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+	.step-card-media {
+		margin: -20px -20px 14px -20px;
+		border-radius: 14px 14px 0 0;
+		overflow: hidden;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+		background: #0d0717;
+	}
+	.step-card-img {
+		width: 100%;
+		height: auto;
+		display: block;
+		object-fit: contain;
+		object-position: center;
+	}
+	.step-index {
+		font-size: 12px;
+		letter-spacing: 0.14em;
+		color: #c9a8f5;
+	}
+	.step-card h3 {
+		margin-top: 10px;
+		font-size: 1rem;
+	}
+	.step-card p {
+		margin-top: 8px;
+		font-size: 14px;
+		line-height: 1.55;
+		color: #b9b3a8;
+	}
+	.faq-list {
+		margin-top: 22px;
+		display: grid;
+		gap: 10px;
+	}
+	.faq-item {
+		border-radius: 14px;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		background: rgba(255, 255, 255, 0.03);
+		padding: 18px;
+	}
+	.faq-item summary {
+		cursor: pointer;
+		font-size: 15px;
+		font-weight: 500;
+	}
+	.faq-item p {
+		margin-top: 10px;
+		font-size: 14px;
+		color: #bab4aa;
+		line-height: 1.6;
+	}
+	.final-cta {
+		padding-top: 18px;
+	}
+	.final-panel {
+		text-align: center;
+	}
+	.final-panel h2 {
+		font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+	}
+	.final-panel p {
+		margin-inline: auto;
+		max-width: 56ch;
+	}
+	.final-panel .hero-actions {
+		justify-content: center;
+	}
+	.footer {
+		position: relative;
+		z-index: 1;
+		margin-top: 16px;
+		padding-top: 24px;
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+		color: #8a8478;
+		font-size: 13px;
+		text-align: center;
+	}
+	@media (max-width: 1024px) {
+		.hero {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 28px;
+			padding-top: 44px;
+			align-items: start;
+		}
+		.hero-copy {
+			min-width: 0;
+		}
+		.hero-copy h1 {
+			max-width: 22ch;
+		}
+		.hero-visual {
+			justify-self: center;
+			width: 100%;
+			max-width: min(100%, 440px);
+			min-width: 0;
+		}
+		.feature-grid,
+		.steps {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+		.feature-capture-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+		.split {
+			grid-template-columns: 1fr;
+		}
+	}
+	@media (max-width: 740px) {
+		.container {
+			width: min(1120px, calc(100% - 1.4rem));
+		}
+		.nav-inner {
+			padding-block: 12px;
+		}
+		.desktop-nav {
+			display: none;
+		}
+		.nav-toggle {
+			display: inline-flex;
+		}
+		.hero {
+			padding-top: 28px;
+			padding-bottom: 40px;
+			gap: 24px;
+			align-items: stretch;
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.hero-copy {
+			min-width: 0;
+			text-align: center;
+		}
+		.hero-copy .eyebrow {
+			margin-inline: auto;
+		}
+		.hero-copy h1 {
+			font-size: clamp(1.85rem, 8.2vw, 2.35rem);
+			line-height: 1.12;
+			max-width: 18ch;
+			margin-inline: auto;
+		}
+		.hero-title-inner {
+			justify-content: center;
+		}
+		.hero-morph-viewport {
+			height: calc(1.3em + 0.1em);
+		}
+		.hero-morph-line {
+			height: 1.3em;
+			line-height: 1.3;
+		}
+		.lead {
+			font-size: 14px;
+			line-height: 1.6;
+			margin-top: 14px;
+			max-width: 36ch;
+			margin-inline: auto;
+		}
+		.feature-grid,
+		.steps {
+			grid-template-columns: 1fr;
+		}
+		.hero-actions {
+			width: 100%;
+			margin-top: 20px;
+			justify-content: center;
+		}
+		.btn {
+			justify-content: center;
+			width: 100%;
+			max-width: 320px;
+			padding: 11px 14px;
+		}
+		.badge-row {
+			justify-content: center;
+			margin-top: 16px;
+		}
+		.hero-visual {
+			width: 100%;
+			max-width: 100%;
+			justify-self: stretch;
+			text-align: center;
+			min-width: 0;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 10px;
+		}
+		.mockup-screen {
+			width: 100%;
+			max-width: 100%;
+			border-radius: 14px;
+			overflow: hidden;
+		}
+		.hero-swiper-wrap {
+			width: 100%;
+			--hero-swiper-nav-gap: 0px;
+		}
+		.hero-swiper-wrap .hero-swiper-nav-out.swiper-button-prev,
+		.hero-swiper-wrap .hero-swiper-nav-out.swiper-button-next {
+			width: 30px;
+			height: 30px;
+			top: 50%;
+			bottom: auto;
+			transform: translateY(-50%);
+			background: rgba(12, 7, 22, 0.82);
+		}
+		.hero-swiper-wrap .hero-swiper-nav-out.swiper-button-prev {
+			left: 8px;
+			right: auto;
+		}
+		.hero-swiper-wrap .hero-swiper-nav-out.swiper-button-next {
+			right: 8px;
+			left: auto;
+		}
+		.hero-swiper .swiper-pagination {
+			bottom: 8px !important;
+		}
+		.slider-meta {
+			padding: 10px 12px 12px;
+			text-align: center;
+		}
+		.mockup-label {
+			letter-spacing: 0.1em;
+		}
+		.left-chip,
+		.right-chip {
+			position: static;
+			display: inline-flex;
+			margin-top: 4px;
+			margin-inline: 4px;
+		}
+		.logo-chip {
+			width: 52px;
+			height: 52px;
+			margin-top: 2px;
+		}
+		.section {
+			padding-top: 18px;
+			padding-bottom: 30px;
+		}
+		.panel {
+			padding: 20px;
+		}
+		.feature-capture-grid {
+			grid-template-columns: 1fr;
+		}
+		.feature-capture-img {
+			max-height: min(440px, 62vh);
+		}
+	}
+	@media (max-width: 420px) {
+		.container {
+			width: min(1120px, calc(100% - 1rem));
+		}
+		.hero-copy h1 {
+			font-size: clamp(1.7rem, 8.8vw, 2.1rem);
+			max-width: 100%;
+		}
+		.lead {
+			max-width: 100%;
+		}
+		.mockup-help {
+			font-size: 12px;
+		}
+		.btn {
+			max-width: none;
+		}
+	}
 </style>
 
 <script>
-  import Swiper from "swiper";
-  import { Autoplay, Navigation, Pagination } from "swiper/modules";
+	import Swiper from "swiper";
+	import { Autoplay, Navigation, Pagination } from "swiper/modules";
 
-  const captions = [
-    { title: "Biblioteca y listas", subtitle: "Gestiona y organiza tu lectura fácilmente." },
-    { title: "Vista de obra", subtitle: "Revisa detalles, estado y fuente de cada manga." },
-    { title: "Gestión de capítulos", subtitle: "Marca leídos, ajusta estados, géneros y notas." },
-    { title: "Detección automática", subtitle: "Detecta lecturas compatibles al instante." },
-    { title: "Reconocimiento y fusión", subtitle: "Identifica lecturas ya agregados y fusiona registros." }
-  ];
+	const captions = [
+		{
+			title: "Biblioteca y listas",
+			subtitle: "Gestiona y organiza tu lectura fácilmente.",
+		},
+		{
+			title: "Vista de obra",
+			subtitle: "Revisa detalles, estado y fuente de cada manga.",
+		},
+		{
+			title: "Gestión de capítulos",
+			subtitle: "Marca leídos, ajusta estados, géneros y notas.",
+		},
+		{
+			title: "Detección automática",
+			subtitle: "Detecta lecturas compatibles al instante.",
+		},
+		{
+			title: "Reconocimiento y fusión",
+			subtitle: "Identifica lecturas ya agregados y fusiona registros.",
+		},
+	];
 
-  function initMobileNav() {
-    const toggle = document.getElementById("nav-toggle");
-    const panel = document.getElementById("mobile-nav-dropdown");
-    if (!toggle || !panel || toggle.dataset.navReady === "true") return;
-    toggle.dataset.navReady = "true";
-    const menuToggle = toggle;
-    const menuPanel = panel;
+	function initMobileNav() {
+		const toggle = document.getElementById("nav-toggle");
+		const panel = document.getElementById("mobile-nav-dropdown");
+		if (!toggle || !panel || toggle.dataset.navReady === "true") return;
+		toggle.dataset.navReady = "true";
+		const menuToggle = toggle;
+		const menuPanel = panel;
 
-    function setOpen(open: boolean) {
-      menuToggle.setAttribute("aria-expanded", String(open));
-      menuToggle.classList.toggle("is-open", open);
-      menuPanel.hidden = !open;
-    }
+		function setOpen(open: boolean) {
+			menuToggle.setAttribute("aria-expanded", String(open));
+			menuToggle.classList.toggle("is-open", open);
+			menuPanel.hidden = !open;
+		}
 
-    menuToggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      setOpen(menuPanel.hidden);
-    });
+		menuToggle.addEventListener("click", (e) => {
+			e.stopPropagation();
+			setOpen(menuPanel.hidden);
+		});
 
-    menuPanel.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => setOpen(false));
-    });
+		menuPanel.querySelectorAll("a").forEach((link) => {
+			link.addEventListener("click", () => setOpen(false));
+		});
 
-    document.addEventListener("click", (e) => {
-      if (menuPanel.hidden) return;
-      const el = e.target as Element;
-      if (el.closest("#nav-toggle") || el.closest("#mobile-nav-dropdown")) return;
-      setOpen(false);
-    });
+		document.addEventListener("click", (e) => {
+			if (menuPanel.hidden) return;
+			const el = e.target as Element;
+			if (el.closest("#nav-toggle") || el.closest("#mobile-nav-dropdown"))
+				return;
+			setOpen(false);
+		});
 
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !menuPanel.hidden) setOpen(false);
-    });
+		document.addEventListener("keydown", (e) => {
+			if (e.key === "Escape" && !menuPanel.hidden) setOpen(false);
+		});
 
-    window.addEventListener("resize", () => {
-      if (window.matchMedia("(min-width: 741px)").matches) setOpen(false);
-    });
-  }
+		window.addEventListener("resize", () => {
+			if (window.matchMedia("(min-width: 741px)").matches) setOpen(false);
+		});
+	}
 
-  function initHeroLightbox() {
-    const root = document.getElementById("hero-lightbox");
-    const fullImg = root?.querySelector(".hero-lightbox-img") as HTMLImageElement | null;
-    const closeBtn = root?.querySelector(".hero-lightbox-close") as HTMLButtonElement | null;
-    const swiperEl = document.getElementById("hero-swiper");
-    if (!root || !fullImg || !closeBtn || !swiperEl || root.dataset.lightboxReady === "true") return;
-    root.dataset.lightboxReady = "true";
+	function initHeroLightbox() {
+		const root = document.getElementById("hero-lightbox");
+		const fullImg = root?.querySelector(
+			".hero-lightbox-img",
+		) as HTMLImageElement | null;
+		const closeBtn = root?.querySelector(
+			".hero-lightbox-close",
+		) as HTMLButtonElement | null;
+		const swiperEl = document.getElementById("hero-swiper");
+		if (
+			!root ||
+			!fullImg ||
+			!closeBtn ||
+			!swiperEl ||
+			root.dataset.lightboxReady === "true"
+		)
+			return;
+		root.dataset.lightboxReady = "true";
 
-    const box = root;
-    const img = fullImg;
-    const xbtn = closeBtn;
-    const swiper = swiperEl;
+		const box = root;
+		const img = fullImg;
+		const xbtn = closeBtn;
+		const swiper = swiperEl;
 
-    let lastFocus: HTMLElement | null = null;
+		let lastFocus: HTMLElement | null = null;
 
-    function open(src: string, alt: string) {
-      lastFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-      img.src = src;
-      img.alt = alt;
-      box.hidden = false;
-      document.body.style.overflow = "hidden";
-      xbtn.focus();
-    }
+		function open(src: string, alt: string) {
+			lastFocus =
+				document.activeElement instanceof HTMLElement
+					? document.activeElement
+					: null;
+			img.src = src;
+			img.alt = alt;
+			box.hidden = false;
+			document.body.style.overflow = "hidden";
+			xbtn.focus();
+		}
 
-    function close() {
-      box.hidden = true;
-      document.body.style.overflow = "";
-      img.removeAttribute("src");
-      img.alt = "";
-      lastFocus?.focus();
-      lastFocus = null;
-    }
+		function close() {
+			box.hidden = true;
+			document.body.style.overflow = "";
+			img.removeAttribute("src");
+			img.alt = "";
+			lastFocus?.focus();
+			lastFocus = null;
+		}
 
-    swiper.addEventListener("click", (e) => {
-      const btn = (e.target as HTMLElement).closest(".hero-slide-zoom");
-      if (!btn) return;
-      const thumb = btn.querySelector("img");
-      if (!thumb) return;
-      const src = thumb.currentSrc || thumb.getAttribute("src") || "";
-      if (!src) return;
-      open(src, thumb.alt || "");
-    });
+		swiper.addEventListener("click", (e) => {
+			const btn = (e.target as HTMLElement).closest(".hero-slide-zoom");
+			if (!btn) return;
+			const thumb = btn.querySelector("img");
+			if (!thumb) return;
+			const src = thumb.currentSrc || thumb.getAttribute("src") || "";
+			if (!src) return;
+			open(src, thumb.alt || "");
+		});
 
-    xbtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      close();
-    });
+		xbtn.addEventListener("click", (e) => {
+			e.stopPropagation();
+			close();
+		});
 
-    box.addEventListener("click", (e) => {
-      if (e.target === box) close();
-    });
+		box.addEventListener("click", (e) => {
+			if (e.target === box) close();
+		});
 
-    img.addEventListener("click", (e) => e.stopPropagation());
+		img.addEventListener("click", (e) => e.stopPropagation());
 
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !box.hidden) close();
-    });
-  }
+		document.addEventListener("keydown", (e) => {
+			if (e.key === "Escape" && !box.hidden) close();
+		});
+	}
 
-  function initHeroSwiper() {
-    const el = document.getElementById("hero-swiper");
-    const titleEl = document.getElementById("slider-title");
-    const subtitleEl = document.getElementById("slider-subtitle");
-    if (!el || el.dataset.swiperReady === "true") return;
+	/** Índice de la última fila del carrusel (clon de "manga" para loop sin salto). */
+	const MORPH_LAST_INDEX = 4;
+	const MORPH_INTERVAL_MS = 3200;
 
-    const wrap = el.closest(".hero-swiper-wrap");
-    const nextBtn = (wrap?.querySelector(".swiper-button-next") ?? el.querySelector(".swiper-button-next")) as HTMLElement | null;
-    const prevBtn = (wrap?.querySelector(".swiper-button-prev") ?? el.querySelector(".swiper-button-prev")) as HTMLElement | null;
-    const paginationEl = el.querySelector(".swiper-pagination") as HTMLElement | null;
+	function getMorphLineStepPx(track: HTMLElement) {
+		const first = track.querySelector(".hero-morph-line");
+		return first ? first.getBoundingClientRect().height : 0;
+	}
 
-    const swiper = new Swiper(el, {
-      modules: [Autoplay, Navigation, Pagination],
-      loop: true,
-      autoHeight: true,
-      speed: 1100,
-      autoplay: {
-        delay: 3300,
-        disableOnInteraction: false
-      },
-      navigation: {
-        nextEl: nextBtn,
-        prevEl: prevBtn,
-        addIcons: false
-      },
-      pagination: {
-        el: paginationEl,
-        clickable: true
-      }
-    });
+	function initHeroMorph() {
+		const track = document.getElementById("hero-morph-track");
+		if (!track || track.dataset.morphReady === "true") return;
+		track.dataset.morphReady = "true";
+		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+			return;
+		let pos = 0;
+		window.setInterval(() => {
+			const step = getMorphLineStepPx(track);
+			if (step < 1) return;
+			if (pos === MORPH_LAST_INDEX) {
+				track.style.transition = "none";
+				track.style.transform = "translate3d(0,0,0)";
+				void track.offsetWidth;
+				requestAnimationFrame(() => {
+					track.style.removeProperty("transition");
+					requestAnimationFrame(() => {
+						track.style.transform = `translate3d(0, -${step}px, 0)`;
+					});
+				});
+				pos = 1;
+				return;
+			}
+			const next = pos + 1;
+			track.style.transform = `translate3d(0, -${next * step}px, 0)`;
+			pos = next;
+		}, MORPH_INTERVAL_MS);
+	}
 
-    el.dataset.swiperReady = "true";
+	function initHeroSwiper() {
+		const el = document.getElementById("hero-swiper");
+		const titleEl = document.getElementById("slider-title");
+		const subtitleEl = document.getElementById("slider-subtitle");
+		if (!el || el.dataset.swiperReady === "true") return;
 
-    const updateCaption = () => {
-      if (!titleEl || !subtitleEl) return;
-      const idx = swiper.realIndex ?? 0;
-      const current = captions[idx] ?? captions[0];
-      titleEl.textContent = current.title;
-      subtitleEl.textContent = current.subtitle;
-    };
+		const wrap = el.closest(".hero-swiper-wrap");
+		const nextBtn = (wrap?.querySelector(".swiper-button-next") ??
+			el.querySelector(".swiper-button-next")) as HTMLElement | null;
+		const prevBtn = (wrap?.querySelector(".swiper-button-prev") ??
+			el.querySelector(".swiper-button-prev")) as HTMLElement | null;
+		const paginationEl = el.querySelector(
+			".swiper-pagination",
+		) as HTMLElement | null;
 
-    updateCaption();
-    swiper.on("slideChange", updateCaption);
-  }
+		const swiper = new Swiper(el, {
+			modules: [Autoplay, Navigation, Pagination],
+			loop: true,
+			autoHeight: true,
+			speed: 1100,
+			autoplay: {
+				delay: 3300,
+				disableOnInteraction: false,
+			},
+			navigation: {
+				nextEl: nextBtn,
+				prevEl: prevBtn,
+				addIcons: false,
+			},
+			pagination: {
+				el: paginationEl,
+				clickable: true,
+			},
+		});
 
-  function boot() {
-    initMobileNav();
-    initHeroLightbox();
-    initHeroSwiper();
-  }
+		el.dataset.swiperReady = "true";
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", boot);
-  } else {
-    boot();
-  }
+		const updateCaption = () => {
+			if (!titleEl || !subtitleEl) return;
+			const idx = swiper.realIndex ?? 0;
+			const current = captions[idx] ?? captions[0];
+			titleEl.textContent = current.title;
+			subtitleEl.textContent = current.subtitle;
+		};
+
+		updateCaption();
+		swiper.on("slideChange", updateCaption);
+	}
+
+	function boot() {
+		initMobileNav();
+		initHeroLightbox();
+		initHeroSwiper();
+		initHeroMorph();
+	}
+
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", boot);
+	} else {
+		boot();
+	}
 </script>
