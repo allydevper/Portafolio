@@ -37,9 +37,9 @@ const sliderCaptions = [
 
 const featureCaptures = [
   {
-    file: "accede al listado desde la pantalla principal.png",
-    title: "Acceso al listado",
-    caption: "Abre tu biblioteca desde la pantalla principal sin perder el contexto."
+    file: "con el boton actualizar puedes revisar si hay nuevos capitulos en tu lectura.png",
+    title: "Actualizar novedades",
+    caption: "Comprueba si hay capítulos nuevos con un solo botón."
   },
   {
     file: "marca el capitulo en que te quedaste.png",
@@ -47,28 +47,43 @@ const featureCaptures = [
     caption: "Marca dónde te quedaste y mantén el seguimiento al día."
   },
   {
-    file: "gestion de generos por obra .png",
-    title: "Géneros por obra",
-    caption: "Clasifica cada lectura con géneros que te sirvan para filtrar."
+    file: "acceso a la fuente de tu lectura y actulizar el capitulo con un solo boton.png",
+    title: "Fuente y capítulo",
+    caption: "Abre la fuente de la lectura y actualiza el capítulo con un solo clic."
   },
   {
-    file: "importar-exportar-config-json.png",
-    title: "Importar y exportar JSON",
-    caption: "Respalda tu configuración y restáurala cuando cambies de equipo."
+    file: "grabaste un duplicado. puedes fusionar ambas y juntar tu obra.png",
+    title: "Fusionar duplicados",
+    caption: "Si registraste la misma obra dos veces, unifica registros sin perder datos."
   },
   {
-    file: "con el boton actualizar puedes revisar si hay nuevos capitulos en tu lectura.png",
-    title: "Actualizar novedades",
-    caption: "Comprueba si hay capítulos nuevos con un solo botón."
+    file: "Agrega tu web para acceso; si tiene parse, úsala, si no, usa las predeterminadas o pide actualización..png",
+    title: "Sitios y solicitudes",
+    caption: "Consulta sitios integrados, envía URLs nuevas y revisa si ya hay parser activo."
   },
   {
     file: "organiza tu lectura en grupos para que puedas organizar mejor.png",
     title: "Grupos de lectura",
     caption: "Agrupa obras para ordenar listas largas con más claridad."
+  },
+  {
+    file: "anota referencias y detalles que puedas necesitar.png",
+    title: "Notas y personajes",
+    caption: "Guarda notas personales y referencias de personajes junto a cada obra."
+  },
+  {
+    file: "gestion_generos_de_obras.png",
+    title: "Géneros en la biblioteca",
+    caption: "Filtra, edita o fusiona etiquetas y ve cuántas obras usan cada género."
+  },
+  {
+    title: "Y muchas más opciones a descubrir",
+    caption: "",
+    teaser: true
   }
 ].map((item) => ({
   ...item,
-  src: encodeURI(`/omnimanga/features/${item.file}`)
+  src: "file" in item && item.file ? encodeURI(`/omnimanga/features/${item.file}`) : undefined
 }));
 ---
 
@@ -177,7 +192,7 @@ const featureCaptures = [
 
     <section id="features" class="container section">
       <div class="section-head">
-        <p class="eyebrow">Features</p>
+        <p class="eyebrow">Funcionalidades</p>
         <h2>Todo lo necesario para gestionar tus lecturas</h2>
       </div>
       <div class="feature-grid">
@@ -193,25 +208,34 @@ const featureCaptures = [
 
     <section id="capturas" class="container section">
       <div class="section-head">
-        <p class="eyebrow">Product Preview</p>
+        <p class="eyebrow">Capacidades</p>
         <h2>Funciones de la extensión en capturas reales</h2>
       </div>
       <div class="feature-capture-grid">
         {featureCaptures.map((item) => (
-          <article class="feature-capture-card">
-            <div class="feature-capture-media">
-              <img
-                src={item.src}
-                alt={item.title}
-                loading="lazy"
-                decoding="async"
-                class="feature-capture-img"
-              />
-            </div>
-            <div class="feature-capture-text">
-              <h3>{item.title}</h3>
-              <p>{item.caption}</p>
-            </div>
+          <article class:list={["feature-capture-card", item.teaser && "feature-capture-card--teaser"]}>
+            {item.teaser ? (
+              <div class="feature-capture-teaser">
+                <h3>{item.title}</h3>
+                {item.caption ? <p>{item.caption}</p> : null}
+              </div>
+            ) : (
+              <>
+                <div class="feature-capture-media">
+                  <img
+                    src={item.src}
+                    alt={item.title}
+                    loading="lazy"
+                    decoding="async"
+                    class="feature-capture-img"
+                  />
+                </div>
+                <div class="feature-capture-text">
+                  <h3>{item.title}</h3>
+                  {item.caption ? <p>{item.caption}</p> : null}
+                </div>
+              </>
+            )}
           </article>
         ))}
       </div>
@@ -219,7 +243,7 @@ const featureCaptures = [
 
     <section id="como-funciona" class="container section">
       <div class="section-head">
-        <p class="eyebrow">How it works</p>
+        <p class="eyebrow">Como funciona</p>
         <h2>Tres pasos para empezar rapido</h2>
       </div>
       <div class="steps">
@@ -389,13 +413,34 @@ const featureCaptures = [
 .feature-icon { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 10px; background: rgba(123,63,191,.18); color: #d9bcff; font-size: 16px; }
 .feature-card h3 { margin-top: 14px; font-size: 1rem; }
 .feature-card p { margin-top: 8px; font-size: 14px; line-height: 1.55; color: #b9b3a8; }
-.feature-capture-grid { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.feature-capture-grid { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
 .feature-capture-card { border-radius: 16px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.03); overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
 .feature-capture-media { background: #0d0717; border-bottom: 1px solid rgba(255,255,255,.08); padding: 12px; }
 .feature-capture-img { width: 100%; height: auto; max-height: min(520px, 70vh); display: block; object-fit: contain; object-position: center; border-radius: 12px; vertical-align: middle; }
 .feature-capture-text { padding: 18px 20px 20px; }
 .feature-capture-text h3 { font-size: 1rem; font-weight: 600; line-height: 1.3; }
 .feature-capture-text p { margin-top: 8px; font-size: 14px; line-height: 1.55; color: #b9b3a8; }
+.feature-capture-card--teaser { display: flex; min-height: 0; }
+.feature-capture-teaser {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 28px 20px;
+  margin: 12px;
+  border-radius: 12px;
+  border: 1px dashed rgba(201, 168, 245, 0.45);
+  background: rgba(123, 63, 191, 0.08);
+  min-height: min(200px, 28vw);
+}
+.feature-capture-teaser h3 {
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  font-weight: 600;
+  line-height: 1.35;
+  color: #e8e5de;
+  margin: 0;
+}
+.feature-capture-teaser p { margin-top: 8px; font-size: 14px; line-height: 1.55; color: #b9b3a8; }
 .steps { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
 .step-card { border-radius: 14px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.03); padding: 20px; }
 .step-index { font-size: 12px; letter-spacing: .14em; color: #c9a8f5; }
