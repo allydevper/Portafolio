@@ -79,7 +79,9 @@ const sliderCaptions = [
               <div class="swiper-wrapper">
                 {sliderImages.map((image, index) => (
                   <div class="swiper-slide" aria-label={`Captura ${index + 1}`}>
-                    <img src={image} alt={`Captura de OmniManga Tracker ${index + 1}`} loading={index === 0 ? "eager" : "lazy"} />
+                    <button type="button" class="hero-slide-zoom" aria-label={`Ampliar captura ${index + 1}`}>
+                      <img src={image} alt={`Captura de OmniManga Tracker ${index + 1}`} loading={index === 0 ? "eager" : "lazy"} />
+                    </button>
                   </div>
                 ))}
               </div>
@@ -185,6 +187,11 @@ const sliderCaptions = [
 
     <footer class="container footer">OmniManga Tracker - MangaTracker v1.0.0</footer>
   </main>
+
+  <div id="hero-lightbox" class="hero-lightbox" role="dialog" aria-modal="true" aria-label="Captura ampliada" hidden>
+    <button type="button" class="hero-lightbox-close" aria-label="Cerrar">&times;</button>
+    <img class="hero-lightbox-img" alt="" decoding="async" />
+  </div>
 </Layout>
 
 <style>
@@ -218,12 +225,20 @@ const sliderCaptions = [
 .badge-green { border-color: rgba(74,200,130,.35); background: rgba(74,200,130,.14); color: #6be3a1; }
 .badge-blue { border-color: rgba(90,140,255,.35); background: rgba(90,140,255,.14); color: #9bb4ff; }
 .badge-purple { border-color: rgba(138,80,200,.5); background: rgba(123,63,191,.18); color: #c9a8f5; }
-.hero-visual { position: relative; max-width: 300px; width: 100%; justify-self: end; }
+.hero-visual { position: relative; max-width: 370px; width: 100%; justify-self: end; }
 .mockup-screen { position: relative; z-index: 0; border-radius: 16px; border: 1px solid rgba(255,255,255,.14); background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02)), radial-gradient(circle at 20% 10%, rgba(201,168,245,.18), rgba(201,168,245,0)); text-align: center; padding: 0; overflow: visible; }
 .hero-swiper-wrap { position: relative; --hero-swiper-nav-gap: 10px; }
 .hero-swiper { width: 100%; height: auto; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.12); background: #0d0717; --swiper-navigation-size: 18px; --swiper-navigation-color: #e8e5de; --swiper-pagination-color: #c9a8f5; --swiper-pagination-bullet-inactive-color: rgba(255,255,255,.45); --swiper-pagination-bullet-inactive-opacity: 1; }
 .hero-swiper .swiper-slide { display: grid; place-items: center; background: #0d0717; box-sizing: border-box; }
-.hero-swiper .swiper-slide img { width: 100%; height: auto; object-fit: contain; object-position: center; display: block; }
+.hero-slide-zoom { display: block; width: 100%; padding: 0; margin: 0; border: 0; background: none; cursor: pointer; color: inherit; font: inherit; text-align: inherit; }
+.hero-slide-zoom:focus-visible { outline: 2px solid #c9a8f5; outline-offset: 2px; border-radius: 4px; }
+.hero-slide-zoom img { width: 100%; height: auto; object-fit: contain; object-position: center; display: block; pointer-events: none; }
+.hero-lightbox { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; padding: clamp(16px, 4vw, 40px); background: rgba(5, 3, 12, 0.94); backdrop-filter: blur(6px); cursor: pointer; }
+.hero-lightbox[hidden] { display: none !important; }
+.hero-lightbox-img { max-width: min(96vw, 1280px); max-height: min(90vh, 900px); width: auto; height: auto; object-fit: contain; border-radius: 10px; box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55); cursor: default; }
+.hero-lightbox-close { position: fixed; top: 16px; right: 16px; z-index: 101; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(15, 8, 27, 0.85); color: #e8e5de; font-size: 28px; line-height: 1; cursor: pointer; }
+.hero-lightbox-close:hover { background: rgba(123, 63, 191, 0.35); border-color: rgba(201, 168, 245, 0.45); }
+.hero-lightbox-close:focus-visible { outline: 2px solid #c9a8f5; outline-offset: 2px; }
 .hero-swiper-wrap .hero-swiper-nav-out.swiper-button-prev,
 .hero-swiper-wrap .hero-swiper-nav-out.swiper-button-next { width: 32px; height: 32px; margin-top: 0; top: 50%; transform: translateY(-50%); background: rgba(12, 7, 22, 0.72); border: 1px solid rgba(255,255,255,.16); border-radius: 999px; z-index: 2; }
 .hero-swiper-wrap .hero-swiper-nav-out.swiper-button-prev { left: auto; right: calc(100% + var(--hero-swiper-nav-gap)); }
@@ -283,12 +298,71 @@ const sliderCaptions = [
   import { Autoplay, Navigation, Pagination } from "swiper/modules";
 
   const captions = [
-    { title: "Biblioteca central", subtitle: "Vista principal con progreso y estados" },
-    { title: "Busqueda y filtros", subtitle: "Encuentra obras rapido por criterios" },
-    { title: "Detalle de lectura", subtitle: "Capitulos, metadata y control manual" },
-    { title: "Listas personalizadas", subtitle: "Organiza por prioridad o categoria" },
-    { title: "Ajustes y respaldo", subtitle: "Exporta e importa tu backup JSON" }
+    { title: "Biblioteca y listas", subtitle: "Gestiona y organiza tu lectura fácilmente." },
+    { title: "Vista de obra", subtitle: "Revisa detalles, estado y fuente de cada manga." },
+    { title: "Gestión de capítulos", subtitle: "Marca leídos, ajusta estados, géneros y notas." },
+    { title: "Detección automática", subtitle: "Detecta lecturas compatibles al instante." },
+    { title: "Reconocimiento y fusión", subtitle: "Identifica lecturas ya agregados y fusiona registros." }
   ];
+
+  function initHeroLightbox() {
+    const root = document.getElementById("hero-lightbox");
+    const fullImg = root?.querySelector(".hero-lightbox-img") as HTMLImageElement | null;
+    const closeBtn = root?.querySelector(".hero-lightbox-close") as HTMLButtonElement | null;
+    const swiperEl = document.getElementById("hero-swiper");
+    if (!root || !fullImg || !closeBtn || !swiperEl || root.dataset.lightboxReady === "true") return;
+    root.dataset.lightboxReady = "true";
+
+    const box = root;
+    const img = fullImg;
+    const xbtn = closeBtn;
+    const swiper = swiperEl;
+
+    let lastFocus: HTMLElement | null = null;
+
+    function open(src: string, alt: string) {
+      lastFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      img.src = src;
+      img.alt = alt;
+      box.hidden = false;
+      document.body.style.overflow = "hidden";
+      xbtn.focus();
+    }
+
+    function close() {
+      box.hidden = true;
+      document.body.style.overflow = "";
+      img.removeAttribute("src");
+      img.alt = "";
+      lastFocus?.focus();
+      lastFocus = null;
+    }
+
+    swiper.addEventListener("click", (e) => {
+      const btn = (e.target as HTMLElement).closest(".hero-slide-zoom");
+      if (!btn) return;
+      const thumb = btn.querySelector("img");
+      if (!thumb) return;
+      const src = thumb.currentSrc || thumb.getAttribute("src") || "";
+      if (!src) return;
+      open(src, thumb.alt || "");
+    });
+
+    xbtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      close();
+    });
+
+    box.addEventListener("click", (e) => {
+      if (e.target === box) close();
+    });
+
+    img.addEventListener("click", (e) => e.stopPropagation());
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !box.hidden) close();
+    });
+  }
 
   function initHeroSwiper() {
     const el = document.getElementById("hero-swiper");
@@ -307,7 +381,7 @@ const sliderCaptions = [
       autoHeight: true,
       speed: 1100,
       autoplay: {
-        delay: 3100,
+        delay: 3300,
         disableOnInteraction: false
       },
       navigation: {
@@ -335,9 +409,14 @@ const sliderCaptions = [
     swiper.on("slideChange", updateCaption);
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initHeroSwiper);
-  } else {
+  function boot() {
+    initHeroLightbox();
     initHeroSwiper();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
   }
 </script>
