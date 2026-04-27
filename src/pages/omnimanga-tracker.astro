@@ -1,361 +1,330 @@
----
+﻿---
 import Layout from "../layouts/Layout.astro";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const features = [
-	{
-		title: "Deteccion automatica",
-		description: "Detecta mangas en webs compatibles y prepara el alta en segundos.",
-		badge: "Parser ready",
-	},
-	{
-		title: "Biblioteca inteligente",
-		description: "Busca, filtra y ordena tu biblioteca para encontrar cualquier lectura rapido.",
-		badge: "Organizacion",
-	},
-	{
-		title: "Detalle por obra",
-		description: "Edita metadata, notas, portada y progreso desde una sola vista.",
-		badge: "Control total",
-	},
-	{
-		title: "Listas personalizadas",
-		description: "Crea colecciones por genero, prioridad o temporada sin duplicar obras.",
-		badge: "Flexible",
-	},
-	{
-		title: "Actualizacion masiva",
-		description: "Actualiza varias obras con resumen final de cambios, fallidas o sin fuente.",
-		badge: "Productividad",
-	},
-	{
-		title: "Export / Import JSON",
-		description: "Respalda y restaura toda tu biblioteca cuando quieras.",
-		badge: "Backup seguro",
-	},
+  { title: "Deteccion automatica", description: "Reconoce mangas en webs compatibles y prepara el registro sin pasos manuales.", icon: "✦" },
+  { title: "Biblioteca inteligente", description: "Buscador, filtros por estado y orden por actividad para una gestion rapida.", icon: "▦" },
+  { title: "Detalle por obra", description: "Edita metadata, portada, notas y progreso desde una sola vista clara.", icon: "✎" },
+  { title: "Listas personalizadas", description: "Agrupa por objetivo, genero o prioridad sin duplicar obras en tu biblioteca.", icon: "◫" },
+  { title: "Actualizacion masiva", description: "Ejecuta refresh por lotes y revisa el resumen final por resultado.", icon: "↻" },
+  { title: "Export / Import JSON", description: "Haz respaldo completo y restaura datos cuando cambies de equipo o perfil.", icon: "◉" }
 ];
 
 const faqs = [
-	{
-		question: "Que sitios soporta OmniManga Tracker?",
-		answer:
-			"Actualmente incluye soporte para MangaDex, Webtoon, Manga Plus y multiples parsers integrados.",
-	},
-	{
-		question: "Puedo migrar mis datos entre navegadores?",
-		answer:
-			"Si. Puedes exportar un respaldo JSON e importarlo luego para recuperar tu biblioteca.",
-	},
-	{
-		question: "La extension evita duplicados?",
-		answer:
-			"Si. El flujo de agregado detecta obras existentes y permite fusionar o vincular antes de guardar.",
-	},
+  { question: "Que sitios soporta OmniManga Tracker?", answer: "Incluye compatibilidad con MangaDex, Webtoon, Manga Plus y decenas de parsers integrados." },
+  { question: "Puedo migrar toda mi biblioteca?", answer: "Si. Puedes exportar un JSON de respaldo e importarlo en cualquier momento." },
+  { question: "Como evita duplicados?", answer: "Durante el agregado detecta coincidencias y permite fusionar, vincular o crear un registro nuevo." }
+];
+
+const sliderImages = [
+  "/omnimanga/slider/1.png",
+  "/omnimanga/slider/2.png",
+  "/omnimanga/slider/3.png",
+  "/omnimanga/slider/4.png",
+  "/omnimanga/slider/5.png"
+];
+
+const sliderCaptions = [
+  { title: "Biblioteca central", subtitle: "Vista principal con progreso y estados" },
+  { title: "Busqueda y filtros", subtitle: "Encuentra obras rapido por criterios" },
+  { title: "Detalle de lectura", subtitle: "Capitulos, metadata y control manual" },
+  { title: "Listas personalizadas", subtitle: "Organiza por prioridad o categoria" },
+  { title: "Ajustes y respaldo", subtitle: "Exporta e importa tu backup JSON" }
 ];
 ---
 
 <Layout>
-	<main class="omni-page min-h-screen text-[#E8E5DE]">
-		<div class="ambient-layer ambient-one"></div>
-		<div class="ambient-layer ambient-two"></div>
-		<div class="relative z-10">
-			<header class="sticky top-0 backdrop-blur-md bg-black/35 border-b border-white/10">
-				<div class="max-w-6xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
-					<a href="/omnimanga-tracker" class="flex items-center gap-3">
-						<img
-							src="/omnimanga/app-logo-home.png"
-							alt="OmniManga Tracker"
-							class="h-5 w-auto opacity-95"
-						/>
-					</a>
-					<nav class="hidden md:flex items-center gap-6 text-sm text-[#BFBAB0]">
-						<a href="#features" class="hover:text-white transition-colors">Features</a>
-						<a href="#como-funciona" class="hover:text-white transition-colors">Como funciona</a>
-						<a href="#faq" class="hover:text-white transition-colors">FAQ</a>
-					</nav>
-				</div>
-			</header>
+  <main class="omni-page text-[#E8E5DE]">
+    <div class="ambient ambient-top"></div>
+    <div class="ambient ambient-bottom"></div>
 
-			<section class="px-4 md:px-8 pt-16 pb-20">
-				<div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 items-center">
-					<div class="space-y-6">
-						<p class="text-[10.5px] uppercase tracking-[0.24em] text-[#6F6B63]">
-							Chrome Extension
-						</p>
-						<h1 class="text-4xl md:text-5xl font-semibold leading-tight">
-							Centraliza tus mangas en un solo lugar.
-						</h1>
-						<p class="text-sm md:text-base text-[#BFBAB0] max-w-xl">
-							OmniManga Tracker detecta lecturas desde webs compatibles, organiza tu
-							biblioteca, administra listas y mantiene tu progreso actualizado.
-						</p>
-						<div class="flex flex-wrap gap-3">
-							<a
-								href="#"
-								class="rounded-xl px-5 py-3 text-sm font-medium btn-primary inline-flex items-center gap-2"
-							>
-								<span aria-hidden="true" class="chrome-icon"></span>
-								Instalar extension
-							</a>
-							<a
-								href="#features"
-								class="rounded-xl px-5 py-3 text-sm font-medium btn-secondary"
-							>
-								Ver funcionalidades
-							</a>
-						</div>
-						<div class="flex flex-wrap gap-2 pt-2">
-							<span class="status-badge badge-blue">MangaDex</span>
-							<span class="status-badge badge-purple">Webtoon</span>
-							<span class="status-badge badge-green">Manga Plus</span>
-							<span class="status-badge">+ 37 parsers integrados</span>
-						</div>
-					</div>
+    <header class="nav-wrap">
+      <div class="container nav-inner">
+        <a href="/omnimanga-tracker" class="brand">
+          <img src="/omnimanga/app-logo-home.png" alt="OmniManga Tracker" class="brand-wordmark" />
+        </a>
+        <nav class="desktop-nav">
+          <a href="#features">Features</a>
+          <a href="#capturas">Capturas</a>
+          <a href="#como-funciona">Como funciona</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+      </div>
+    </header>
 
-					<div class="rounded-2xl border border-white/12 bg-white/[0.04] p-4 shadow-xl">
-						<div class="rounded-xl border border-white/10 bg-[#120A1F] min-h-[320px] grid place-items-center text-center p-6">
-							<div>
-								<img
-									src="/omnimanga/app-logo.png"
-									alt="Logo de OmniManga Tracker"
-									class="mx-auto mb-4 w-24 h-24 rounded-2xl border border-white/10"
-								/>
-								<img
-									src="/omnimanga/app-logo-home.png"
-									alt="Texto OmniManga Tracker"
-									class="mx-auto mb-4 h-8 w-auto opacity-95"
-								/>
-								<p class="text-sm text-[#BFBAB0]">
-									Placeholder de screenshot del sidepanel
-								</p>
-								<p class="text-xs text-[#6F6B63] mt-2">
-									Recomendado: captura real de biblioteca + progreso
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
+    <section class="container hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Chrome Extension</p>
+        <h1>Centraliza tus mangas en un solo lugar.</h1>
+        <p class="lead">OmniManga Tracker detecta lecturas en webs compatibles y las organiza en una biblioteca lateral con progreso, listas y actualizaciones en lote.</p>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-primary"><span aria-hidden="true" class="chrome-icon"></span>Instalar extension</a>
+          <a href="#features" class="btn btn-secondary">Ver funcionalidades</a>
+        </div>
+        <div class="badge-row">
+          <span class="status-badge badge-blue">MangaDex</span>
+          <span class="status-badge badge-purple">Webtoon</span>
+          <span class="status-badge badge-green">Manga Plus</span>
+          <span class="status-badge">+37 parsers</span>
+        </div>
+      </div>
 
-			<section class="px-4 md:px-8 pb-16">
-				<div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-6">
-					<div class="content-card">
-						<p class="text-[10.5px] uppercase tracking-[0.2em] text-[#6F6B63] mb-3">Problema</p>
-						<h2 class="text-2xl font-semibold mb-3">Tus lecturas estan dispersas entre sitios</h2>
-						<p class="text-sm text-[#BFBAB0]">
-							Cambiar entre pestañas, listas y marcadores hace dificil mantener tu progreso
-							real al dia.
-						</p>
-					</div>
-					<div class="content-card">
-						<p class="text-[10.5px] uppercase tracking-[0.2em] text-[#6F6B63] mb-3">Solucion</p>
-						<h2 class="text-2xl font-semibold mb-3">Unifica todo en un panel lateral</h2>
-						<p class="text-sm text-[#BFBAB0]">
-							OmniManga Tracker concentra deteccion, biblioteca, listas y actualizaciones en
-							un flujo simple.
-						</p>
-					</div>
-				</div>
-			</section>
+      <div class="hero-visual">
+        <div class="mockup-screen">
+          <div class="swiper hero-swiper" id="hero-swiper">
+            <div class="swiper-wrapper">
+              {sliderImages.map((image, index) => (
+                <div class="swiper-slide" aria-label={`Captura ${index + 1}`}>
+                  <img src={image} alt={`Captura de OmniManga Tracker ${index + 1}`} loading={index === 0 ? "eager" : "lazy"} />
+                </div>
+              ))}
+            </div>
+            <div class="swiper-button-prev" aria-label="Slide anterior"></div>
+            <div class="swiper-button-next" aria-label="Slide siguiente"></div>
+            <div class="swiper-pagination"></div>
+          </div>
+          <div class="slider-meta">
+            <p id="slider-title" class="mockup-label">{sliderCaptions[0].title}</p>
+            <p id="slider-subtitle" class="mockup-help">{sliderCaptions[0].subtitle}</p>
+          </div>
+        </div>
+        <div class="mockup-chip left-chip logo-chip">
+          <img src="/omnimanga/app-logo.png" alt="OmniManga Tracker logo" />
+        </div>
+      </div>
+    </section>
 
-			<section id="features" class="px-4 md:px-8 pb-16">
-				<div class="max-w-6xl mx-auto">
-					<h2 class="text-3xl font-semibold mb-8">Funcionalidades clave</h2>
-					<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-						{
-							features.map((feature) => (
-								<article class="content-card">
-									<p class="status-badge badge-purple inline-flex mb-3">{feature.badge}</p>
-									<h3 class="text-lg font-medium mb-2">{feature.title}</h3>
-									<p class="text-sm text-[#BFBAB0]">{feature.description}</p>
-								</article>
-							))
-						}
-					</div>
-				</div>
-			</section>
+    <section class="container trust">
+      <p class="eyebrow">Problema / Solucion</p>
+      <div class="split">
+        <article class="panel">
+          <h2>Tus lecturas estan dispersas entre sitios</h2>
+          <p>El progreso se pierde entre pestanas, marcadores y listas no conectadas.</p>
+        </article>
+        <article class="panel">
+          <h2>Unifica todo en un flujo simple</h2>
+          <p>OmniManga concentra deteccion, organizacion y seguimiento en un solo panel lateral.</p>
+        </article>
+      </div>
+    </section>
 
-			<section id="como-funciona" class="px-4 md:px-8 pb-16">
-				<div class="max-w-6xl mx-auto">
-					<h2 class="text-3xl font-semibold mb-8">Como funciona</h2>
-					<div class="grid md:grid-cols-3 gap-4">
-						<div class="content-card">
-							<p class="status-badge mb-3">Paso 1</p>
-							<h3 class="text-lg font-medium mb-2">Detecta una obra</h3>
-							<p class="text-sm text-[#BFBAB0]">Abre una web compatible y deja que OmniManga la identifique.</p>
-						</div>
-						<div class="content-card">
-							<p class="status-badge mb-3">Paso 2</p>
-							<h3 class="text-lg font-medium mb-2">Guarda en tu biblioteca</h3>
-							<p class="text-sm text-[#BFBAB0]">Revisa metadatos, evita duplicados y organiza por listas.</p>
-						</div>
-						<div class="content-card">
-							<p class="status-badge mb-3">Paso 3</p>
-							<h3 class="text-lg font-medium mb-2">Actualiza progreso</h3>
-							<p class="text-sm text-[#BFBAB0]">Marca capitulos, actualiza en lote y exporta respaldo JSON.</p>
-						</div>
-					</div>
-				</div>
-			</section>
+    <section id="features" class="container section">
+      <div class="section-head">
+        <p class="eyebrow">Features</p>
+        <h2>Todo lo necesario para gestionar tus lecturas</h2>
+      </div>
+      <div class="feature-grid">
+        {features.map((feature) => (
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">{feature.icon}</div>
+            <h3>{feature.title}</h3>
+            <p>{feature.description}</p>
+          </article>
+        ))}
+      </div>
+    </section>
 
-			<section id="faq" class="px-4 md:px-8 pb-16">
-				<div class="max-w-6xl mx-auto">
-					<h2 class="text-3xl font-semibold mb-8">FAQ</h2>
-					<div class="space-y-4">
-						{
-							faqs.map((faq) => (
-								<details class="content-card">
-									<summary class="cursor-pointer font-medium">{faq.question}</summary>
-									<p class="text-sm text-[#BFBAB0] mt-3">{faq.answer}</p>
-								</details>
-							))
-						}
-					</div>
-				</div>
-			</section>
+    <section id="capturas" class="container section">
+      <div class="section-head">
+        <p class="eyebrow">Product Preview</p>
+        <h2>Espacios listos para capturas reales de la extension</h2>
+      </div>
+      <div class="capture-layout">
+        <div class="capture-main panel-dashed"><p>CAPTURA DESKTOP</p><span>Biblioteca + filtros + cards de progreso</span></div>
+        <div class="capture-side">
+          <div class="panel-dashed small"><p>CAPTURA DETALLE</p><span>Editor de obra y capitulos</span></div>
+          <div class="panel-dashed small"><p>CAPTURA AJUSTES</p><span>Backup JSON y preferencias</span></div>
+        </div>
+      </div>
+    </section>
 
-			<section class="px-4 md:px-8 pb-20">
-				<div class="max-w-6xl mx-auto content-card text-center">
-					<p class="text-[10.5px] uppercase tracking-[0.22em] text-[#6F6B63] mb-3">
-						Empieza hoy
-					</p>
-					<h2 class="text-3xl font-semibold mb-4">Empieza a organizar tu lectura hoy</h2>
-					<p class="text-sm text-[#BFBAB0] mb-6">
-						Centraliza tus mangas y enfocate en leer, no en ordenar pestañas.
-					</p>
-					<div class="flex justify-center gap-3 flex-wrap">
-						<a href="#" class="rounded-xl px-5 py-3 text-sm font-medium btn-primary inline-flex items-center gap-2">
-							<span aria-hidden="true" class="chrome-icon"></span>
-							Instalar extension
-						</a>
-						<a href="#features" class="rounded-xl px-5 py-3 text-sm font-medium btn-secondary">
-							Ver funcionalidades
-						</a>
-					</div>
-				</div>
-			</section>
+    <section id="como-funciona" class="container section">
+      <div class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2>Tres pasos para empezar rapido</h2>
+      </div>
+      <div class="steps">
+        <article class="step-card"><span class="step-index">01</span><h3>Detecta una obra</h3><p>Visita una web compatible y deja que el parser identifique la lectura.</p></article>
+        <article class="step-card"><span class="step-index">02</span><h3>Guarda y organiza</h3><p>Revisa metadatos, evita duplicados y asigna la obra a tu lista.</p></article>
+        <article class="step-card"><span class="step-index">03</span><h3>Actualiza progreso</h3><p>Marca capitulos, ejecuta refresh por lotes y exporta respaldo.</p></article>
+      </div>
+    </section>
 
-			<footer class="border-t border-white/10 px-4 md:px-8 py-8 text-center text-sm text-[#6F6B63]">
-				OmniManga Tracker - MangaTracker v1.0.0
-			</footer>
-		</div>
-	</main>
+    <section id="faq" class="container section">
+      <div class="section-head"><p class="eyebrow">FAQ</p><h2>Preguntas frecuentes</h2></div>
+      <div class="faq-list">
+        {faqs.map((faq) => (
+          <details class="faq-item">
+            <summary>{faq.question}</summary>
+            <p>{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section class="container section final-cta">
+      <div class="panel final-panel">
+        <p class="eyebrow">Empieza hoy</p>
+        <h2>Organiza tu lectura sin friccion</h2>
+        <p>Pasa de pestanas dispersas a una biblioteca centralizada con progreso y listas claras.</p>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-primary"><span aria-hidden="true" class="chrome-icon"></span>Instalar extension</a>
+          <a href="#capturas" class="btn btn-secondary">Ver capturas</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="container footer">OmniManga Tracker - MangaTracker v0.1.0</footer>
+  </main>
 </Layout>
 
 <style>
-	@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
-
-	.omni-page {
-		position: relative;
-		background: linear-gradient(180deg, #160b26 0%, #0e0718 45%, #0a0512 100%);
-		font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-		overflow-x: hidden;
-	}
-
-	.ambient-layer {
-		position: absolute;
-		pointer-events: none;
-		filter: blur(60px);
-		opacity: 0.36;
-	}
-
-	.ambient-one {
-		width: 380px;
-		height: 380px;
-		background: radial-gradient(circle, #7b3fbf 0%, rgba(123, 63, 191, 0) 72%);
-		top: -120px;
-		left: -70px;
-	}
-
-	.ambient-two {
-		width: 480px;
-		height: 480px;
-		background: radial-gradient(circle, #b089ec 0%, rgba(176, 137, 236, 0) 76%);
-		bottom: -190px;
-		right: -120px;
-	}
-
-	.content-card {
-		border-radius: 16px;
-		border: 1px solid rgba(255, 255, 255, 0.12);
-		background: rgba(255, 255, 255, 0.04);
-		padding: 24px;
-		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
-	}
-
-	.btn-primary {
-		color: #f8f3ff;
-		background: #7b3fbf;
-		box-shadow:
-			0 1px 0 rgba(255, 255, 255, 0.1) inset,
-			0 2px 8px rgba(49, 19, 78, 0.45),
-			0 0 0 1px rgba(123, 63, 191, 0.45);
-		transition: background-color 0.2s ease;
-	}
-
-	.btn-primary:hover {
-		background: #6d31b1;
-	}
-
-	.btn-secondary {
-		color: #e8e5de;
-		background: rgba(255, 255, 255, 0.04);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		transition: background-color 0.2s ease;
-	}
-
-	.btn-secondary:hover {
-		background: rgba(255, 255, 255, 0.08);
-	}
-
-	.status-badge {
-		display: inline-flex;
-		align-items: center;
-		border-radius: 10px;
-		padding: 4px 10px;
-		font-size: 12px;
-		border: 1px solid rgba(255, 255, 255, 0.12);
-		background: rgba(255, 255, 255, 0.06);
-		color: #bfbab0;
-	}
-
-	.badge-green {
-		border-color: rgba(74, 200, 130, 0.35);
-		background: rgba(74, 200, 130, 0.14);
-		color: #6be3a1;
-	}
-
-	.badge-blue {
-		border-color: rgba(90, 140, 255, 0.35);
-		background: rgba(90, 140, 255, 0.14);
-		color: #9bb4ff;
-	}
-
-	.badge-purple {
-		border-color: rgba(138, 80, 200, 0.5);
-		background: rgba(123, 63, 191, 0.18);
-		color: #c9a8f5;
-	}
-
-	.chrome-icon {
-		width: 14px;
-		height: 14px;
-		border-radius: 999px;
-		background:
-			conic-gradient(
-				from 45deg,
-				#fbbc04 0deg 120deg,
-				#34a853 120deg 240deg,
-				#ea4335 240deg 360deg
-			);
-		position: relative;
-		display: inline-block;
-	}
-
-	.chrome-icon::after {
-		content: "";
-		position: absolute;
-		inset: 3px;
-		background: #4285f4;
-		border-radius: 999px;
-	}
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+.omni-page { position: relative; min-height: 100vh; background: linear-gradient(180deg, #160b26 0%, #0e0718 46%, #0a0512 100%); font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif; overflow-x: hidden; padding-bottom: 40px; }
+.container { width: min(1120px, calc(100% - 2.5rem)); margin-inline: auto; }
+.ambient { position: fixed; pointer-events: none; filter: blur(56px); opacity: .35; z-index: 0; }
+.ambient-top { width: 360px; height: 360px; top: -120px; left: -80px; background: radial-gradient(circle, #7b3fbf 0%, rgba(123,63,191,0) 72%); }
+.ambient-bottom { width: 440px; height: 440px; right: -120px; bottom: -200px; background: radial-gradient(circle, #b089ec 0%, rgba(176,137,236,0) 74%); }
+.nav-wrap { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); background: rgba(7,4,14,.55); border-bottom: 1px solid rgba(255,255,255,.09); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding-block: 14px; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-icon { width: 34px; height: 34px; border-radius: 10px; border: 1px solid rgba(255,255,255,.18); }
+.brand-wordmark { height: 18px; width: auto; opacity: .95; }
+.desktop-nav { display: flex; gap: 22px; font-size: 14px; color: #bfbab0; }
+.desktop-nav a:hover { color: #fff; }
+.hero { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 42px; padding-top: 68px; padding-bottom: 72px; align-items: center; }
+.eyebrow { font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: #8f8a81; margin-bottom: 14px; }
+.hero-copy h1 { font-size: clamp(2.1rem, 4.4vw, 3.35rem); line-height: 1.08; font-weight: 600; max-width: 16ch; }
+.lead { margin-top: 20px; font-size: 15px; line-height: 1.65; color: #c8c2b7; max-width: 56ch; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; border-radius: 12px; padding: 12px 18px; font-size: 14px; font-weight: 500; }
+.btn-primary { color: #f8f3ff; background: #7b3fbf; box-shadow: 0 1px 0 rgba(255,255,255,.1) inset, 0 2px 10px rgba(49,19,78,.45), 0 0 0 1px rgba(123,63,191,.45); }
+.btn-primary:hover { background: #6d31b1; }
+.btn-secondary { color: #e8e5de; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); }
+.btn-secondary:hover { background: rgba(255,255,255,.08); }
+.chrome-icon { width: 14px; height: 14px; border-radius: 999px; background: conic-gradient(from 45deg, #fbbc04 0deg 120deg, #34a853 120deg 240deg, #ea4335 240deg 360deg); position: relative; display: inline-block; }
+.chrome-icon::after { content: ""; position: absolute; inset: 3px; border-radius: 999px; background: #4285f4; }
+.badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.status-badge { display: inline-flex; align-items: center; border-radius: 10px; padding: 4px 10px; font-size: 12px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06); color: #bfbab0; }
+.badge-green { border-color: rgba(74,200,130,.35); background: rgba(74,200,130,.14); color: #6be3a1; }
+.badge-blue { border-color: rgba(90,140,255,.35); background: rgba(90,140,255,.14); color: #9bb4ff; }
+.badge-purple { border-color: rgba(138,80,200,.5); background: rgba(123,63,191,.18); color: #c9a8f5; }
+.hero-visual { position: relative; max-width: 300px; width: 100%; justify-self: end; }
+.mockup-screen { position: relative; z-index: 0; border-radius: 16px; border: 1px solid rgba(255,255,255,.14); background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02)), radial-gradient(circle at 20% 10%, rgba(201,168,245,.18), rgba(201,168,245,0)); text-align: center; padding: 0; overflow: hidden; }
+.hero-swiper { width: 100%; height: 400px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.12); background: #0d0717; --swiper-navigation-size: 18px; --swiper-navigation-color: #e8e5de; --swiper-pagination-color: #c9a8f5; --swiper-pagination-bullet-inactive-color: rgba(255,255,255,.45); --swiper-pagination-bullet-inactive-opacity: 1; }
+.hero-swiper .swiper-slide { display: grid; place-items: center; background: #0d0717; box-sizing: border-box; }
+.hero-swiper .swiper-slide img { width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; }
+.hero-swiper .swiper-button-prev,
+.hero-swiper .swiper-button-next { width: 32px; height: 32px; margin-top: 0; top: 50%; transform: translateY(-50%); background: rgba(12, 7, 22, 0.72); border: 1px solid rgba(255,255,255,.16); border-radius: 999px; }
+.hero-swiper .swiper-button-prev::after,
+.hero-swiper .swiper-button-next::after { font-size: 12px; font-weight: 700; }
+.hero-swiper .swiper-pagination { bottom: 6px !important; }
+.slider-meta { padding: 12px 14px 14px; background: rgba(9, 5, 16, 0.62); border-top: 1px solid rgba(255,255,255,.08); }
+.mockup-label { font-size: 12px; letter-spacing: .14em; color: #c9a8f5; }
+.mockup-help { margin-top: 8px; font-size: 13px; color: #9e988d; }
+.mockup-chip { position: absolute; font-size: 11px; padding: 7px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); background: rgba(15,8,27,.7); color: #d7cfbf; }
+.logo-chip { z-index: 2; padding: 4px; width: 60px; height: 60px; display: grid; place-items: center; border-radius: 12px; }
+.logo-chip img { width: 100%; height: 100%; object-fit: cover; border-radius: 9px; display: block; }
+.left-chip { right: -20px; top: -18px; }
+.right-chip { right: -8px; bottom: 16px; }
+.section { position: relative; z-index: 1; padding-top: 24px; padding-bottom: 38px; }
+.trust { position: relative; z-index: 1; padding-bottom: 30px; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.panel { border-radius: 16px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); padding: 26px; }
+.panel h2 { font-size: 1.45rem; line-height: 1.25; }
+.panel p { margin-top: 11px; font-size: 14px; line-height: 1.6; color: #c2bcae; }
+.section-head h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); max-width: 24ch; line-height: 1.2; }
+.feature-grid { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+.feature-card { border-radius: 14px; border: 1px solid rgba(255,255,255,.09); background: rgba(255,255,255,.03); padding: 20px; }
+.feature-icon { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 10px; background: rgba(123,63,191,.18); color: #d9bcff; font-size: 16px; }
+.feature-card h3 { margin-top: 14px; font-size: 1rem; }
+.feature-card p { margin-top: 8px; font-size: 14px; line-height: 1.55; color: #b9b3a8; }
+.capture-layout { margin-top: 22px; display: grid; grid-template-columns: 1.15fr .85fr; gap: 14px; }
+.capture-main,.panel-dashed { border-radius: 16px; border: 1px dashed rgba(201,168,245,.55); background: rgba(255,255,255,.02); display: grid; place-items: center; text-align: center; }
+.capture-main { min-height: 310px; padding: 24px; }
+.capture-side { display: grid; gap: 14px; }
+.panel-dashed.small { min-height: 148px; padding: 18px; }
+.panel-dashed p { font-size: 12px; letter-spacing: .13em; color: #c9a8f5; }
+.panel-dashed span { margin-top: 8px; font-size: 13px; color: #a09a8f; }
+.steps { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+.step-card { border-radius: 14px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.03); padding: 20px; }
+.step-index { font-size: 12px; letter-spacing: .14em; color: #c9a8f5; }
+.step-card h3 { margin-top: 10px; font-size: 1rem; }
+.step-card p { margin-top: 8px; font-size: 14px; line-height: 1.55; color: #b9b3a8; }
+.faq-list { margin-top: 22px; display: grid; gap: 10px; }
+.faq-item { border-radius: 14px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.03); padding: 18px; }
+.faq-item summary { cursor: pointer; font-size: 15px; font-weight: 500; }
+.faq-item p { margin-top: 10px; font-size: 14px; color: #bab4aa; line-height: 1.6; }
+.final-cta { padding-top: 18px; }
+.final-panel { text-align: center; }
+.final-panel h2 { font-size: clamp(1.8rem, 3.2vw, 2.4rem); }
+.final-panel p { margin-inline: auto; max-width: 56ch; }
+.final-panel .hero-actions { justify-content: center; }
+.footer { position: relative; z-index: 1; margin-top: 16px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.1); color: #8a8478; font-size: 13px; text-align: center; }
+@media (max-width: 1024px) { .hero { grid-template-columns: 1fr; gap: 28px; padding-top: 44px; } .hero-visual { justify-self: center; max-width: 380px; } .hero-swiper { height: 360px; } .feature-grid,.steps { grid-template-columns: repeat(2,minmax(0,1fr)); } .capture-layout,.split { grid-template-columns: 1fr; } }
+@media (max-width: 740px) { .container { width: min(1120px, calc(100% - 1.4rem)); } .desktop-nav { display: none; } .feature-grid,.steps { grid-template-columns: 1fr; } .hero-actions { width: 100%; } .btn { justify-content: center; width: 100%; } .hero-visual { max-width: min(100%, 320px); } .hero-swiper { height: 320px; } .left-chip,.right-chip { position: static; display: inline-flex; margin-top: 10px; margin-right: 6px; } .hero-visual { text-align: center; } }
 </style>
+
+<script>
+  import Swiper from "swiper";
+  import { Autoplay, Navigation, Pagination } from "swiper/modules";
+
+  const captions = [
+    { title: "Biblioteca central", subtitle: "Vista principal con progreso y estados" },
+    { title: "Busqueda y filtros", subtitle: "Encuentra obras rapido por criterios" },
+    { title: "Detalle de lectura", subtitle: "Capitulos, metadata y control manual" },
+    { title: "Listas personalizadas", subtitle: "Organiza por prioridad o categoria" },
+    { title: "Ajustes y respaldo", subtitle: "Exporta e importa tu backup JSON" }
+  ];
+
+  function initHeroSwiper() {
+    const el = document.getElementById("hero-swiper");
+    const titleEl = document.getElementById("slider-title");
+    const subtitleEl = document.getElementById("slider-subtitle");
+    if (!el || el.dataset.swiperReady === "true") return;
+
+    const nextBtn = el.querySelector(".swiper-button-next") as HTMLElement | null;
+    const prevBtn = el.querySelector(".swiper-button-prev") as HTMLElement | null;
+    const paginationEl = el.querySelector(".swiper-pagination") as HTMLElement | null;
+
+    const swiper = new Swiper(el, {
+      modules: [Autoplay, Navigation, Pagination],
+      loop: true,
+      speed: 1000,
+      autoplay: {
+        delay: 3200,
+        disableOnInteraction: false
+      },
+      navigation: {
+        nextEl: nextBtn,
+        prevEl: prevBtn
+      },
+      pagination: {
+        el: paginationEl,
+        clickable: true
+      }
+    });
+
+    el.dataset.swiperReady = "true";
+
+    const updateCaption = () => {
+      if (!titleEl || !subtitleEl) return;
+      const idx = swiper.realIndex ?? 0;
+      const current = captions[idx] ?? captions[0];
+      titleEl.textContent = current.title;
+      subtitleEl.textContent = current.subtitle;
+    };
+
+    updateCaption();
+    swiper.on("slideChange", updateCaption);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initHeroSwiper);
+  } else {
+    initHeroSwiper();
+  }
+</script>
