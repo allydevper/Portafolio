@@ -57,9 +57,9 @@ const featureCaptures = [
     caption: "Si registraste la misma obra dos veces, unifica registros sin perder datos."
   },
   {
-    file: "Agrega tu web para acceso; si tiene parse, úsala, si no, usa las predeterminadas o pide actualización..png",
-    title: "Sitios y solicitudes",
-    caption: "Consulta sitios integrados, envía URLs nuevas y revisa si ya hay parser activo."
+    file: "gestion_generos_de_obras.png",
+    title: "Géneros en la biblioteca",
+    caption: "Filtra, edita o fusiona etiquetas y ve cuántas obras usan cada género."
   },
   {
     file: "organiza tu lectura en grupos para que puedas organizar mejor.png",
@@ -72,9 +72,9 @@ const featureCaptures = [
     caption: "Guarda notas personales y referencias de personajes junto a cada obra."
   },
   {
-    file: "gestion_generos_de_obras.png",
-    title: "Géneros en la biblioteca",
-    caption: "Filtra, edita o fusiona etiquetas y ve cuántas obras usan cada género."
+    file: "importar-exportar-config-json.png",
+    title: "Copia de seguridad",
+    caption: "Exporta o importa un JSON para respaldar datos y restaurarlos en otro perfil o equipo."
   },
   {
     title: "Y muchas más opciones a descubrir",
@@ -85,6 +85,34 @@ const featureCaptures = [
   ...item,
   src: "file" in item && item.file ? encodeURI(`/omnimanga/features/${item.file}`) : undefined
 }));
+
+const howItWorksSteps = [
+  {
+    index: "01",
+    title: "Registra o usa una web compatible",
+    text: "Agrega un lector, scan o cualquier url, si no se puede leer informanos para que la agreguemos.",
+    image: encodeURI(
+      "/omnimanga/features/Agrega tu web para acceso; si tiene parse, úsala, si no, usa las predeterminadas o pide actualizaciónv2.png"
+    ),
+    imageAlt:
+      "Sitios integrados (MangaDex, Webtoon, Manga Plus) y formulario para solicitar nuevas webs con indicador de parser"
+  },
+  {
+    index: "02",
+    title: "Detecta una obra",
+    text: "Visita una web compatible y deja que el parser identifique la lectura.",
+    image: "/omnimanga/features/quickAdd.png",
+    imageAlt: "Vista rápida: resultado de búsqueda en MangaDex con opciones para ver o añadir la obra"
+  },
+  {
+    index: "03",
+    title: "Actualiza progreso",
+    text: "Marca capitulos, ejecuta refresh por lotes y exporta respaldo.",
+    image: encodeURI("/omnimanga/features/marca el capitulo en que te quedastev2.png"),
+    imageAlt:
+      "Sección Capítulos: barra de progreso, marcar o desmarcar todos y rejilla de capítulos leídos y pendientes"
+  }
+];
 ---
 
 <Layout>
@@ -247,9 +275,18 @@ const featureCaptures = [
         <h2>Tres pasos para empezar rapido</h2>
       </div>
       <div class="steps">
-        <article class="step-card"><span class="step-index">01</span><h3>Detecta una obra</h3><p>Visita una web compatible y deja que el parser identifique la lectura.</p></article>
-        <article class="step-card"><span class="step-index">02</span><h3>Guarda y organiza</h3><p>Revisa metadatos, evita duplicados y asigna la obra a tu lista.</p></article>
-        <article class="step-card"><span class="step-index">03</span><h3>Actualiza progreso</h3><p>Marca capitulos, ejecuta refresh por lotes y exporta respaldo.</p></article>
+        {howItWorksSteps.map((step) => (
+          <article class="step-card">
+            {step.image ? (
+              <div class="step-card-media">
+                <img src={step.image} alt={step.imageAlt} loading="lazy" decoding="async" class="step-card-img" />
+              </div>
+            ) : null}
+            <span class="step-index">{step.index}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </article>
+        ))}
       </div>
     </section>
 
@@ -441,8 +478,10 @@ const featureCaptures = [
   margin: 0;
 }
 .feature-capture-teaser p { margin-top: 8px; font-size: 14px; line-height: 1.55; color: #b9b3a8; }
-.steps { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
-.step-card { border-radius: 14px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.03); padding: 20px; }
+.steps { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; align-items: start; }
+.step-card { border-radius: 14px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.03); padding: 20px; display: flex; flex-direction: column; min-width: 0; }
+.step-card-media { margin: -20px -20px 14px -20px; border-radius: 14px 14px 0 0; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,.08); background: #0d0717; }
+.step-card-img { width: 100%; height: auto; display: block; object-fit: contain; object-position: center; }
 .step-index { font-size: 12px; letter-spacing: .14em; color: #c9a8f5; }
 .step-card h3 { margin-top: 10px; font-size: 1rem; }
 .step-card p { margin-top: 8px; font-size: 14px; line-height: 1.55; color: #b9b3a8; }
