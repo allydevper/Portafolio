@@ -325,7 +325,20 @@ const howItWorksSteps = [
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
-.omni-page { position: relative; min-height: 100vh; background: linear-gradient(180deg, #160b26 0%, #0e0718 46%, #0a0512 100%); font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif; overflow-x: hidden; padding-bottom: 40px; }
+.omni-page {
+  position: relative;
+  min-height: 100vh;
+  background-color: #0a0512;
+  background-image:
+    linear-gradient(180deg, rgba(22, 11, 38, 0.9) 0%, rgba(14, 7, 24, 0.97) 1%, rgba(10, 5, 18, 0.95) 100%),
+    url("/omnimanga/back2.jpg");
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat;
+  font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  overflow-x: hidden;
+  padding-bottom: 40px;
+}
 .container { width: min(1120px, calc(100% - 2.5rem)); margin-inline: auto; }
 .ambient { position: fixed; pointer-events: none; filter: blur(56px); opacity: .35; z-index: 0; }
 .ambient-top { width: 360px; height: 360px; top: -120px; left: -80px; background: radial-gradient(circle, #7b3fbf 0%, rgba(123,63,191,0) 72%); }
