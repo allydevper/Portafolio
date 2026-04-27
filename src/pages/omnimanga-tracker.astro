@@ -46,12 +46,32 @@ const sliderCaptions = [
         <a href="/omnimanga-tracker" class="brand">
           <img src="/omnimanga/app-logo-home.png" alt="OmniManga Tracker" class="brand-wordmark" />
         </a>
-        <nav class="desktop-nav">
+        <nav class="desktop-nav" aria-label="Secciones">
           <a href="#features">Features</a>
           <a href="#capturas">Capturas</a>
           <a href="#como-funciona">Como funciona</a>
           <a href="#faq">FAQ</a>
         </nav>
+        <button
+          type="button"
+          class="nav-toggle"
+          id="nav-toggle"
+          aria-expanded="false"
+          aria-controls="mobile-nav-dropdown"
+        >
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+          <span class="sr-only">Menú de navegación</span>
+        </button>
+      </div>
+      <div id="mobile-nav-dropdown" class="mobile-nav-dropdown" hidden>
+        <div class="container mobile-nav-inner">
+          <nav class="mobile-nav" aria-label="Secciones">
+            <a href="#features">Features</a>
+            <a href="#capturas">Capturas</a>
+            <a href="#como-funciona">Como funciona</a>
+            <a href="#faq">FAQ</a>
+          </nav>
+        </div>
       </div>
     </header>
 
@@ -208,6 +228,60 @@ const sliderCaptions = [
 .brand-wordmark { height: 18px; width: auto; opacity: .95; }
 .desktop-nav { display: flex; gap: 22px; font-size: 14px; color: #bfbab0; }
 .desktop-nav a:hover { color: #fff; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.nav-toggle {
+  display: none;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 12px;
+  background: rgba(255,255,255,.06);
+  color: #e8e5de;
+  cursor: pointer;
+}
+.nav-toggle:hover { background: rgba(255,255,255,.1); }
+.nav-toggle:focus-visible { outline: 2px solid #c9a8f5; outline-offset: 2px; }
+.nav-toggle-bars {
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+  box-shadow: 0 -6px 0 currentColor, 0 6px 0 currentColor;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.nav-toggle.is-open .nav-toggle-bars {
+  box-shadow: none;
+  background:
+    linear-gradient(currentColor, currentColor) 50% 50% / 100% 2px no-repeat,
+    linear-gradient(currentColor, currentColor) 50% 50% / 2px 20px no-repeat;
+  transform: rotate(45deg);
+}
+.mobile-nav-dropdown {
+  border-top: 1px solid rgba(255,255,255,.08);
+  background: rgba(7,4,14,.92);
+  backdrop-filter: blur(12px);
+}
+.mobile-nav-dropdown[hidden] { display: none !important; }
+.mobile-nav-inner { padding-block: 12px 16px; }
+.mobile-nav { display: flex; flex-direction: column; gap: 4px; }
+.mobile-nav a {
+  display: block;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #e8e5de;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+.mobile-nav a:hover { background: rgba(255,255,255,.06); color: #fff; }
+.mobile-nav a:focus-visible { outline: 2px solid #c9a8f5; outline-offset: 2px; }
 .hero { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 42px; padding-top: 68px; padding-bottom: 72px; align-items: center; }
 .eyebrow { font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: #8f8a81; margin-bottom: 14px; }
 .hero-copy h1 { font-size: clamp(2.1rem, 4.4vw, 3.35rem); line-height: 1.08; font-weight: 600; max-width: 16ch; }
@@ -301,6 +375,7 @@ const sliderCaptions = [
   .container { width: min(1120px, calc(100% - 1.4rem)); }
   .nav-inner { padding-block: 12px; }
   .desktop-nav { display: none; }
+  .nav-toggle { display: inline-flex; }
   .hero {
     padding-top: 28px;
     padding-bottom: 40px;
@@ -378,6 +453,45 @@ const sliderCaptions = [
     { title: "Detección automática", subtitle: "Detecta lecturas compatibles al instante." },
     { title: "Reconocimiento y fusión", subtitle: "Identifica lecturas ya agregados y fusiona registros." }
   ];
+
+  function initMobileNav() {
+    const toggle = document.getElementById("nav-toggle");
+    const panel = document.getElementById("mobile-nav-dropdown");
+    if (!toggle || !panel || toggle.dataset.navReady === "true") return;
+    toggle.dataset.navReady = "true";
+    const menuToggle = toggle;
+    const menuPanel = panel;
+
+    function setOpen(open: boolean) {
+      menuToggle.setAttribute("aria-expanded", String(open));
+      menuToggle.classList.toggle("is-open", open);
+      menuPanel.hidden = !open;
+    }
+
+    menuToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      setOpen(menuPanel.hidden);
+    });
+
+    menuPanel.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => setOpen(false));
+    });
+
+    document.addEventListener("click", (e) => {
+      if (menuPanel.hidden) return;
+      const el = e.target as Element;
+      if (el.closest("#nav-toggle") || el.closest("#mobile-nav-dropdown")) return;
+      setOpen(false);
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !menuPanel.hidden) setOpen(false);
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.matchMedia("(min-width: 741px)").matches) setOpen(false);
+    });
+  }
 
   function initHeroLightbox() {
     const root = document.getElementById("hero-lightbox");
@@ -484,6 +598,7 @@ const sliderCaptions = [
   }
 
   function boot() {
+    initMobileNav();
     initHeroLightbox();
     initHeroSwiper();
   }
