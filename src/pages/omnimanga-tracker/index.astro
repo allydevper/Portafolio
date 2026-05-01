@@ -93,18 +93,18 @@ const featureCaptures = [
 	{
 		file: "con el boton actualizar puedes revisar si hay nuevos capitulos en tu lectura.png",
 		title: "Actualizar novedades",
-		caption: "Comprueba si hay capítulos nuevos con un solo botón.",
+		caption: "Comprueba si hay capÃ­tulos nuevos con un solo botÃ³n.",
 	},
 	{
 		file: "marca el capitulo en que te quedaste.png",
-		title: "Progreso por capítulo",
-		caption: "Marca dónde te quedaste y mantén el seguimiento al día.",
+		title: "Progreso por capÃ­tulo",
+		caption: "Marca dÃ³nde te quedaste y mantÃ©n el seguimiento al dÃ­a.",
 	},
 	{
 		file: "acceso a la fuente de tu lectura y actulizar el capitulo con un solo boton.png",
-		title: "Fuente y capítulo",
+		title: "Fuente y capÃ­tulo",
 		caption:
-			"Abre la fuente de la lectura y actualiza el capítulo con un solo clic.",
+			"Abre la fuente de la lectura y actualiza el capÃ­tulo con un solo clic.",
 	},
 	{
 		file: "grabaste un duplicado. puedes fusionar ambas y juntar tu obra.png",
@@ -114,14 +114,14 @@ const featureCaptures = [
 	},
 	{
 		file: "gestion_generos_de_obras.png",
-		title: "Géneros en la biblioteca",
+		title: "GÃ©neros en la biblioteca",
 		caption:
-			"Filtra, edita o fusiona etiquetas y ve cuántas obras usan cada género.",
+			"Filtra, edita o fusiona etiquetas y ve cuÃ¡ntas obras usan cada gÃ©nero.",
 	},
 	{
 		file: "organiza tu lectura en grupos para que puedas organizar mejor.png",
 		title: "Grupos de lectura",
-		caption: "Agrupa obras para ordenar listas largas con más claridad.",
+		caption: "Agrupa obras para ordenar listas largas con mÃ¡s claridad.",
 	},
 	{
 		file: "anota referencias y detalles que puedas necesitar.png",
@@ -136,7 +136,7 @@ const featureCaptures = [
 			"Exporta o importa un JSON para respaldar datos y restaurarlos en otro perfil o equipo.",
 	},
 	{
-		title: "Y muchas más opciones a descubrir",
+		title: "Y muchas mÃ¡s opciones a descubrir",
 		caption: "",
 		teaser: true,
 	},
@@ -154,7 +154,7 @@ const howItWorksSteps = [
 		title: "Registra o usa una web compatible",
 		text: "Puede que necesites dar permisos a ciertos scans, si aun asi no se puede leer informanos para que las agreguemos.",
 		image: encodeURI(
-			"/omnimanga/features/Agrega tu web para acceso; si tiene parse, úsala, si no, usa las predeterminadas o pide actualizaciónv2.png",
+			"/omnimanga/features/addwebsecutity.png",
 		),
 		imageAlt:
 			"Sitios integrados (MangaDex, Webtoon, Manga Plus) y formulario para solicitar nuevas webs con indicador de parser",
@@ -165,7 +165,7 @@ const howItWorksSteps = [
 		text: "Visita una web compatible y deja que el parser identifique la lectura.",
 		image: "/omnimanga/features/quickAdd.png",
 		imageAlt:
-			"Vista rápida: resultado de búsqueda en MangaDex con opciones para ver o añadir la obra",
+			"Vista rÃ¡pida: resultado de bÃºsqueda en MangaDex con opciones para ver o aÃ±adir la obra",
 	},
 	{
 		index: "03",
@@ -175,7 +175,7 @@ const howItWorksSteps = [
 			"/omnimanga/features/marca el capitulo en que te quedastev2.png",
 		),
 		imageAlt:
-			"Sección Capítulos: barra de progreso, marcar o desmarcar todos y rejilla de capítulos leídos y pendientes",
+			"SecciÃ³n CapÃ­tulos: barra de progreso, marcar o desmarcar todos y rejilla de capÃ­tulos leÃ­dos y pendientes",
 	},
 ];
 ---
@@ -209,7 +209,7 @@ const howItWorksSteps = [
 					aria-controls="mobile-nav-dropdown"
 				>
 					<span class="nav-toggle-bars" aria-hidden="true"></span>
-					<span class="sr-only">Menú de navegación</span>
+					<span class="sr-only">Menu de navegaciÃ³n</span>
 				</button>
 			</div>
 			<div id="mobile-nav-dropdown" class="mobile-nav-dropdown" hidden>
@@ -388,7 +388,7 @@ const howItWorksSteps = [
 		<section id="capturas" class="container section">
 			<div class="section-head">
 				<p class="eyebrow">Capacidades</p>
-				<h2>Funciones de la extensión en capturas reales</h2>
+				<h2>Funciones de la extensiÃ³n en capturas reales</h2>
 			</div>
 			<div class="feature-capture-grid">
 				{
@@ -1511,22 +1511,22 @@ const howItWorksSteps = [
 	const captions = [
 		{
 			title: "Biblioteca y listas",
-			subtitle: "Gestiona y organiza tu lectura fácilmente.",
+			subtitle: "Gestiona y organiza tu lectura fÃ¡cilmente.",
 		},
 		{
 			title: "Vista de obra",
 			subtitle: "Revisa detalles, estado y fuente de cada manga.",
 		},
 		{
-			title: "Gestión de capítulos",
-			subtitle: "Marca leídos, ajusta estados, géneros y notas.",
+			title: "GestiÃ³n de capÃ­tulos",
+			subtitle: "Marca lecturas, ajusta estados, gÃ©neros y notas.",
 		},
 		{
-			title: "Detección automática",
+			title: "DetecciÃ³n automÃ¡tica",
 			subtitle: "Detecta lecturas compatibles al instante.",
 		},
 		{
-			title: "Reconocimiento y fusión",
+			title: "Reconocimiento y fusiÃ³n",
 			subtitle: "Identifica lecturas ya agregados y fusiona registros.",
 		},
 	];
@@ -1644,7 +1644,6 @@ const howItWorksSteps = [
 		});
 	}
 
-	/** Índice de la última fila del carrusel (clon de "manga" para loop sin salto). */
 	const MORPH_LAST_INDEX = 4;
 	const MORPH_INTERVAL_MS = 3200;
 
