@@ -2,7 +2,13 @@ import { showToastFront } from '@/lib/customToast';
 import React, { useState } from 'react';
 import { Toaster } from 'sonner';
 
-const ContactForm: React.FC = () => {
+export type ContactFormVariant = 'default' | 'terminal';
+
+type ContactFormProps = {
+    variant?: ContactFormVariant;
+};
+
+const ContactForm: React.FC<ContactFormProps> = ({ variant = 'default' }) => {
 
     const email = 'alamaswilmer@gmail.com';
 
@@ -41,6 +47,75 @@ const ContactForm: React.FC = () => {
             setIsSubmitting(false);
         }
     };
+
+    if (variant === 'terminal') {
+        return (
+            <>
+                <Toaster theme="dark" />
+                <form id="contact-form-terminal" className="terminal-form" onSubmit={handleSubmit}>
+                    <input type="hidden" name="_subject" value="Contacto · portafolio (terminal)" />
+                    <input type="hidden" name="_template" value="table" />
+                    <div className="terminal-form-row2">
+                        <label>
+                            <div className="label-text">
+                                <span className="chev">›</span> nombre
+                            </div>
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="tu nombre"
+                                className="terminal-input"
+                                value={formData.name}
+                                onChange={handleChange}
+                                required
+                            />
+                        </label>
+                        <label>
+                            <div className="label-text">
+                                <span className="chev">›</span> email
+                            </div>
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="tu@correo.com"
+                                className="terminal-input"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </label>
+                    </div>
+                    <label>
+                        <div className="label-text">
+                            <span className="chev">›</span> mensaje
+                        </div>
+                        <textarea
+                            name="message"
+                            placeholder="contame del proyecto, stack, plazos…"
+                            className="terminal-textarea"
+                            rows={6}
+                            value={formData.message}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label>
+                    <div className="terminal-form-foot">
+                        <div className="terminal-form-hint">
+                            <span className="dollar">$</span> envío vía FormSubmit → {email}
+                        </div>
+                        <button
+                            type="submit"
+                            className="terminal-form-submit"
+                            aria-label="Enviar mensaje"
+                            disabled={isSubmitting}
+                        >
+                            {isSubmitting ? './enviando…' : './enviar.sh →'}
+                        </button>
+                    </div>
+                </form>
+            </>
+        );
+    }
 
     return (
         <div className='max-w-4xl mx-auto'>

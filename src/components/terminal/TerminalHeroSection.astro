@@ -1,0 +1,119 @@
+---
+/**
+ * Bloque hero (ventana bash + tarjeta identidad + CTAs).
+ * Para una terminal interactiva real más adelante, opciones habituales:
+ * - xterm.js + node-pty (solo si hay backend) o xterm solo con shell simulado en cliente
+ * - react-console-emulator / jquery.terminal (comandos definidos en JS, liviano)
+ * - typed.js / typewriter-effect (solo animación de texto, sin input)
+ */
+import { MASCOT_SRC } from "../../data/terminal";
+---
+
+<section id="home" class="terminal-section terminal-hero">
+	<div class="terminal-hero-grid">
+		<div class="terminal-window">
+			<div class="terminal-window-header">
+				<span class="terminal-window-dot red"></span>
+				<span class="terminal-window-dot amber"></span>
+				<span class="terminal-window-dot green"></span>
+				<span class="terminal-window-title">— bash — wilmer@mac — 80×24</span>
+			</div>
+			<div class="terminal-window-body">
+				<div class="terminal-line">
+					<span class="terminal-line-prompt">$</span>{" "}
+					<span class="terminal-line-cmd">whoami</span>
+					<div class="terminal-line-out">
+						<span class="terminal-accent">wilmer alama</span> · sr. software engineer · lima, perú
+					</div>
+				</div>
+				<div class="terminal-line">
+					<span class="terminal-line-prompt">$</span>{" "}
+					<span class="terminal-line-cmd">cat experience.txt</span>
+					<div class="terminal-line-out">
+						<span class="terminal-accent">10+ años</span> construyendo plataformas de viajes:<br />
+						· integraciones GDS — <span class="terminal-dim">Sabre · Amadeus · Travelport</span><br />
+						· motores de reservas, mid-office, fareshop con caché distribuido<br />
+						· ~2.4M PNRs procesados / mes en producción
+					</div>
+				</div>
+				<div class="terminal-line">
+					<span class="terminal-line-prompt">$</span>{" "}
+					<span class="terminal-line-cmd">ls stack/principal/</span>
+					<div class="terminal-line-out terminal-accent">
+						java/ c#/ typescript/ react/ node/ spring-boot/ .net/ php/
+					</div>
+				</div>
+				<div class="terminal-line">
+					<span class="terminal-line-prompt">$</span>{" "}
+					<span class="terminal-line-cmd">cat status.json</span>
+					<div class="terminal-line-out" style="display:block;font-family:inherit;color:#888">
+						{"{"}<br />
+						&nbsp;&nbsp;<span class="terminal-json-key">"rol"</span>:{" "}
+						<span class="terminal-accent">"tech lead / sr engineer"</span>,<br />
+						&nbsp;&nbsp;<span class="terminal-json-key">"disponible"</span>:{" "}
+						<span class="terminal-json-bool">true</span>,<br />
+						&nbsp;&nbsp;<span class="terminal-json-key">"modo"</span>:{" "}
+						<span class="terminal-accent">"contractual / fulltime remoto"</span><br />
+						{"}"}
+					</div>
+				</div>
+				<div class="terminal-prompt-row">
+					<span class="terminal-line-prompt">$</span> <span class="terminal-cursor">▎</span>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<div class="terminal-card">
+				<div class="terminal-mascot-wrap">
+					<div class="terminal-mascot-glow-bg"></div>
+					<img src={MASCOT_SRC} alt="Mascot pixel de Wilmer" width="140" height="140" />
+				</div>
+				<div class="terminal-identity">
+					<div class="terminal-identity-label">// identity</div>
+					<div class="terminal-identity-name">Wilmer Alama</div>
+					<div class="terminal-identity-role">Sr. Software Engineer · Travel Tech</div>
+					<div class="terminal-identity-loc">Lima, Perú · UTC-5</div>
+				</div>
+				<div class="terminal-stat-grid">
+					<div class="terminal-stat">
+						<div class="terminal-stat-label">EXP</div>
+						<div class="terminal-stat-value">10+ años</div>
+					</div>
+					<div class="terminal-stat">
+						<div class="terminal-stat-label">FOCO</div>
+						<div class="terminal-stat-value neutral">Travel / GDS</div>
+					</div>
+					<div class="terminal-stat">
+						<div class="terminal-stat-label">ROL</div>
+						<div class="terminal-stat-value neutral">Tech Lead</div>
+					</div>
+					<div class="terminal-stat">
+						<div class="terminal-stat-label">STATUS</div>
+						<div class="terminal-stat-value status">● disponible</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="terminal-cta-col">
+				<a class="terminal-cta terminal-cta-primary" href="#projects">
+					<span>./ver-proyectos.sh</span>
+					<span>→</span>
+				</a>
+				<a
+					class="terminal-cta terminal-cta-outline"
+					href="https://www.linkedin.com/in/wilmer-alama/"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<span>linkedin.com/in/wilmer-alama</span>
+					<span class="arrow-accent">↗</span>
+				</a>
+				<a class="terminal-cta terminal-cta-dashed" href="#contact">
+					<span>./contactar.sh</span>
+					<span>→</span>
+				</a>
+			</div>
+		</div>
+	</div>
+</section>
