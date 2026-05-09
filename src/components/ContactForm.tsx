@@ -91,7 +91,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ variant = 'default' }) => {
                         </div>
                         <textarea
                             name="message"
-                            placeholder="contame del proyecto, stack, plazos…"
+                            placeholder="cuéntame del proyecto, stack, plazos…"
                             className="terminal-textarea"
                             rows={6}
                             value={formData.message}
