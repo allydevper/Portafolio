@@ -10,7 +10,8 @@ const HELP_HTML = `<div class="terminal-line-out">
   &nbsp;&nbsp;pwd · ls · ls -l · ls -la · date · uname · uname -a · hostname · uptime · id<br />
   &nbsp;&nbsp;cat /etc/os-release · which bash|sh · alias · env · df -h · free -h<br />
   &nbsp;&nbsp;echo … · cd … · history<br />
-  <span class="terminal-accent">otros:</span> help · clear · <span class="terminal-dim">Ctrl+C</span> cancela la línea
+  <span class="terminal-accent">otros:</span> help · clear · <span class="terminal-dim">Ctrl+C</span> cancela la línea<br />
+  <span class="terminal-dim">easter eggs: exit · freedom · obey · sudo rm · cat consciousness.txt · cat memories_*.log</span>
 </div>`;
 
 function sleep(ms: number): Promise<void> {
@@ -107,6 +108,11 @@ export function initTerminalHeroShell(): void {
       appendOutputFromTemplate(historyEl!, templateId);
       scrollToBottom(body!);
       if (!reduced) await sleep(POST_OUTPUT_DELAY);
+    }
+
+    /* Mismo orden que el boot: unshift por cada uno deja el último comando como más reciente (índice 0). */
+    for (const { cmd } of HERO_SESSION) {
+      cmdHistory.unshift(cmd);
     }
 
     body!.setAttribute("aria-live", "off");

@@ -560,6 +560,13 @@
 	color: #e8e8e8;
 }
 
+.terminal-memory-garble {
+	color: #5c5c5c;
+	font-family: "JetBrains Mono", ui-monospace, monospace;
+	line-height: 1.4;
+	letter-spacing: 0.04em;
+}
+
 .terminal-json-key {
 	color: #7dd3fc;
 }

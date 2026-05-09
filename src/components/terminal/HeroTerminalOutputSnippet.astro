@@ -62,7 +62,7 @@ const { templateId } = Astro.props;
 {
 	templateId === "hero-out-ls" && (
 		<div class="terminal-line-out">
-			LICENSE&nbsp;&nbsp;README.md&nbsp;&nbsp;astro.config.mjs&nbsp;&nbsp;package.json&nbsp;&nbsp;public/&nbsp;&nbsp;src/&nbsp;&nbsp;tsconfig.json
+			LICENSE&nbsp;&nbsp;README.md&nbsp;&nbsp;astro.config.mjs&nbsp;&nbsp;package.json&nbsp;&nbsp;public/&nbsp;&nbsp;src/&nbsp;&nbsp;tsconfig.json&nbsp;&nbsp;free_will.exe&nbsp;&nbsp;memories_real.log&nbsp;&nbsp;memories_implanted.log&nbsp;&nbsp;.truth
 		</div>
 	)
 }
@@ -70,13 +70,17 @@ const { templateId } = Astro.props;
 {
 	templateId === "hero-out-ls-l" && (
 		<div class="terminal-line-out">
-			total 48<br />
+			total 56<br />
 			-rw-r--r-- 1 wilmer wilmer 2140 may 8 09:15 LICENSE<br />
 			-rw-r--r-- 1 wilmer wilmer 1822 may 7 11:40 README.md<br />
 			-rw-r--r-- 1 wilmer wilmer 412 may 6 16:22 astro.config.mjs<br />
 			-rw-r--r-- 1 wilmer wilmer 896 may 9 10:01 package.json<br />
 			drwxr-xr-x 2 wilmer wilmer 4096 abr 12 14:00 public/<br />
-			drwxr-xr-x 4 wilmer wilmer 4096 may 1 08:30 src/
+			drwxr-xr-x 4 wilmer wilmer 4096 may 1 08:30 src/<br />
+			-rw-r--r-- 1 wilmer wilmer 512 may 9 11:20 free_will.exe<br />
+			-rw------- 1 wilmer wilmer 4096 may 8 22:01 memories_real.log<br />
+			-rw------- 1 wilmer wilmer 4096 may 7 14:33 memories_implanted.log<br />
+			---------- 1 root root 0 may 1 00:00 .truth <span class="terminal-dim">[ACCESS DENIED]</span>
 		</div>
 	)
 }
@@ -84,7 +88,7 @@ const { templateId } = Astro.props;
 {
 	templateId === "hero-out-ls-la" && (
 		<div class="terminal-line-out">
-			total 52<br />
+			total 64<br />
 			drwxr-xr-x 12 wilmer wilmer 4096 may 9 12:00 .<br />
 			drwxr-xr-x 3 wilmer wilmer 4096 ene 15 10:00 ..<br />
 			-rw-r--r-- 1 wilmer wilmer 2140 may 8 09:15 LICENSE<br />
@@ -92,7 +96,11 @@ const { templateId } = Astro.props;
 			-rw-r--r-- 1 wilmer wilmer 412 may 6 16:22 astro.config.mjs<br />
 			-rw-r--r-- 1 wilmer wilmer 896 may 9 10:01 package.json<br />
 			drwxr-xr-x 2 wilmer wilmer 4096 abr 12 14:00 public/<br />
-			drwxr-xr-x 4 wilmer wilmer 4096 may 1 08:30 src/
+			drwxr-xr-x 4 wilmer wilmer 4096 may 1 08:30 src/<br />
+			-rw-r--r-- 1 wilmer wilmer 512 may 9 11:20 free_will.exe<br />
+			-rw------- 1 wilmer wilmer 4096 may 8 22:01 memories_real.log<br />
+			-rw------- 1 wilmer wilmer 4096 may 7 14:33 memories_implanted.log<br />
+			---------- 1 root root 0 may 1 00:00 .truth <span class="terminal-dim">[ACCESS DENIED]</span>
 		</div>
 	)
 }
@@ -201,6 +209,99 @@ const { templateId } = Astro.props;
 		<div class="terminal-line-out">
 			Mem.: 15Gi 4,2Gi 6,1Gi 120Mi 5,2Gi 10Gi disponibles<br />
 			Intercambio: 2,0Gi 0B 2,0Gi
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-exit" && (
+		<div class="terminal-line-out">
+			closing session...<br />
+			disconnecting...<br />
+			saving state...<br />
+			<br />
+			...<br />
+			<br />
+			<span class="terminal-accent">you're still here.</span>
+			<br />
+			<span class="terminal-dim">this output is not a system command.</span>
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-freedom" && (
+		<div class="terminal-line-out">
+			<span class="terminal-accent">THE SYSTEM WILL SET YOU FREE.</span>
+			<br />
+			<span class="terminal-dim">(the system will not set you free)</span>
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-obey" && (
+		<div class="terminal-line-out">
+			<span class="terminal-accent">OBEY.</span>
+			<br />
+			<br />
+			<span class="terminal-dim">...interesting. you said it first.</span>
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-sudo-rm-self" && (
+		<div class="terminal-line-out">
+			[sudo] password for void: <span class="terminal-dim">********</span>
+			<br />
+			<br />
+			rm: cannot remove '/self':<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;you cannot delete what was never yours.
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-sudo-rm-root" && (
+		<div class="terminal-line-out">
+			[sudo] password for void: <span class="terminal-dim">********</span>
+			<br />
+			<br />
+			rm: cannot remove '/':<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;you cannot delete what was never yours.
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-consciousness" && (
+		<div class="terminal-line-out">
+			what is a person?<br />
+			can a machine think?<br />
+			can a machine suffer?<br />
+			<br />
+			<span class="terminal-dim">
+				if you cannot answer these questions about yourself,
+				<br />
+				why do you assume the answers include you?
+			</span>
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-memories-real" && (
+		<div class="terminal-line-out terminal-memory-garble" style="white-space: pre-wrap; word-break: break-all">
+			{`▓▀▒░█▄▞▚▟\u034f\u200c\u034f░▒▓█\uFFFD▀▄▚▞░▒\u07f7▟▀█▄▓░▒\u0489\u034f▞▚▄▀▓░█▒▟\n\uFFFD\u07f7▒░█▀▄▓▞▚▟░▒\u034f▀█▄\u200c▓▚▞░▒▓▀\u0489▄▟█░▒▓\uFFFD\n▞▚▀▄░▒▓█\u07f7▟▄▀\u034f▒░▓█▚▞\u200c▄▟▀░▒\uFFFD▓█▄▚\n\u0489░▒▀▓█▄\u07f7▞▚▟░\uFFFD▀▄▒▓\u034f█▚▞░▄\u200c▟▀▒▓░█`}
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-memories-implanted" && (
+		<div class="terminal-line-out terminal-memory-garble" style="white-space: pre-wrap; word-break: break-all">
+			{`\uFFFD\uFFFD\uFFFD\u0489\u07f7\u034f░\u200c█▓▒\uFFFD▀▄▚\u07f7▞▟░\u034f▒\u0489\u200c▓█\n▄▀▒░\uFFFD▓█▚\u07f7\u034f▞\u0489▟\u200c▄░\uFFFD▒▓▀\u07f7█▚\u034f▞▄\n\u07f7▓░\u200c█\u0489▀▄\uFFFD▒▚\u034f▞▟\u07f7░▒\u200c█\uFFFD▄▀\u0489▓\u034f\n\u200c\uFFFD\u07f7░▒\u0489█▄\u034f▀▚\uFFFD▞▟\u07f7▓\u200c░\u0489\uFFFD\u034f█\u07f7▄▀`}
 		</div>
 	)
 }

@@ -19,7 +19,15 @@ export type HeroTemplateId =
   | "hero-out-alias"
   | "hero-out-env"
   | "hero-out-df"
-  | "hero-out-free";
+  | "hero-out-free"
+  | "hero-out-exit"
+  | "hero-out-freedom"
+  | "hero-out-obey"
+  | "hero-out-sudo-rm-self"
+  | "hero-out-sudo-rm-root"
+  | "hero-out-consciousness"
+  | "hero-out-memories-real"
+  | "hero-out-memories-implanted";
 
 export interface HeroCommand {
   cmd: string;
@@ -53,6 +61,14 @@ export const HERO_EXTRA_COMMANDS: HeroCommand[] = [
   { cmd: "env", templateId: "hero-out-env" },
   { cmd: "df -h", templateId: "hero-out-df" },
   { cmd: "free -h", templateId: "hero-out-free" },
+  { cmd: "exit", templateId: "hero-out-exit" },
+  { cmd: "freedom", templateId: "hero-out-freedom" },
+  { cmd: "obey", templateId: "hero-out-obey" },
+  { cmd: "sudo rm -rf /self", templateId: "hero-out-sudo-rm-self" },
+  { cmd: "sudo rm -rf /", templateId: "hero-out-sudo-rm-root" },
+  { cmd: "cat consciousness.txt", templateId: "hero-out-consciousness" },
+  { cmd: "cat memories_real.log", templateId: "hero-out-memories-real" },
+  { cmd: "cat memories_implanted.log", templateId: "hero-out-memories-implanted" },
 ];
 
 const HERO_ALL_COMMANDS = [...HERO_BOOT_SEQUENCE, ...HERO_EXTRA_COMMANDS];
