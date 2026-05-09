@@ -186,7 +186,7 @@ const projectCount = SHARED_PROJECTS.length;
 										</div>
 										<div class="terminal-skill-bars">
 											{[1, 2, 3, 4, 5].map((n) => (
-												<span class:list={["terminal-skill-bar", n <= 4 && "is-on"]} />
+												<span class:list={["terminal-skill-bar", n <= s.level && "is-on"]} />
 											))}
 										</div>
 									</div>

@@ -74,17 +74,17 @@ export const SHARED_PROJECTS: TerminalProject[] = [
 	},
 ];
 
-export type SkillPrimary = { name: string; cat: string };
+export type SkillPrimary = { name: string; cat: string; level: number };
 
 export const SKILLS_PRIMARY: SkillPrimary[] = [
-	{ name: "Java", cat: "Backend" },
-	{ name: "C#", cat: "Backend" },
-	{ name: "TypeScript", cat: "Lenguaje" },
-	{ name: "React", cat: "Front" },
-	{ name: "PHP", cat: "Backend" },
-	{ name: "Spring Boot", cat: "Framework" },
-	{ name: ".NET", cat: "Framework" },
-	{ name: "Node.js", cat: "Runtime" },
+	{ name: "Java", cat: "Backend", level: 4 },
+	{ name: "C#", cat: "Backend", level: 5 },
+	{ name: "TypeScript", cat: "Lenguaje", level: 4 },
+	{ name: "React", cat: "Front", level: 4 },
+	{ name: "PHP", cat: "Backend", level: 4 },
+	{ name: "Spring Boot", cat: "Framework", level: 5 },
+	{ name: ".NET", cat: "Framework", level: 5 },
+	{ name: "Node.js", cat: "Runtime", level: 4 },
 ];
 
 export const SKILLS_SECONDARY: string[] = [
