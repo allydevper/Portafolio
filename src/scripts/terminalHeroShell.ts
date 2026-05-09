@@ -6,7 +6,7 @@ const POST_OUTPUT_DELAY = 200;
 const HELP_HTML = `<div class="terminal-line-out">
   <span class="terminal-accent">portafolio (boot):</span><br />
   &nbsp;&nbsp;whoami · cat experience.txt · ls stack/principal/ · cat status.json<br />
-  <span class="terminal-accent">linux simulado:</span><br />
+  <span class="terminal-accent">linux:</span><br />
   &nbsp;&nbsp;pwd · ls · ls -l · ls -la · date · uname · uname -a · hostname · uptime · id<br />
   &nbsp;&nbsp;cat /etc/os-release · which bash|sh · alias · env · df -h · free -h<br />
   &nbsp;&nbsp;echo … · cd … · history<br />
@@ -171,7 +171,7 @@ export function initTerminalHeroShell(): void {
       const dest = cmd === "cd" ? "~" : cmd.slice(3).trim() || "~";
       appendOutputLiteral(
         historyEl!,
-        `<div class="terminal-line-out terminal-dim">simulado — cwd: ${escapeHtml(dest)}</div>`
+        `<div class="terminal-line-out terminal-dim">cwd: ${escapeHtml(dest)}</div>`
       );
       scrollToBottom(body!);
       return;
