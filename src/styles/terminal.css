@@ -427,7 +427,52 @@
 .terminal-window-body {
 	padding: 22px;
 	font-size: 13.5px;
-	min-height: 440px;
+	min-height: 540px;
+	max-height: 540px;
+	overflow-y: auto;
+	scroll-behavior: smooth;
+	scrollbar-width: thin;
+	scrollbar-color: #2a2a2a transparent;
+}
+
+.terminal-window-body::-webkit-scrollbar {
+	width: 4px;
+}
+
+.terminal-window-body::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.terminal-window-body::-webkit-scrollbar-thumb {
+	background: #2a2a2a;
+	border-radius: 2px;
+}
+
+.terminal-input-row {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	margin-top: 12px;
+}
+
+.terminal-input-row .terminal-input {
+	flex: 1;
+	min-width: 0;
+	background: transparent;
+	border: none;
+	outline: none;
+	box-shadow: none;
+	appearance: none;
+	color: #e8e8e8;
+	font: inherit;
+	caret-color: var(--accent);
+	padding: 0;
+	padding-left: 0;
+}
+
+.terminal-input-row .terminal-input:focus-visible {
+	outline: none;
+	box-shadow: none;
 }
 
 .terminal-line-prompt {
@@ -1109,8 +1154,8 @@
 	color: #555;
 }
 
-.terminal-input,
-.terminal-textarea {
+.terminal-form .terminal-input,
+.terminal-form .terminal-textarea {
 	width: 100%;
 	padding: 12px 14px;
 	background: #0a0a0a;
@@ -1128,8 +1173,8 @@
 	min-height: 120px;
 }
 
-.terminal-input:focus,
-.terminal-textarea:focus {
+.terminal-form .terminal-input:focus,
+.terminal-form .terminal-textarea:focus {
 	border-color: var(--accent);
 }
 
@@ -1224,6 +1269,7 @@
 
 	.terminal-window-body {
 		min-height: 0;
+		max-height: 320px;
 	}
 
 	.terminal-contact-title {

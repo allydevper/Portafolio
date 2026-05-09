@@ -1,0 +1,54 @@
+---
+import type { HeroTemplateId } from "../../data/heroTerminalSession";
+
+export interface Props {
+	templateId: HeroTemplateId;
+}
+
+const { templateId } = Astro.props;
+---
+
+{
+	templateId === "hero-out-whoami" && (
+		<div class="terminal-line-out">
+			<span class="terminal-accent">wilmer alama</span> · sr. software engineer · lima, perú
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-experience" && (
+		<div class="terminal-line-out">
+			<span class="terminal-accent">10+ años</span> construyendo plataformas de viajes:<br />
+			· integraciones GDS — <span class="terminal-dim">Sabre · Amadeus · Kontrol</span>
+			<br />
+			· motores de reservas, fareshop, entre otros.<br />
+			. portales web, aplicaciones escritorio, aplicaciones móviles, etc.
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-stack" && (
+		<div class="terminal-line-out terminal-accent">
+			java/ c#/ typescript/ react/ node/ spring-boot/ .net/ php/
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-status" && (
+		<div class="terminal-line-out" style="display:block;font-family:inherit;color:#888">
+			{"{"}
+			<br />
+			&nbsp;&nbsp;<span class="terminal-json-key">"rol"</span>:{" "}
+			<span class="terminal-accent">"tech lead / sr engineer"</span>,<br />
+			&nbsp;&nbsp;<span class="terminal-json-key">"disponible"</span>:{" "}
+			<span class="terminal-json-bool">true</span>,<br />
+			&nbsp;&nbsp;<span class="terminal-json-key">"modo"</span>:{" "}
+			<span class="terminal-accent">"remoto"</span>
+			<br />
+			{"}"}
+		</div>
+	)
+}

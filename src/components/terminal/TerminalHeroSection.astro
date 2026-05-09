@@ -1,12 +1,7 @@
 ---
-/**
- * Bloque hero (ventana bash + tarjeta identidad + CTAs).
- * Para una terminal interactiva real más adelante, opciones habituales:
- * - xterm.js + node-pty (solo si hay backend) o xterm solo con shell simulado en cliente
- * - react-console-emulator / jquery.terminal (comandos definidos en JS, liviano)
- * - typed.js / typewriter-effect (solo animación de texto, sin input)
- */
+import { HERO_SESSION } from "../../data/heroTerminalSession";
 import { MASCOT_SRC } from "../../data/terminal";
+import HeroTerminalOutputSnippet from "./HeroTerminalOutputSnippet.astro";
 ---
 
 <section id="home" class="terminal-section terminal-hero">
@@ -16,49 +11,53 @@ import { MASCOT_SRC } from "../../data/terminal";
 				<span class="terminal-window-dot red"></span>
 				<span class="terminal-window-dot amber"></span>
 				<span class="terminal-window-dot green"></span>
-				<span class="terminal-window-title">— bash — wilmer@mac — 80×24</span>
+				<span class="terminal-window-title">— bash — wilmer@portfolio:~$ — 80×24</span>
 			</div>
-			<div class="terminal-window-body">
-				<div class="terminal-line">
-					<span class="terminal-line-prompt">$</span>{" "}
-					<span class="terminal-line-cmd">whoami</span>
-					<div class="terminal-line-out">
-						<span class="terminal-accent">wilmer alama</span> · sr. software engineer · lima, perú
+			<div
+				class="terminal-window-body"
+				id="terminal-hero-body"
+				role="log"
+				aria-live="polite"
+				aria-label="Terminal simulada"
+			>
+				<!-- Salidas: un solo HTML en HeroTerminalOutputSnippet; templates para JS, noscript para sin JS -->
+				{
+					HERO_SESSION.map(({ templateId }) => (
+						<template id={templateId}>
+							<HeroTerminalOutputSnippet templateId={templateId} />
+						</template>
+					))
+				}
+
+				<noscript>
+					{
+						HERO_SESSION.map(({ cmd, templateId }) => (
+							<div class="terminal-line">
+								<span class="terminal-line-prompt">$</span> <span class="terminal-line-cmd">{cmd}</span>
+								<HeroTerminalOutputSnippet templateId={templateId} />
+							</div>
+						))
+					}
+					<div class="terminal-prompt-row">
+						<span class="terminal-line-prompt">$</span> <span class="terminal-cursor">▎</span>
 					</div>
-				</div>
-				<div class="terminal-line">
-					<span class="terminal-line-prompt">$</span>{" "}
-					<span class="terminal-line-cmd">cat experience.txt</span>
-					<div class="terminal-line-out">
-						<span class="terminal-accent">10+ años</span> construyendo plataformas de viajes:<br />
-						· integraciones GDS — <span class="terminal-dim">Sabre · Amadeus · Travelport</span><br />
-						· motores de reservas, mid-office, fareshop con caché distribuido<br />
-						· ~2.4M PNRs procesados / mes en producción
-					</div>
-				</div>
-				<div class="terminal-line">
-					<span class="terminal-line-prompt">$</span>{" "}
-					<span class="terminal-line-cmd">ls stack/principal/</span>
-					<div class="terminal-line-out terminal-accent">
-						java/ c#/ typescript/ react/ node/ spring-boot/ .net/ php/
-					</div>
-				</div>
-				<div class="terminal-line">
-					<span class="terminal-line-prompt">$</span>{" "}
-					<span class="terminal-line-cmd">cat status.json</span>
-					<div class="terminal-line-out" style="display:block;font-family:inherit;color:#888">
-						{"{"}<br />
-						&nbsp;&nbsp;<span class="terminal-json-key">"rol"</span>:{" "}
-						<span class="terminal-accent">"tech lead / sr engineer"</span>,<br />
-						&nbsp;&nbsp;<span class="terminal-json-key">"disponible"</span>:{" "}
-						<span class="terminal-json-bool">true</span>,<br />
-						&nbsp;&nbsp;<span class="terminal-json-key">"modo"</span>:{" "}
-						<span class="terminal-accent">"contractual / fulltime remoto"</span><br />
-						{"}"}
-					</div>
-				</div>
-				<div class="terminal-prompt-row">
-					<span class="terminal-line-prompt">$</span> <span class="terminal-cursor">▎</span>
+				</noscript>
+
+				<!-- Historial dinámico (JS inserta aquí) -->
+				<div id="terminal-hero-history"></div>
+
+				<!-- Fila de input interactivo (oculta hasta terminar el boot) -->
+				<div class="terminal-input-row" id="terminal-hero-input-row" hidden>
+					<span class="terminal-line-prompt">$</span>
+					<input
+						id="terminal-hero-input"
+						class="terminal-input"
+						type="text"
+						autocomplete="off"
+						autocorrect="off"
+						spellcheck="false"
+						aria-label="Comando de terminal"
+					/>
 				</div>
 			</div>
 		</div>
@@ -117,3 +116,8 @@ import { MASCOT_SRC } from "../../data/terminal";
 		</div>
 	</div>
 </section>
+
+<script>
+	import { initTerminalHeroShell } from "../../scripts/terminalHeroShell";
+	initTerminalHeroShell();
+</script>
