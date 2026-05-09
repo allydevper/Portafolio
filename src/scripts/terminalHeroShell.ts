@@ -69,6 +69,13 @@ function appendOutputLiteral(history: HTMLElement, html: string): void {
   history.appendChild(wrapper);
 }
 
+/** No robar foco del input si el usuario está seleccionando texto en el historial. */
+function hasNonCollapsedDocumentSelection(): boolean {
+  const sel = window.getSelection();
+  if (!sel || sel.rangeCount === 0) return false;
+  return !sel.isCollapsed;
+}
+
 export function initTerminalHeroShell(): void {
   const body = document.getElementById("terminal-hero-body");
   const historyEl = document.getElementById("terminal-hero-history");
@@ -151,8 +158,10 @@ export function initTerminalHeroShell(): void {
     }
   });
 
-  // Click anywhere in the terminal body refocuses the input
-  body.addEventListener("click", () => input!.focus());
+  body.addEventListener("click", () => {
+    if (hasNonCollapsedDocumentSelection()) return;
+    input!.focus();
+  });
 
   runBoot();
 }

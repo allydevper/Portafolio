@@ -427,8 +427,8 @@
 .terminal-window-body {
 	padding: 22px;
 	font-size: 13.5px;
-	min-height: 540px;
-	max-height: 540px;
+	min-height: 460px;
+	max-height: 460px;
 	overflow-y: auto;
 	scroll-behavior: smooth;
 	scrollbar-width: thin;
