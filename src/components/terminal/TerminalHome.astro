@@ -50,7 +50,7 @@ const projectCount = SHARED_PROJECTS.length;
 						"--p-size": `${p.size}px`,
 						"--p-op": String(p.opacity),
 					}}
-				/>
+				></span>
 			))
 		}
 		<div class="terminal-bg-mouse-glow" data-terminal-mouse-glow></div>
@@ -77,15 +77,6 @@ const projectCount = SHARED_PROJECTS.length;
 					}
 				</div>
 				<div class="terminal-nav-actions">
-					<!-- <a
-						class="btn-ghost"
-						href="https://github.com/allydevper"
-						target="_blank"
-						rel="noopener noreferrer"
-						title="demos & experimentos · proyectos empresariales bajo NDA"
-					>
-						github · demos ↗
-					</a> -->
 					<a
 						class="btn-primary"
 						href="https://www.linkedin.com/in/wilmer-alama/"
@@ -145,7 +136,7 @@ const projectCount = SHARED_PROJECTS.length;
 					{
 						EXPERIENCE.map((e, i) => (
 							<div class="terminal-timeline-item">
-								<div class:list={["terminal-timeline-dot", i === 0 && "is-current"]} />
+								<div class:list={["terminal-timeline-dot", i === 0 && "is-current"]}></div>
 								<div class="terminal-exp-card">
 									<div class="terminal-exp-period">{e.period}</div>
 									<div class="terminal-exp-role">{e.role}</div>
@@ -186,7 +177,7 @@ const projectCount = SHARED_PROJECTS.length;
 										</div>
 										<div class="terminal-skill-bars">
 											{[1, 2, 3, 4, 5].map((n) => (
-												<span class:list={["terminal-skill-bar", n <= s.level && "is-on"]} />
+												<span class:list={["terminal-skill-bar", n <= s.level && "is-on"]}></span>
 											))}
 										</div>
 									</div>
@@ -216,7 +207,7 @@ const projectCount = SHARED_PROJECTS.length;
 						</h2>
 					</div>
 					<div class="terminal-projects-meta">
-						<span class="dot">●</span> {projectCount} de {projectCount} cargados
+						<span class="dot">●</span> {projectCount} proyectos
 					</div>
 				</div>
 
