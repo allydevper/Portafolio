@@ -117,9 +117,13 @@ export function initTerminalHeroShell(): void {
 
     body!.setAttribute("aria-live", "off");
     inputRow!.hidden = false;
-    requestAnimationFrame(() => syncHeroFakeCaret());
-    input!.focus();
-    scrollToBottom(body!);
+    /* Tras mostrar el input: primero el scroll interno del terminal, luego foco sin
+     * "scroll into view" del documento (evita que la página salte al terminar el boot). */
+    requestAnimationFrame(() => {
+      syncHeroFakeCaret();
+      scrollToBottom(body!);
+      input!.focus({ preventScroll: true });
+    });
   }
 
   function executeCommand(raw: string): void {
@@ -246,7 +250,7 @@ export function initTerminalHeroShell(): void {
 
   body.addEventListener("click", () => {
     if (hasNonCollapsedDocumentSelection()) return;
-    input!.focus();
+    input!.focus({ preventScroll: true });
   });
 
   runBoot();
