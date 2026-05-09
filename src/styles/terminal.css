@@ -466,6 +466,8 @@
 	color: #e8e8e8;
 	font: inherit;
 	caret-color: var(--accent);
+	/* Barra de escritura más ancha (bloque ~1ch); navegadores sin soporte usan el caret por defecto */
+	caret-shape: block;
 	padding: 0;
 	padding-left: 0;
 }
