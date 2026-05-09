@@ -84,6 +84,18 @@ export function initTerminalHeroShell(): void {
 
   if (!body || !historyEl || !inputRow || !input) return;
 
+  function syncHeroFakeCaret(): void {
+    const el = input;
+    if (!el) return;
+    const wrap = el.closest(".terminal-hero-input-wrap");
+    if (!wrap) return;
+    const measure = wrap.querySelector(".terminal-hero-input-measure");
+    const fake = wrap.querySelector(".terminal-hero-fake-caret") as HTMLElement | null;
+    if (!(measure instanceof HTMLElement) || !fake) return;
+    measure.textContent = el.value;
+    fake.style.setProperty("--terminal-fake-caret-x", `${measure.offsetWidth}px`);
+  }
+
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const cmdHistory: string[] = [];
   let historyIndex = -1;
@@ -99,6 +111,7 @@ export function initTerminalHeroShell(): void {
 
     body!.setAttribute("aria-live", "off");
     inputRow!.hidden = false;
+    requestAnimationFrame(() => syncHeroFakeCaret());
     input!.focus();
     scrollToBottom(body!);
   }
@@ -135,10 +148,16 @@ export function initTerminalHeroShell(): void {
     scrollToBottom(body!);
   }
 
+  input.addEventListener("input", syncHeroFakeCaret);
+  input.addEventListener("focus", syncHeroFakeCaret);
+  input.addEventListener("blur", syncHeroFakeCaret);
+  window.addEventListener("resize", syncHeroFakeCaret);
+
   input.addEventListener("keydown", (e: KeyboardEvent) => {
     if (e.key === "Enter") {
       const value = input.value;
       input.value = "";
+      syncHeroFakeCaret();
       executeCommand(value);
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
@@ -146,6 +165,7 @@ export function initTerminalHeroShell(): void {
         historyIndex++;
         input.value = cmdHistory[historyIndex] ?? "";
       }
+      syncHeroFakeCaret();
     } else if (e.key === "ArrowDown") {
       e.preventDefault();
       if (historyIndex > 0) {
@@ -155,6 +175,7 @@ export function initTerminalHeroShell(): void {
         historyIndex = -1;
         input.value = "";
       }
+      syncHeroFakeCaret();
     }
   });
 

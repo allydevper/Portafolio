@@ -449,10 +449,62 @@
 }
 
 .terminal-input-row {
+	--terminal-hero-caret-lh: 1.5;
 	display: flex;
 	align-items: center;
 	gap: 4px;
 	margin-top: 12px;
+	line-height: var(--terminal-hero-caret-lh);
+}
+
+.terminal-hero-input-wrap {
+	display: flex;
+	align-items: center;
+	flex: 1;
+	min-width: 0;
+	position: relative;
+	font: inherit;
+	line-height: inherit;
+}
+
+.terminal-hero-input-measure {
+	position: absolute;
+	left: 0;
+	top: 0;
+	visibility: hidden;
+	pointer-events: none;
+	white-space: pre;
+	font: inherit;
+	line-height: inherit;
+	letter-spacing: inherit;
+}
+
+/* Sin foco: misma celda ~1ch × altura de línea que caret-shape:block; trazo interior para no robar tamaño al borde */
+.terminal-hero-fake-caret {
+	position: absolute;
+	left: 0;
+	top: 50%;
+	box-sizing: border-box;
+	font: inherit;
+	line-height: inherit;
+	width: 1ch;
+	height: 1lh;
+	background: transparent;
+	border: none;
+	box-shadow: inset 0 0 0 1px var(--accent);
+	pointer-events: none;
+	transform: translate(var(--terminal-fake-caret-x, 0px), -50%);
+	opacity: 0;
+}
+
+@supports not (height: 1lh) {
+	.terminal-hero-fake-caret {
+		height: calc(1em * var(--terminal-hero-caret-lh));
+	}
+}
+
+.terminal-input-row:not(:focus-within) .terminal-hero-fake-caret {
+	opacity: 1;
 }
 
 .terminal-input-row .terminal-input {
@@ -465,6 +517,7 @@
 	appearance: none;
 	color: #e8e8e8;
 	font: inherit;
+	line-height: inherit;
 	caret-color: var(--accent);
 	/* Barra de escritura más ancha (bloque ~1ch); navegadores sin soporte usan el caret por defecto */
 	caret-shape: block;

@@ -49,15 +49,19 @@ import HeroTerminalOutputSnippet from "./HeroTerminalOutputSnippet.astro";
 				<!-- Fila de input interactivo (oculta hasta terminar el boot) -->
 				<div class="terminal-input-row" id="terminal-hero-input-row" hidden>
 					<span class="terminal-line-prompt">$</span>
-					<input
-						id="terminal-hero-input"
-						class="terminal-input"
-						type="text"
-						autocomplete="off"
-						autocorrect="off"
-						spellcheck="false"
-						aria-label="Comando de terminal"
-					/>
+					<div class="terminal-hero-input-wrap">
+						<span class="terminal-hero-input-measure" aria-hidden="true"></span>
+						<input
+							id="terminal-hero-input"
+							class="terminal-input"
+							type="text"
+							autocomplete="off"
+							autocorrect="off"
+							spellcheck="false"
+							aria-label="Comando de terminal"
+						/>
+						<span class="terminal-hero-fake-caret" aria-hidden="true"></span>
+					</div>
 				</div>
 			</div>
 		</div>
