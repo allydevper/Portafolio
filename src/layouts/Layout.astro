@@ -1,43 +1,74 @@
 ---
 import "../styles/global.css";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+export interface Props {
+	variant?: "default" | "terminal";
+	lang?: string;
+	title?: string;
+}
+
+const { variant = "default", lang = "en", title = "Wilmer Alama's Portfolio" } = Astro.props;
+const isTerminal = variant === "terminal";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/images/icon.png" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Wilmer Alama's Portfolio</title>
+		<title>{title}</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<meta name="google-site-verification" content="Ie8fCUzp2EcZeQy_DtJOJNEfu_G4GSjqV2Yk6_QR6sY" />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Fredoka:wght@300..700&family=Signika:wght@300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
-			rel="stylesheet"
-		/>
-		<style type="text/css">
-			body, html {
-				font-family: "Comfortaa", serif;
+		{
+			isTerminal ? (
+				<link
+					href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+					rel="stylesheet"
+				/>
+			) : (
+				<link
+					href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Fredoka:wght@300..700&family=Signika:wght@300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+					rel="stylesheet"
+				/>
+			)
+		}
+		<style>
+			body,
+			html {
 				height: 100%;
 			}
 			@media (max-width: 768px) {
-				body, html {
+				body,
+				html {
 					font-size: 14px;
 				}
 			}
 			@media (max-width: 480px) {
-				body, html {
+				body,
+				html {
 					font-size: 12px;
 				}
 			}
 		</style>
+		{
+			!isTerminal && (
+				<style>
+					body,
+					html {
+						font-family: "Comfortaa", serif;
+					}
+				</style>
+			)
+		}
 	</head>
-	<body class="bg-black text-white flex flex-col min-h-screen">
+	<body
+		class:list={[
+			isTerminal ? "terminal-body" : "bg-black text-white flex flex-col min-h-screen",
+		]}
+	>
 		<slot />
 	</body>
 </html>

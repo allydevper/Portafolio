@@ -1,0 +1,487 @@
+---
+import {
+	ACCENT,
+	CONTACT_EMAIL,
+	DOMAIN_SKILLS,
+	EXPERIENCE,
+	MASCOT_SRC,
+	SHARED_PROJECTS,
+	SKILLS_PRIMARY,
+	SKILLS_SECONDARY,
+} from "../../data/terminal";
+
+const navItems = [
+	{ id: "home", label: "~/home" },
+	{ id: "about", label: "~/about" },
+	{ id: "experience", label: "~/experience" },
+	{ id: "skills", label: "~/skills" },
+	{ id: "projects", label: "~/projects" },
+	{ id: "contact", label: "~/contact" },
+] as const;
+
+const particles = Array.from({ length: 22 }, (_, i) => ({
+	left: (i * 137.508) % 100,
+	top: ((i * 61.803) + i * 7) % 100,
+	delay: (i * 0.7) % 9,
+	duration: 14 + (i % 7) * 2.4,
+	size: 2 + (i % 3),
+	opacity: 0.12 + ((i * 17) % 10) / 100,
+	accent: i % 5 === 0,
+}));
+
+const projectCount = SHARED_PROJECTS.length;
+---
+
+<div class="terminal-root" style={`--accent: ${ACCENT};`} data-terminal-root>
+	<div class="terminal-bg" aria-hidden="true">
+		<div class="terminal-bg-layer-gradient"></div>
+		<div class="terminal-bg-layer-grid"></div>
+		<div class="terminal-bg-layer-grid-accent"></div>
+		{
+			particles.map((p) => (
+				<span
+					class:list={["terminal-bg-particle", p.accent && "is-accent"]}
+					style={{
+						"--p-left": `${p.left}%`,
+						"--p-top": String(p.top),
+						"--p-delay": `${p.delay}s`,
+						"--p-dur": `${p.duration}s`,
+						"--p-size": `${p.size}px`,
+						"--p-op": String(p.opacity),
+					}}
+				/>
+			))
+		}
+		<div class="terminal-bg-mouse-glow" data-terminal-mouse-glow></div>
+		<div class="terminal-bg-scan"></div>
+	</div>
+
+	<div class="terminal-scroll">
+		<nav class="terminal-nav">
+			<div class="terminal-nav-brand">
+				<img src={MASCOT_SRC} alt="Mascot pixel de Wilmer" width="28" height="28" />
+				<span class="terminal-nav-user">wilmer@portfolio</span>
+				<span class="terminal-nav-colon">:</span>
+				<span class="terminal-nav-tilde">~</span>
+				<span class="terminal-nav-dollar">$</span>
+			</div>
+			<div class="terminal-nav-links">
+				{
+					navItems.map((item, idx) => (
+						<a href={`#${item.id}`} class:list={[idx === 0 && "is-active"]}>
+							{item.label}
+						</a>
+					))
+				}
+			</div>
+			<div class="terminal-nav-actions">
+				<a
+					class="btn-ghost"
+					href="https://github.com/allydevper"
+					target="_blank"
+					rel="noopener noreferrer"
+					title="demos & experimentos · proyectos empresariales bajo NDA"
+				>
+					github · demos ↗
+				</a>
+				<a
+					class="btn-primary"
+					href="https://www.linkedin.com/in/wilmer-alama/"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					linkedin / cv ↗
+				</a>
+			</div>
+		</nav>
+
+		<section id="home" class="terminal-section terminal-hero">
+			<div class="terminal-hero-grid">
+				<div class="terminal-window">
+					<div class="terminal-window-header">
+						<span class="terminal-window-dot red"></span>
+						<span class="terminal-window-dot amber"></span>
+						<span class="terminal-window-dot green"></span>
+						<span class="terminal-window-title">— bash — wilmer@mac — 80×24</span>
+					</div>
+					<div class="terminal-window-body">
+						<div class="terminal-line">
+							<span class="terminal-line-prompt">$</span>{" "}
+							<span class="terminal-line-cmd">whoami</span>
+							<div class="terminal-line-out">
+								<span class="terminal-accent">wilmer alama</span> · sr. software engineer · lima, perú
+							</div>
+						</div>
+						<div class="terminal-line">
+							<span class="terminal-line-prompt">$</span>{" "}
+							<span class="terminal-line-cmd">cat experience.txt</span>
+							<div class="terminal-line-out">
+								<span class="terminal-accent">10+ años</span> construyendo plataformas de viajes:<br />
+								· integraciones GDS — <span class="terminal-dim">Sabre · Amadeus · Travelport</span><br />
+								· motores de reservas, mid-office, fareshop con caché distribuido<br />
+								· ~2.4M PNRs procesados / mes en producción
+							</div>
+						</div>
+						<div class="terminal-line">
+							<span class="terminal-line-prompt">$</span>{" "}
+							<span class="terminal-line-cmd">ls stack/principal/</span>
+							<div class="terminal-line-out terminal-accent">
+								java/ c#/ typescript/ react/ node/ spring-boot/ .net/ php/
+							</div>
+						</div>
+						<div class="terminal-line">
+							<span class="terminal-line-prompt">$</span>{" "}
+							<span class="terminal-line-cmd">cat status.json</span>
+							<div class="terminal-line-out" style="display:block;font-family:inherit;color:#888">
+								{"{"}<br />
+								&nbsp;&nbsp;<span class="terminal-json-key">"rol"</span>:{" "}
+								<span class="terminal-accent">"tech lead / sr engineer"</span>,<br />
+								&nbsp;&nbsp;<span class="terminal-json-key">"disponible"</span>:{" "}
+								<span class="terminal-json-bool">true</span>,<br />
+								&nbsp;&nbsp;<span class="terminal-json-key">"modo"</span>:{" "}
+								<span class="terminal-accent">"contractual / fulltime remoto"</span><br />
+								{"}"}
+							</div>
+						</div>
+						<div class="terminal-prompt-row">
+							<span class="terminal-line-prompt">$</span> <span class="terminal-cursor">▎</span>
+						</div>
+					</div>
+				</div>
+
+				<div>
+					<div class="terminal-card">
+						<div class="terminal-mascot-wrap">
+							<div class="terminal-mascot-glow-bg"></div>
+							<img src={MASCOT_SRC} alt="Mascot pixel de Wilmer" width="140" height="140" />
+						</div>
+						<div class="terminal-identity">
+							<div class="terminal-identity-label">// identity</div>
+							<div class="terminal-identity-name">Wilmer Alama</div>
+							<div class="terminal-identity-role">Sr. Software Engineer · Travel Tech</div>
+							<div class="terminal-identity-loc">Lima, Perú · UTC-5</div>
+						</div>
+						<div class="terminal-stat-grid">
+							<div class="terminal-stat">
+								<div class="terminal-stat-label">EXP</div>
+								<div class="terminal-stat-value">10+ años</div>
+							</div>
+							<div class="terminal-stat">
+								<div class="terminal-stat-label">FOCO</div>
+								<div class="terminal-stat-value neutral">Travel / GDS</div>
+							</div>
+							<div class="terminal-stat">
+								<div class="terminal-stat-label">ROL</div>
+								<div class="terminal-stat-value neutral">Tech Lead</div>
+							</div>
+							<div class="terminal-stat">
+								<div class="terminal-stat-label">STATUS</div>
+								<div class="terminal-stat-value status">● disponible</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="terminal-cta-col">
+						<a class="terminal-cta terminal-cta-primary" href="#projects">
+							<span>./ver-proyectos.sh</span>
+							<span>→</span>
+						</a>
+						<a
+							class="terminal-cta terminal-cta-outline"
+							href="https://www.linkedin.com/in/wilmer-alama/"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<span>linkedin.com/in/wilmer-alama</span>
+							<span class="arrow-accent">↗</span>
+						</a>
+						<a class="terminal-cta terminal-cta-dashed" href="#contact">
+							<span>./contactar.sh</span>
+							<span>→</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="about" class="terminal-section">
+			<div class="terminal-kicker">// 02 · about.md</div>
+			<div class="terminal-about-grid">
+				<div>
+					<h2 class="terminal-about-title">
+						Construyo el plumbing que <span class="terminal-accent">conecta agencias con GDS.</span>
+					</h2>
+				</div>
+				<div class="terminal-about-copy">
+					<p>
+						Desde 2015 trabajo en el lado menos glamoroso pero más crítico de la industria: las integraciones
+						que hacen que una búsqueda de vuelo en una agencia regrese 200 tarifas en menos de un segundo.
+					</p>
+					<p>
+						He construido <span class="terminal-dim">conectores NDC</span>,{" "}
+						<span class="terminal-dim">workers de sincronización de PNR</span>,{" "}
+						<span class="terminal-dim">motores de fareshop con caché distribuido</span> y{" "}
+						<span class="terminal-dim">mid-offices contables</span> que reconcilian BSP automáticamente.
+					</p>
+					<p>
+						En el front-end armo SPAs limpias para que ese inventario complicado se venda sin fricción.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<section id="experience" class="terminal-section">
+			<div class="terminal-kicker">// 03 · experience.log</div>
+			<div class="terminal-exp-head">
+				<h2 class="terminal-exp-title">
+					<span class="terminal-exp-git">$ git log</span> --since=2015 --pretty
+				</h2>
+				<a
+					class="terminal-exp-link"
+					href="https://www.linkedin.com/in/wilmer-alama/"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					versión completa en linkedin ↗
+				</a>
+			</div>
+
+			<div class="terminal-timeline">
+				<div class="terminal-timeline-rail"></div>
+				{
+					EXPERIENCE.map((e, i) => (
+						<div class="terminal-timeline-item">
+							<div class:list={["terminal-timeline-dot", i === 0 && "is-current"]} />
+							<div class="terminal-exp-card">
+								<div class="terminal-exp-period">{e.period}</div>
+								<div class="terminal-exp-role">{e.role}</div>
+								<div class="terminal-exp-company">{e.company}</div>
+								<p class="terminal-exp-summary">{e.summary}</p>
+								<ul class="terminal-exp-list">
+									{e.bullets.map((b) => (
+										<li>
+											<span class="bullet">›</span>
+											<span>{b}</span>
+										</li>
+									))}
+								</ul>
+								<div class="terminal-tag-row">
+									{e.stack.map((s) => (
+										<span class="terminal-tag">{s}</span>
+									))}
+								</div>
+							</div>
+						</div>
+					))
+				}
+			</div>
+		</section>
+
+		<section id="skills" class="terminal-section">
+			<div class="terminal-kicker">// 04 · stack.json</div>
+			<div class="terminal-skills-grid">
+				<div>
+					<div class="terminal-skills-label accent">// principales — donde llevo más tiempo</div>
+					<div class="terminal-skill-cards">
+						{
+							SKILLS_PRIMARY.map((s) => (
+								<div class="terminal-skill-card">
+									<div>
+										<div class="terminal-skill-name">{s.name}</div>
+										<div class="terminal-skill-cat">{s.cat.toLowerCase()}</div>
+									</div>
+									<div class="terminal-skill-bars">
+										{[1, 2, 3, 4, 5].map((n) => (
+											<span class:list={["terminal-skill-bar", n <= 4 && "is-on"]} />
+										))}
+									</div>
+								</div>
+							))
+						}
+					</div>
+				</div>
+				<div>
+					<div class="terminal-skills-label muted">// dominio — viajes / GDS</div>
+					<div class="terminal-domain-tags">
+						{DOMAIN_SKILLS.map((d) => <span class="terminal-domain-tag">{d}</span>)}
+					</div>
+					<div class="terminal-skills-label dim">// también manejo</div>
+					<div class="terminal-secondary-tags">
+						{SKILLS_SECONDARY.map((s) => <span class="terminal-secondary-tag">{s}</span>)}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="projects" class="terminal-section">
+			<div class="terminal-projects-head">
+				<div>
+					<div class="terminal-kicker terminal-kicker-tight">// 05 · projects/</div>
+					<h2 class="terminal-projects-title">
+						<span class="terminal-exp-git">$ ls -la</span> projects/
+					</h2>
+				</div>
+				<div class="terminal-projects-meta">
+					<span class="dot">●</span> {projectCount} de {projectCount} cargados
+				</div>
+			</div>
+
+			<div class="terminal-table-wrap">
+				<div class="terminal-table-header">
+					<span>#</span>
+					<span>nombre</span>
+					<span>rol</span>
+					<span>stack</span>
+					<span>métrica</span>
+					<span style="text-align:right">año</span>
+				</div>
+				{
+					SHARED_PROJECTS.map((p, i) => (
+						<div class="terminal-table-row">
+							<span class="terminal-table-idx">{String(i + 1).padStart(2, "0")}</span>
+							<div>
+								<div class="terminal-table-project-name">{p.name}</div>
+								<div class="terminal-table-project-tag">{p.tagline}</div>
+							</div>
+							<span class="terminal-table-role">{p.role}</span>
+							<div class="terminal-tag-row" style="margin:0">
+								{p.stack.map((s) => (
+									<span class="terminal-tag">{s}</span>
+								))}
+							</div>
+							<span class="terminal-table-metric">{p.metric}</span>
+							<span class="terminal-table-year">{p.year}</span>
+						</div>
+					))
+				}
+			</div>
+
+			<div class="terminal-projects-note">
+				<div>
+					<span class="terminal-accent">// nota</span> los proyectos empresariales son bajo NDA — no puedo compartir
+					código.
+				</div>
+				<div>
+					en{" "}
+					<a href="https://github.com/allydevper" target="_blank" rel="noopener noreferrer">
+						github.com/allydevper ↗
+					</a>{" "}
+					hay demos, experimentos y juguetes con código.
+				</div>
+			</div>
+		</section>
+
+		<section id="contact" class="terminal-section terminal-contact">
+			<div class="terminal-kicker">// 06 · contact.sh</div>
+			<div class="terminal-contact-grid">
+				<div>
+					<h2 class="terminal-contact-title">¿Tienes una integración<br />complicada en mente?</h2>
+					<p class="terminal-contact-lead">
+						Si tu proyecto involucra GDS, NDC, mid-office o cualquier sistema de viajes que necesite hablar
+						con otros — escríbeme aquí.
+					</p>
+					<div class="terminal-contact-mascot-row">
+						<img src={MASCOT_SRC} alt="Mascot pixel de Wilmer" width="56" height="56" />
+						<div class="terminal-contact-aside">
+							<div>respondo en <span class="hl">&lt; 24h</span></div>
+							<div>contractual o fulltime remoto</div>
+						</div>
+					</div>
+					<a
+						class="terminal-cta terminal-cta-outline"
+						href="https://www.linkedin.com/in/wilmer-alama/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<span>linkedin.com/in/wilmer-alama</span>
+						<span class="arrow-accent">↗</span>
+					</a>
+				</div>
+
+				<div class="terminal-form-card">
+					<div class="terminal-form-head">
+						<div class="terminal-form-kicker">// contact_form.tsx</div>
+						<div class="terminal-form-status">○ listo</div>
+					</div>
+					<form
+						class="terminal-form"
+						action={`mailto:${CONTACT_EMAIL}`}
+						method="post"
+						enctype="text/plain"
+					>
+						<div class="terminal-form-row2">
+							<label>
+								<div class="label-text">
+									<span class="chev">›</span> nombre
+								</div>
+								<input class="terminal-input" type="text" name="Nombre" required placeholder="tu nombre" />
+							</label>
+							<label>
+								<div class="label-text">
+									<span class="chev">›</span> email
+								</div>
+								<input
+									class="terminal-input"
+									type="email"
+									name="Email"
+									required
+									placeholder="tu@correo.com"
+								/>
+							</label>
+						</div>
+						<label>
+							<div class="label-text">
+								<span class="chev" style="color:#555">›</span> asunto <span class="opt">(opcional)</span>
+							</div>
+							<input
+								class="terminal-input"
+								type="text"
+								name="Asunto"
+								placeholder="integración Sabre / mid-office / otro"
+							/>
+						</label>
+						<label>
+							<div class="label-text">
+								<span class="chev">›</span> mensaje
+							</div>
+							<textarea
+								class="terminal-textarea"
+								name="Mensaje"
+								required
+								rows={6}
+								placeholder="contame del proyecto, qué stack usás, plazos, presupuesto…"
+							/>
+						</label>
+						<div class="terminal-form-foot">
+							<div class="terminal-form-hint">
+								<span class="dollar">$</span> se abrirá tu cliente de correo; no hay backend en esta versión
+								estática
+							</div>
+							<button type="submit" class="terminal-form-submit">./enviar.sh →</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<div class="terminal-footer-bar">
+				<span>© 2026 Wilmer Alama · construido con Astro</span>
+				<span><span class="status-dot">●</span> sistema operativo</span>
+			</div>
+		</section>
+	</div>
+</div>
+
+<script is:inline>
+	(function () {
+		var root = document.querySelector("[data-terminal-root]");
+		var glow = document.querySelector("[data-terminal-mouse-glow]");
+		if (!root || !glow) return;
+		root.addEventListener("mousemove", function (e) {
+			var rect = root.getBoundingClientRect();
+			var x = ((e.clientX - rect.left) / rect.width) * 100;
+			var y = ((e.clientY - rect.top) / rect.height) * 100;
+			glow.style.setProperty("--mx", x + "%");
+			glow.style.setProperty("--my", y + "%");
+		});
+	})();
+</script>

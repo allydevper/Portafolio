@@ -441,3 +441,4 @@ examples/**/env.d.ts
 *.code-workspace
 /.vscode
 /.wrangler
+/migration
