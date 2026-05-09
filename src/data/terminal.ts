@@ -27,17 +27,17 @@ export const SHARED_PROJECTS: TerminalProject[] = [
 		name: "Sync Amadeus PNR",
 		tagline: "Sincronización bidireccional de PNR",
 		desc: "Workers en C# / .NET que reconcilian PNRs entre Amadeus, mid-office y back-office propio.",
-		stack: ["C#", ".NET 8", "RabbitMQ", "Amadeus EDIFACT"],
+		stack: ["C#", ".NET 8", "Amadeus"],
 		year: "2024",
 		role: "Backend",
 		metric: "~2.4M PNRs / mes",
 	},
 	{
 		id: "p3",
-		name: "Travelport Booking UI",
+		name: "Sabre 360 Booking UI",
 		tagline: "Front-end de venta multicanal",
 		desc: "SPA con flujo de búsqueda, fareshop, seat-map y pago. Pruebas E2E en 6 idiomas.",
-		stack: ["TypeScript", "React", "Tailwind", "Travelport JSON"],
+		stack: ["TypeScript", "React", "Tailwind", "Sabre 360"],
 		year: "2023",
 		role: "Front-end Lead",
 		metric: "CR +18% vs legacy",
@@ -91,34 +91,24 @@ export const SKILLS_SECONDARY: string[] = [
 	"Astro",
 	"Tailwind",
 	"Next.js",
-	"GraphQL",
 	"PostgreSQL",
 	"MySQL",
-	"Redis",
-	"Kafka",
-	"RabbitMQ",
 	"Docker",
 	"Kubernetes",
-	"AWS",
 	"Git",
-	"Jenkins",
-	"Jest",
-	"Playwright",
 	"HTML",
 	"CSS",
 	"Sass",
 	"Vite",
-	"Webpack",
 	"JIRA",
 ];
 
 export const DOMAIN_SKILLS: string[] = [
 	"Sabre NDC",
 	"Amadeus",
-	"Travelport",
-	"IATA BSP",
-	"PNR sync",
-	"Fareshop",
+	"Sabre 360",
+	"Kontrol",
+	"IATA BSP"
 ];
 
 export type TerminalExperienceEntry = {
@@ -136,42 +126,40 @@ export const EXPERIENCE: TerminalExperienceEntry[] = [
 		role: "Sr. Software Engineer / Tech Lead",
 		company: "Travel Tech · empresa actual",
 		summary:
-			"Lidero un equipo de 5–8 ingenieros construyendo el motor de fareshop multi-GDS y el portal B2B para agencias.",
+			"Dirijo 6 personas directamente; lideré la migración WildFly → Spring Boot y el stack de emisión Sabre/Amadeus con APIs NDC y pagos.",
 		bullets: [
-			"Migré legacy SOAP → APIs REST + GraphQL, latencia p95 de 2.1s a 480ms",
-			"Diseñé caché distribuido (Redis cluster) para tarifas, ahorro ~$18k/mes en llamadas a GDS",
-			"Mentor de 4 desarrolladores junior/mid · code reviews, pair, on-call",
+			"Responsable principal de la migración del proyecto de emisión de WildFly a Spring Boot",
+			"Emisión Sabre y Amadeus: NDC, pago directo y touchless (en touchless poco desarrollo directo; más coordinación y entrega)",
+			"Pases a producción; coordinación PCI con la empresa cliente; librerías Maven para consumo interno",
+			"Mentor de 4 desarrolladores junior/mid: code reviews, pair, on-call",
 		],
-		stack: ["Java", "Spring Boot", "TypeScript", "React", "Redis", "PostgreSQL", "AWS"],
+		stack: ["Java", "Spring Boot", "Maven", "TypeScript", "Sabre NDC", "Amadeus", "Sabre 360"],
 	},
 	{
 		period: "2018 — 2022",
 		role: "Software Engineer",
 		company: "Travel Tech · agencia mayorista",
-		summary: "Construí mid-office contable que reconcilia BSP IATA y workers de sincronización de PNR.",
+		summary:
+			"Integraciones GDS (Sabre 360 / Sabre, Amadeus), Angular sobre APIs y microservicios .NET, y WS para mantenimiento y otros flujos.",
 		bullets: [
-			"Conector Sabre + Travelport (NDC) para vuelos, hoteles y autos",
-			"Workers de PNR sync con retries inteligentes — 99.94% uptime",
-			"Mid-office contable con conciliación BSP automática · 12k tickets/mes",
+			"Sabre 360 / Sabre y Amadeus: disponibilidad, emisión y sync de PNR; vuelos, hoteles y autos",
+			"Angular consumiendo REST entre microservicios C# / .NET; WebSockets en servicios de mantenimiento y tiempo real",
 		],
-		stack: ["C#", ".NET", "SQL Server", "RabbitMQ", "Angular"],
+		stack: ["C#", ".NET", "SQL Server", "Angular", "REST", "Sabre 360", "Amadeus"],
 	},
 	{
 		period: "2015 — 2018",
-		role: "Full-stack Developer",
+		role: "Software Developer",
 		company: "Agencia · primer trabajo en travel",
 		summary:
-			"Empecé escribiendo APIs PHP para una agencia mayorista. La caja negra de tarifas y disponibilidad me enganchó.",
+			"Primeros años en travel: casi todo en C#, mantenimiento de sistemas legacy, documentación, soporte a operación y un portal web de gestión interno.",
 		bullets: [
-			"Primer conector Amadeus para tarifas y disponibilidad de vuelos",
-			"Portal B2B con login multi-tenant para agencias afiliadas",
-			"Migración de stored procedures → ORM, reducción de 60% del código",
+			"Mantenimiento y correcciones en código legacy C# / .NET",
+			"Documentación técnica y funcional; soporte a usuarios y a otros equipos",
+			"Desarrollo y evolución del portal web de gestión (back-office / administración)",
 		],
-		stack: ["PHP", "MySQL", "JS", "jQuery", "Bootstrap"],
+		stack: ["C#", ".NET", "SQL Server", "ASP.NET", "JavaScript", "jQuery"],
 	},
 ];
 
 export const MASCOT_SRC = "/images/wilmer-mascot.svg";
-
-/** Para el formulario estático mailto: */
-export const CONTACT_EMAIL = "hola@wilmeralama.com";
