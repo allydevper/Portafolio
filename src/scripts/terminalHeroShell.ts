@@ -4,13 +4,13 @@ const CHAR_DELAY = 40;
 const POST_OUTPUT_DELAY = 200;
 
 const HELP_HTML = `<div class="terminal-line-out">
-  <span class="terminal-accent">comandos disponibles:</span><br />
-  &nbsp;&nbsp;whoami &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— identidad<br />
-  &nbsp;&nbsp;cat experience.txt — trayectoria<br />
-  &nbsp;&nbsp;ls stack/principal/ — stack principal<br />
-  &nbsp;&nbsp;cat status.json &nbsp;&nbsp;— disponibilidad<br />
-  &nbsp;&nbsp;help &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— esta ayuda<br />
-  &nbsp;&nbsp;clear &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— limpiar pantalla
+  <span class="terminal-accent">portafolio (boot):</span><br />
+  &nbsp;&nbsp;whoami · cat experience.txt · ls stack/principal/ · cat status.json<br />
+  <span class="terminal-accent">linux simulado:</span><br />
+  &nbsp;&nbsp;pwd · ls · ls -l · ls -la · date · uname · uname -a · hostname · uptime · id<br />
+  &nbsp;&nbsp;cat /etc/os-release · which bash|sh · alias · env · df -h · free -h<br />
+  &nbsp;&nbsp;echo … · cd … · history<br />
+  <span class="terminal-accent">otros:</span> help · clear · <span class="terminal-dim">Ctrl+C</span> cancela la línea
 </div>`;
 
 function sleep(ms: number): Promise<void> {
@@ -136,6 +136,41 @@ export function initTerminalHeroShell(): void {
       return;
     }
 
+    if (cmd === "history") {
+      const reversed = cmdHistory.slice().reverse();
+      const lines = reversed
+        .map((c, i) => `<span class="terminal-dim">${i + 1}</span>&nbsp;&nbsp;${escapeHtml(c)}`)
+        .join("<br />");
+      appendOutputLiteral(
+        historyEl!,
+        `<div class="terminal-line-out">${
+          lines || '<span class="terminal-dim">(sin comandos aún)</span>'
+        }</div>`
+      );
+      scrollToBottom(body!);
+      return;
+    }
+
+    if (cmd === "echo" || cmd.startsWith("echo ")) {
+      const payload = cmd === "echo" ? "" : cmd.slice(5);
+      appendOutputLiteral(
+        historyEl!,
+        `<div class="terminal-line-out">${escapeHtml(payload)}</div>`
+      );
+      scrollToBottom(body!);
+      return;
+    }
+
+    if (cmd === "cd" || cmd.startsWith("cd ")) {
+      const dest = cmd === "cd" ? "~" : cmd.slice(3).trim() || "~";
+      appendOutputLiteral(
+        historyEl!,
+        `<div class="terminal-line-out terminal-dim">simulado — cwd: ${escapeHtml(dest)}</div>`
+      );
+      scrollToBottom(body!);
+      return;
+    }
+
     const templateId = HERO_COMMANDS_MAP[cmd];
     if (templateId) {
       appendOutputFromTemplate(historyEl!, templateId);
@@ -154,6 +189,30 @@ export function initTerminalHeroShell(): void {
   window.addEventListener("resize", syncHeroFakeCaret);
 
   input.addEventListener("keydown", (e: KeyboardEvent) => {
+    if (e.ctrlKey && (e.key === "c" || e.key === "C")) {
+      e.preventDefault();
+      const partial = input.value;
+      input.value = "";
+      historyIndex = -1;
+      syncHeroFakeCaret();
+      const line = document.createElement("div");
+      line.className = "terminal-line";
+      const prompt = document.createElement("span");
+      prompt.className = "terminal-line-prompt";
+      prompt.textContent = "$";
+      const space = document.createTextNode(" ");
+      const cmdSpan = document.createElement("span");
+      cmdSpan.className = "terminal-line-cmd";
+      cmdSpan.textContent = partial;
+      const intr = document.createElement("span");
+      intr.className = "terminal-dim";
+      intr.textContent = "^C";
+      line.append(prompt, space, cmdSpan, intr);
+      historyEl!.appendChild(line);
+      scrollToBottom(body!);
+      return;
+    }
+
     if (e.key === "Enter") {
       const value = input.value;
       input.value = "";

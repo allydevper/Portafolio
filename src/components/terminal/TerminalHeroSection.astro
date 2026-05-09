@@ -1,5 +1,5 @@
 ---
-import { HERO_SESSION } from "../../data/heroTerminalSession";
+import { HERO_BOOT_SEQUENCE, HERO_TEMPLATE_IDS } from "../../data/heroTerminalSession";
 import { MASCOT_SRC } from "../../data/terminal";
 import HeroTerminalOutputSnippet from "./HeroTerminalOutputSnippet.astro";
 ---
@@ -22,7 +22,7 @@ import HeroTerminalOutputSnippet from "./HeroTerminalOutputSnippet.astro";
 			>
 				<!-- Salidas: un solo HTML en HeroTerminalOutputSnippet; templates para JS, noscript para sin JS -->
 				{
-					HERO_SESSION.map(({ templateId }) => (
+					HERO_TEMPLATE_IDS.map((templateId) => (
 						<template id={templateId}>
 							<HeroTerminalOutputSnippet templateId={templateId} />
 						</template>
@@ -31,7 +31,7 @@ import HeroTerminalOutputSnippet from "./HeroTerminalOutputSnippet.astro";
 
 				<noscript>
 					{
-						HERO_SESSION.map(({ cmd, templateId }) => (
+						HERO_BOOT_SEQUENCE.map(({ cmd, templateId }) => (
 							<div class="terminal-line">
 								<span class="terminal-line-prompt">$</span> <span class="terminal-line-cmd">{cmd}</span>
 								<HeroTerminalOutputSnippet templateId={templateId} />

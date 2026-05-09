@@ -52,3 +52,155 @@ const { templateId } = Astro.props;
 		</div>
 	)
 }
+
+{
+	templateId === "hero-out-pwd" && (
+		<div class="terminal-line-out">/home/wilmer/portfolio</div>
+	)
+}
+
+{
+	templateId === "hero-out-ls" && (
+		<div class="terminal-line-out">
+			LICENSE&nbsp;&nbsp;README.md&nbsp;&nbsp;astro.config.mjs&nbsp;&nbsp;package.json&nbsp;&nbsp;public/&nbsp;&nbsp;src/&nbsp;&nbsp;tsconfig.json
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-ls-l" && (
+		<div class="terminal-line-out">
+			total 48<br />
+			-rw-r--r-- 1 wilmer wilmer 2140 may 8 09:15 LICENSE<br />
+			-rw-r--r-- 1 wilmer wilmer 1822 may 7 11:40 README.md<br />
+			-rw-r--r-- 1 wilmer wilmer 412 may 6 16:22 astro.config.mjs<br />
+			-rw-r--r-- 1 wilmer wilmer 896 may 9 10:01 package.json<br />
+			drwxr-xr-x 2 wilmer wilmer 4096 abr 12 14:00 public/<br />
+			drwxr-xr-x 4 wilmer wilmer 4096 may 1 08:30 src/
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-ls-la" && (
+		<div class="terminal-line-out">
+			total 52<br />
+			drwxr-xr-x 12 wilmer wilmer 4096 may 9 12:00 .<br />
+			drwxr-xr-x 3 wilmer wilmer 4096 ene 15 10:00 ..<br />
+			-rw-r--r-- 1 wilmer wilmer 2140 may 8 09:15 LICENSE<br />
+			-rw-r--r-- 1 wilmer wilmer 1822 may 7 11:40 README.md<br />
+			-rw-r--r-- 1 wilmer wilmer 412 may 6 16:22 astro.config.mjs<br />
+			-rw-r--r-- 1 wilmer wilmer 896 may 9 10:01 package.json<br />
+			drwxr-xr-x 2 wilmer wilmer 4096 abr 12 14:00 public/<br />
+			drwxr-xr-x 4 wilmer wilmer 4096 may 1 08:30 src/
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-date" && (
+		<div class="terminal-line-out">sáb may 9 12:00:00 -05 2026</div>
+	)
+}
+
+{
+	templateId === "hero-out-uname" && (
+		<div class="terminal-line-out">Linux</div>
+	)
+}
+
+{
+	templateId === "hero-out-uname-a" && (
+		<div class="terminal-line-out">
+			Linux wilmer-portfolio 6.8.0-portfolio-generic #1 SMP x86_64 GNU/Linux
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-hostname" && (
+		<div class="terminal-line-out">wilmer-portfolio</div>
+	)
+}
+
+{
+	templateId === "hero-out-os-release" && (
+		<div class="terminal-line-out">
+			PRETTY_NAME="Portfolio GNU/Linux 1.0 (simulado)"<br />
+			NAME="Portfolio"<br />
+			VERSION_ID="1.0"<br />
+			ID=portfolio<br />
+			HOME_URL="https://github.com/"
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-uptime" && (
+		<div class="terminal-line-out">
+			12:00:00 up 42 days, 1 user, load average: 0.05, 0.03, 0.01
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-id" && (
+		<div class="terminal-line-out">
+			uid=1000(wilmer) gid=1000(wilmer) groups=1000(wilmer),27(sudo)
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-which-bash" && (
+		<div class="terminal-line-out">/usr/bin/bash</div>
+	)
+}
+
+{
+	templateId === "hero-out-which-sh" && (
+		<div class="terminal-line-out">/usr/bin/sh</div>
+	)
+}
+
+{
+	templateId === "hero-out-alias" && (
+		<div class="terminal-line-out">
+			alias ll='ls -la'<br />
+			alias la='ls -A'<br />
+			alias ..='cd ..'<br />
+			alias grep='grep --color=auto'
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-env" && (
+		<div class="terminal-line-out">
+			<span class="terminal-json-key">USER</span>=wilmer<br />
+			<span class="terminal-json-key">HOME</span>=/home/wilmer<br />
+			<span class="terminal-json-key">SHELL</span>=/bin/bash<br />
+			<span class="terminal-json-key">LANG</span>=es_PE.UTF-8<br />
+			<span class="terminal-json-key">PATH</span>=/usr/local/bin:/usr/bin:/bin
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-df" && (
+		<div class="terminal-line-out">
+			S.ficheros Tamaño Usados Disp Uso% Montado en<br />
+			/dev/sda1 20G 8,2G 11G 44% /<br />
+			tmpfs 1,9G 1,2M 1,9G 1% /run
+		</div>
+	)
+}
+
+{
+	templateId === "hero-out-free" && (
+		<div class="terminal-line-out">
+			Mem.: 15Gi 4,2Gi 6,1Gi 120Mi 5,2Gi 10Gi disponibles<br />
+			Intercambio: 2,0Gi 0B 2,0Gi
+		</div>
+	)
+}
