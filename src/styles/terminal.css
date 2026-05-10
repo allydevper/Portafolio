@@ -30,9 +30,10 @@
 	overflow-y: auto;
 	position: relative;
 	z-index: 2;
-	/* espacio bajo el nav fijo (altura aprox. una fila + padding) */
-	padding-top: var(--terminal-nav-h, 4.75rem);
-	scroll-padding-top: var(--terminal-nav-h, 4.75rem);
+	/* espacio bajo el nav fijo (altura aprox. una fila + padding + notch) */
+	--terminal-nav-h: calc(4.75rem + env(safe-area-inset-top, 0px));
+	padding-top: var(--terminal-nav-h);
+	scroll-padding-top: var(--terminal-nav-h);
 	scroll-behavior: smooth;
 }
 
@@ -259,7 +260,8 @@
 	justify-content: space-between;
 	flex-wrap: wrap;
 	gap: 12px;
-	padding-block: 14px;
+	padding-top: calc(14px + env(safe-area-inset-top, 0px));
+	padding-bottom: 14px;
 	padding-inline: 0;
 	background: transparent;
 	backdrop-filter: blur(12px);
@@ -345,6 +347,21 @@
 	display: flex;
 	align-items: center;
 	gap: 10px;
+	min-width: 0;
+}
+
+.terminal-nav-prompt {
+	display: flex;
+	align-items: center;
+	gap: 0;
+	min-width: 0;
+	flex: 1;
+}
+
+.terminal-nav-colon,
+.terminal-nav-tilde,
+.terminal-nav-dollar {
+	flex-shrink: 0;
 }
 
 .terminal-nav-brand img {
@@ -357,6 +374,10 @@
 .terminal-nav-user {
 	margin-left: 6px;
 	color: #d0d0d0;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .terminal-nav-colon {
@@ -466,6 +487,7 @@
 	display: flex;
 	align-items: center;
 	gap: 6px;
+	min-width: 0;
 	padding: 8px 12px;
 	background: #141414;
 	border-bottom: 1px solid #1f1f1f;
@@ -493,6 +515,11 @@
 
 .terminal-window-title {
 	margin-left: 10px;
+	min-width: 0;
+	flex: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .terminal-window-body {
@@ -1395,13 +1422,13 @@
 
 @media (max-width: 900px) {
 	.terminal-scroll {
-		--terminal-nav-h: 6.5rem;
+		--terminal-nav-h: calc(6.5rem + env(safe-area-inset-top, 0px));
 	}
 }
 
 @media (max-width: 768px) {
 	.terminal-scroll {
-		--terminal-nav-h: 5.35rem;
+		--terminal-nav-h: calc(5.35rem + env(safe-area-inset-top, 0px));
 	}
 
 	.terminal-scroll.is-nav-open {
@@ -1421,6 +1448,10 @@
 		justify-content: space-between;
 		width: 100%;
 		gap: 12px;
+	}
+
+	.terminal-nav-brand {
+		flex: 1;
 	}
 
 	.terminal-nav-toggle {
@@ -1469,6 +1500,105 @@
 		width: 100%;
 		box-sizing: border-box;
 	}
+
+	.terminal-exp-link {
+		display: block;
+		width: 100%;
+		padding-block: 10px;
+		box-sizing: border-box;
+	}
+
+	/* Proyectos: tarjetas en lugar de tabla ancha + scroll horizontal */
+	.terminal-table-wrap {
+		overflow-x: visible;
+		border: none;
+		background: transparent;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.terminal-table-header {
+		display: none;
+	}
+
+	.terminal-table-row {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-areas:
+			"idx idx"
+			"proj proj"
+			"role role"
+			"tags tags"
+			"metric year";
+		min-width: 0;
+		padding: 16px;
+		border: 1px solid #1f1f1f;
+		border-radius: 6px;
+		background: rgba(14, 14, 15, 0.85);
+		box-sizing: border-box;
+	}
+
+	.terminal-table-row:last-child {
+		margin-bottom: 0;
+	}
+
+	.terminal-table-row > .terminal-table-idx {
+		grid-area: idx;
+		margin-bottom: 2px;
+	}
+
+	.terminal-table-row > div:not(.terminal-tag-row) {
+		grid-area: proj;
+	}
+
+	.terminal-table-row > .terminal-table-role {
+		grid-area: role;
+	}
+
+	.terminal-table-row > .terminal-tag-row {
+		grid-area: tags;
+		margin: 0;
+	}
+
+	.terminal-table-row > .terminal-table-metric {
+		grid-area: metric;
+	}
+
+	.terminal-table-row > .terminal-table-year {
+		grid-area: year;
+		text-align: right;
+	}
+
+	.terminal-table-role::before,
+	.terminal-table-row > .terminal-tag-row::before,
+	.terminal-table-metric::before,
+	.terminal-table-year::before {
+		display: block;
+		font-size: 10px;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: #555;
+		margin-bottom: 4px;
+	}
+
+	.terminal-table-role::before {
+		content: "rol";
+	}
+
+	.terminal-table-row > .terminal-tag-row::before {
+		content: "stack";
+		flex-basis: 100%;
+		width: 100%;
+	}
+
+	.terminal-table-metric::before {
+		content: "métrica";
+	}
+
+	.terminal-table-year::before {
+		content: "año";
+	}
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1478,10 +1608,6 @@
 }
 
 @media (max-width: 640px) {
-	.terminal-scroll {
-		--terminal-nav-h: 5.5rem;
-	}
-
 	.terminal-window-body {
 		min-height: 0;
 		max-height: 480px;
@@ -1501,5 +1627,10 @@
 
 	.terminal-projects-title {
 		font-size: 24px;
+	}
+
+	.terminal-about-title {
+		font-size: 28px;
+		letter-spacing: -0.35px;
 	}
 }
