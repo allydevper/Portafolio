@@ -1618,6 +1618,10 @@
 		background: rgba(14, 14, 15, 0.97);
 	}
 
+	.terminal-card {
+		background: rgba(14, 14, 15, 0.97);
+	}
+
 	/* Reducir partículas de 22 a 12 para aliviar compositor layers en mobile */
 	.terminal-bg > span:nth-child(n+16) {
 		display: none;
