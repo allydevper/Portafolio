@@ -1601,6 +1601,29 @@
 	}
 }
 
+@media (max-width: 768px) {
+	/* backdrop-filter causa áreas negras en mobile WebKit/Blink hasta que
+	   se fuerza un repaint (ej. selección de texto). Se desactiva y se
+	   compensa con un fondo más opaco. */
+	.terminal-exp-card,
+	.terminal-form-card {
+		backdrop-filter: none;
+		-webkit-backdrop-filter: none;
+		background: rgba(14, 14, 15, 0.95);
+	}
+
+	.terminal-window {
+		backdrop-filter: none;
+		-webkit-backdrop-filter: none;
+		background: rgba(14, 14, 15, 0.97);
+	}
+
+	/* Reducir partículas de 22 a 12 para aliviar compositor layers en mobile */
+	.terminal-bg > span:nth-child(n+16) {
+		display: none;
+	}
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.terminal-nav-toggle-icon span {
 		transition: none;
