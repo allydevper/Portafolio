@@ -1622,6 +1622,12 @@
 	.terminal-bg > span:nth-child(n+16) {
 		display: none;
 	}
+
+	/* mix-blend-mode: screen fuerza compositing de todas las capas superpuestas
+	   en cada frame — muy costoso en mobile, causa lag especialmente al final */
+	.terminal-bg-scan {
+		mix-blend-mode: normal;
+	}
 }
 
 @media (prefers-reduced-motion: reduce) {

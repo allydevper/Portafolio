@@ -97,7 +97,9 @@ export function initTerminalHeroShell(): void {
     fake.style.setProperty("--terminal-fake-caret-x", `${measure.offsetWidth}px`);
   }
 
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduced =
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+    window.matchMedia("(max-width: 768px)").matches;
   const cmdHistory: string[] = [];
   let historyIndex = -1;
 
