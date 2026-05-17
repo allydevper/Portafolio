@@ -1,0 +1,202 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { ACCENT, MASCOT_SRC } from "../data/terminal";
+import "../styles/terminal.css";
+
+const particles = Array.from({ length: 14 }, (_, i) => ({
+	left: (i * 137.508) % 100,
+	top: ((i * 61.803) + i * 7) % 100,
+	delay: (i * 0.7) % 9,
+	duration: 14 + (i % 7) * 2.4,
+	size: 3 + (i % 3),
+	opacity: 0.28 + ((i * 17) % 12) / 100,
+	accent: i % 5 === 0,
+}));
+---
+
+<Layout variant="terminal" lang="es" title="404 · Página no encontrada · Wilmer Alama">
+	<div class="terminal-root terminal-not-found" style={`--accent: ${ACCENT};`}>
+		<div class="terminal-bg" aria-hidden="true">
+			<div class="terminal-bg-layer-gradient"></div>
+			<div class="terminal-bg-layer-grid"></div>
+			<div class="terminal-bg-layer-grid-accent"></div>
+			{
+				particles.map((p) => (
+					<span
+						class:list={["terminal-bg-particle", p.accent && "is-accent"]}
+						style={{
+							left: `${p.left}%`,
+							bottom: `${-p.top}%`,
+							"--p-delay": `${p.delay}s`,
+							"--p-dur": `${p.duration}s`,
+							"--p-size": `${p.size}px`,
+							"--p-op": String(p.opacity),
+						}}
+					/>
+				))
+			}
+			<div class="terminal-bg-scan"></div>
+		</div>
+
+		<main class="terminal-not-found-main">
+			<div class="terminal-layout-inner terminal-not-found-inner">
+				<div class="terminal-not-found-brand">
+					<img src={MASCOT_SRC} alt="" width="32" height="32" aria-hidden="true" />
+					<span class="terminal-nav-prompt">
+						<span class="terminal-nav-user">wilmer@portfolio</span>
+						<span class="terminal-nav-colon">:</span>
+						<span class="terminal-nav-tilde">~</span>
+						<span class="terminal-nav-dollar">$</span>
+					</span>
+				</div>
+
+				<div class="terminal-kicker">// error · http 404</div>
+
+				<div class="terminal-window terminal-not-found-window">
+					<div class="terminal-window-header">
+						<span class="terminal-window-dot red"></span>
+						<span class="terminal-window-dot amber"></span>
+						<span class="terminal-window-dot green"></span>
+						<span class="terminal-window-title">— bash — 404.sh —</span>
+					</div>
+					<div class="terminal-window-body terminal-not-found-body">
+						<div class="terminal-line">
+							<span class="terminal-line-prompt">$</span>
+							<span class="terminal-line-cmd"> cd /ruta-desconocida</span>
+						</div>
+						<div class="terminal-line terminal-line-out">
+							bash: cd: /ruta-desconocida: <span class="terminal-accent">No such file or directory</span>
+						</div>
+						<div class="terminal-line">
+							<span class="terminal-line-prompt">$</span>
+							<span class="terminal-line-cmd"> echo $?</span>
+						</div>
+						<div class="terminal-line terminal-line-out">
+							<span class="terminal-not-found-code">404</span>
+						</div>
+						<div class="terminal-line terminal-line-out terminal-not-found-hint">
+							La página que buscas no existe o fue movida.
+						</div>
+					</div>
+				</div>
+
+				<p class="terminal-not-found-sub">
+					Puedes volver al inicio del portafolio y seguir explorando desde <span class="terminal-accent">~/home</span>.
+				</p>
+
+				<div class="terminal-not-found-actions">
+					<a class="terminal-not-found-btn" href="/">
+						cd ~/home
+					</a>
+				</div>
+			</div>
+		</main>
+	</div>
+</Layout>
+
+<style>
+	.terminal-not-found {
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.terminal-not-found-main {
+		position: relative;
+		z-index: 2;
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: max(24px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom));
+	}
+
+	.terminal-not-found-inner {
+		width: 100%;
+		max-width: min(560px, calc(100vw - 32px));
+	}
+
+	.terminal-not-found-brand {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		margin-bottom: 28px;
+	}
+
+	.terminal-not-found-brand img {
+		image-rendering: pixelated;
+	}
+
+	.terminal-not-found-window {
+		margin-bottom: 20px;
+	}
+
+	.terminal-not-found-body {
+		padding: 20px 18px 22px;
+		min-height: 0;
+	}
+
+	.terminal-not-found-code {
+		display: block;
+		font-size: clamp(2.75rem, 12vw, 4rem);
+		font-weight: 700;
+		line-height: 1;
+		color: var(--accent);
+		letter-spacing: -0.04em;
+		margin-top: 4px;
+		text-shadow: 0 0 40px rgb(var(--accent-rgb) / 0.35);
+	}
+
+	.terminal-not-found-hint {
+		margin-top: 12px;
+		color: #888;
+		font-size: 13px;
+	}
+
+	.terminal-not-found-sub {
+		margin: 0 0 22px;
+		color: #888;
+		font-size: 13px;
+		line-height: 1.6;
+	}
+
+	.terminal-not-found-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+	}
+
+	.terminal-not-found-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 10px 18px;
+		font-family: inherit;
+		font-size: 13px;
+		font-weight: 600;
+		text-decoration: none;
+		background: var(--accent);
+		color: #0a0a0a;
+		border: 1px solid transparent;
+		border-radius: 2px;
+		transition:
+			transform 160ms ease,
+			box-shadow 160ms ease;
+	}
+
+	.terminal-not-found-btn:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 6px 24px rgb(var(--accent-rgb) / 0.28);
+	}
+
+	.terminal-not-found-btn:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 3px;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.terminal-not-found-btn:hover {
+			transform: none;
+		}
+	}
+</style>
