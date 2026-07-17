@@ -4,3 +4,6 @@ declare namespace App {
 		user: import("lucia").User | null;
 	}
 }
+
+declare module "swiper/css";
+declare module "swiper/css/*";

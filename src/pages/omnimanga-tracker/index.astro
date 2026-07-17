@@ -3,61 +3,13 @@ import Layout from "../../layouts/Layout.astro";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { messages } from "./i18n";
 
-const features = [
-	{
-		title: "Deteccion automatica",
-		description:
-			"Reconoce mangas en webs compatibles y prepara el registro sin pasos manuales.",
-		icon: "✦",
-	},
-	{
-		title: "Biblioteca inteligente",
-		description:
-			"Buscador, filtros por estado y orden por actividad para una gestion rapida.",
-		icon: "▦",
-	},
-	{
-		title: "Detalle por obra",
-		description:
-			"Edita metadata, portada, notas y progreso desde una sola vista clara.",
-		icon: "✎",
-	},
-	{
-		title: "Listas personalizadas",
-		description:
-			"Agrupa por objetivo, genero o prioridad sin duplicar obras en tu biblioteca.",
-		icon: "◫",
-	},
-	{
-		title: "Actualizacion masiva",
-		description:
-			"Ejecuta refresh por lotes y revisa el resumen final por resultado.",
-		icon: "↻",
-	},
-	{
-		title: "Export / Import JSON",
-		description:
-			"Haz respaldo completo y restaura datos cuando cambies de equipo o perfil.",
-		icon: "◉",
-	},
-];
+const t = messages.es;
 
-const faqs = [
-	{
-		question: "Que sitios soporta OmniManga Tracker?",
-		answer: "Incluye compatibilidad con MangaDex, Webtoon, Manga Plus y decenas de sitios integrados.",
-	},
-	{
-		question: "Puedo migrar toda mi biblioteca?",
-		answer: "Si. Puedes exportar un JSON de respaldo e importarlo en cualquier momento.",
-	},
-	{
-		question: "Como evita duplicados?",
-		answer: "Durante el agregado detecta coincidencias y permite fusionar, vincular o crear un registro nuevo.",
-	},
-];
-
+const features = t.features;
+const faqs = t.faqs;
+const sliderCaptions = t.sliderCaptions;
 const sliderImages = [
 	"/omnimanga/slider/1.png",
 	"/omnimanga/slider/2.png",
@@ -66,121 +18,29 @@ const sliderImages = [
 	"/omnimanga/slider/5.png",
 ];
 
-const sliderCaptions = [
-	{
-		title: "Biblioteca central",
-		subtitle: "Vista principal con progreso y estados",
-	},
-	{
-		title: "Busqueda y filtros",
-		subtitle: "Encuentra obras rapido por criterios",
-	},
-	{
-		title: "Detalle de lectura",
-		subtitle: "Capitulos, metadata y control manual",
-	},
-	{
-		title: "Listas personalizadas",
-		subtitle: "Organiza por prioridad o categoria",
-	},
-	{
-		title: "Ajustes y respaldo",
-		subtitle: "Exporta e importa tu backup JSON",
-	},
-];
-
-const featureCaptures = [
-	{
-		file: "con el boton actualizar puedes revisar si hay nuevos capitulos en tu lectura.png",
-		title: "Actualizar novedades",
-		caption: "Comprueba si hay capítulos nuevos con un solo botón.",
-	},
-	{
-		file: "marca el capitulo en que te quedaste.png",
-		title: "Progreso por capítulo",
-		caption: "Marca dónde te quedaste y mantén el seguimiento al día.",
-	},
-	{
-		file: "acceso a la fuente de tu lectura y actulizar el capitulo con un solo boton.png",
-		title: "Fuente y capítulo",
-		caption:
-			"Abre la fuente de la lectura y actualiza el capítulo con un solo clic.",
-	},
-	{
-		file: "grabaste un duplicado. puedes fusionar ambas y juntar tu obra.png",
-		title: "Fusionar duplicados",
-		caption:
-			"Si registraste la misma obra dos veces, unifica registros sin perder datos.",
-	},
-	{
-		file: "gestion_generos_de_obras.png",
-		title: "Géneros en la biblioteca",
-		caption:
-			"Filtra, edita o fusiona etiquetas y ve cuántas obras usan cada género.",
-	},
-	{
-		file: "organiza tu lectura en grupos para que puedas organizar mejor.png",
-		title: "Grupos de lectura",
-		caption: "Agrupa obras para ordenar listas largas con más claridad.",
-	},
-	{
-		file: "anota referencias y detalles que puedas necesitar.png",
-		title: "Notas y personajes",
-		caption:
-			"Guarda notas personales y referencias de personajes junto a cada obra.",
-	},
-	{
-		file: "importar-exportar-config-json.png",
-		title: "Copia de seguridad",
-		caption:
-			"Exporta o importa un JSON para respaldar datos y restaurarlos en otro perfil o equipo.",
-	},
-	{
-		title: "Y muchas más opciones a descubrir",
-		caption: "",
-		teaser: true,
-	},
-].map((item) => ({
+const featureCaptures = t.featureCaptures.map((item) => ({
 	...item,
-	src:
-		"file" in item && item.file
-			? encodeURI(`/omnimanga/features/${item.file}`)
-			: undefined,
+	src: item.file ? encodeURI(`/omnimanga/features/${item.file}`) : undefined,
 }));
 
-const howItWorksSteps = [
-	{
-		index: "01",
-		title: "Registra o usa una web compatible",
-		text: "Puede que necesites dar permisos a ciertos scans, si aun asi no se puede leer informanos para que las agreguemos.",
-		image: encodeURI(
-			"/omnimanga/features/addwebsecutity.png",
-		),
-		imageAlt:
-			"Sitios integrados (MangaDex, Webtoon, Manga Plus) y formulario para solicitar nuevas webs con indicador de sitio",
-	},
-	{
-		index: "02",
-		title: "Detecta una obra",
-		text: "Visita una web compatible y deja que el sitio identifique la lectura.",
-		image: "/omnimanga/features/quickAdd.png",
-		imageAlt:
-			"Vista rápida: resultado de búsqueda en MangaDex con opciones para ver o añadir la obra",
-	},
-	{
-		index: "03",
-		title: "Actualiza progreso",
-		text: "Marca capitulos, ejecuta refresh por lotes y exporta respaldo.",
-		image: encodeURI(
-			"/omnimanga/features/marca el capitulo en que te quedastev2.png",
-		),
-		imageAlt:
-			"Sección Capítulos: barra de progreso, marcar o desmarcar todos y rejilla de capítulos leídos y pendientes",
-	},
-];
+const howItWorksSteps = t.howItWorksSteps.map((step) => ({
+	...step,
+	image: encodeURI(step.image),
+}));
 ---
 
-<Layout>
+<Layout lang="es" title="OmniManga Tracker">
+	<script is:inline>
+		(function () {
+			try {
+				var l = localStorage.getItem("omnimanga-lang");
+				if (l === "en" || l === "es") {
+					document.documentElement.lang = l;
+					document.documentElement.dataset.locale = l;
+				}
+			} catch (e) {}
+		})();
+	</script>
 	<main class="omni-page text-[#E8E5DE]">
 		<div class="ambient ambient-top"></div>
 		<div class="ambient ambient-bottom"></div>
@@ -194,32 +54,38 @@ const howItWorksSteps = [
 						class="brand-wordmark"
 					/>
 				</a>
-				<nav class="desktop-nav" aria-label="Secciones">
-					<a href="#features">Features</a>
-					<a href="#capturas">Capturas</a>
-					<a href="#como-funciona">Como funciona</a>
-					<a href="#faq">FAQ</a>
-					<a href="/omnimanga-tracker/privacy">Privacidad</a>
+				<nav class="desktop-nav" data-i18n="nav.aria" data-i18n-attr="aria-label" aria-label={t.nav.aria}>
+					<a href="#features" data-i18n="nav.features">{t.nav.features}</a>
+					<a href="#capturas" data-i18n="nav.captures">{t.nav.captures}</a>
+					<a href="#como-funciona" data-i18n="nav.howItWorks">{t.nav.howItWorks}</a>
+					<a href="#faq" data-i18n="nav.faq">{t.nav.faq}</a>
+					<a href="/omnimanga-tracker/privacy" data-i18n="nav.privacy">{t.nav.privacy}</a>
 				</nav>
-				<button
-					type="button"
-					class="nav-toggle"
-					id="nav-toggle"
-					aria-expanded="false"
-					aria-controls="mobile-nav-dropdown"
-				>
-					<span class="nav-toggle-bars" aria-hidden="true"></span>
-					<span class="sr-only">Menu de navegación</span>
-				</button>
+				<div class="nav-end">
+					<div class="lang-switch" role="group" data-i18n="lang.aria" data-i18n-attr="aria-label" aria-label={t.lang.aria}>
+						<button type="button" class="lang-btn is-active" data-lang-switch="es" aria-pressed="true" data-i18n="lang.es">{t.lang.es}</button>
+						<button type="button" class="lang-btn" data-lang-switch="en" aria-pressed="false" data-i18n="lang.en">{t.lang.en}</button>
+					</div>
+					<button
+						type="button"
+						class="nav-toggle"
+						id="nav-toggle"
+						aria-expanded="false"
+						aria-controls="mobile-nav-dropdown"
+					>
+						<span class="nav-toggle-bars" aria-hidden="true"></span>
+						<span class="sr-only" data-i18n="nav.menu">{t.nav.menu}</span>
+					</button>
+				</div>
 			</div>
 			<div id="mobile-nav-dropdown" class="mobile-nav-dropdown" hidden>
 				<div class="container mobile-nav-inner">
-					<nav class="mobile-nav" aria-label="Secciones">
-						<a href="#features">Features</a>
-						<a href="#capturas">Capturas</a>
-						<a href="#como-funciona">Como funciona</a>
-						<a href="#faq">FAQ</a>
-						<a href="/omnimanga-tracker/privacy">Privacidad</a>
+					<nav class="mobile-nav" data-i18n="nav.aria" data-i18n-attr="aria-label" aria-label={t.nav.aria}>
+						<a href="#features" data-i18n="nav.features">{t.nav.features}</a>
+						<a href="#capturas" data-i18n="nav.captures">{t.nav.captures}</a>
+						<a href="#como-funciona" data-i18n="nav.howItWorks">{t.nav.howItWorks}</a>
+						<a href="#faq" data-i18n="nav.faq">{t.nav.faq}</a>
+						<a href="/omnimanga-tracker/privacy" data-i18n="nav.privacy">{t.nav.privacy}</a>
 					</nav>
 				</div>
 			</div>
@@ -227,52 +93,51 @@ const howItWorksSteps = [
 
 		<section class="container hero">
 			<div class="hero-copy">
-				<p class="eyebrow">Chrome Extension</p>
+				<p class="eyebrow" data-i18n="hero.eyebrow">{t.hero.eyebrow}</p>
 				<h1
 					class="hero-title"
-					aria-label="Centraliza tus mangas, manhwas, manhuas o novelas en un solo lugar."
+					data-i18n="hero.titleAria"
+					data-i18n-attr="aria-label"
+					aria-label={t.hero.titleAria}
 				>
 					<span class="hero-title-inner" aria-hidden="true">
-						<span class="hero-title-chunk">Centraliza tus</span>
+						<span class="hero-title-chunk" data-i18n="hero.titleBefore">{t.hero.titleBefore}</span>
 						<span id="hero-morph" class="hero-morph">
 							<span class="hero-morph-viewport">
 								<span
 									id="hero-morph-track"
 									class="hero-morph-track"
 								>
-									<span class="hero-morph-line">mangas</span>
-									<span class="hero-morph-line">manhwas</span>
-									<span class="hero-morph-line">manhuas</span>
-									<span class="hero-morph-line">novelas</span>
+									<span class="hero-morph-line" data-i18n="hero.morph.0">{t.hero.morph[0]}</span>
+									<span class="hero-morph-line" data-i18n="hero.morph.1">{t.hero.morph[1]}</span>
+									<span class="hero-morph-line" data-i18n="hero.morph.2">{t.hero.morph[2]}</span>
+									<span class="hero-morph-line" data-i18n="hero.morph.3">{t.hero.morph[3]}</span>
 									<span
 										class="hero-morph-line hero-morph-line--clone"
-										aria-hidden="true">mangas</span
+										aria-hidden="true"
+										data-i18n="hero.morph.0">{t.hero.morph[0]}</span
 									>
 								</span>
 							</span>
 						</span>
-						<span class="hero-title-chunk">en un solo lugar.</span>
+						<span class="hero-title-chunk" data-i18n="hero.titleAfter">{t.hero.titleAfter}</span>
 					</span>
 				</h1>
-				<p class="lead">
-					OmniManga Tracker detecta lecturas en webs compatibles y las
-					organiza en una biblioteca lateral con progreso, listas y
-					actualizaciones en lote.
-				</p>
+				<p class="lead" data-i18n="hero.lead">{t.hero.lead}</p>
 				<div class="hero-actions">
 					<a href="https://chromewebstore.google.com/detail/lcenjfnbpnbjfpedificjckljicfijfc?utm_source=item-share-cb" target="_blank" class="btn btn-primary"
 						><span aria-hidden="true" class="chrome-icon"
-						></span>Instalar extension</a
+						></span><span data-i18n="hero.install">{t.hero.install}</span></a
 					>
-					<a href="#features" class="btn btn-secondary"
-						>Ver funcionalidades</a
+					<a href="#features" class="btn btn-secondary" data-i18n="hero.seeFeatures"
+						>{t.hero.seeFeatures}</a
 					>
 				</div>
 				<div class="badge-row">
 					<span class="status-badge badge-blue">MangaDex</span>
 					<span class="status-badge badge-purple">Webtoon</span>
 					<span class="status-badge badge-green">Manga Plus</span>
-					<span class="status-badge">+37 sitios</span>
+					<span class="status-badge" data-i18n="hero.sitesMore">{t.hero.sitesMore}</span>
 				</div>
 			</div>
 
@@ -285,15 +150,24 @@ const howItWorksSteps = [
 									sliderImages.map((image, index) => (
 										<div
 											class="swiper-slide"
+											data-i18n-template="hero.slideAria"
+											data-i18n-vars={JSON.stringify({ n: index + 1 })}
+											data-i18n-attr="aria-label"
 											aria-label={`Captura ${index + 1}`}
 										>
 											<button
 												type="button"
 												class="hero-slide-zoom"
+												data-i18n-template="hero.slideZoom"
+												data-i18n-vars={JSON.stringify({ n: index + 1 })}
+												data-i18n-attr="aria-label"
 												aria-label={`Ampliar captura ${index + 1}`}
 											>
 												<img
 													src={image}
+													data-i18n-template="hero.slideAlt"
+													data-i18n-vars={JSON.stringify({ n: index + 1 })}
+													data-i18n-attr="alt"
 													alt={`Captura de OmniManga Tracker ${index + 1}`}
 													loading={
 														index === 0
@@ -310,7 +184,9 @@ const howItWorksSteps = [
 						</div>
 						<div
 							class="swiper-button-prev hero-swiper-nav-out"
-							aria-label="Slide anterior"
+							data-i18n="hero.slidePrev"
+							data-i18n-attr="aria-label"
+							aria-label={t.hero.slidePrev}
 						>
 							<span
 								class="hero-swiper-nav-icon"
@@ -319,7 +195,9 @@ const howItWorksSteps = [
 						</div>
 						<div
 							class="swiper-button-next hero-swiper-nav-out"
-							aria-label="Slide siguiente"
+							data-i18n="hero.slideNext"
+							data-i18n-attr="aria-label"
+							aria-label={t.hero.slideNext}
 						>
 							<span
 								class="hero-swiper-nav-icon"
@@ -346,39 +224,33 @@ const howItWorksSteps = [
 		</section>
 
 		<section class="container trust">
-			<p class="eyebrow">Problema / Solucion</p>
+			<p class="eyebrow" data-i18n="trust.eyebrow">{t.trust.eyebrow}</p>
 			<div class="split">
 				<article class="panel">
-					<h2>Tus lecturas estan dispersas entre sitios</h2>
-					<p>
-						El progreso se pierde entre pestanas, marcadores y
-						listas no conectadas.
-					</p>
+					<h2 data-i18n="trust.problemTitle">{t.trust.problemTitle}</h2>
+					<p data-i18n="trust.problemText">{t.trust.problemText}</p>
 				</article>
 				<article class="panel">
-					<h2>Unifica todo en un flujo simple</h2>
-					<p>
-						OmniManga concentra deteccion, organizacion y
-						seguimiento en un solo panel lateral.
-					</p>
+					<h2 data-i18n="trust.solutionTitle">{t.trust.solutionTitle}</h2>
+					<p data-i18n="trust.solutionText">{t.trust.solutionText}</p>
 				</article>
 			</div>
 		</section>
 
 		<section id="features" class="container section">
 			<div class="section-head">
-				<p class="eyebrow">Funcionalidades</p>
-				<h2>Todo lo necesario para gestionar tus lecturas</h2>
+				<p class="eyebrow" data-i18n="featuresSection.eyebrow">{t.featuresSection.eyebrow}</p>
+				<h2 data-i18n="featuresSection.title">{t.featuresSection.title}</h2>
 			</div>
 			<div class="feature-grid">
 				{
-					features.map((feature) => (
+					features.map((feature, index) => (
 						<article class="feature-card">
 							<div class="feature-icon" aria-hidden="true">
 								{feature.icon}
 							</div>
-							<h3>{feature.title}</h3>
-							<p>{feature.description}</p>
+							<h3 data-i18n={`features.${index}.title`}>{feature.title}</h3>
+							<p data-i18n={`features.${index}.description`}>{feature.description}</p>
 						</article>
 					))
 				}
@@ -387,12 +259,12 @@ const howItWorksSteps = [
 
 		<section id="capturas" class="container section">
 			<div class="section-head">
-				<p class="eyebrow">Capacidades</p>
-				<h2>Funciones de la extensión en capturas reales</h2>
+				<p class="eyebrow" data-i18n="capturesSection.eyebrow">{t.capturesSection.eyebrow}</p>
+				<h2 data-i18n="capturesSection.title">{t.capturesSection.title}</h2>
 			</div>
 			<div class="feature-capture-grid">
 				{
-					featureCaptures.map((item) => (
+					featureCaptures.map((item, index) => (
 						<article
 							class:list={[
 								"feature-capture-card",
@@ -401,9 +273,9 @@ const howItWorksSteps = [
 						>
 							{item.teaser ? (
 								<div class="feature-capture-teaser">
-									<h3>{item.title}</h3>
+									<h3 data-i18n={`featureCaptures.${index}.title`}>{item.title}</h3>
 									{item.caption ? (
-										<p>{item.caption}</p>
+										<p data-i18n={`featureCaptures.${index}.caption`}>{item.caption}</p>
 									) : null}
 								</div>
 							) : (
@@ -412,15 +284,17 @@ const howItWorksSteps = [
 										<img
 											src={item.src}
 											alt={item.title}
+											data-i18n={`featureCaptures.${index}.title`}
+											data-i18n-attr="alt"
 											loading="lazy"
 											decoding="async"
 											class="feature-capture-img"
 										/>
 									</div>
 									<div class="feature-capture-text">
-										<h3>{item.title}</h3>
+										<h3 data-i18n={`featureCaptures.${index}.title`}>{item.title}</h3>
 										{item.caption ? (
-											<p>{item.caption}</p>
+											<p data-i18n={`featureCaptures.${index}.caption`}>{item.caption}</p>
 										) : null}
 									</div>
 								</>
@@ -433,18 +307,20 @@ const howItWorksSteps = [
 
 		<section id="como-funciona" class="container section">
 			<div class="section-head">
-				<p class="eyebrow">Como funciona</p>
-				<h2>Tres pasos para empezar rapido</h2>
+				<p class="eyebrow" data-i18n="howSection.eyebrow">{t.howSection.eyebrow}</p>
+				<h2 data-i18n="howSection.title">{t.howSection.title}</h2>
 			</div>
 			<div class="steps">
 				{
-					howItWorksSteps.map((step) => (
+					howItWorksSteps.map((step, index) => (
 						<article class="step-card">
 							{step.image ? (
 								<div class="step-card-media">
 									<img
 										src={step.image}
 										alt={step.imageAlt}
+										data-i18n={`howItWorksSteps.${index}.imageAlt`}
+										data-i18n-attr="alt"
 										loading="lazy"
 										decoding="async"
 										class="step-card-img"
@@ -452,8 +328,8 @@ const howItWorksSteps = [
 								</div>
 							) : null}
 							<span class="step-index">{step.index}</span>
-							<h3>{step.title}</h3>
-							<p>{step.text}</p>
+							<h3 data-i18n={`howItWorksSteps.${index}.title`}>{step.title}</h3>
+							<p data-i18n={`howItWorksSteps.${index}.text`}>{step.text}</p>
 						</article>
 					))
 				}
@@ -462,14 +338,15 @@ const howItWorksSteps = [
 
 		<section id="faq" class="container section">
 			<div class="section-head">
-				<p class="eyebrow">FAQ</p><h2>Preguntas frecuentes</h2>
+				<p class="eyebrow" data-i18n="faqSection.eyebrow">{t.faqSection.eyebrow}</p>
+				<h2 data-i18n="faqSection.title">{t.faqSection.title}</h2>
 			</div>
 			<div class="faq-list">
 				{
-					faqs.map((faq) => (
+					faqs.map((faq, index) => (
 						<details class="faq-item">
-							<summary>{faq.question}</summary>
-							<p>{faq.answer}</p>
+							<summary data-i18n={`faqs.${index}.question`}>{faq.question}</summary>
+							<p data-i18n={`faqs.${index}.answer`}>{faq.answer}</p>
 						</details>
 					))
 				}
@@ -478,26 +355,23 @@ const howItWorksSteps = [
 
 		<section class="container section final-cta">
 			<div class="panel final-panel">
-				<p class="eyebrow">Empieza hoy</p>
-				<h2>Organiza tu lectura sin friccion</h2>
-				<p>
-					Pasa de pestanas dispersas a una biblioteca centralizada con
-					progreso y listas claras.
-				</p>
+				<p class="eyebrow" data-i18n="cta.eyebrow">{t.cta.eyebrow}</p>
+				<h2 data-i18n="cta.title">{t.cta.title}</h2>
+				<p data-i18n="cta.text">{t.cta.text}</p>
 				<div class="hero-actions">
-					<a href="#" class="btn btn-primary"
+					<a href="https://chromewebstore.google.com/detail/lcenjfnbpnbjfpedificjckljicfijfc?utm_source=item-share-cb" target="_blank" class="btn btn-primary"
 						><span aria-hidden="true" class="chrome-icon"
-						></span>Instalar extension</a
+						></span><span data-i18n="cta.install">{t.cta.install}</span></a
 					>
-					<a href="#capturas" class="btn btn-secondary"
-						>Ver capturas</a
+					<a href="#capturas" class="btn btn-secondary" data-i18n="cta.seeCaptures"
+						>{t.cta.seeCaptures}</a
 					>
 				</div>
 			</div>
 		</section>
 
-		<footer class="container footer">
-			OmniManga Tracker - MangaTracker v1.0.0
+		<footer class="container footer" data-i18n="footer">
+			{t.footer}
 		</footer>
 	</main>
 
@@ -506,16 +380,24 @@ const howItWorksSteps = [
 		class="hero-lightbox"
 		role="dialog"
 		aria-modal="true"
-		aria-label="Captura ampliada"
+		data-i18n="lightbox.aria"
+		data-i18n-attr="aria-label"
+		aria-label={t.lightbox.aria}
 		hidden
 	>
-		<button type="button" class="hero-lightbox-close" aria-label="Cerrar"
+		<button type="button" class="hero-lightbox-close" data-i18n="lightbox.close" data-i18n-attr="aria-label" aria-label={t.lightbox.close}
 			>&times;</button
 		>
 		<img class="hero-lightbox-img" alt="" decoding="async" />
 	</div>
 </Layout>
 
+<style is:global>
+	html[data-locale="en"]:not([data-i18n-ready]) .omni-page,
+	html[data-locale="en"]:not([data-i18n-ready]) .privacy-page {
+		visibility: hidden;
+	}
+</style>
 <style>
 	@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
 	.omni-page {
@@ -582,7 +464,48 @@ const howItWorksSteps = [
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		gap: 16px;
 		padding-block: 14px;
+	}
+	.nav-end {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		flex-shrink: 0;
+	}
+	.lang-switch {
+		display: inline-flex;
+		align-items: center;
+		gap: 2px;
+		padding: 3px;
+		border-radius: 10px;
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		background: rgba(255, 255, 255, 0.04);
+	}
+	.lang-btn {
+		margin: 0;
+		padding: 6px 10px;
+		border: 0;
+		border-radius: 8px;
+		background: transparent;
+		color: #9e978c;
+		font: inherit;
+		font-size: 12px;
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		cursor: pointer;
+		line-height: 1;
+	}
+	.lang-btn:hover {
+		color: #e8e5de;
+	}
+	.lang-btn.is-active {
+		background: rgba(201, 168, 245, 0.18);
+		color: #f3ecff;
+	}
+	.lang-btn:focus-visible {
+		outline: 2px solid #c9a8f5;
+		outline-offset: 1px;
 	}
 	.brand {
 		display: flex;
@@ -1507,29 +1430,20 @@ const howItWorksSteps = [
 <script>
 	import Swiper from "swiper";
 	import { Autoplay, Navigation, Pagination } from "swiper/modules";
+	import {
+		getStoredLocale,
+		initLangSwitcher,
+		messages,
+		type Locale,
+	} from "./i18n";
 
-	const captions = [
-		{
-			title: "Biblioteca y listas",
-			subtitle: "Gestiona y organiza tu lectura fácilmente.",
-		},
-		{
-			title: "Vista de obra",
-			subtitle: "Revisa detalles, estado y fuente de cada manga.",
-		},
-		{
-			title: "Gestión de capítulos",
-			subtitle: "Marca lecturas, ajusta estados, géneros y notas.",
-		},
-		{
-			title: "Detección automática",
-			subtitle: "Detecta lecturas compatibles al instante.",
-		},
-		{
-			title: "Reconocimiento y fusión",
-			subtitle: "Identifica lecturas ya agregados y fusiona registros.",
-		},
-	];
+	let currentLocale: Locale = getStoredLocale();
+	let heroSwiper: Swiper | null = null;
+	let updateCaption: (() => void) | null = null;
+
+	function getCaptions() {
+		return messages[currentLocale].sliderCaptions;
+	}
 
 	function initMobileNav() {
 		const toggle = document.getElementById("nav-toggle");
@@ -1547,7 +1461,7 @@ const howItWorksSteps = [
 
 		menuToggle.addEventListener("click", (e) => {
 			e.stopPropagation();
-			setOpen(menuPanel.hidden);
+			setOpen(Boolean(menuPanel.hidden));
 		});
 
 		menuPanel.querySelectorAll("a").forEach((link) => {
@@ -1717,9 +1631,11 @@ const howItWorksSteps = [
 		});
 
 		el.dataset.swiperReady = "true";
+		heroSwiper = swiper;
 
-		const updateCaption = () => {
+		updateCaption = () => {
 			if (!titleEl || !subtitleEl) return;
+			const captions = getCaptions();
 			const idx = swiper.realIndex ?? 0;
 			const current = captions[idx] ?? captions[0];
 			titleEl.textContent = current.title;
@@ -1731,6 +1647,11 @@ const howItWorksSteps = [
 	}
 
 	function boot() {
+		initLangSwitcher((locale) => {
+			currentLocale = locale;
+			updateCaption?.();
+			heroSwiper?.updateAutoHeight?.(300);
+		});
 		initMobileNav();
 		initHeroLightbox();
 		initHeroSwiper();
