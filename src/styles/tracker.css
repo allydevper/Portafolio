@@ -6,20 +6,37 @@
 	color: #f0f0f2;
 }
 
-.tracker-shell .terminal-bg-layer-gradient {
-	opacity: 0.55;
-}
-
+/* Misma cuadrícula del home, un poco más marcada para el fondo más claro */
 .tracker-shell .terminal-bg-layer-grid {
-	opacity: 0.28;
+	opacity: 1;
+	background-image:
+		linear-gradient(to right, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+		linear-gradient(to bottom, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+	mask-image: radial-gradient(
+		ellipse 90% 80% at 50% 30%,
+		black 0%,
+		transparent 100%
+	);
+	-webkit-mask-image: radial-gradient(
+		ellipse 90% 80% at 50% 30%,
+		black 0%,
+		transparent 100%
+	);
 }
 
 .tracker-shell .terminal-bg-layer-grid-accent {
-	opacity: 0.4;
+	opacity: 1;
+	background-image:
+		linear-gradient(to right, rgb(var(--accent-rgb) / 0.1) 1px, transparent 1px),
+		linear-gradient(to bottom, rgb(var(--accent-rgb) / 0.1) 1px, transparent 1px);
+}
+
+.tracker-shell .terminal-bg-layer-gradient {
+	opacity: 1;
 }
 
 .tracker-shell .terminal-bg-scan {
-	opacity: 0.3;
+	opacity: 1;
 }
 
 .tracker-page {
