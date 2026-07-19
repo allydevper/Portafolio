@@ -13,8 +13,15 @@ import {
 	updateJournalEntry,
 } from "../../../services/journal.service";
 import { buildExportText, currentMonthKey, formatMonthLabel } from "./exportText";
+import {
+	buildMonthOptions,
+	copyPreviousMonthProjects,
+	getMonthProjectIds,
+	setMonthProjectIds,
+	toggleMonthProject,
+} from "./monthProjects";
 
-type Tab = "todos" | "journal";
+type Tab = "todos" | "journal" | "projects";
 
 const EMPTY_TODO = {
 	title: "",
@@ -29,19 +36,37 @@ const EMPTY_JOURNAL = {
 	project_id: "none" as string | number,
 };
 
+let tempIdSeq = -1;
+function nextTempId() {
+	return tempIdSeq--;
+}
+
 const TrackerBase: React.FC = () => {
 	const [tab, setTab] = useState<Tab>("todos");
 	const [projects, setProjects] = useState<ProjectModel[]>([]);
 	const [todos, setTodos] = useState<TodoModel[]>([]);
 	const [journal, setJournal] = useState<JournalEntryModel[]>([]);
 	const [loading, setLoading] = useState(true);
-	const [saving, setSaving] = useState(false);
 	const [filterProject, setFilterProject] = useState<string>("all");
 	const [monthKey, setMonthKey] = useState(currentMonthKey());
+	const [assignedIds, setAssignedIds] = useState<number[]>(() =>
+		typeof window !== "undefined" ? getMonthProjectIds(currentMonthKey()) : [],
+	);
 	const [todoForm, setTodoForm] = useState(EMPTY_TODO);
 	const [editingTodoId, setEditingTodoId] = useState<number | null>(null);
 	const [journalForm, setJournalForm] = useState(EMPTY_JOURNAL);
 	const [editingJournalId, setEditingJournalId] = useState<number | null>(null);
+
+	const monthOptions = useMemo(() => buildMonthOptions(18), []);
+
+	const assignedProjects = useMemo(
+		() => projects.filter((p) => assignedIds.includes(p.id)),
+		[projects, assignedIds],
+	);
+
+	useEffect(() => {
+		setAssignedIds(getMonthProjectIds(monthKey));
+	}, [monthKey]);
 
 	const loadAll = async () => {
 		setLoading(true);
@@ -127,36 +152,59 @@ const TrackerBase: React.FC = () => {
 			showToastFront("El título es obligatorio", "danger");
 			return;
 		}
-		setSaving(true);
-		try {
-			const payload = {
-				title: todoForm.title.trim(),
-				description: todoForm.description.trim() || null,
-				done: todoForm.done,
-				project_id: parseProjectId(todoForm.project_id),
+
+		const payload = {
+			title: todoForm.title.trim(),
+			description: todoForm.description.trim() || null,
+			done: todoForm.done,
+			project_id: parseProjectId(todoForm.project_id),
+		};
+
+		if (editingTodoId != null) {
+			const id = editingTodoId;
+			const previous = todos.find((t) => t.id === id);
+			const optimistic: TodoModel = {
+				...(previous ?? { id }),
+				...payload,
 			};
-			if (editingTodoId != null) {
-				const updated = await updateTodo({ id: editingTodoId, ...payload });
-				setTodos((prev) => prev.map((t) => (t.id === updated.id ? updated : t)));
-				showToastFront("Todo actualizado", "success");
-			} else {
-				const created = await createTodo(payload);
-				setTodos((prev) => [created, ...prev]);
-				showToastFront("Todo creado", "success");
-			}
+			setTodos((prev) => prev.map((t) => (t.id === id ? optimistic : t)));
 			resetTodoForm();
+			try {
+				const updated = await updateTodo(optimistic);
+				setTodos((prev) => prev.map((t) => (t.id === id ? updated : t)));
+				showToastFront("Todo actualizado", "success");
+			} catch (error: Error | any) {
+				if (previous) {
+					setTodos((prev) => prev.map((t) => (t.id === id ? previous : t)));
+				}
+				showToastFront(error?.message ?? "Error al guardar", "danger");
+			}
+			return;
+		}
+
+		const tempId = nextTempId();
+		const optimistic: TodoModel = { id: tempId, ...payload };
+		setTodos((prev) => [optimistic, ...prev]);
+		resetTodoForm();
+		try {
+			const created = await createTodo(payload);
+			setTodos((prev) => prev.map((t) => (t.id === tempId ? created : t)));
+			showToastFront("Todo creado", "success");
 		} catch (error: Error | any) {
+			setTodos((prev) => prev.filter((t) => t.id !== tempId));
 			showToastFront(error?.message ?? "Error al guardar", "danger");
-		} finally {
-			setSaving(false);
 		}
 	};
 
 	const handleToggleDone = async (todo: TodoModel) => {
+		const previous = todo;
+		const optimistic = { ...todo, done: !todo.done };
+		setTodos((prev) => prev.map((t) => (t.id === todo.id ? optimistic : t)));
 		try {
-			const updated = await updateTodo({ ...todo, done: !todo.done });
-			setTodos((prev) => prev.map((t) => (t.id === updated.id ? updated : t)));
+			const updated = await updateTodo(optimistic);
+			setTodos((prev) => prev.map((t) => (t.id === todo.id ? updated : t)));
 		} catch (error: Error | any) {
+			setTodos((prev) => prev.map((t) => (t.id === todo.id ? previous : t)));
 			showToastFront(error?.message ?? "Error al actualizar", "danger");
 		}
 	};
@@ -174,12 +222,16 @@ const TrackerBase: React.FC = () => {
 
 	const handleDeleteTodo = async (id: number) => {
 		if (!confirm("¿Eliminar este todo?")) return;
+		const previous = todos.find((t) => t.id === id);
+		setTodos((prev) => prev.filter((t) => t.id !== id));
+		if (editingTodoId === id) resetTodoForm();
 		try {
 			await deleteTodo(id);
-			setTodos((prev) => prev.filter((t) => t.id !== id));
-			if (editingTodoId === id) resetTodoForm();
 			showToastFront("Todo eliminado", "success");
 		} catch (error: Error | any) {
+			if (previous) {
+				setTodos((prev) => [previous, ...prev]);
+			}
 			showToastFront(error?.message ?? "Error al eliminar", "danger");
 		}
 	};
@@ -190,28 +242,47 @@ const TrackerBase: React.FC = () => {
 			showToastFront("La nota es obligatoria", "danger");
 			return;
 		}
-		setSaving(true);
-		try {
-			const payload = {
-				title: journalForm.title.trim() || null,
-				body: journalForm.body.trim(),
-				entry_month: `${monthKey}-01`,
-				project_id: parseProjectId(journalForm.project_id),
+
+		const payload = {
+			title: journalForm.title.trim() || null,
+			body: journalForm.body.trim(),
+			entry_month: `${monthKey}-01`,
+			project_id: parseProjectId(journalForm.project_id),
+		};
+
+		if (editingJournalId != null) {
+			const id = editingJournalId;
+			const previous = journal.find((j) => j.id === id);
+			const optimistic: JournalEntryModel = {
+				...(previous ?? { id, body: payload.body, entry_month: payload.entry_month }),
+				...payload,
 			};
-			if (editingJournalId != null) {
-				const updated = await updateJournalEntry({ id: editingJournalId, ...payload });
-				setJournal((prev) => prev.map((j) => (j.id === updated.id ? updated : j)));
-				showToastFront("Nota actualizada", "success");
-			} else {
-				const created = await createJournalEntry(payload);
-				setJournal((prev) => [created, ...prev]);
-				showToastFront("Nota creada", "success");
-			}
+			setJournal((prev) => prev.map((j) => (j.id === id ? optimistic : j)));
 			resetJournalForm();
+			try {
+				const updated = await updateJournalEntry({ id, ...payload });
+				setJournal((prev) => prev.map((j) => (j.id === id ? updated : j)));
+				showToastFront("Nota actualizada", "success");
+			} catch (error: Error | any) {
+				if (previous) {
+					setJournal((prev) => prev.map((j) => (j.id === id ? previous : j)));
+				}
+				showToastFront(error?.message ?? "Error al guardar", "danger");
+			}
+			return;
+		}
+
+		const tempId = nextTempId();
+		const optimistic: JournalEntryModel = { id: tempId, ...payload };
+		setJournal((prev) => [optimistic, ...prev]);
+		resetJournalForm();
+		try {
+			const created = await createJournalEntry(payload);
+			setJournal((prev) => prev.map((j) => (j.id === tempId ? created : j)));
+			showToastFront("Nota creada", "success");
 		} catch (error: Error | any) {
+			setJournal((prev) => prev.filter((j) => j.id !== tempId));
 			showToastFront(error?.message ?? "Error al guardar", "danger");
-		} finally {
-			setSaving(false);
 		}
 	};
 
@@ -227,14 +298,39 @@ const TrackerBase: React.FC = () => {
 
 	const handleDeleteJournal = async (id: number) => {
 		if (!confirm("¿Eliminar esta nota?")) return;
+		const previous = journal.find((j) => j.id === id);
+		setJournal((prev) => prev.filter((j) => j.id !== id));
+		if (editingJournalId === id) resetJournalForm();
 		try {
 			await deleteJournalEntry(id);
-			setJournal((prev) => prev.filter((j) => j.id !== id));
-			if (editingJournalId === id) resetJournalForm();
 			showToastFront("Nota eliminada", "success");
 		} catch (error: Error | any) {
+			if (previous) {
+				setJournal((prev) => [previous, ...prev]);
+			}
 			showToastFront(error?.message ?? "Error al eliminar", "danger");
 		}
+	};
+
+	const handleToggleAssigned = (projectId: number) => {
+		const next = toggleMonthProject(monthKey, projectId);
+		setAssignedIds(next);
+	};
+
+	const handleCopyPreviousMonth = () => {
+		const next = copyPreviousMonthProjects(monthKey);
+		setAssignedIds(next);
+		showToastFront(
+			next.length > 0
+				? `Copiados ${next.length} proyecto(s) del mes anterior`
+				: "El mes anterior no tenía proyectos asignados",
+			next.length > 0 ? "success" : "normal",
+		);
+	};
+
+	const handleClearAssigned = () => {
+		setMonthProjectIds(monthKey, []);
+		setAssignedIds([]);
 	};
 
 	const handleExport = async (onlyDone: boolean) => {
@@ -256,12 +352,35 @@ const TrackerBase: React.FC = () => {
 	const projectOptions = (
 		<>
 			<option value="none">Sin proyecto (one-shot)</option>
-			{projects.map((p) => (
+			{assignedProjects.map((p) => (
 				<option key={p.id} value={p.id}>
 					{p.name}
 				</option>
 			))}
 		</>
+	);
+
+	const monthToolbar = (
+		<div className="tracker-month-bar">
+			<div className="tracker-field tracker-month-field">
+				<label htmlFor="tracker-month">Mes</label>
+				<select
+					id="tracker-month"
+					className="tracker-select"
+					value={monthKey}
+					onChange={(e) => setMonthKey(e.target.value)}
+				>
+					{monthOptions.map((opt) => (
+						<option key={opt.value} value={opt.value}>
+							{opt.label}
+						</option>
+					))}
+				</select>
+			</div>
+			<span className="tracker-month-hint">
+				{assignedIds.length} proyecto(s) asignado(s)
+			</span>
+		</div>
 	);
 
 	return (
@@ -302,6 +421,8 @@ const TrackerBase: React.FC = () => {
 					</nav>
 				</header>
 
+				{monthToolbar}
+
 				<div className="tracker-tabs" role="tablist">
 					<button
 						type="button"
@@ -319,12 +440,33 @@ const TrackerBase: React.FC = () => {
 						aria-selected={tab === "journal"}
 						onClick={() => setTab("journal")}
 					>
-						Bitácora · {formatMonthLabel(monthKey)}
+						Bitácora
+					</button>
+					<button
+						type="button"
+						role="tab"
+						className={`tracker-tab${tab === "projects" ? " is-active" : ""}`}
+						aria-selected={tab === "projects"}
+						onClick={() => setTab("projects")}
+					>
+						Proyectos · {formatMonthLabel(monthKey)}
 					</button>
 				</div>
 
 				{tab === "todos" && (
 					<section>
+						{assignedIds.length === 0 && (
+							<div className="tracker-empty tracker-empty-hint">
+								No hay proyectos asignados a {formatMonthLabel(monthKey)}.{" "}
+								<button
+									type="button"
+									className="tracker-inline-link"
+									onClick={() => setTab("projects")}
+								>
+									Asignar en el tab Proyectos
+								</button>
+							</div>
+						)}
 						<form className="tracker-form" onSubmit={handleSaveTodo}>
 							<div className="tracker-form-row">
 								<div className="tracker-field">
@@ -367,11 +509,7 @@ const TrackerBase: React.FC = () => {
 								/>
 							</div>
 							<div className="tracker-form-actions">
-								<button
-									type="submit"
-									className="tracker-btn tracker-btn-primary"
-									disabled={saving}
-								>
+								<button type="submit" className="tracker-btn tracker-btn-primary">
 									{editingTodoId != null ? "Actualizar" : "Agregar"}
 								</button>
 								{editingTodoId != null && (
@@ -397,7 +535,7 @@ const TrackerBase: React.FC = () => {
 								>
 									<option value="all">Todos los proyectos</option>
 									<option value="none">Solo sin proyecto</option>
-									{projects.map((p) => (
+									{assignedProjects.map((p) => (
 										<option key={p.id} value={p.id}>
 											{p.name}
 										</option>
@@ -461,19 +599,18 @@ const TrackerBase: React.FC = () => {
 
 				{tab === "journal" && (
 					<section>
-						<div className="tracker-toolbar">
-							<div className="tracker-field" style={{ maxWidth: 220 }}>
-								<label htmlFor="journal-month">Mes</label>
-								<input
-									id="journal-month"
-									type="month"
-									className="tracker-input"
-									value={monthKey}
-									onChange={(e) => setMonthKey(e.target.value)}
-								/>
+						{assignedIds.length === 0 && (
+							<div className="tracker-empty tracker-empty-hint">
+								No hay proyectos asignados a {formatMonthLabel(monthKey)}.{" "}
+								<button
+									type="button"
+									className="tracker-inline-link"
+									onClick={() => setTab("projects")}
+								>
+									Asignar en el tab Proyectos
+								</button>
 							</div>
-						</div>
-
+						)}
 						<form className="tracker-form" onSubmit={handleSaveJournal}>
 							<div className="tracker-form-row">
 								<div className="tracker-field">
@@ -519,11 +656,7 @@ const TrackerBase: React.FC = () => {
 								/>
 							</div>
 							<div className="tracker-form-actions">
-								<button
-									type="submit"
-									className="tracker-btn tracker-btn-primary"
-									disabled={saving}
-								>
+								<button type="submit" className="tracker-btn tracker-btn-primary">
 									{editingJournalId != null ? "Actualizar nota" : "Agregar nota"}
 								</button>
 								{editingJournalId != null && (
@@ -574,6 +707,59 @@ const TrackerBase: React.FC = () => {
 												</div>
 											</div>
 											<p className="tracker-journal-body">{entry.body}</p>
+										</li>
+									);
+								})}
+							</ul>
+						)}
+					</section>
+				)}
+
+				{tab === "projects" && (
+					<section>
+						<p className="tracker-projects-lead">
+							Marca los proyectos activos de{" "}
+							<strong>{formatMonthLabel(monthKey)}</strong>. Esos son los que
+							aparecen en los combos de Todos y Bitácora (sin volver a buscar entre
+							todos).
+						</p>
+						<div className="tracker-toolbar">
+							<button
+								type="button"
+								className="tracker-btn"
+								onClick={handleCopyPreviousMonth}
+							>
+								Usar mismos que el mes anterior
+							</button>
+							<button
+								type="button"
+								className="tracker-btn tracker-btn-ghost"
+								onClick={handleClearAssigned}
+								disabled={assignedIds.length === 0}
+							>
+								Limpiar mes
+							</button>
+						</div>
+
+						{loading ? (
+							<div className="tracker-empty">Cargando…</div>
+						) : projects.length === 0 ? (
+							<div className="tracker-empty">No hay proyectos en el portafolio.</div>
+						) : (
+							<ul className="tracker-project-assign-list">
+								{projects.map((project) => {
+									const checked = assignedIds.includes(project.id);
+									return (
+										<li key={project.id}>
+											<label className="tracker-project-assign-item">
+												<input
+													type="checkbox"
+													className="tracker-check"
+													checked={checked}
+													onChange={() => handleToggleAssigned(project.id)}
+												/>
+												<span>{project.name}</span>
+											</label>
 										</li>
 									);
 								})}

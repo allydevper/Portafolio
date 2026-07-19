@@ -76,6 +76,87 @@
 	margin-bottom: 20px;
 }
 
+.tracker-month-bar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: 14px;
+	margin-bottom: 20px;
+	padding: 12px 14px;
+	border: 1px solid #1f1f1f;
+	background: rgb(255 255 255 / 0.015);
+}
+
+.tracker-month-field {
+	flex: 0 1 240px;
+	max-width: 280px;
+}
+
+.tracker-month-hint {
+	color: #666;
+	font-size: 12px;
+	padding-bottom: 10px;
+}
+
+.tracker-projects-lead {
+	margin: 0 0 16px;
+	font-size: 13px;
+	color: #888;
+	max-width: 56ch;
+	line-height: 1.5;
+}
+
+.tracker-projects-lead strong {
+	color: #e8e8e8;
+	font-weight: 500;
+}
+
+.tracker-project-assign-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	border-top: 1px solid #151515;
+}
+
+.tracker-project-assign-item {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 12px 4px;
+	border-bottom: 1px solid #151515;
+	cursor: pointer;
+	font-size: 14px;
+	color: #e8e8e8;
+}
+
+.tracker-project-assign-item:hover {
+	color: #fff;
+}
+
+.tracker-project-assign-item .tracker-check {
+	margin-top: 0;
+}
+
+.tracker-empty-hint {
+	margin-bottom: 16px;
+}
+
+.tracker-inline-link {
+	appearance: none;
+	background: none;
+	border: none;
+	padding: 0;
+	font: inherit;
+	color: var(--accent);
+	cursor: pointer;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.tracker-inline-link:hover {
+	color: #fff;
+}
+
 .tracker-field {
 	display: flex;
 	flex-direction: column;
