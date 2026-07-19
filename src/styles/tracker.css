@@ -1,9 +1,32 @@
 /* Admin tracker — extends terminal theme */
 
+.terminal-body .tracker-shell.terminal-root,
+.tracker-shell.terminal-root {
+	background: #121218;
+	color: #f0f0f2;
+}
+
+.tracker-shell .terminal-bg-layer-gradient {
+	opacity: 0.55;
+}
+
+.tracker-shell .terminal-bg-layer-grid {
+	opacity: 0.28;
+}
+
+.tracker-shell .terminal-bg-layer-grid-accent {
+	opacity: 0.4;
+}
+
+.tracker-shell .terminal-bg-scan {
+	opacity: 0.3;
+}
+
 .tracker-page {
 	position: relative;
 	z-index: 2;
 	padding-block: 32px 64px;
+	color: #f0f0f2;
 }
 
 .tracker-header {
@@ -20,6 +43,7 @@
 	font-size: clamp(1.4rem, 3vw, 1.85rem);
 	font-weight: 600;
 	letter-spacing: -0.02em;
+	color: #f5f5f7;
 }
 
 .tracker-header h1 span {
@@ -28,7 +52,7 @@
 
 .tracker-header p {
 	margin: 8px 0 0;
-	color: #888;
+	color: #b0b0b8;
 	font-size: 13px;
 	max-width: 42ch;
 }
@@ -42,7 +66,7 @@
 .tracker-tabs {
 	display: flex;
 	gap: 4px;
-	border-bottom: 1px solid #151515;
+	border-bottom: 1px solid #2e2e36;
 	margin-bottom: 24px;
 }
 
@@ -51,7 +75,7 @@
 	background: transparent;
 	border: none;
 	border-bottom: 2px solid transparent;
-	color: #888;
+	color: #9a9aa3;
 	font-family: inherit;
 	font-size: 13px;
 	padding: 10px 14px;
@@ -60,7 +84,7 @@
 }
 
 .tracker-tab:hover {
-	color: #e8e8e8;
+	color: #f0f0f2;
 }
 
 .tracker-tab.is-active {
@@ -83,8 +107,9 @@
 	gap: 14px;
 	margin-bottom: 20px;
 	padding: 12px 14px;
-	border: 1px solid #1f1f1f;
-	background: rgb(255 255 255 / 0.015);
+	border: 1px solid #34343e;
+	background: #1a1a22;
+	border-radius: 4px;
 }
 
 .tracker-month-field {
@@ -93,7 +118,7 @@
 }
 
 .tracker-month-hint {
-	color: #666;
+	color: #a0a0aa;
 	font-size: 12px;
 	padding-bottom: 10px;
 }
@@ -101,13 +126,13 @@
 .tracker-projects-lead {
 	margin: 0 0 16px;
 	font-size: 13px;
-	color: #888;
+	color: #b0b0b8;
 	max-width: 56ch;
 	line-height: 1.5;
 }
 
 .tracker-projects-lead strong {
-	color: #e8e8e8;
+	color: #f0f0f2;
 	font-weight: 500;
 }
 
@@ -115,7 +140,9 @@
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	border-top: 1px solid #151515;
+	border: 1px solid #34343e;
+	background: #1a1a22;
+	border-radius: 4px;
 }
 
 .tracker-project-assign-row {
@@ -123,8 +150,12 @@
 	grid-template-columns: 1fr auto;
 	gap: 8px;
 	align-items: center;
-	padding: 10px 4px;
-	border-bottom: 1px solid #151515;
+	padding: 12px 14px;
+	border-bottom: 1px solid #2a2a32;
+}
+
+.tracker-project-assign-row:last-child {
+	border-bottom: none;
 }
 
 .tracker-project-assign-item {
@@ -186,7 +217,7 @@
 
 .tracker-field label {
 	font-size: 11px;
-	color: #666;
+	color: #9a9aa3;
 	text-transform: uppercase;
 	letter-spacing: 0.06em;
 }
@@ -196,19 +227,25 @@
 .tracker-textarea {
 	width: 100%;
 	box-sizing: border-box;
-	background: #0c0c0d;
-	border: 1px solid #2a2a2a;
-	color: #e8e8e8;
+	background: #101016;
+	border: 1px solid #3a3a46;
+	color: #f0f0f2;
 	font-family: inherit;
 	font-size: 13px;
 	padding: 10px 12px;
 	outline: none;
 }
 
+.tracker-input::placeholder,
+.tracker-textarea::placeholder {
+	color: #6e6e78;
+}
+
 .tracker-input:focus,
 .tracker-select:focus,
 .tracker-textarea:focus {
-	border-color: rgb(var(--accent-rgb) / 0.55);
+	border-color: rgb(var(--accent-rgb) / 0.7);
+	background: #14141c;
 }
 
 .tracker-textarea {
@@ -227,14 +264,15 @@
 	font-size: 12px;
 	padding: 10px 14px;
 	cursor: pointer;
-	border: 1px solid #2a2a2a;
-	background: transparent;
-	color: #e8e8e8;
+	border: 1px solid #3a3a46;
+	background: #1a1a22;
+	color: #f0f0f2;
 	transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
 }
 
 .tracker-btn:hover:not(:disabled) {
-	border-color: #444;
+	border-color: #55556a;
+	background: #22222c;
 }
 
 .tracker-btn:disabled {
@@ -251,20 +289,23 @@
 
 .tracker-btn-primary:hover:not(:disabled) {
 	box-shadow: 0 0 20px rgb(var(--accent-rgb) / 0.28);
+	background: var(--accent);
 }
 
 .tracker-btn-ghost {
-	color: #888;
+	color: #b0b0b8;
 	border-style: dashed;
+	background: transparent;
 }
 
 .tracker-form {
 	display: grid;
 	gap: 12px;
 	padding: 16px;
-	border: 1px solid #1f1f1f;
-	background: rgb(255 255 255 / 0.015);
+	border: 1px solid #34343e;
+	background: #1a1a22;
 	margin-bottom: 24px;
+	border-radius: 4px;
 }
 
 .tracker-form-row {
@@ -294,7 +335,9 @@
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	border-top: 1px solid #151515;
+	border: 1px solid #34343e;
+	background: #1a1a22;
+	border-radius: 4px;
 }
 
 .tracker-item {
@@ -302,12 +345,16 @@
 	grid-template-columns: auto 1fr auto;
 	gap: 12px;
 	align-items: start;
-	padding: 12px 4px;
-	border-bottom: 1px solid #151515;
+	padding: 12px 14px;
+	border-bottom: 1px solid #2a2a32;
+}
+
+.tracker-item:last-child {
+	border-bottom: none;
 }
 
 .tracker-item.is-done .tracker-item-title {
-	color: #666;
+	color: #8a8a94;
 	text-decoration: line-through;
 }
 
@@ -316,8 +363,8 @@
 	width: 16px;
 	height: 16px;
 	margin-top: 3px;
-	border: 1px solid #444;
-	background: transparent;
+	border: 1px solid #5a5a66;
+	background: #101016;
 	cursor: pointer;
 	flex-shrink: 0;
 }
@@ -325,19 +372,20 @@
 .tracker-check:checked {
 	background: var(--accent);
 	border-color: var(--accent);
-	box-shadow: inset 0 0 0 2px #0a0a0a;
+	box-shadow: inset 0 0 0 2px #121218;
 }
 
 .tracker-item-title {
 	margin: 0;
 	font-size: 14px;
 	font-weight: 500;
+	color: #f0f0f2;
 }
 
 .tracker-item-desc {
 	margin: 4px 0 0;
 	font-size: 12px;
-	color: #777;
+	color: #a8a8b2;
 	white-space: pre-wrap;
 }
 
@@ -351,7 +399,7 @@
 	appearance: none;
 	background: transparent;
 	border: none;
-	color: #666;
+	color: #9a9aa3;
 	font-family: inherit;
 	font-size: 11px;
 	cursor: pointer;
@@ -367,16 +415,22 @@
 }
 
 .tracker-empty {
-	padding: 28px 8px;
-	color: #555;
+	padding: 28px 14px;
+	color: #9a9aa3;
 	font-size: 13px;
-	border: 1px dashed #1f1f1f;
+	border: 1px dashed #3a3a46;
+	background: #1a1a22;
 	text-align: center;
+	border-radius: 4px;
 }
 
 .tracker-journal-item {
-	padding: 14px 4px;
-	border-bottom: 1px solid #151515;
+	padding: 14px;
+	border-bottom: 1px solid #2a2a32;
+}
+
+.tracker-journal-item:last-child {
+	border-bottom: none;
 }
 
 .tracker-journal-meta {
@@ -391,12 +445,13 @@
 	margin: 0;
 	font-size: 14px;
 	font-weight: 500;
+	color: #f0f0f2;
 }
 
 .tracker-journal-body {
 	margin: 0;
 	font-size: 13px;
-	color: #999;
+	color: #b8b8c0;
 	white-space: pre-wrap;
 	line-height: 1.55;
 }

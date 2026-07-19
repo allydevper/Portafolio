@@ -655,7 +655,7 @@ const TrackerBase: React.FC = () => {
 									))}
 								</select>
 							</div>
-							<span style={{ color: "#555", fontSize: 12 }}>
+							<span style={{ color: "#9a9aa3", fontSize: 12 }}>
 								{filteredTodos.length} ítem(s)
 								{filteredTodos.filter((t) => t.done).length > 0 &&
 									` · ${filteredTodos.filter((t) => t.done).length} hechos`}
