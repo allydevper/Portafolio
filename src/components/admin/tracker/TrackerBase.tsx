@@ -26,6 +26,16 @@ import {
 	renameTrackerProject,
 	type TrackerProject,
 } from "./trackerProjects";
+import {
+	moveJournalProjectLink,
+	moveTodoProjectLink,
+	removeJournalProjectLink,
+	removeTodoProjectLink,
+	setJournalProjectLink,
+	setTodoProjectLink,
+	withJournalProjectLink,
+	withTodoProjectLink,
+} from "./projectLinks";
 
 type Tab = "todos" | "journal" | "projects";
 
@@ -92,8 +102,8 @@ const TrackerBase: React.FC = () => {
 				getTodos(),
 				getJournalEntries({ month: monthKey }),
 			]);
-			setTodos(todoList);
-			setJournal(journalList);
+			setTodos(todoList.map(withTodoProjectLink));
+			setJournal(journalList.map(withJournalProjectLink));
 		} catch (error: Error | any) {
 			console.error(error);
 			showToastFront(error?.message ?? "Error al cargar", "danger");
@@ -112,7 +122,7 @@ const TrackerBase: React.FC = () => {
 		(async () => {
 			try {
 				const journalList = await getJournalEntries({ month: monthKey });
-				if (!cancelled) setJournal(journalList);
+				if (!cancelled) setJournal(journalList.map(withJournalProjectLink));
 			} catch (error: Error | any) {
 				if (!cancelled) {
 					showToastFront(error?.message ?? "Error al cargar bitácora", "danger");
@@ -168,29 +178,37 @@ const TrackerBase: React.FC = () => {
 			return;
 		}
 
-		const payload = {
+		const trackerProjectId = parseProjectId(todoForm.project_id);
+		const apiPayload = {
 			title: todoForm.title.trim(),
 			description: todoForm.description.trim() || null,
 			done: todoForm.done,
-			project_id: parseProjectId(todoForm.project_id),
+			project_id: null as number | null,
 		};
+		const uiPayload = { ...apiPayload, project_id: trackerProjectId };
 
 		if (editingTodoId != null) {
 			const id = editingTodoId;
 			const previous = todos.find((t) => t.id === id);
 			const optimistic: TodoModel = {
 				...(previous ?? { id }),
-				...payload,
+				...uiPayload,
 			};
 			setTodos((prev) => prev.map((t) => (t.id === id ? optimistic : t)));
+			setTodoProjectLink(id, trackerProjectId);
 			resetTodoForm();
 			try {
-				const updated = await updateTodo(optimistic);
-				setTodos((prev) => prev.map((t) => (t.id === id ? updated : t)));
+				const updated = await updateTodo({ id, ...apiPayload });
+				setTodos((prev) =>
+					prev.map((t) =>
+						t.id === id ? { ...updated, project_id: trackerProjectId } : t,
+					),
+				);
 				showToastFront("Todo actualizado", "success");
 			} catch (error: Error | any) {
 				if (previous) {
 					setTodos((prev) => prev.map((t) => (t.id === id ? previous : t)));
+					setTodoProjectLink(id, previous.project_id ?? null);
 				}
 				showToastFront(error?.message ?? "Error al guardar", "danger");
 			}
@@ -198,14 +216,22 @@ const TrackerBase: React.FC = () => {
 		}
 
 		const tempId = nextTempId();
-		const optimistic: TodoModel = { id: tempId, ...payload };
+		const optimistic: TodoModel = { id: tempId, ...uiPayload };
 		setTodos((prev) => [optimistic, ...prev]);
+		setTodoProjectLink(tempId, trackerProjectId);
 		resetTodoForm();
 		try {
-			const created = await createTodo(payload);
-			setTodos((prev) => prev.map((t) => (t.id === tempId ? created : t)));
+			const created = await createTodo(apiPayload);
+			moveTodoProjectLink(tempId, created.id);
+			setTodoProjectLink(created.id, trackerProjectId);
+			setTodos((prev) =>
+				prev.map((t) =>
+					t.id === tempId ? { ...created, project_id: trackerProjectId } : t,
+				),
+			);
 			showToastFront("Todo creado", "success");
 		} catch (error: Error | any) {
+			removeTodoProjectLink(tempId);
 			setTodos((prev) => prev.filter((t) => t.id !== tempId));
 			showToastFront(error?.message ?? "Error al guardar", "danger");
 		}
@@ -213,11 +239,20 @@ const TrackerBase: React.FC = () => {
 
 	const handleToggleDone = async (todo: TodoModel) => {
 		const previous = todo;
+		const trackerProjectId = todo.project_id ?? null;
 		const optimistic = { ...todo, done: !todo.done };
 		setTodos((prev) => prev.map((t) => (t.id === todo.id ? optimistic : t)));
 		try {
-			const updated = await updateTodo(optimistic);
-			setTodos((prev) => prev.map((t) => (t.id === todo.id ? updated : t)));
+			const updated = await updateTodo({
+				...todo,
+				done: !todo.done,
+				project_id: null,
+			});
+			setTodos((prev) =>
+				prev.map((t) =>
+					t.id === todo.id ? { ...updated, project_id: trackerProjectId } : t,
+				),
+			);
 		} catch (error: Error | any) {
 			setTodos((prev) => prev.map((t) => (t.id === todo.id ? previous : t)));
 			showToastFront(error?.message ?? "Error al actualizar", "danger");
@@ -242,6 +277,7 @@ const TrackerBase: React.FC = () => {
 		if (editingTodoId === id) resetTodoForm();
 		try {
 			await deleteTodo(id);
+			removeTodoProjectLink(id);
 			showToastFront("Todo eliminado", "success");
 		} catch (error: Error | any) {
 			if (previous) {
@@ -258,29 +294,37 @@ const TrackerBase: React.FC = () => {
 			return;
 		}
 
-		const payload = {
+		const trackerProjectId = parseProjectId(journalForm.project_id);
+		const apiPayload = {
 			title: journalForm.title.trim() || null,
 			body: journalForm.body.trim(),
 			entry_month: `${monthKey}-01`,
-			project_id: parseProjectId(journalForm.project_id),
+			project_id: null as number | null,
 		};
+		const uiPayload = { ...apiPayload, project_id: trackerProjectId };
 
 		if (editingJournalId != null) {
 			const id = editingJournalId;
 			const previous = journal.find((j) => j.id === id);
 			const optimistic: JournalEntryModel = {
-				...(previous ?? { id, body: payload.body, entry_month: payload.entry_month }),
-				...payload,
+				...(previous ?? { id, body: uiPayload.body, entry_month: uiPayload.entry_month }),
+				...uiPayload,
 			};
 			setJournal((prev) => prev.map((j) => (j.id === id ? optimistic : j)));
+			setJournalProjectLink(id, trackerProjectId);
 			resetJournalForm();
 			try {
-				const updated = await updateJournalEntry({ id, ...payload });
-				setJournal((prev) => prev.map((j) => (j.id === id ? updated : j)));
+				const updated = await updateJournalEntry({ id, ...apiPayload });
+				setJournal((prev) =>
+					prev.map((j) =>
+						j.id === id ? { ...updated, project_id: trackerProjectId } : j,
+					),
+				);
 				showToastFront("Nota actualizada", "success");
 			} catch (error: Error | any) {
 				if (previous) {
 					setJournal((prev) => prev.map((j) => (j.id === id ? previous : j)));
+					setJournalProjectLink(id, previous.project_id ?? null);
 				}
 				showToastFront(error?.message ?? "Error al guardar", "danger");
 			}
@@ -288,14 +332,22 @@ const TrackerBase: React.FC = () => {
 		}
 
 		const tempId = nextTempId();
-		const optimistic: JournalEntryModel = { id: tempId, ...payload };
+		const optimistic: JournalEntryModel = { id: tempId, ...uiPayload };
 		setJournal((prev) => [optimistic, ...prev]);
+		setJournalProjectLink(tempId, trackerProjectId);
 		resetJournalForm();
 		try {
-			const created = await createJournalEntry(payload);
-			setJournal((prev) => prev.map((j) => (j.id === tempId ? created : j)));
+			const created = await createJournalEntry(apiPayload);
+			moveJournalProjectLink(tempId, created.id);
+			setJournalProjectLink(created.id, trackerProjectId);
+			setJournal((prev) =>
+				prev.map((j) =>
+					j.id === tempId ? { ...created, project_id: trackerProjectId } : j,
+				),
+			);
 			showToastFront("Nota creada", "success");
 		} catch (error: Error | any) {
+			removeJournalProjectLink(tempId);
 			setJournal((prev) => prev.filter((j) => j.id !== tempId));
 			showToastFront(error?.message ?? "Error al guardar", "danger");
 		}
@@ -318,6 +370,7 @@ const TrackerBase: React.FC = () => {
 		if (editingJournalId === id) resetJournalForm();
 		try {
 			await deleteJournalEntry(id);
+			removeJournalProjectLink(id);
 			showToastFront("Nota eliminada", "success");
 		} catch (error: Error | any) {
 			if (previous) {
