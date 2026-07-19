@@ -31,6 +31,15 @@ if (!Astro.locals.user) {
 					Organiza los proyectos creados para mostrar en el
 					portafolio.
 				</p>
+				{/* TEMP: quitar link cuando ya no se necesite */}
+				<p class="mt-4">
+					<a
+						href="/admin/tracker"
+						class="inline-flex items-center gap-2 rounded border border-yellow-500/40 px-4 py-2 text-sm font-medium text-yellow-400 transition hover:border-yellow-400 hover:bg-yellow-500/10"
+					>
+						→ Todo Tracker / Bitácora
+					</a>
+				</p>
 			</div>
 			<ProjectBase client:load />
 		</div>

@@ -1,0 +1,25 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import TrackerBase from "../../../components/admin/tracker/TrackerBase";
+import { ACCENT } from "../../../data/terminal";
+import "../../../styles/terminal.css";
+import "../../../styles/tracker.css";
+
+if (!Astro.locals.user) {
+	return Astro.redirect("/login");
+}
+---
+
+<Layout variant="terminal" lang="es" title="Tracker · Admin · Wilmer Alama">
+	<div class="terminal-root" style={`--accent: ${ACCENT};`}>
+		<div class="terminal-bg" aria-hidden="true">
+			<div class="terminal-bg-layer-gradient"></div>
+			<div class="terminal-bg-layer-grid"></div>
+			<div class="terminal-bg-layer-grid-accent"></div>
+			<div class="terminal-bg-scan"></div>
+		</div>
+		<div class="terminal-scroll">
+			<TrackerBase client:load />
+		</div>
+	</div>
+</Layout>
