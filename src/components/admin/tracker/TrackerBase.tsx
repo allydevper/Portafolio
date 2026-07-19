@@ -1,10 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Toaster } from "sonner";
 import { showToastFront } from "@/lib/customToast";
-import type { ProjectModel } from "../../../models/project.model";
 import type { TodoModel } from "../../../models/todo.model";
 import type { JournalEntryModel } from "../../../models/journal.model";
-import { getProjects } from "../../../services/project.service";
 import { createTodo, deleteTodo, getTodos, updateTodo } from "../../../services/todo.service";
 import {
 	createJournalEntry,
@@ -20,6 +18,14 @@ import {
 	setMonthProjectIds,
 	toggleMonthProject,
 } from "./monthProjects";
+import {
+	assignTrackerProjectToMonth,
+	createTrackerProject,
+	deleteTrackerProject,
+	listTrackerProjects,
+	renameTrackerProject,
+	type TrackerProject,
+} from "./trackerProjects";
 
 type Tab = "todos" | "journal" | "projects";
 
@@ -43,7 +49,9 @@ function nextTempId() {
 
 const TrackerBase: React.FC = () => {
 	const [tab, setTab] = useState<Tab>("todos");
-	const [projects, setProjects] = useState<ProjectModel[]>([]);
+	const [projects, setProjects] = useState<TrackerProject[]>(() =>
+		typeof window !== "undefined" ? listTrackerProjects() : [],
+	);
 	const [todos, setTodos] = useState<TodoModel[]>([]);
 	const [journal, setJournal] = useState<JournalEntryModel[]>([]);
 	const [loading, setLoading] = useState(true);
@@ -56,6 +64,9 @@ const TrackerBase: React.FC = () => {
 	const [editingTodoId, setEditingTodoId] = useState<number | null>(null);
 	const [journalForm, setJournalForm] = useState(EMPTY_JOURNAL);
 	const [editingJournalId, setEditingJournalId] = useState<number | null>(null);
+	const [newProjectName, setNewProjectName] = useState("");
+	const [renamingId, setRenamingId] = useState<number | null>(null);
+	const [renameValue, setRenameValue] = useState("");
 
 	const monthOptions = useMemo(() => buildMonthOptions(18), []);
 
@@ -64,6 +75,11 @@ const TrackerBase: React.FC = () => {
 		[projects, assignedIds],
 	);
 
+	const refreshProjects = () => {
+		setProjects(listTrackerProjects());
+		setAssignedIds(getMonthProjectIds(monthKey));
+	};
+
 	useEffect(() => {
 		setAssignedIds(getMonthProjectIds(monthKey));
 	}, [monthKey]);
@@ -71,12 +87,11 @@ const TrackerBase: React.FC = () => {
 	const loadAll = async () => {
 		setLoading(true);
 		try {
-			const [projectList, todoList, journalList] = await Promise.all([
-				getProjects(),
+			setProjects(listTrackerProjects());
+			const [todoList, journalList] = await Promise.all([
 				getTodos(),
 				getJournalEntries({ month: monthKey }),
 			]);
-			setProjects(projectList.sort((a, b) => a.name.localeCompare(b.name)));
 			setTodos(todoList);
 			setJournal(journalList);
 		} catch (error: Error | any) {
@@ -333,6 +348,51 @@ const TrackerBase: React.FC = () => {
 		setAssignedIds([]);
 	};
 
+	const handleCreateProject = (e: React.FormEvent) => {
+		e.preventDefault();
+		try {
+			const created = createTrackerProject(newProjectName);
+			const next = assignTrackerProjectToMonth(monthKey, created.id);
+			setNewProjectName("");
+			refreshProjects();
+			setAssignedIds(next);
+			showToastFront("Proyecto creado y asignado al mes", "success");
+		} catch (error: Error | any) {
+			showToastFront(error?.message ?? "No se pudo crear", "danger");
+		}
+	};
+
+	const handleStartRename = (project: TrackerProject) => {
+		setRenamingId(project.id);
+		setRenameValue(project.name);
+	};
+
+	const handleSaveRename = (id: number) => {
+		try {
+			renameTrackerProject(id, renameValue);
+			setRenamingId(null);
+			setRenameValue("");
+			refreshProjects();
+			showToastFront("Proyecto renombrado", "success");
+		} catch (error: Error | any) {
+			showToastFront(error?.message ?? "No se pudo renombrar", "danger");
+		}
+	};
+
+	const handleDeleteProject = (id: number) => {
+		if (!confirm("¿Eliminar este proyecto del tracker? Se quita de todos los meses."))
+			return;
+		deleteTrackerProject(id);
+		refreshProjects();
+		if (todoForm.project_id === id || todoForm.project_id === String(id)) {
+			setTodoForm((f) => ({ ...f, project_id: "none" }));
+		}
+		if (journalForm.project_id === id || journalForm.project_id === String(id)) {
+			setJournalForm((f) => ({ ...f, project_id: "none" }));
+		}
+		showToastFront("Proyecto eliminado", "success");
+	};
+
 	const handleExport = async (onlyDone: boolean) => {
 		const text = buildExportText({
 			todos: filteredTodos,
@@ -400,7 +460,7 @@ const TrackerBase: React.FC = () => {
 					</div>
 					<nav className="tracker-nav-links">
 						<a href="/admin" className="terminal-cta terminal-cta-outline">
-							← Proyectos
+							← Admin portafolio
 						</a>
 						<button
 							type="button"
@@ -718,11 +778,33 @@ const TrackerBase: React.FC = () => {
 				{tab === "projects" && (
 					<section>
 						<p className="tracker-projects-lead">
-							Marca los proyectos activos de{" "}
-							<strong>{formatMonthLabel(monthKey)}</strong>. Esos son los que
-							aparecen en los combos de Todos y Bitácora (sin volver a buscar entre
-							todos).
+							Catálogo propio del tracker (no son los del portafolio). Crea
+							proyectos y marca cuáles están activos en{" "}
+							<strong>{formatMonthLabel(monthKey)}</strong> para los combos de
+							Todos y Bitácora.
 						</p>
+
+						<form className="tracker-form" onSubmit={handleCreateProject}>
+							<div className="tracker-form-row">
+								<div className="tracker-field">
+									<label htmlFor="tracker-project-name">Nuevo proyecto</label>
+									<input
+										id="tracker-project-name"
+										className="tracker-input"
+										value={newProjectName}
+										onChange={(e) => setNewProjectName(e.target.value)}
+										placeholder="ej. Cliente Acme / Soporte interno"
+										required
+									/>
+								</div>
+							</div>
+							<div className="tracker-form-actions">
+								<button type="submit" className="tracker-btn tracker-btn-primary">
+									Crear y asignar al mes
+								</button>
+							</div>
+						</form>
+
 						<div className="tracker-toolbar">
 							<button
 								type="button"
@@ -741,25 +823,79 @@ const TrackerBase: React.FC = () => {
 							</button>
 						</div>
 
-						{loading ? (
-							<div className="tracker-empty">Cargando…</div>
-						) : projects.length === 0 ? (
-							<div className="tracker-empty">No hay proyectos en el portafolio.</div>
+						{projects.length === 0 ? (
+							<div className="tracker-empty">
+								Aún no hay proyectos del tracker. Crea el primero arriba.
+							</div>
 						) : (
 							<ul className="tracker-project-assign-list">
 								{projects.map((project) => {
 									const checked = assignedIds.includes(project.id);
+									const isRenaming = renamingId === project.id;
 									return (
-										<li key={project.id}>
+										<li key={project.id} className="tracker-project-assign-row">
 											<label className="tracker-project-assign-item">
 												<input
 													type="checkbox"
 													className="tracker-check"
 													checked={checked}
 													onChange={() => handleToggleAssigned(project.id)}
+													title="Activo este mes"
 												/>
-												<span>{project.name}</span>
+												{isRenaming ? (
+													<input
+														className="tracker-input"
+														value={renameValue}
+														onChange={(e) => setRenameValue(e.target.value)}
+														onKeyDown={(e) => {
+															if (e.key === "Enter") {
+																e.preventDefault();
+																handleSaveRename(project.id);
+															}
+															if (e.key === "Escape") {
+																setRenamingId(null);
+															}
+														}}
+														autoFocus
+													/>
+												) : (
+													<span>{project.name}</span>
+												)}
 											</label>
+											<div className="tracker-item-actions">
+												{isRenaming ? (
+													<>
+														<button
+															type="button"
+															onClick={() => handleSaveRename(project.id)}
+														>
+															guardar
+														</button>
+														<button
+															type="button"
+															onClick={() => setRenamingId(null)}
+														>
+															cancelar
+														</button>
+													</>
+												) : (
+													<>
+														<button
+															type="button"
+															onClick={() => handleStartRename(project)}
+														>
+															renombrar
+														</button>
+														<button
+															type="button"
+															className="is-danger"
+															onClick={() => handleDeleteProject(project.id)}
+														>
+															borrar
+														</button>
+													</>
+												)}
+											</div>
 										</li>
 									);
 								})}

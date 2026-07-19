@@ -1,6 +1,6 @@
 import type { JournalEntryModel } from "../../../models/journal.model";
 import type { TodoModel } from "../../../models/todo.model";
-import type { ProjectModel } from "../../../models/project.model";
+import type { TrackerProject } from "./trackerProjects";
 
 const MONTH_NAMES = [
 	"Enero",
@@ -33,7 +33,7 @@ export function currentMonthKey(date = new Date()): string {
 
 function projectName(
 	projectId: number | null | undefined,
-	projects: ProjectModel[],
+	projects: TrackerProject[],
 ): string {
 	if (projectId == null) return "Sin proyecto";
 	return projects.find((p) => p.id === projectId)?.name ?? `Proyecto #${projectId}`;
@@ -42,7 +42,7 @@ function projectName(
 export function buildExportText(opts: {
 	todos: TodoModel[];
 	journal: JournalEntryModel[];
-	projects: ProjectModel[];
+	projects: TrackerProject[];
 	monthKey: string;
 	onlyDone: boolean;
 }): string {

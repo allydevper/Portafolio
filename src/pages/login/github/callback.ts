@@ -43,7 +43,7 @@ export async function GET(context: APIContext): Promise<Response> {
             const session = await lucia.createSession(existingUser.id, {});
             const sessionCookie = lucia.createSessionCookie(session.id);
             context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-            return context.redirect("/admin");
+            return context.redirect("/admin/tracker");
         }
 
         const userId = generateId(15);
@@ -55,7 +55,7 @@ export async function GET(context: APIContext): Promise<Response> {
         const session = await lucia.createSession(userId, {});
         const sessionCookie = lucia.createSessionCookie(session.id);
         context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-        return context.redirect("/admin");
+        return context.redirect("/admin/tracker");
     } catch (e) {
         if (e instanceof OAuth2RequestError) {
             if (e.message === "bad_verification_code") {
