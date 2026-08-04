@@ -126,13 +126,21 @@ export type PageMessages = {
 		s4P1: string;
 		s4P2: string;
 		s5Title: string;
-		s5P: string;
+		s5Intro: string;
+		s5Scope: string;
+		s5Upload: string;
+		s5Access: string;
+		s5Credentials: string;
+		s5Limited: string;
+		s5Revoke: string;
 		s6Title: string;
 		s6P: string;
 		s7Title: string;
 		s7P: string;
 		s8Title: string;
 		s8P: string;
+		s9Title: string;
+		s9P: string;
 		meta: string;
 		back: string;
 	};
@@ -388,15 +396,30 @@ export const messages: Record<Locale, PageMessages> = {
 			s4Title: "4. Almacenamiento y control de datos",
 			s4P1: "Tus datos se almacenan localmente en el navegador.",
 			s4P2: "Puedes eliminar tus datos locales desinstalando la extension o limpiando el almacenamiento del navegador. Tambien puedes gestionar tus respaldos a traves de exportacion/importacion JSON.",
-			s5Title: "5. Seguridad",
-			s5P: "Aplicamos buenas practicas para reducir riesgos de acceso no autorizado, aunque ningun sistema es completamente infalible.",
-			s6Title: "6. Menores de edad",
-			s6P: "OmniManga Tracker no esta dirigida especificamente a menores de 13 anos.",
-			s7Title: "7. Cambios en esta politica",
-			s7P: "Podemos actualizar esta politica para reflejar mejoras del producto o cambios legales. La version vigente sera la publicada en esta pagina.",
-			s8Title: "8. Contacto",
-			s8P: "Si tienes preguntas sobre privacidad, contactanos en:",
-			meta: "Ultima actualizacion: 29 de abril de 2026.",
+			s5Title: "5. Respaldo en Google Drive (opcional)",
+			s5Intro:
+				"Esta funcion esta desactivada por defecto y solo se activa si la autorizas explicitamente.",
+			s5Scope:
+				"Alcance del acceso. La extension solicita el permiso \"drive.file\" de Google, que concede acceso unicamente a los archivos que la propia extension crea. No puede ver, abrir ni modificar ningun otro archivo de tu Google Drive.",
+			s5Upload:
+				"Que se sube. Una copia de tu lista de lectura (el mismo respaldo que puedes exportar manualmente) comprimida en formato .json.gz, a una carpeta llamada \"OmniManga Tracker\" dentro de tu propio Google Drive. Se guarda un archivo por perfil y se conservan las ultimas copias que indiques, borrando las mas antiguas.",
+			s5Access:
+				"Quien tiene acceso. Solo tu. Los archivos residen en tu cuenta de Google y ocupan tu propio espacio de almacenamiento. El desarrollador no recibe, almacena ni puede consultar ninguna copia de esos datos, ni el contenido de tu Drive.",
+			s5Credentials:
+				"Credenciales. El token de acceso lo gestiona y almacena Google Chrome. La extension no lo guarda ni lo transmite a ningun servidor propio ni de terceros.",
+			s5Limited:
+				"Uso limitado. Los datos obtenidos a traves de las APIs de Google se usan exclusivamente para prestar esta funcion de respaldo, y su uso se ajusta a la Politica de Datos de Usuario de los Servicios de API de Google, incluidos los requisitos de Uso Limitado.",
+			s5Revoke:
+				"Como revocarlo. Puedes desconectar la cuenta desde Ajustes > Datos > Respaldo en Google Drive > Desconectar, o retirar el permiso en myaccount.google.com/permissions. Los archivos ya subidos permanecen en tu Drive hasta que los borres tu mismo.",
+			s6Title: "6. Seguridad",
+			s6P: "Aplicamos buenas practicas para reducir riesgos de acceso no autorizado, aunque ningun sistema es completamente infalible.",
+			s7Title: "7. Menores de edad",
+			s7P: "OmniManga Tracker no esta dirigida especificamente a menores de 13 anos.",
+			s8Title: "8. Cambios en esta politica",
+			s8P: "Podemos actualizar esta politica para reflejar mejoras del producto o cambios legales. La version vigente sera la publicada en esta pagina.",
+			s9Title: "9. Contacto",
+			s9P: "Si tienes preguntas sobre privacidad, contactanos en:",
+			meta: "Ultima actualizacion: 4 de agosto de 2026.",
 			back: "Volver a OmniManga Tracker",
 		},
 	},
@@ -645,15 +668,30 @@ export const messages: Record<Locale, PageMessages> = {
 			s4Title: "4. Storage and data control",
 			s4P1: "Your data is stored locally in the browser.",
 			s4P2: "You can delete local data by uninstalling the extension or clearing browser storage. You can also manage backups through JSON export/import.",
-			s5Title: "5. Security",
-			s5P: "We apply good practices to reduce unauthorized access risks, although no system is completely infallible.",
-			s6Title: "6. Children",
-			s6P: "OmniManga Tracker is not specifically directed at children under 13.",
-			s7Title: "7. Changes to this policy",
-			s7P: "We may update this policy to reflect product improvements or legal changes. The current version is the one published on this page.",
-			s8Title: "8. Contact",
-			s8P: "If you have privacy questions, contact us at:",
-			meta: "Last updated: April 29, 2026.",
+			s5Title: "5. Google Drive backup (optional)",
+			s5Intro:
+				"This feature is disabled by default and only turns on if you explicitly authorize it.",
+			s5Scope:
+				"Access scope. The extension requests Google's \"drive.file\" permission, which grants access only to files the extension itself creates. It cannot view, open, or modify any other file in your Google Drive.",
+			s5Upload:
+				"What is uploaded. A copy of your reading list (the same backup you can export manually) compressed as .json.gz, into a folder named \"OmniManga Tracker\" in your own Google Drive. One file is saved per profile and the latest copies you configure are kept, deleting older ones.",
+			s5Access:
+				"Who has access. Only you. The files live in your Google account and use your own storage quota. The developer does not receive, store, or access any copy of that data, nor the contents of your Drive.",
+			s5Credentials:
+				"Credentials. The access token is managed and stored by Google Chrome. The extension does not save it or transmit it to any first-party or third-party server.",
+			s5Limited:
+				"Limited use. Data obtained through Google APIs is used solely to provide this backup feature, and that use complies with the Google API Services User Data Policy, including the Limited Use requirements.",
+			s5Revoke:
+				"How to revoke it. You can disconnect the account from Settings > Data > Google Drive backup > Disconnect, or remove the permission at myaccount.google.com/permissions. Files already uploaded stay in your Drive until you delete them yourself.",
+			s6Title: "6. Security",
+			s6P: "We apply good practices to reduce unauthorized access risks, although no system is completely infallible.",
+			s7Title: "7. Children",
+			s7P: "OmniManga Tracker is not specifically directed at children under 13.",
+			s8Title: "8. Changes to this policy",
+			s8P: "We may update this policy to reflect product improvements or legal changes. The current version is the one published on this page.",
+			s9Title: "9. Contact",
+			s9P: "If you have privacy questions, contact us at:",
+			meta: "Last updated: August 4, 2026.",
 			back: "Back to OmniManga Tracker",
 		},
 	},
