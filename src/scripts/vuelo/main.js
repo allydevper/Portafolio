@@ -59,6 +59,7 @@ const routePaths = ['#routeFuture', '#routeWash', '#routeDone', '#routeMaskPath'
 const maskPath = $('#routeMaskPath');
 
 let samples = [], total = 1, startPt = null, endPt = null, pathKey = '';
+let lastMaskLen = -1;
 let planeW = 0, travelScale = .36;
 const flight = { len: 0, scale: 1, dir: 1, travelDir: 1, pitch: 0, intro: 0, x: 0, y: 0 };
 
@@ -117,6 +118,7 @@ function buildFlightPath() {
         samples.push({ l, x: lerp(p.x, q.x, f), y: lerp(p.y, q.y, f) });
     }
     maskPath.style.strokeDasharray = `${total} ${total}`;
+    lastMaskLen = -1; // ruta nueva: la estela se vuelve a ubicar
     startPt = pts[0];
     endPt = pts[pts.length - 1];
 }
@@ -225,7 +227,11 @@ function updateFlight() {
     heroSpot.style.pointerEvents = intro < .3 ? 'auto' : 'none';
     // En el hero vuela delante; al viajar pasa por detrás del contenido para no tapar la lectura
     planeLayer.style.zIndex = intro < .3 || (climb && climb.w > .3) ? '40' : '5';
-    maskPath.style.strokeDashoffset = total - flight.len;
+    // La estela cubre toda la página: repintarla por menos de un píxel es puro gasto (sobre todo en móvil)
+    if (Math.abs(flight.len - lastMaskLen) >= 1) {
+        lastMaskLen = flight.len;
+        maskPath.style.strokeDashoffset = total - flight.len;
+    }
     hint.style.opacity = clamp(1 - sy / 120, 0, 1);
 }
 

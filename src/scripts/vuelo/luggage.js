@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { $, clamp, lerp, reduceMotion, seeded, shadersReady } from './util.js';
+import { $, clamp, lerp, reduceMotion, seeded, shadersReady, maxDpr, uploadTextures, grainTile, tiled } from './util.js';
 
 export function initLuggage() {
     // ================= MALETA 3D =================
@@ -73,21 +73,11 @@ export function initLuggage() {
         };
 
         // Grano fino de la carcasa (se genera una vez)
-        const grain = (() => {
-            const c = document.createElement('canvas');
-            c.width = FW;
-            c.height = FH;
-            const g = c.getContext('2d');
-            g.fillStyle = '#808080';
-            g.fillRect(0, 0, FW, FH);
-            const rand = seeded(311);
-            for (let i = 0; i < 40000; i++) {
-                const v = 128 + (rand() - .5) * 46 | 0;
-                g.fillStyle = `rgb(${v},${v},${v})`;
-                g.fillRect(rand() * FW, rand() * FH, 1 + rand() * 2, 1 + rand() * 2);
-            }
-            return c;
-        })();
+        const grain = tiled(grainTile(seeded(311), 256, 1800, (g, x, y, r1, r2, r3) => {
+            const v = 128 + (r1 - .5) * 46 | 0;
+            g.fillStyle = `rgb(${v},${v},${v})`;
+            g.fillRect(x, y, 1 + r2 * 2, 1 + r3 * 2);
+        }), FW, FH);
         const scuffs = (() => {
             const rand = seeded(57);
             return [...Array(22)].map(() => {
@@ -422,15 +412,15 @@ export function initLuggage() {
             for (const mode of ['color', 'bump', 'rough']) { drawFrontInto(mode); drawBackInto(mode); }
             drawTag();
         };
-        drawAllL();
-        Promise.all(Object.entries(LOGO_FILES).map(([key, file]) => new Promise(res => {
-            const img = new Image();
-            img.onload = () => { logos[key] = img; res(); };
-            img.onerror = () => res();
-            img.src = `/images/technologies/${file}.png`;
-        }))).then(drawAllL);
-        document.fonts && Promise.all([`700 84px ${HAND_L}`, `800 82px ${MONO_L}`, `600 17px ${MONO_L}`, `700 28px ${SERIF_L}`]
-            .map(f => document.fonts.load(f))).then(drawAllL).catch(() => {});
+        const texturesReady = Promise.all([
+            ...Object.entries(LOGO_FILES).map(([key, file]) => new Promise(res => {
+                const img = new Image();
+                img.onload = () => { logos[key] = img; res(); };
+                img.onerror = () => res();
+                img.src = `/images/technologies/${file}.png`;
+            })),
+            ...(document.fonts ? [`700 84px ${HAND_L}`, `800 82px ${MONO_L}`, `600 17px ${MONO_L}`, `700 28px ${SERIF_L}`].map(f => document.fonts.load(f).catch(() => {})) : []),
+        ]).then(drawAllL);
 
         // ---------- Maleta ----------
         const tilt = new THREE.Group();
@@ -587,7 +577,10 @@ export function initLuggage() {
 
         // Shaders compilados en paralelo antes del primer frame (sin trabar el scroll)
         let compiled = false, shown = false;
-        shadersReady(lr, scene, cam).then(() => { compiled = true; });
+        Promise.all([shadersReady(lr, scene, cam), texturesReady]).then(() => {
+            compiled = true;
+            uploadTextures(lr, scene);
+        });
         renderLuggage = t => {
             if (!st.visible || !compiled) return;
             // El lienzo es más grande que la caja: al girarla, las esquinas no se cortan
@@ -595,7 +588,7 @@ export function initLuggage() {
             if (cw !== st.w || ch !== st.h) {
                 st.w = cw;
                 st.h = ch;
-                lr.setPixelRatio(Math.min(devicePixelRatio, 2));
+                lr.setPixelRatio(maxDpr());
                 lr.setSize(cw, ch, false);
                 cam.aspect = cw / ch;
                 cam.updateProjectionMatrix();

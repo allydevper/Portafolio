@@ -2,7 +2,7 @@
 // Se carga después del primer pintado (ver main.js) para que el texto aparezca sin esperar a Three.js
 import * as THREE from 'three';
 import { mergeVertices, mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { $, clamp, lerp, ease, reduceMotion, seeded, loadMascot, shadersReady } from './util.js';
+import { $, clamp, lerp, ease, reduceMotion, seeded, loadMascot, shadersReady, maxDpr, isTouch } from './util.js';
 
 export function initScene({ flight, heroSpot, getPlaneW, rebuild }) {
     // ================= AVIÓN 3D =================
@@ -22,10 +22,29 @@ export function initScene({ flight, heroSpot, getPlaneW, rebuild }) {
     sun.position.set(.6, 1, 1.2);
     scene.add(sun);
 
+    // Tamaño de los lienzos fijos. En móvil la barra del navegador cambia la altura al hacer scroll,
+    // y redimensionar borra el lienzo (parpadeo): la altura solo crece, salvo que cambie el ancho
+    let viewW = 0, viewH = 0;
+    // Alto de la pantalla con la barra del navegador escondida (100lvh), para partir ya con el tamaño máximo
+    const largeViewportH = () => {
+        const probe = document.createElement('div');
+        probe.style.cssText = 'position:fixed;top:0;width:0;height:100lvh;visibility:hidden;pointer-events:none';
+        document.body.appendChild(probe);
+        const h = probe.offsetHeight;
+        probe.remove();
+        return h;
+    };
+    const viewSize = () => {
+        const W = document.documentElement.clientWidth;
+        if (W !== viewW) { viewW = W; viewH = Math.max(innerHeight, largeViewportH()); } else viewH = Math.max(viewH, innerHeight);
+        return [viewW, viewH];
+    };
+
     function resizeRenderer() {
         if (!renderer) return;
-        const W = document.documentElement.clientWidth, H = innerHeight;
-        renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+        const [W, H] = viewSize();
+        if (camera.right === W && camera.bottom === -H) return;
+        renderer.setPixelRatio(maxDpr());
         renderer.setSize(W, H, false);
         canvas.style.width = W + 'px';
         canvas.style.height = H + 'px';
@@ -354,7 +373,8 @@ export function initScene({ flight, heroSpot, getPlaneW, rebuild }) {
 
     function renderPlane(t, dt) {
         if (!renderer) return;
-        if (camera.right !== document.documentElement.clientWidth || camera.bottom !== -innerHeight) rebuild();
+        const [vw, vh] = viewSize();
+        if (camera.right !== vw || camera.bottom !== -vh) rebuild();
         const s = flight.scale * getPlaneW() / 2.5;
         const intro = flight.intro;
 
@@ -526,11 +546,11 @@ export function initScene({ flight, heroSpot, getPlaneW, rebuild }) {
     let cloudW = 0, cloudH = 0;
     function renderClouds(t) {
         if (!cloudRenderer) return;
-        const W = document.documentElement.clientWidth, H = innerHeight;
+        const [W, H] = viewSize();
         if (W !== cloudW || H !== cloudH) {
             cloudW = W;
             cloudH = H;
-            cloudRenderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+            cloudRenderer.setPixelRatio(Math.min(devicePixelRatio, isTouch ? 1 : 1.5)); // nubes suaves: no necesitan más
             cloudRenderer.setSize(W, H, false);
             cloudCanvas.style.width = W + 'px';
             cloudCanvas.style.height = H + 'px';

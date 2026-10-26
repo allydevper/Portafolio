@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { $, clamp, lerp, ease, reduceMotion, seeded, loadMascot, shadersReady } from './util.js';
+import { $, clamp, lerp, ease, reduceMotion, seeded, loadMascot, shadersReady, maxDpr, follow, uploadTextures, grainTile, tiled } from './util.js';
 
 export function initPassport() {
     // ================= PASAPORTE 3D =================
@@ -10,6 +10,8 @@ export function initPassport() {
     let renderPassport = () => {};
     (() => {
         const box = $('#passport3d');
+        // Solo se dibuja cuando algo cambia: quieto, el pasaporte no gasta GPU
+        let needsRender = true;
         let pr = null;
         try {
             pr = new THREE.WebGLRenderer({ canvas: $('#passportCanvas'), alpha: true, antialias: true });
@@ -198,6 +200,7 @@ export function initPassport() {
             spaced(g, 'WA2015<GDS<NDC<SABRE<AMADEUS<1', 70, 1290, 5);
             gutter(g, 'right', .15);
             data.tex.needsUpdate = true;
+            needsRender = true;
         }
 
         // Página de visados
@@ -362,6 +365,7 @@ export function initPassport() {
             if (approved) printStamp(g, stamps.approved, STAMP_AT.x, STAMP_AT.y, STAMP_AT.rot, .88);
             gutter(g, 'left', .26);
             visa.tex.needsUpdate = true;
+            needsRender = true;
         }
 
         // Portada: República de Codillera — cuero azul marino con estampado de pan de oro
@@ -375,29 +379,13 @@ export function initPassport() {
         const coverColor = makePage(), coverMetal = makePage(), coverRough = makePage(), coverBump = makePage();
         coverBump.tex.colorSpace = THREE.NoColorSpace;
         // Grano de cuero: miles de "poros" grises, suavizados. Sirve de textura y de relieve
-        const leatherGrain = (() => {
-            const c = document.createElement('canvas');
-            c.width = CW;
-            c.height = CH;
-            const g = c.getContext('2d');
-            g.fillStyle = '#808080';
-            g.fillRect(0, 0, CW, CH);
-            const rand = seeded(77);
-            for (let i = 0; i < 70000; i++) {
-                const v = 128 + (rand() - .5) * 80 | 0;
-                g.fillStyle = `rgb(${v},${v},${v})`;
-                g.beginPath();
-                g.ellipse(rand() * CW, rand() * CH, 1.5 + rand() * 2.8, 1 + rand() * 2, rand() * Math.PI, 0, Math.PI * 2);
-                g.fill();
-            }
-            const out = document.createElement('canvas');
-            out.width = CW;
-            out.height = CH;
-            const og = out.getContext('2d');
-            og.filter = 'blur(1px)';
-            og.drawImage(c, 0, 0);
-            return out;
-        })();
+        const leatherGrain = tiled(grainTile(seeded(77), 256, 3200, (g, x, y, r1, r2, r3, r4) => {
+            const v = 128 + (r1 - .5) * 80 | 0;
+            g.fillStyle = `rgb(${v},${v},${v})`;
+            g.beginPath();
+            g.ellipse(x, y, 1.5 + r2 * 2.8, 1 + r3 * 2, r4 * Math.PI, 0, Math.PI * 2);
+            g.fill();
+        }), CW, CH, 1);
         coverMetal.tex.colorSpace = THREE.NoColorSpace;
         coverRough.tex.colorSpace = THREE.NoColorSpace;
 
@@ -512,14 +500,17 @@ export function initPassport() {
             }
             g.restore();
             target.tex.needsUpdate = true;
+            needsRender = true;
         }
         const drawCover = () => { drawCoverInto(coverColor, 'color'); drawCoverInto(coverMetal, 'metal'); drawCoverInto(coverRough, 'rough'); drawCoverInto(coverBump, 'bump'); };
 
         const drawAll = () => { stamps = null; drawCover(); drawDataPage(); drawVisaPage(); };
         drawAll();
-        Promise.all([`500 26px ${MONO}`, `italic 400 49px ${SERIF}`, `700 84px ${SERIF}`, `600 46px ${SERIF}`, `700 25px ${SERIF}`, `700 90px ${HAND}`, `400 33px ${SANS}`]
-            .map(f => document.fonts ? document.fonts.load(f) : Promise.resolve()))
-            .then(drawAll).catch(() => {});
+        const FONTS = [`500 26px ${MONO}`, `italic 400 49px ${SERIF}`, `700 84px ${SERIF}`, `600 46px ${SERIF}`, `700 25px ${SERIF}`, `700 90px ${HAND}`, `400 33px ${SANS}`];
+        // Si alguna fuente todavía no llegó, se vuelve a pintar cuando llegue (si ya están, no se repite el trabajo)
+        if (document.fonts && !FONTS.every(f => document.fonts.check(f))) {
+            Promise.all(FONTS.map(f => document.fonts.load(f))).then(drawAll).catch(() => {});
+        }
         loadMascot().then(img => { mascotImg = img; drawDataPage(); }).catch(() => {});
 
         // Reflejos para el pan de oro
@@ -614,23 +605,31 @@ export function initPassport() {
                 st.stampT = -1;
                 stamp.visible = false;
             }
+            needsRender = true;
         });
         new IntersectionObserver(([entry]) => { st.visible = entry.isIntersecting; }, { threshold: 0 }).observe(pCanvas);
 
         // Shaders compilados en paralelo antes del primer frame (sin trabar el scroll)
         let compiled = false, shown = false;
         shadersReady(pr, scene, cam).then(() => { compiled = true; });
+        uploadTextures(pr, scene);
+        let lastT = 0, lastPose = '';
+        // Acerca un valor a su objetivo y lo deja exacto al llegar (así el pasaporte queda quieto de verdad)
+        const approach = (v, target, k) => Math.abs(target - v) < 1e-4 ? target : v + (target - v) * k;
         renderPassport = t => {
+            const dt = lastT ? t - lastT : 16.67;
+            lastT = t;
             if (!st.visible || !compiled) return;
             // El lienzo es más grande que la caja para que la tapa no se corte al levantarse
             const cw = pCanvas.clientWidth, ch = pCanvas.clientHeight;
             if (cw !== st.cw || ch !== st.ch) {
                 st.cw = cw;
                 st.ch = ch;
-                pr.setPixelRatio(Math.min(devicePixelRatio, 2));
+                pr.setPixelRatio(maxDpr());
                 pr.setSize(cw, ch, false);
                 cam.aspect = cw / ch;
                 cam.updateProjectionMatrix();
+                needsRender = true;
             }
             const w = box.clientWidth, h = box.clientHeight;
             st.single = w / h < 1.1;
@@ -645,14 +644,14 @@ export function initPassport() {
             }
 
             // Apertura de la tapa (más pausada) y desplazamiento para centrar la libreta
-            st.open += (st.openTarget - st.open) * (reduceMotion ? 1 : .044);
+            st.open = approach(st.open, st.openTarget, reduceMotion ? 1 : follow(.044, dt));
             const o = ease(clamp(st.open, 0, 1));
             hinge.rotation.y = -(Math.PI - .05) * o;
             book.position.x = lerp(-CW3 / 2, 0, o);
 
             // Inclinación base + mouse
-            st.rx += (st.tx - st.rx) * .08;
-            st.ry += (st.ty - st.ry) * .08;
+            st.rx = approach(st.rx, st.tx, follow(.08, dt));
+            st.ry = approach(st.ry, st.ty, follow(.08, dt));
             tilt.rotation.set(lerp(-.26, .05, o) + st.rx, lerp(-.38, 0, o) + st.ry, lerp(-.05, -.01, o));
 
             // Sello: cuando está abierto (en móvil, al mirar la página de visados)
@@ -661,6 +660,7 @@ export function initPassport() {
                 else st.stampT = t;
             }
             if (st.stampT >= 0) {
+                needsRender = true; // el sello se mueve en cada frame (y su último frame también se dibuja)
                 // Tiempos (s): espera · baja y se detiene encima · golpe · presiona · se retira
                 const k = (t - st.stampT) / 1000 - .4;
                 const T_HOVER = .88, T_HIT = 1.08, T_HOLD = 1.6, T_END = 2.56;
@@ -705,10 +705,14 @@ export function initPassport() {
             const needW = st.single ? 1.1 : 2.22, needH = st.single ? 1.45 : 1.58;
             const d = ch / (2 * tanH) * Math.max(needH / h, needW / w);
             const targetX = st.single && st.open > .5 ? st.focus * .5 : 0;
-            st.camX += (targetX - st.camX) * .08;
+            st.camX = approach(st.camX, targetX, follow(.08, dt));
             cam.position.set(st.camX, -.05, d);
             cam.lookAt(st.camX, -.03, 0);
 
+            const pose = `${st.open},${st.rx},${st.ry},${st.camX},${d}`;
+            if (!needsRender && pose === lastPose && st.stampT < 0) return;
+            lastPose = pose;
+            needsRender = false;
             pr.render(scene, cam);
             if (!shown) {
                 shown = true;

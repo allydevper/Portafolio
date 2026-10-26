@@ -634,3 +634,23 @@ html.dark :is(#passport3d, #luggage3d)::before {
     #passport3d::before, #luggage3d::before { animation: none; }
     #passportCanvas, #luggageCanvas { transform: none; }
 }
+
+/* En pantallas táctiles, el drop-shadow en vivo sobre los lienzos 3D se recalcula en cada frame (caro y con
+   parpadeos en móvil): se reemplaza por una sombra fija debajo del objeto */
+@media (pointer: coarse) {
+    #passportCanvas, #luggageCanvas { filter: none !important; }
+    #passport3d::after, #luggage3d::after {
+        content: '';
+        position: absolute;
+        left: 22%;
+        right: 22%;
+        bottom: 3%;
+        height: 7%;
+        border-radius: 50%;
+        background: radial-gradient(closest-side, rgba(15, 23, 42, .2), transparent);
+        opacity: 0;
+        transition: opacity .7s ease;
+    }
+    #luggage3d::after { left: 26%; right: 26%; bottom: -1%; }
+    :is(#passport3d, #luggage3d).is-ready::after { opacity: 1; }
+}
