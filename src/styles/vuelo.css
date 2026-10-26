@@ -608,7 +608,7 @@ html.dark #climbChart {
 #passport3d::before, #luggage3d::before {
     content: '';
     position: absolute;
-    inset: 16% 26%;
+    inset: 9% 33%; /* la tapa cerrada, antes de abrirse */
     border-radius: 22px;
     background: linear-gradient(100deg, rgba(43, 108, 176, .05) 35%, rgba(43, 108, 176, .12) 50%, rgba(43, 108, 176, .05) 65%) 0 0 / 300% 100%;
     animation: sceneShimmer 1.8s linear infinite;
@@ -616,7 +616,6 @@ html.dark #climbChart {
 }
 #luggage3d::before { inset: 6% 24%; border-radius: 30px; }
 @media (min-width: 640px) {
-    #passport3d::before { inset: 9% 33%; }   /* la tapa cerrada, antes de abrirse */
     #luggage3d::before { inset: 5% 34%; }
 }
 html.dark :is(#passport3d, #luggage3d)::before {
@@ -638,21 +637,20 @@ html.dark :is(#passport3d, #luggage3d)::before {
 /* En pantallas táctiles, el drop-shadow en vivo sobre los lienzos 3D se recalcula en cada frame (caro y con
    parpadeos en móvil): se reemplaza por una sombra fija debajo del objeto */
 @media (pointer: coarse) {
-    #passportCanvas, #luggageCanvas { filter: none !important; }
-    #passport3d::after, #luggage3d::after {
+    #luggageCanvas { filter: none !important; }
+    #luggage3d::after {
         content: '';
         position: absolute;
-        left: 22%;
-        right: 22%;
-        bottom: 3%;
+        left: 26%;
+        right: 26%;
+        bottom: -1%;
         height: 7%;
         border-radius: 50%;
         background: radial-gradient(closest-side, rgba(15, 23, 42, .2), transparent);
         opacity: 0;
         transition: opacity .7s ease;
     }
-    #luggage3d::after { left: 26%; right: 26%; bottom: -1%; }
-    :is(#passport3d, #luggage3d).is-ready::after { opacity: 1; }
+    #luggage3d.is-ready::after { opacity: 1; }
 }
 
 /* En móvil no hay avión: tampoco su lienzo ni la estela punteada que recorre la página */

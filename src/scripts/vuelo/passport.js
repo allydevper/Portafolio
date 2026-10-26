@@ -588,9 +588,7 @@ export function initPassport() {
 
         // ---------- Interacción ----------
         const pCanvas = $('#passportCanvas');
-        const st = { open: 0, openTarget: 0, camX: 0, rx: 0, ry: 0, tx: 0, ty: 0, visible: false, stampT: -1, cw: 0, ch: 0, autoOpened: false, zoom: 0, zoomTarget: 0, zoomSide: 1 };
-        // Pantallas angostas: la libreta completa, y al tocar una página la cámara se acerca a ella
-        const narrow = matchMedia('(max-width: 639px)');
+        const st = { open: 0, openTarget: 0, camX: 0, rx: 0, ry: 0, tx: 0, ty: 0, visible: false, stampT: -1, cw: 0, ch: 0, autoOpened: false };
         box.addEventListener('pointermove', e => {
             const r = box.getBoundingClientRect();
             st.ty = ((e.clientX - r.left) / r.width - .5) * .1;
@@ -598,20 +596,10 @@ export function initPassport() {
         });
         box.addEventListener('pointerleave', () => { st.tx = st.ty = 0; });
         // Escritorio: clic abre / cierra para volver a ver la portada. Móvil: tocar cambia de página
-        box.addEventListener('click', e => {
+        box.addEventListener('click', () => {
             st.autoOpened = true;
             needsRender = true;
-            if (narrow.matches && st.openTarget === 1) {
-                if (st.zoomTarget) st.zoomTarget = 0;
-                else {
-                    const r = box.getBoundingClientRect();
-                    st.zoomSide = e.clientX < r.left + r.width / 2 ? -1 : 1;
-                    st.zoomTarget = 1;
-                }
-                return;
-            }
             st.openTarget = st.openTarget ? 0 : 1;
-            st.zoomTarget = 0;
             // Si se cierra con el sello en camino, se cancela; si aún no estampó, volverá a caer al reabrir
             if (st.openTarget === 0 && st.stampT >= 0) {
                 st.stampT = -1;
@@ -713,16 +701,13 @@ export function initPassport() {
 
             // Cámara: encuadra la libreta dentro de la caja (el lienzo sobra alrededor)
             const tanH = Math.tan(THREE.MathUtils.degToRad(cam.fov / 2));
-            // Encuadre: la libreta completa (un poco más justa en móvil) o, acercada, una sola página
-            st.zoom = approach(st.zoom, st.zoomTarget, reduceMotion ? 1 : follow(.08, dt));
-            const z = ease(st.zoom);
-            const needW = lerp(narrow.matches ? 2.12 : 2.22, 1.1, z), needH = lerp(1.58, 1.45, z);
+            const needW = 2.22, needH = 1.58;
             const d = ch / (2 * tanH) * Math.max(needH / h, needW / w);
-            st.camX = approach(st.camX, st.zoomSide * .5 * z, follow(.08, dt));
+            st.camX = approach(st.camX, 0, follow(.08, dt));
             cam.position.set(st.camX, -.05, d);
             cam.lookAt(st.camX, -.03, 0);
 
-            const pose = `${st.open},${st.rx},${st.ry},${st.camX},${d},${st.zoom}`;
+            const pose = `${st.open},${st.rx},${st.ry},${st.camX},${d}`;
             if (!needsRender && pose === lastPose && st.stampT < 0) return;
             lastPose = pose;
             needsRender = false;
