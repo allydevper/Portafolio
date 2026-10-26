@@ -617,8 +617,11 @@ export function initPassport() {
         });
         new IntersectionObserver(([entry]) => { st.visible = entry.isIntersecting; }, { threshold: 0 }).observe(pCanvas);
 
+        // Shaders compilados en paralelo antes del primer frame (sin trabar el scroll)
+        let compiled = false;
+        pr.compileAsync(scene, cam).then(() => { compiled = true; });
         renderPassport = t => {
-            if (!st.visible) return;
+            if (!st.visible || !compiled) return;
             // El lienzo es más grande que la caja para que la tapa no se corte al levantarse
             const cw = pCanvas.clientWidth, ch = pCanvas.clientHeight;
             if (cw !== st.cw || ch !== st.ch) {

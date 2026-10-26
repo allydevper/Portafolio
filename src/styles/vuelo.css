@@ -49,7 +49,11 @@ section { scroll-margin-top: 80px; }
     inset: 0;
     z-index: 40;
     pointer-events: none;
+    /* La escena 3D se carga después del texto: entra con un fundido en vez de aparecer de golpe */
+    opacity: 0;
+    transition: opacity .6s ease;
 }
+.scene-ready #planeCanvas { opacity: 1; }
 /* Arrastrar gira el avión; pan-y deja hacer scroll vertical en móvil */
 #heroPlaneSpot { cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
 #heroPlaneSpot.dragging { cursor: grabbing; }
@@ -69,8 +73,10 @@ section { scroll-margin-top: 80px; }
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    opacity: .6; /* discretas: acompañan sin llamar la atención */
+    opacity: 0;
+    transition: opacity 1.2s ease;
 }
+.scene-ready #cloudCanvas { opacity: .6; } /* discretas: acompañan sin llamar la atención */
 
 /* ---------- Tarjeta de embarque ---------- */
 /* La sombra va en un contenedor con drop-shadow, que respeta los agujeros de la máscara */
@@ -578,7 +584,7 @@ html.dark .hover\:bg-slate-50:hover { background-color: #1E2C47; }
 html.dark .hover\:bg-sky-600:hover { background-color: #38BDF8; color: #0E1626; }
 
 /* Nubes de luna, ruta y gráfico de ascenso */
-html.dark #cloudCanvas { opacity: .5; }
+html.dark.scene-ready #cloudCanvas { opacity: .5; }
 html.dark #routeFuture { stroke: #7CC4E8; stroke-opacity: .3; }
 html.dark #routeDone { stroke: #9DCFF5; stroke-opacity: .75; }
 html.dark .route-track { background: repeating-linear-gradient(180deg, rgba(125, 196, 232, .4) 0 10px, transparent 10px 18px); }

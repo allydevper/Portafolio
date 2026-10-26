@@ -585,8 +585,11 @@ export function initLuggage() {
         box.addEventListener('pointercancel', endSpin);
         tilt.rotation.order = 'YXZ';
 
+        // Shaders compilados en paralelo antes del primer frame (sin trabar el scroll)
+        let compiled = false;
+        lr.compileAsync(scene, cam).then(() => { compiled = true; });
         renderLuggage = t => {
-            if (!st.visible) return;
+            if (!st.visible || !compiled) return;
             // El lienzo es más grande que la caja: al girarla, las esquinas no se cortan
             const cw = cv.clientWidth, ch = cv.clientHeight;
             if (cw !== st.w || ch !== st.h) {
