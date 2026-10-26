@@ -1,6 +1,6 @@
 ---
 // Iconos de Lucide renderizados en el servidor: SVG en línea, sin JavaScript en el navegador
-import { ArrowRight, ArrowUpRight, Github, Linkedin, Plane, Send } from 'lucide';
+import { ArrowRight, ArrowUpRight, Github, Linkedin, Moon, Plane, Send, Sun } from 'lucide';
 
 type IconNode = [string, Record<string, string | number>, [string, Record<string, string | number>][]];
 const ICONS: Record<string, IconNode> = {
@@ -8,8 +8,10 @@ const ICONS: Record<string, IconNode> = {
     'arrow-up-right': ArrowUpRight as unknown as IconNode,
     github: Github as unknown as IconNode,
     linkedin: Linkedin as unknown as IconNode,
+    moon: Moon as unknown as IconNode,
     plane: Plane as unknown as IconNode,
     send: Send as unknown as IconNode,
+    sun: Sun as unknown as IconNode,
 };
 
 interface Props {

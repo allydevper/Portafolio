@@ -717,8 +717,16 @@ const clouds = CLOUDS.map(([x, y, size, depth], i) => {
     body.rotation.x = .18;
     body.scale.setScalar(size * .85 / 1.9);
     cloudScene.add(body);
-    return { obj: body, x, y, size, depth, phase: i * 1.7 };
+    return { obj: body, outline, x, y, size, depth, phase: i * 1.7 };
 });
+// De noche las nubes toman el azul de la luna (más oscuras mientras más lejos)
+function setCloudTheme(dark) {
+    for (const c of clouds) {
+        const far = 1 - c.depth;
+        c.obj.material.color.set(dark ? 0x4a5d80 : 0xffffff).lerp(dark ? new THREE.Color(0x2b3a57) : paper, far * .7);
+        c.outline.material.uniforms.color.value.set(dark ? 0x6880a8 : 0xcde0ee).lerp(new THREE.Color(dark ? 0x34456a : 0xeaf1f6), far);
+    }
+}
 
 const wrapMod = (a, n) => ((a % n) + n) % n;
 let cloudW = 0, cloudH = 0;
@@ -1052,6 +1060,31 @@ function updateTear() {
     bpStamp.style.opacity = s * .85;
     bpStamp.style.transform = `rotate(-12deg) scale(${lerp(1.8, 1, ease(s))})`;
 }
+
+// ================= MODO OSCURO (vuelo nocturno) =================
+// El tema inicial ya lo aplicó el layout antes de pintar; aquí se sincroniza lo demás y se cambia con el botón
+const themeToggle = $('#themeToggle');
+const themeColor = document.querySelector('meta[name="theme-color"]');
+const systemDark = matchMedia('(prefers-color-scheme: dark)');
+function applyTheme(dark) {
+    document.documentElement.classList.toggle('dark', dark);
+    themeColor?.setAttribute('content', dark ? '#0E1626' : '#FBF9F5');
+    themeToggle.setAttribute('aria-label', dark ? 'Activar modo claro' : 'Activar modo oscuro');
+    themeToggle.title = dark ? 'Vuelo diurno' : 'Vuelo nocturno';
+    setCloudTheme(dark);
+}
+applyTheme(document.documentElement.classList.contains('dark'));
+themeToggle.addEventListener('click', () => {
+    const dark = !document.documentElement.classList.contains('dark');
+    try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
+    applyTheme(dark);
+});
+// Si nunca eligió, sigue al sistema
+systemDark.addEventListener('change', e => {
+    let saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (err) {}
+    if (!saved) applyTheme(e.matches);
+});
 
 // ================= INICIO =================
 renderChips();

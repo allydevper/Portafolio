@@ -21,9 +21,16 @@ import Icon from './Icon.astro';
             <a href="#escalas" class="hover:text-sky-600 transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-sky-500 hover:after:w-full after:transition-all">Experiencia</a>
         </nav>
 
-        <a href="#aterrizaje" aria-label="Contacto" class="shrink-0 bg-slate-900 text-white p-3 sm:px-5 sm:py-2.5 rounded-full font-medium hover:bg-sky-600 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 flex items-center gap-2">
-            <Icon name="send" class="w-4 h-4" />
-            <span class="hidden sm:inline">Contacto</span>
-        </a>
+        <div class="flex items-center gap-2 shrink-0">
+            <!-- Vuelo diurno / nocturno -->
+            <button id="themeToggle" type="button" aria-label="Activar modo oscuro" title="Vuelo nocturno" class="theme-toggle w-11 h-11 rounded-full border border-slate-200 bg-white/80 text-slate-600 hover:text-sky-600 flex items-center justify-center transition-colors">
+                <Icon name="moon" class="icon-moon w-[18px] h-[18px]" />
+                <Icon name="sun" class="icon-sun w-[18px] h-[18px]" />
+            </button>
+            <a href="#aterrizaje" aria-label="Contacto" class="shrink-0 bg-slate-900 text-white p-3 sm:px-5 sm:py-2.5 rounded-full font-medium hover:bg-sky-600 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 flex items-center gap-2">
+                <Icon name="send" class="w-4 h-4" />
+                <span class="hidden sm:inline">Contacto</span>
+            </a>
+        </div>
     </div>
 </header>
