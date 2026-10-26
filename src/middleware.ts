@@ -3,6 +3,9 @@ import { verifyRequestOrigin } from "lucia";
 import { defineMiddleware } from "astro:middleware";
 
 export const onRequest = defineMiddleware(async (context, next) => {
+    // Las páginas estáticas (como el home) se generan en el build: no hay sesión que validar
+    if (context.isPrerendered) return next();
+
     if (context.request.method !== "GET") {
         const originHeader = context.request.headers.get("Origin");
         const hostHeader = context.request.headers.get("Host");

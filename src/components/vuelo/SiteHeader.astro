@@ -1,0 +1,29 @@
+---
+import Icon from './Icon.astro';
+---
+
+<!-- Navbar -->
+<header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/70 border-b border-amber-900/5 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <a href="#" class="flex items-center gap-3 group min-w-0">
+            <div class="shrink-0 w-10 h-10 rounded-full bg-sky-100 flex items-center justify-center text-sky-600 transition-transform group-hover:-rotate-12">
+                <img src="/images/wilmer-mascot.svg" alt="" class="w-6 h-6">
+            </div>
+            <div>
+                <span class="font-serif font-bold text-xl tracking-wide text-slate-800 block leading-none">Wilmer Alama</span>
+                <span class="font-hand text-sm text-sky-700 tracking-wider">Vuelo WA-2015 · Travel Tech</span>
+            </div>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-8 font-medium text-slate-600">
+            <a href="#seguridad" class="hover:text-sky-600 transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-sky-500 hover:after:w-full after:transition-all">Pasaporte</a>
+            <a href="#ventanilla" class="hover:text-sky-600 transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-sky-500 hover:after:w-full after:transition-all">Proyectos</a>
+            <a href="#escalas" class="hover:text-sky-600 transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-sky-500 hover:after:w-full after:transition-all">Experiencia</a>
+        </nav>
+
+        <a href="#aterrizaje" aria-label="Contacto" class="shrink-0 bg-slate-900 text-white p-3 sm:px-5 sm:py-2.5 rounded-full font-medium hover:bg-sky-600 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 flex items-center gap-2">
+            <Icon name="send" class="w-4 h-4" />
+            <span class="hidden sm:inline">Contacto</span>
+        </a>
+    </div>
+</header>

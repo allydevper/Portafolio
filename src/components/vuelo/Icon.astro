@@ -1,0 +1,26 @@
+---
+// Iconos de Lucide renderizados en el servidor: SVG en línea, sin JavaScript en el navegador
+import { ArrowRight, ArrowUpRight, Github, Linkedin, Plane, Send } from 'lucide';
+
+type IconNode = [string, Record<string, string | number>, [string, Record<string, string | number>][]];
+const ICONS: Record<string, IconNode> = {
+    'arrow-right': ArrowRight as unknown as IconNode,
+    'arrow-up-right': ArrowUpRight as unknown as IconNode,
+    github: Github as unknown as IconNode,
+    linkedin: Linkedin as unknown as IconNode,
+    plane: Plane as unknown as IconNode,
+    send: Send as unknown as IconNode,
+};
+
+interface Props {
+    name: keyof typeof ICONS;
+    class?: string;
+}
+
+const { name, class: className = '' } = Astro.props;
+const [, attrs, children] = ICONS[name];
+const toAttrs = (o: Record<string, string | number>) => Object.entries(o).map(([k, v]) => `${k}="${v}"`).join(' ');
+const inner = children.map(([tag, a]) => `<${tag} ${toAttrs(a)}/>`).join('');
+---
+
+<svg {...attrs} class={`lucide lucide-${name} ${className}`} aria-hidden="true" set:html={inner} />

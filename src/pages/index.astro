@@ -1,9 +1,30 @@
 ---
-import TerminalHome from "../components/terminal/TerminalHome.astro";
-import Layout from "../layouts/Layout.astro";
-import "../styles/terminal.css";
+// Home "Vuelo WA-2015": se genera como HTML estático en el build
+export const prerender = true;
+
+import VueloLayout from "../layouts/VueloLayout.astro";
+import FlightLayer from "../components/vuelo/FlightLayer.astro";
+import SiteHeader from "../components/vuelo/SiteHeader.astro";
+import Hero from "../components/vuelo/Hero.astro";
+import Seguridad from "../components/vuelo/Seguridad.astro";
+import Ruta from "../components/vuelo/Ruta.astro";
+import Escalas from "../components/vuelo/Escalas.astro";
+import Aterrizaje from "../components/vuelo/Aterrizaje.astro";
 ---
 
-<Layout variant="terminal" lang="es" title="Wilmer Alama · Portafolio">
-	<TerminalHome />
-</Layout>
+<VueloLayout
+	title="Wilmer Alama · Vuelo WA-2015"
+	description="Wilmer Alama · Sr. Software Engineer en Travel Tech. Integraciones con Sabre, Amadeus y NDC desde Lima, Perú."
+>
+	<FlightLayer />
+	<SiteHeader />
+	<Hero />
+	<Seguridad />
+	<Ruta />
+	<Escalas />
+	<Aterrizaje />
+</VueloLayout>
+
+<script>
+	import "../scripts/vuelo/main.js";
+</script>

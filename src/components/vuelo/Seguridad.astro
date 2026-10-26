@@ -1,0 +1,93 @@
+<!-- ============ ESCALA 01: CONTROL DE SEGURIDAD ============ -->
+<section id="seguridad" class="relative py-24 px-6">
+    <span data-waypoint data-wx="0.86" class="absolute top-10 left-0 w-px h-px"></span>
+
+    <div class="max-w-7xl mx-auto relative z-10">
+        <div class="max-w-2xl">
+            <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-slate-400 halo">Escala 01 — Control de seguridad</p>
+            <h2 class="font-serif text-3xl md:text-5xl font-bold text-slate-900 mt-3 halo">Documentos y equipaje, por favor.</h2>
+            <p class="text-slate-600 mt-4 halo">Especialista en integrar agencias de viajes con sistemas GDS. Aquí está mi pasaporte y lo que llevo en la maleta.</p>
+        </div>
+
+        <!-- Pasaporte 3D (Three.js). La versión HTML de abajo queda para lectores de pantalla y como respaldo sin WebGL -->
+        <div id="passport" class="relative mt-10 max-w-5xl mx-auto">
+        <div id="passport3d" class="relative w-full aspect-[4/5] sm:aspect-[16/10] cursor-pointer select-none" aria-hidden="true">
+            <canvas id="passportCanvas" class="absolute pointer-events-none" style="inset: -22% -10%; width: 120%; height: 144%; z-index: 20; filter: drop-shadow(0 18px 22px rgba(15, 23, 42, .16)) drop-shadow(0 2px 3px rgba(15, 23, 42, .12))"></canvas>
+        </div>
+        <p id="passportHint" class="text-center font-hand text-xl text-slate-500 -mt-2 halo">
+            <span class="hidden sm:inline">clic para cerrar o abrir el pasaporte</span>
+            <span class="sm:hidden">toca para pasar de página</span>
+        </p>
+        <div id="passportFlat" class="sr-only mt-6 max-w-4xl mx-auto grid md:grid-cols-2 rounded-[22px] overflow-hidden border border-slate-300/60 shadow-2xl shadow-slate-300/50">
+            <div class="passport-page p-6 md:p-8 border-b md:border-b-0 border-slate-300/70">
+                <div class="flex justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500">
+                    <span>República de Vuelos</span>
+                    <span>Pasaporte</span>
+                </div>
+                <div class="flex gap-5 mt-6">
+                    <div class="w-28 h-36 rounded-md overflow-hidden border-2 border-white shadow-md shrink-0 rotate-[-2deg] bg-sky-100 flex items-center justify-center">
+                        <img src="/images/wilmer-mascot.svg" alt="Avatar pixel art de Wilmer Alama" class="w-24 h-24 object-contain" style="image-rendering: pixelated">
+                    </div>
+                    <dl class="font-mono text-[11px] space-y-2 min-w-0">
+                        <div><dt class="text-slate-400 uppercase tracking-wider text-[9px]">Apellidos / Nombres</dt><dd class="text-slate-800 font-medium">ALAMA, WILMER</dd></div>
+                        <div><dt class="text-slate-400 uppercase tracking-wider text-[9px]">Profesión</dt><dd class="text-slate-800">Sr. Software Engineer</dd></div>
+                        <div><dt class="text-slate-400 uppercase tracking-wider text-[9px]">Base</dt><dd class="text-slate-800">Lima, Perú · UTC-5</dd></div>
+                        <div><dt class="text-slate-400 uppercase tracking-wider text-[9px]">En travel desde</dt><dd class="text-slate-800">2015</dd></div>
+                        <div><dt class="text-slate-400 uppercase tracking-wider text-[9px]">Modalidad</dt><dd class="text-slate-800">Remoto</dd></div>
+                    </dl>
+                </div>
+                <p class="font-hand text-3xl text-slate-700 mt-4 -rotate-2">Wilmer Alama</p>
+                <div class="mt-4 font-mono text-[11px] tracking-[0.18em] text-slate-500 break-all leading-relaxed">
+                    P&lt;RDV&lt;ALAMA&lt;&lt;WILMER&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>WA2015&lt;GDS&lt;NDC&lt;SABRE&lt;AMADEUS&lt;&lt;10
+                </div>
+            </div>
+
+            <div class="passport-page p-6 md:p-8 relative min-h-[360px]">
+                <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500">Visados · Observaciones</p>
+                <p class="font-serif italic text-lg text-slate-700 mt-4 leading-snug">
+                    “Desde 2015 trabajo en el lado menos glamoroso pero más crítico de la industria: las integraciones que aseguran la emisión de tarifas y la disponibilidad de vuelos.”
+                </p>
+                <p class="text-sm text-slate-600 mt-3">Conectores EDIFACT y NDC, sincronización de PNR, motores de búsqueda de tarifas con caché distribuido y front-end para Sabre 360 y Amadeus.</p>
+                <div class="relative h-40 mt-5">
+                    <div class="visa-stamp w-24 h-24 rounded-full border-[3px] border-rose-500/70 text-rose-600/80 flex flex-col items-center justify-center text-[11px] font-semibold" style="left:0; top:4px; transform:rotate(-14deg)">
+                        <span>Sabre</span><span class="text-[9px]">✦ 360 ✦</span><span class="text-[9px]">NDC</span>
+                    </div>
+                    <div class="visa-stamp px-3 py-2 border-2 border-dashed border-sky-600/70 text-sky-700/80 text-[11px] font-semibold" style="left:36%; top:0; transform:rotate(9deg)">
+                        Amadeus<br><span class="text-[9px]">Emisión · PNR</span>
+                    </div>
+                    <div class="visa-stamp px-3 py-2 rounded-lg border-[3px] border-emerald-600/60 text-emerald-700/80 text-[11px] font-semibold" style="left:24%; bottom:2px; transform:rotate(-5deg)">
+                        IATA BSP<br><span class="text-[9px]">Void · Refund</span>
+                    </div>
+                    <div class="visa-stamp px-3 py-1.5 rounded-full border-2 border-amber-600/60 text-amber-700/80 text-[10px] font-semibold" style="right:0; top:46px; transform:rotate(14deg)">
+                        EDIFACT
+                    </div>
+                </div>
+                <div id="approvedStamp" class="approved-stamp">APROBADO</div>
+            </div>
+
+            <div class="hidden md:block absolute inset-y-0 left-1/2 w-12 -translate-x-1/2 bg-linear-to-r from-transparent via-slate-900/10 to-transparent pointer-events-none"></div>
+        </div>
+        </div>
+
+        <!-- Equipaje de mano: maleta 3D con el stack en stickers -->
+        <div class="relative text-center mt-20">
+            <span data-waypoint data-wx="0.07" class="absolute top-1/2 left-0 w-px h-px"></span>
+            <p class="font-hand text-3xl text-sky-600 halo">Ahora, el equipaje de mano ↓</p>
+            <p class="text-sm text-slate-500 mt-1 halo">Cada sticker es parte del stack con el que viajo · arrástrala para girarla.</p>
+        </div>
+        <div id="luggage" class="relative max-w-3xl mx-auto mt-12">
+            <div id="luggage3d" class="relative w-full aspect-[4/5] sm:aspect-[5/4]" aria-hidden="true">
+                <canvas id="luggageCanvas" class="absolute pointer-events-none" style="inset: -20% -30%; width: 160%; height: 140%; z-index: 20; filter: drop-shadow(0 20px 22px rgba(15, 23, 42, .16)) drop-shadow(0 2px 3px rgba(15, 23, 42, .1))"></canvas>
+            </div>
+            <ul id="luggageList" class="sr-only mt-4 grid sm:grid-cols-2 gap-2 text-sm text-slate-700">
+                <li>Java · Spring Boot · Maven</li>
+                <li>C# · .NET · SQL Server · ASP.NET</li>
+                <li>TypeScript · React · Angular · Tailwind</li>
+                <li>Node.js · PHP</li>
+                <li>Docker</li>
+                <li>PostgreSQL · MySQL</li>
+                <li>Sabre · Amadeus · NDC</li>
+            </ul>
+        </div>
+    </div>
+</section>

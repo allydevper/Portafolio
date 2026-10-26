@@ -1,0 +1,91 @@
+---
+import Icon from './Icon.astro';
+---
+
+<!-- ============ ATERRIZAJE: POSTAL ============ -->
+<section id="aterrizaje" class="relative pt-24 pb-10 px-6">
+    <div class="max-w-5xl mx-auto relative z-10">
+        <div class="text-center max-w-2xl mx-auto">
+            <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-slate-400 halo">Aterrizaje — Puerta de llegada</p>
+            <h2 class="font-serif text-3xl md:text-5xl font-bold text-slate-900 mt-3 halo">¿Tienes una integración complicada en mente?</h2>
+            <p class="text-slate-600 mt-4 halo">Si tu proyecto involucra GDS, NDC, mid-office o cualquier sistema de viajes que necesite hablar con otros, mándame una postal.</p>
+        </div>
+
+        <div class="relative mt-14">
+            <div id="postcardWrap" class="postcard-wrap airmail -rotate-1">
+                <form id="postcardForm" class="postcard grid md:grid-cols-2 relative" novalidate>
+                    <div class="p-6 md:p-8 md:border-r border-slate-200 flex flex-col">
+                        <p class="font-hand text-3xl text-slate-700">Hola Wilmer,</p>
+                        <textarea id="pcMessage" required rows="8" maxlength="600" placeholder="Te escribo porque necesitamos conectar…" class="postcard-lines flex-1 w-full mt-2 bg-transparent outline-none resize-none font-hand text-2xl text-slate-800 placeholder:text-slate-400"></textarea>
+                        <p class="flex justify-between items-center mt-3">
+                            <span class="font-hand text-xl text-slate-400">— desde donde estés</span>
+                            <span id="pcCount" class="pc-count">0 / 600</span>
+                        </p>
+                    </div>
+                    <div class="p-6 md:p-8 relative flex flex-col">
+                        <span class="pc-divider hidden md:block" aria-hidden="true">TARJETA POSTAL · POSTCARD · REPÚBLICA DE VUELOS</span>
+                        <div class="flex justify-end items-start">
+                            <div class="stamp">
+                                <div class="stamp-face">
+                                    <span class="val"><span>PERÚ</span><span>S/5</span></span>
+                                    <img src="/images/wilmer-mascot.svg" alt="" class="w-14 h-14 object-contain" aria-hidden="true">
+                                    <span>WA-2015</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="postmark" class="postmark">
+                            <svg viewBox="0 0 130 44" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                                <path d="M2 6 q8 -6 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0"/>
+                                <path d="M2 17 q8 -6 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0"/>
+                                <path d="M2 28 q8 -6 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0"/>
+                                <path d="M2 39 q8 -6 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0"/>
+                            </svg>
+                            <span>LIM · PE</span>
+                            <span id="postmarkDate" class="text-[10px] mt-1"></span>
+                            <span class="text-[9px] mt-1">WA-2015</span>
+                        </div>
+
+                        <div class="space-y-4 mt-8">
+                            <label class="block">
+                                <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-400">› De</span>
+                                <input id="pcName" type="text" required placeholder="Tu nombre" class="field-line text-slate-800">
+                            </label>
+                            <label class="block">
+                                <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-400">› Responder a</span>
+                                <input id="pcEmail" type="email" required placeholder="tu@correo.com" class="field-line text-slate-800">
+                            </label>
+                            <div>
+                                <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-400">Para</span>
+                                <p class="postcard-lines font-hand text-2xl text-slate-700">Wilmer Alama<br>Lima — Perú · remoto</p>
+                                <div class="zip" aria-label="Código postal 15001"><span>1</span><span>5</span><span>0</span><span>0</span><span>1</span></div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="mt-6 self-start bg-sky-600 hover:bg-sky-700 text-white font-medium px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 flex items-center gap-2">
+                            <Icon name="send" class="w-4 h-4" />
+                            <span>Enviar postal</span>
+                        </button>
+                        <p id="pcError" class="text-xs text-rose-600 mt-2 hidden">Completa tu nombre, un correo válido y el mensaje.</p>
+                    </div>
+                </form>
+            </div>
+
+            <div id="postcardDone" class="hidden text-center py-16">
+                <p id="pcDoneTitle" class="font-hand text-4xl text-sky-600">¡Postal en camino! ✈</p>
+                <p id="pcDoneText" class="text-slate-600 mt-2">Respondo en menos de 24 h.</p>
+                <button id="pcAgain" class="mt-6 text-sm font-medium text-slate-600 hover:text-sky-600 underline underline-offset-4">Escribir otra postal</button>
+            </div>
+        </div>
+
+        <footer class="relative pt-40 text-center">
+            <!-- Punto de aterrizaje del avión: con espacio propio, lejos de la postal -->
+            <span data-waypoint class="absolute top-[84px] left-1/2 w-px h-px"></span>
+            <div class="flex justify-center gap-6 text-slate-400">
+                <a href="https://www.linkedin.com/in/wilmer-alama/" target="_blank" rel="noopener" aria-label="LinkedIn" class="hover:text-sky-600 transition-colors"><Icon name="linkedin" class="w-5 h-5" /></a>
+                <a href="https://github.com/allydevper" target="_blank" rel="noopener" aria-label="GitHub" class="hover:text-sky-600 transition-colors"><Icon name="github" class="w-5 h-5" /></a>
+            </div>
+            <p class="font-hand text-xl text-slate-500 mt-6 halo">Fin del trayecto. Gracias por volar con nosotros.</p>
+            <p class="text-xs text-slate-400 pt-2 font-mono halo">© 2026 Wilmer Alama · Lima, Perú</p>
+        </footer>
+    </div>
+</section>

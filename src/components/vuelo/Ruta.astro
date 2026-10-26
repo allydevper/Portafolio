@@ -1,0 +1,30 @@
+---
+import Icon from './Icon.astro';
+---
+
+<!-- ============ ESCALA 02: VENTANILLA (PROYECTOS) ============ -->
+<section id="ventanilla" class="relative py-24 px-6">
+    <span data-waypoint data-wx="0.9" class="absolute top-8 left-0 w-px h-px"></span>
+
+    <div class="max-w-7xl mx-auto relative z-10">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div class="max-w-2xl">
+                <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-slate-400 halo">Escala 02 — Ruta de vuelo</p>
+                <h2 class="font-serif text-3xl md:text-5xl font-bold text-slate-900 mt-3 halo">Escala por escala, de 2018 a hoy</h2>
+                <p class="text-slate-600 mt-4 halo">Seis proyectos, seis escalas. El último todavía está en vuelo.</p>
+            </div>
+            <div class="flex flex-col items-start md:items-end gap-3">
+                <div class="destino-chips flex flex-wrap gap-2"></div>
+            </div>
+        </div>
+
+        <div id="route" class="route mt-14">
+            <div class="route-track" aria-hidden="true"><span class="route-progress"></span><Icon name="plane" class="route-plane" /></div>
+            <div id="routeItems" role="list" aria-label="Proyectos en orden cronológico"></div>
+        </div>
+        <p class="mt-6 text-xs text-slate-500 font-mono halo">
+            // los proyectos empresariales están bajo NDA, no puedo compartir código. Demos y experimentos propios en
+            <a href="https://github.com/allydevper" target="_blank" rel="noopener" class="text-sky-700 hover:underline">github.com/allydevper ↗</a>
+        </p>
+    </div>
+</section>

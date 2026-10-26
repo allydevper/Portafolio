@@ -1,0 +1,527 @@
+/* Solo las clases del home: sin esto Tailwind incluiría también las de admin y terminal */
+@import "tailwindcss" source(none);
+@source "../components/vuelo";
+@source "../scripts/vuelo";
+@source "../layouts/VueloLayout.astro";
+@source "../pages/index.astro";
+
+/* Tipografías y colores del diseño "Vuelo WA-2015" */
+@theme {
+    --font-sans: "Plus Jakarta Sans", sans-serif;
+    --font-hand: "Caveat", cursive;
+    --font-serif: "Playfair Display", serif;
+    --font-mono: "IBM Plex Mono", monospace;
+    --color-paper: #FBF9F5;
+    --color-sky-blue: #E2F1F8;
+    --color-watercolor-blue: #2B6CB0;
+    --color-accent-coral: #E53E3E;
+}
+
+/* El diseño nació con Tailwind 3: mismos valores por defecto para bordes y botones */
+@layer base {
+    *, ::after, ::before, ::backdrop, ::file-selector-button { border-color: var(--color-gray-200, currentColor); }
+    button:not(:disabled), [role="button"]:not(:disabled) { cursor: pointer; }
+}
+
+html { scroll-behavior: smooth; }
+/* Los lienzos 3D son más grandes que su caja para no cortarse al girar: que no generen scroll horizontal */
+html, body { overflow-x: clip; }
+
+/* Textura suave de papel acuarela */
+body {
+    background-color: #FBF9F5;
+    background-image: radial-gradient(#d3cbbd 0.75px, transparent 0.75px), radial-gradient(#d3cbbd 0.75px, #FBF9F5 0.75px);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px;
+    overflow-x: hidden;
+}
+
+section { scroll-margin-top: 80px; }
+
+/* Halo del color del papel: la ruta punteada pasa por detrás del texto sin cortar las letras */
+.halo {
+    text-shadow: 0 0 1px #FBF9F5, 0 0 3px #FBF9F5, 0 0 5px #FBF9F5, 0 0 8px #FBF9F5, 0 0 12px #FBF9F5, 0 0 16px #FBF9F5;
+}
+
+/* ---------- Avión 3D y ruta de vuelo ---------- */
+#planeCanvas {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    pointer-events: none;
+}
+/* Arrastrar gira el avión; pan-y deja hacer scroll vertical en móvil */
+#heroPlaneSpot { cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+#heroPlaneSpot.dragging { cursor: grabbing; }
+
+#flightTrail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: visible;
+}
+
+/* Nubes 3D de fondo (detrás del contenido) */
+#cloudCanvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: .6; /* discretas: acompañan sin llamar la atención */
+}
+
+/* ---------- Tarjeta de embarque ---------- */
+/* La sombra va en un contenedor con drop-shadow, que respeta los agujeros de la máscara */
+.bp-shadow {
+    filter: drop-shadow(0 18px 24px rgba(30, 64, 120, .16)) drop-shadow(0 0 1px rgba(15, 23, 42, .22));
+}
+/* Dos piezas (cuerpo y talón); cada una lleva media muesca recortada en la línea perforada,
+   así al hacer scroll el talón se puede desprender */
+.bp-main, .bp-stub {
+    --n1x: 0px; --n1y: 0px; --n2x: 0px; --n2y: 100%;
+    position: relative;
+    background: #fff;
+    will-change: transform;
+    -webkit-mask:
+        radial-gradient(circle 11px at var(--n1x) var(--n1y), transparent 96%, #000 100%),
+        radial-gradient(circle 11px at var(--n2x) var(--n2y), transparent 96%, #000 100%);
+    -webkit-mask-composite: source-in;
+    mask:
+        radial-gradient(circle 11px at var(--n1x) var(--n1y), transparent 96%, #000 100%),
+        radial-gradient(circle 11px at var(--n2x) var(--n2y), transparent 96%, #000 100%);
+    mask-composite: intersect;
+}
+.bp-main { border-radius: 20px 0 0 20px; --n1x: 100%; --n2x: 100%; transform-origin: 0 100%; }
+.bp-stub { border-radius: 0 20px 20px 0; transform-origin: 0 100%; }
+@media (max-width: 639px) {
+    .bp-main { border-radius: 20px 20px 0 0; --n1x: 0px; --n1y: 100%; --n2x: 100%; --n2y: 100%; }
+    .bp-stub { border-radius: 0 0 20px 20px; --n1x: 0px; --n1y: 0px; --n2x: 100%; --n2y: 0px; transform-origin: 100% 0; }
+}
+.bp-stamp {
+    position: absolute;
+    right: 22px;
+    top: 40%;
+    padding: 3px 10px;
+    border: 3px double #dc2626;
+    border-radius: 8px;
+    color: #dc2626;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .18em;
+    opacity: 0;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+}
+.barcode {
+    height: 40px;
+    background: repeating-linear-gradient(90deg, #0f172a 0 2px, transparent 2px 4px, #0f172a 4px 5px, transparent 5px 8px, #0f172a 8px 11px, transparent 11px 12px, #0f172a 12px 13px, transparent 13px 16px);
+}
+
+/* ---------- Pasaporte ---------- */
+.passport-page {
+    background-color: #F7F1E3;
+    background-image:
+        repeating-radial-gradient(circle at 0 0, transparent 0 12px, rgba(43, 108, 176, .05) 12px 13px),
+        repeating-radial-gradient(circle at 100% 100%, transparent 0 12px, rgba(229, 62, 62, .04) 12px 13px);
+}
+.visa-stamp { position: absolute; font-family: "IBM Plex Mono", monospace; text-transform: uppercase; text-align: center; line-height: 1.15; mix-blend-mode: multiply; }
+.approved-stamp {
+    position: absolute;
+    right: 8%;
+    bottom: 8%;
+    padding: 6px 16px;
+    border: 4px double #dc2626;
+    border-radius: 10px;
+    color: #dc2626;
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 600;
+    letter-spacing: .2em;
+    font-size: 22px;
+    opacity: 0;
+    transform: rotate(-14deg) scale(2.4);
+    mix-blend-mode: multiply;
+    pointer-events: none;
+}
+.approved-stamp.show { animation: stampIn .45s cubic-bezier(.2, 1.5, .4, 1) forwards; }
+@keyframes stampIn { to { opacity: .82; transform: rotate(-14deg) scale(1); } }
+
+/* ---------- Ruta con escalas (proyectos) ---------- */
+/* Móvil: ruta vertical a la izquierda, tarjetas apiladas */
+.route { position: relative; padding-left: 40px; }
+.route-track {
+    position: absolute;
+    left: 12px;
+    top: 10px;
+    bottom: 10px;
+    width: 3px;
+    background: repeating-linear-gradient(180deg, rgba(43, 108, 176, .4) 0 10px, transparent 10px 18px);
+}
+.route-progress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 0;
+    background: #2B6CB0;
+    border-radius: 3px;
+    transition: height 2s cubic-bezier(.3, .7, .3, 1);
+}
+.route.on .route-progress { height: 100%; }
+.route-plane { display: none; }
+.route-item { position: relative; margin-bottom: 20px; }
+.route-stop {
+    position: absolute;
+    left: -39px;
+    top: 22px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #fff;
+    border: 4px solid #2B6CB0;
+    z-index: 1;
+    transform: scale(0);
+    transition: transform .45s cubic-bezier(.3, 1.6, .5, 1);
+    transition-delay: var(--d, 0ms);
+}
+.route.on .route-stop { transform: scale(1); }
+.route-stop.live { border-color: #10b981; }
+.route-stop.live::after {
+    content: '';
+    position: absolute;
+    inset: -9px;
+    border-radius: 50%;
+    border: 2px solid rgba(16, 185, 129, .5);
+    animation: stopPulse 1.8s ease-out infinite;
+}
+@keyframes stopPulse { from { transform: scale(.6); opacity: 1; } to { transform: scale(1.4); opacity: 0; } }
+.route-card {
+    position: relative;
+    background: #fff;
+    border: 1px solid rgba(15, 23, 42, .08);
+    border-radius: 18px;
+    padding: 18px 20px;
+    box-shadow: 0 18px 36px -24px rgba(30, 64, 120, .35);
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .55s ease, transform .55s ease, filter .3s;
+    transition-delay: var(--d, 0ms);
+}
+.route.on .route-card { opacity: 1; transform: none; }
+.route.on .route-card.dim { opacity: .35; filter: grayscale(1); transition-delay: 0ms; }
+/* Escritorio: ruta horizontal con tarjetas alternadas arriba y abajo */
+@media (min-width: 1024px) {
+    .route { padding-left: 0; height: var(--route-h, auto); }
+    .route-track {
+        left: 0;
+        right: 0;
+        top: var(--track-y, 50%);
+        bottom: auto;
+        width: auto;
+        height: 3px;
+        margin-top: -1.5px;
+        background: repeating-linear-gradient(90deg, rgba(43, 108, 176, .4) 0 10px, transparent 10px 18px);
+    }
+    .route-progress { height: 100%; width: 0; transition: width 2.2s cubic-bezier(.3, .7, .3, 1); }
+    .route.on .route-progress { width: calc(100% - 34px); }
+    .route-plane {
+        display: block;
+        position: absolute;
+        right: -4px;
+        top: 50%;
+        width: 28px;
+        height: 28px;
+        color: #2B6CB0;
+        transform: translateY(-50%) rotate(45deg);
+        opacity: 0;
+        transition: opacity .5s 2s;
+    }
+    .route.on .route-plane { opacity: 1; }
+    .route-item { position: static; margin: 0; }
+    .route-stop { left: var(--sx); top: var(--sy); margin: -11px 0 0 -11px; }
+    .route-card { position: absolute; width: var(--cw); height: var(--ch, auto); left: var(--cl); top: var(--ct); }
+    .route-card::after {
+        content: '';
+        position: absolute;
+        left: var(--cx);
+        width: 2px;
+        height: 48px;
+        margin-left: -1px;
+        background: rgba(43, 108, 176, .35);
+    }
+    .route-card.above::after { top: 100%; }
+    .route-card.below::after { bottom: 100%; }
+}
+
+/* ---------- Estampillas (tarjetas de la ruta) ---------- */
+.route-card.stamp {
+    --r: 6px;
+    padding: calc(2.2 * var(--r));
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    /* Borde troquelado: agujeros semicirculares alrededor de un papel blanco */
+    background:
+        radial-gradient(var(--r), #0000 97%, #fffdf8) round calc(-1.5 * var(--r)) calc(-1.5 * var(--r)) / calc(3 * var(--r)) calc(3 * var(--r)),
+        linear-gradient(#fffdf8 0 0) no-repeat 50% / calc(100% - 3 * var(--r)) calc(100% - 3 * var(--r));
+    filter: drop-shadow(0 10px 16px rgba(30, 64, 120, .18)) drop-shadow(0 0 1px rgba(15, 23, 42, .25));
+}
+.route.on .route-card.stamp.dim { filter: grayscale(1) drop-shadow(0 10px 16px rgba(30, 64, 120, .1)); }
+.stamp-inner {
+    height: 100%;
+    padding: 14px 16px 16px;
+    border: 3px solid var(--frame);
+    color: var(--ink);
+}
+.stamp-year { font: 800 30px/1 "Plus Jakarta Sans", sans-serif; letter-spacing: -.02em; }
+.stamp-value {
+    padding: 3px 7px;
+    border-radius: 4px;
+    background: var(--frame);
+    color: #fff;
+    font: 700 11px "IBM Plex Mono", monospace;
+    letter-spacing: .08em;
+}
+.stamp-art { display: flex; justify-content: center; height: 76px; margin: 8px 0 6px; }
+.stamp-art svg { height: 100%; width: auto; }
+.stamp-title { font: 800 17px/1.25 "Plus Jakarta Sans", sans-serif; }
+.stamp-sub { margin-top: 3px; font-size: 13px; opacity: .8; }
+.stamp-meta { margin-top: 8px; font-size: 12.5px; }
+.stamp-chip { padding: 2px 7px; border-radius: 5px; background: rgba(255, 255, 255, .6); font: 500 11px "IBM Plex Mono", monospace; }
+.stamp-postmark {
+    position: absolute;
+    bottom: 12px;
+    right: 14px;
+    width: 70px;
+    height: 70px;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    border-radius: 50%;
+    border: 3px double rgba(185, 28, 28, .8);
+    color: rgba(185, 28, 28, .85);
+    font: 700 10px/1.3 "IBM Plex Mono", monospace;
+    letter-spacing: .1em;
+    transform: rotate(-14deg);
+    mix-blend-mode: multiply;
+    pointer-events: none;
+}
+
+/* ---------- Perfil de ascenso (experiencia) ---------- */
+.climb-chart { display: block; width: 100%; height: auto; overflow: visible; }
+.climb-area, .climb-tag { opacity: 0; transition: opacity .8s ease; }
+.climb.on .climb-area { opacity: 1; transition-delay: 1.3s; }
+.climb.on .climb-tag { opacity: 1; transition-delay: var(--d, 0s); }
+.climb-strips { display: grid; gap: 16px; margin-top: 18px; }
+@media (min-width: 768px) {
+    /* Cada ficha queda debajo de su tramo del gráfico */
+    .climb-strips { grid-template-columns: 3fr 4fr 4fr; padding-left: 7.5%; padding-right: 3.3%; }
+}
+/* Fichas al estilo de las tiras de control aéreo */
+.strip {
+    overflow: hidden;
+    background: #EEF6FB;
+    border: 1px solid #D3E4F0;
+    border-left: 6px solid #2B6CB0;
+    border-radius: 12px;
+    box-shadow: 0 14px 28px -22px rgba(30, 64, 120, .4);
+}
+.strip.now { border-left-color: #10b981; }
+.strip-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 14px;
+    background: rgba(43, 108, 176, .08);
+    border-bottom: 1px dashed #c3d7e6;
+    color: #2B6CB0;
+    font: 600 11px "IBM Plex Mono", monospace;
+    letter-spacing: .14em;
+}
+.strip.now .strip-head { color: #047857; background: rgba(16, 185, 129, .1); }
+.strip-body { padding: 14px 16px 16px; }
+.strip-chip { padding: 2px 8px; border-radius: 6px; background: #fff; border: 1px solid #D3E4F0; color: #334155; font: 500 11px "IBM Plex Mono", monospace; }
+
+/* ---------- Tarjeta de viajero frecuente (hero) ---------- */
+.ff-card {
+    position: relative;
+    overflow: hidden;
+    padding: 16px 22px 14px;
+    border: 1px solid rgba(15, 23, 42, .08);
+    border-radius: 18px;
+    background:
+        linear-gradient(115deg, transparent 55%, rgba(124, 196, 232, .14) 55% 70%, transparent 70%),
+        linear-gradient(180deg, #fff, #F7FBFE);
+    box-shadow: 0 18px 36px -26px rgba(30, 64, 120, .45);
+}
+/* Franja "holográfica" en el borde derecho */
+.ff-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 6px;
+    background: linear-gradient(180deg, #7CC4E8, #2B6CB0 45%, #10b981);
+}
+.ff-label { font: 500 10px "IBM Plex Mono", monospace; letter-spacing: .18em; text-transform: uppercase; color: #64748b; }
+.ff-logo {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #E0F2FE;
+    box-shadow: inset 0 0 0 2px #fff, 0 0 0 1px #BAE6FD;
+}
+.ff-logo img { width: 26px; height: 26px; }
+.ff-tier {
+    display: inline-block;
+    margin-top: 3px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: #D1FAE5;
+    color: #047857;
+    font: 700 11px "IBM Plex Mono", monospace;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+/* Progreso de nivel: hitos en 2015, 2018 y 2022 */
+.ff-bar { position: relative; height: 6px; margin: 18px 8px 30px 6px; border-radius: 3px; background: #E2E8F0; }
+.ff-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 92%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #7CC4E8, #2B6CB0);
+    transform-origin: left;
+    animation: ffFill 1.6s .5s cubic-bezier(.3, .7, .3, 1) both;
+}
+@keyframes ffFill { from { transform: scaleX(0); } }
+.ff-stop { position: absolute; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: #fff; border: 3px solid #2B6CB0; }
+.ff-stop span { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); font: 600 9px "IBM Plex Mono", monospace; letter-spacing: .14em; color: #94a3b8; white-space: nowrap; }
+.ff-stop.start span { left: -6px; transform: none; }
+.ff-stop.now { border-color: #10b981; }
+.ff-stop.now span { color: #047857; }
+.ff-plane { position: absolute; top: 50%; left: 92%; width: 16px; height: 16px; margin: -8px 0 0 -2px; color: #2B6CB0; transform: rotate(45deg); }
+
+/* ---------- Postal ---------- */
+.airmail {
+    padding: 10px;
+    border-radius: 10px;
+    background: repeating-linear-gradient(135deg, #E53E3E 0 14px, #fff 14px 28px, #2B6CB0 28px 42px, #fff 42px 56px);
+    box-shadow: 0 30px 60px -28px rgba(30, 41, 59, .35);
+}
+/* Cartulina con grano y un leve tono cálido en los bordes */
+.postcard {
+    border-radius: 4px;
+    background-color: #FFFCF4;
+    background-image:
+        radial-gradient(rgba(120, 90, 40, .05) 1px, transparent 1.3px),
+        radial-gradient(ellipse at 25% 0%, rgba(255, 255, 255, .9), transparent 60%),
+        linear-gradient(180deg, #FFFDF8, #FBF4E6);
+    background-size: 5px 5px, 100% 100%, 100% 100%;
+    box-shadow: inset 0 0 50px rgba(160, 120, 60, .08);
+}
+.postcard-wrap:not(.fly) { transition: transform .5s cubic-bezier(.2, .8, .2, 1), rotate .5s cubic-bezier(.2, .8, .2, 1), translate .5s cubic-bezier(.2, .8, .2, 1); }
+.postcard-wrap:not(.fly):hover { rotate: 0deg; translate: 0 -4px; }
+/* Texto vertical sobre la línea divisoria */
+.pc-divider {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    padding: 10px 0;
+    background: #FEFAF0;
+    color: #b8c2cf;
+    font: 500 9px "IBM Plex Mono", monospace;
+    letter-spacing: .32em;
+    white-space: nowrap;
+    writing-mode: vertical-rl;
+    transform: translate(-50%, -50%) rotate(180deg);
+}
+.pc-count { font: 500 10px "IBM Plex Mono", monospace; letter-spacing: .1em; color: #94a3b8; }
+.zip { display: flex; gap: 5px; margin-top: 10px; }
+.zip span {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 28px;
+    border: 1.5px solid rgba(43, 108, 176, .35);
+    border-radius: 3px;
+    font: 22px/1 "Caveat", cursive;
+    color: #334155;
+}
+.postcard-lines {
+    background-image: repeating-linear-gradient(180deg, transparent 0 35px, rgba(43, 108, 176, .18) 35px 36px);
+    line-height: 36px;
+}
+/* Estampilla con borde troquelado (misma familia que las de la ruta de proyectos) */
+.stamp {
+    --r: 4px;
+    padding: calc(2.4 * var(--r));
+    background:
+        radial-gradient(var(--r), #0000 97%, #fff) round calc(-1.5 * var(--r)) calc(-1.5 * var(--r)) / calc(3 * var(--r)) calc(3 * var(--r)),
+        linear-gradient(#fff 0 0) no-repeat 50% / calc(100% - 3 * var(--r)) calc(100% - 3 * var(--r));
+    filter: drop-shadow(0 5px 7px rgba(30, 64, 120, .2)) drop-shadow(0 0 1px rgba(15, 23, 42, .35));
+    transform: rotate(3deg);
+}
+.stamp-face {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 84px;
+    height: 100px;
+    padding: 5px 4px 4px;
+    background: #BFE6E8;
+    border: 2px solid #2FA4B5;
+    color: #164E5A;
+    font: 700 8px "IBM Plex Mono", monospace;
+    letter-spacing: .12em;
+}
+.stamp-face .val { align-self: stretch; display: flex; justify-content: space-between; }
+.postmark {
+    position: absolute;
+    top: 14px;
+    right: 70px;
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    border: 3px double rgba(37, 99, 235, .75);
+    color: rgba(37, 99, 235, .8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    opacity: 0;
+    transform: rotate(-12deg) scale(2.2);
+    pointer-events: none;
+    mix-blend-mode: multiply;
+}
+/* Líneas onduladas del matasellos */
+.postmark svg { position: absolute; right: 90%; top: 30%; width: 100px; height: 44px; }
+.postmark.show { animation: postmarkIn .4s cubic-bezier(.2, 1.6, .4, 1) forwards; }
+@keyframes postmarkIn { to { opacity: .9; transform: rotate(-12deg) scale(1); } }
+.postcard-wrap { transition: transform 1.2s cubic-bezier(.55, 0, .75, .3), opacity 1.2s ease; }
+.postcard-wrap.fly { transform: translate(70vw, -70vh) rotate(18deg) scale(.15); opacity: 0; }
+
+.field-line { border: 0; border-bottom: 1.5px solid rgba(51, 65, 85, .25); background: transparent; outline: none; width: 100%; padding: 6px 2px; }
+.field-line:focus { border-bottom-color: #2B6CB0; }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #FBF9F5; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+@media (prefers-reduced-motion: reduce) {
+    .route-stop.live::after, .ff-fill { animation: none; }
+    .climb-area, .climb-tag { transition: none !important; }
+    .route-progress, .route-stop, .route-card, .route-plane { transition: none !important; }
+}

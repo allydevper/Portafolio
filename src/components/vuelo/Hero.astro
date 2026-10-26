@@ -1,0 +1,150 @@
+---
+import Icon from './Icon.astro';
+---
+
+<!-- ============ DESPEGUE (HERO) ============ -->
+<section id="despegue" class="relative min-h-screen pt-28 pb-16 px-6 max-w-7xl mx-auto flex flex-col justify-center">
+
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center relative z-10">
+
+        <!-- Texto -->
+        <div class="lg:col-span-7 space-y-6">
+            <!-- Estado como en un panel de vuelos -->
+            <div class="inline-flex items-center gap-3 pl-3 pr-4 py-1.5 rounded-full bg-white/80 border border-slate-200 shadow-xs font-mono text-[11px] uppercase tracking-[0.18em]">
+                <span class="flex items-center gap-2 text-emerald-700 font-semibold">
+                    <span class="relative flex w-2 h-2">
+                        <span class="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-60"></span>
+                        <span class="relative w-2 h-2 rounded-full bg-emerald-500"></span>
+                    </span>
+                    Embarque abierto
+                </span>
+                <span class="w-px h-3.5 bg-slate-200"></span>
+                <span class="text-slate-500">Remoto · respondo en &lt; 24 h</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl font-bold tracking-tight text-slate-900 leading-none">
+                El código detrás <br/>
+                <span class="font-serif italic font-normal text-sky-600 relative inline-block mt-2">
+                    de cada boleto emitido.
+                    <svg class="absolute -bottom-2 left-0 w-full h-3 text-sky-300/70" viewBox="0 0 100 20" preserveAspectRatio="none">
+                        <path d="M0,15 Q50,0 100,15" fill="none" stroke="currentColor" stroke-width="4"/>
+                    </svg>
+                </span>
+            </h1>
+
+            <p class="text-lg text-slate-600 max-w-xl leading-relaxed">
+                Sr. Software Engineer y Tech Lead en Travel Tech. Desde 2015 construyo las integraciones con <strong class="font-semibold text-slate-800">Sabre, Amadeus y NDC</strong> que permiten a las agencias buscar, reservar y emitir.
+            </p>
+
+            <!-- Tarjeta de embarque -->
+            <div class="bp-shadow max-w-xl">
+            <div class="boarding-pass flex flex-col sm:flex-row">
+                <div class="bp-main flex-1 p-5">
+                    <div id="bpStamp" class="bp-stamp">EMBARCADO</div>
+                    <div class="flex justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-slate-400">
+                        <span>Tarjeta de embarque</span>
+                        <span>Vuelo WA-2015</span>
+                    </div>
+                    <p class="mt-3 font-mono text-[10px] uppercase tracking-widest text-slate-400">Pasajero</p>
+                    <p class="font-mono text-lg font-semibold text-slate-900 leading-none mt-1">ALAMA/WILMER MR</p>
+                    <div class="mt-4 flex items-end gap-3 font-mono">
+                        <div>
+                            <p class="text-[10px] uppercase tracking-widest text-slate-400">Origen</p>
+                            <p class="text-2xl font-semibold text-slate-900 leading-none mt-1">LIM</p>
+                        </div>
+                        <Icon name="plane" class="w-5 h-5 text-sky-500 mb-0.5" />
+                        <div>
+                            <p class="text-[10px] uppercase tracking-widest text-slate-400">Destino</p>
+                            <p class="text-2xl font-semibold text-sky-600 leading-none mt-1">GDS</p>
+                        </div>
+                        <div class="ml-auto text-right">
+                            <p class="text-[10px] uppercase tracking-widest text-slate-400">Clase</p>
+                            <p class="text-sm font-semibold text-slate-900 leading-none mt-1.5">Tech Lead</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 grid grid-cols-3 gap-3 font-mono">
+                        <div>
+                            <p class="text-[10px] uppercase tracking-widest text-slate-400">Exp.</p>
+                            <p class="text-sm font-semibold text-slate-900 mt-0.5">10+ años</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase tracking-widest text-slate-400">Hora</p>
+                            <p class="text-sm font-semibold text-slate-900 mt-0.5">UTC-5</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase tracking-widest text-slate-400">Estado</p>
+                            <p class="text-sm font-semibold text-emerald-600 mt-0.5">● abierto</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bp-stub border-t-2 sm:border-t-0 sm:border-l-2 border-dashed border-slate-200 p-5 sm:w-44 flex sm:flex-col items-center justify-between gap-3">
+                    <div class="hidden sm:block w-full">
+                        <div class="barcode w-full"></div>
+                        <p class="font-mono text-[10px] text-slate-400 tracking-[0.2em] mt-1.5 text-center">PNR · WALAMA</p>
+                    </div>
+                    <div class="flex sm:flex-col gap-2 w-full">
+                        <button id="boardBtn" class="flex-1 w-full bg-sky-600 hover:bg-sky-700 text-white font-medium px-4 py-3 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-xs">
+                            <span>Embarcar</span>
+                            <Icon name="arrow-right" class="w-4 h-4" />
+                        </button>
+                        <a href="https://www.linkedin.com/in/wilmer-alama/" target="_blank" rel="noopener" class="flex-1 w-full border border-slate-200 hover:border-sky-300 hover:text-sky-700 text-slate-600 text-sm font-medium px-4 py-2.5 rounded-xl transition-colors flex items-center justify-center gap-1.5">
+                            LinkedIn / CV <Icon name="arrow-up-right" class="w-3.5 h-3.5" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <!-- Métricas -->
+            <!-- Tarjeta de viajero frecuente: la trayectoria resumida como niveles de millas -->
+            <div class="ff-card max-w-xl" aria-label="Viajero frecuente desde 2015, nivel Tech Lead, más de 10 años">
+                <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <span class="ff-logo"><img src="/images/wilmer-mascot.svg" alt=""></span>
+                        <div>
+                            <p class="ff-label">Viajero frecuente</p>
+                            <p class="font-serif text-lg font-bold text-slate-900 leading-tight">Wilmer Alama</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="ff-label">Nivel</p>
+                        <span class="ff-tier">Tech Lead</span>
+                    </div>
+                </div>
+                <div class="ff-bar" aria-hidden="true">
+                    <span class="ff-fill"></span>
+                    <span class="ff-stop start" style="left:0%"><span>2015 · DEV</span></span>
+                    <span class="ff-stop" style="left:27%"><span>2018 · ENG</span></span>
+                    <span class="ff-stop now" style="left:64%"><span>2022 · LEAD</span></span>
+                    <Icon name="plane" class="ff-plane" />
+                </div>
+                <div class="flex justify-between ff-label">
+                    <span>Miembro desde 2015</span>
+                    <span class="text-slate-700 font-semibold">10+ años acumulados</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lugar del avión en el hero -->
+        <div class="lg:col-span-5 order-first lg:order-none relative flex flex-col items-center justify-center min-h-[220px] md:min-h-[320px] lg:min-h-[460px]">
+            <div id="heroPlaneSpot" data-waypoint role="button" tabindex="0" aria-label="Avión: clic para hacer un tonel" class="relative w-64 h-40 md:w-96 md:h-60">
+                <!-- Respaldo si el navegador no soporta WebGL -->
+                <svg id="planeFallback" class="hidden w-full h-full" viewBox="0 0 500 300" fill="none" aria-hidden="true">
+                    <path d="M 80,150 Q 200,80 430,70 Q 450,75 440,90 Q 300,160 180,180 Z" fill="#FFFFFF" stroke="#334155" stroke-width="4"/>
+                    <path d="M 230,130 L 380,30 Q 400,32 370,55 L 260,140 Z" fill="#E2F1F8" stroke="#334155" stroke-width="4"/>
+                    <path d="M 220,155 L 340,240 Q 350,250 330,245 L 200,170 Z" fill="#CBD5E1" stroke="#334155" stroke-width="4"/>
+                    <path d="M 100,145 L 130,80 L 160,105 Z" fill="#38BDF8" stroke="#334155" stroke-width="3"/>
+                    <path d="M 280,110 Q 340,90 410,80" stroke="#F43F5E" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div id="planeHint" class="mt-3 font-hand text-xl text-slate-500 flex items-center gap-2 pointer-events-none">
+                <svg class="w-8 h-8 text-slate-400" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M6 32 Q 10 12 30 10"/>
+                    <path d="M23 6 L31 10 L25 16"/>
+                </svg>
+                arrástralo para girarlo · clic para un tonel
+            </div>
+        </div>
+    </div>
+</section>
