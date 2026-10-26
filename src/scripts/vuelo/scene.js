@@ -2,7 +2,7 @@
 // Se carga después del primer pintado (ver main.js) para que el texto aparezca sin esperar a Three.js
 import * as THREE from 'three';
 import { mergeVertices, mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { $, clamp, lerp, ease, reduceMotion, seeded, loadMascot } from './util.js';
+import { $, clamp, lerp, ease, reduceMotion, seeded, loadMascot, shadersReady } from './util.js';
 
 export function initScene({ flight, heroSpot, getPlaneW, rebuild }) {
     // ================= AVIÓN 3D =================
@@ -552,8 +552,8 @@ export function initScene({ flight, heroSpot, getPlaneW, rebuild }) {
 
     // Shaders compilados en paralelo: el primer frame no traba la página
     const ready = Promise.all([
-        renderer ? renderer.compileAsync(scene, camera) : null,
-        cloudRenderer ? cloudRenderer.compileAsync(cloudScene, cloudCam) : null,
+        renderer ? shadersReady(renderer, scene, camera) : null,
+        cloudRenderer ? shadersReady(cloudRenderer, cloudScene, cloudCam) : null,
     ]);
     return { renderPlane, renderClouds, resizeRenderer, setCloudTheme, barrelRoll, ready };
 }

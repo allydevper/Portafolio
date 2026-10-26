@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { $, clamp, lerp, reduceMotion, seeded } from './util.js';
+import { $, clamp, lerp, reduceMotion, seeded, shadersReady } from './util.js';
 
 export function initLuggage() {
     // ================= MALETA 3D =================
@@ -586,8 +586,8 @@ export function initLuggage() {
         tilt.rotation.order = 'YXZ';
 
         // Shaders compilados en paralelo antes del primer frame (sin trabar el scroll)
-        let compiled = false;
-        lr.compileAsync(scene, cam).then(() => { compiled = true; });
+        let compiled = false, shown = false;
+        shadersReady(lr, scene, cam).then(() => { compiled = true; });
         renderLuggage = t => {
             if (!st.visible || !compiled) return;
             // El lienzo es más grande que la caja: al girarla, las esquinas no se cortan
@@ -623,6 +623,10 @@ export function initLuggage() {
             cam.position.set(0, .35, d);
             cam.lookAt(0, .22, 0);
             lr.render(scene, cam);
+            if (!shown) {
+                shown = true;
+                box.classList.add('is-ready');
+            }
         };
     })();
     return renderLuggage;

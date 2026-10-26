@@ -349,13 +349,27 @@ new IntersectionObserver((entries, obs) => {
 // Su código y sus texturas se cargan recién cuando están por aparecer en pantalla
 let renderPassport = () => {};
 let renderLuggage = () => {};
-const lazyScene = (sel, load) => new IntersectionObserver((entries, obs) => {
+// Se arman al acercarse, pero recién cuando el avión ya está listo, para no competir con la carga inicial
+let sceneDone;
+const sceneReady = new Promise(r => { sceneDone = r; });
+const lazyScene = (sel, margin, load) => new IntersectionObserver((entries, obs) => {
     if (!entries[0].isIntersecting) return;
     obs.disconnect();
-    load();
-}, { rootMargin: '300px 0px' }).observe($(sel));
-lazyScene('#passport', () => import('./passport.js').then(m => { renderPassport = m.initPassport(); }));
-lazyScene('#luggage', () => import('./luggage.js').then(m => { renderLuggage = m.initLuggage(); }));
+    sceneReady.then(load);
+}, { rootMargin: `${margin}px 0px` }).observe($(sel));
+// Si el módulo no llega (red inestable o un deploy nuevo), se reintenta una vez; si no, queda la versión HTML
+const importRetry = load => load().catch(() => new Promise(r => setTimeout(r, 1500)).then(load));
+const loadPassport = () => import('./passport.js');
+const loadLuggage = () => import('./luggage.js');
+lazyScene('#passport', 1000, () => importRetry(loadPassport).then(m => { renderPassport = m.initPassport(); }).catch(() => {
+    $('#passport3d')?.remove();
+    $('#passportHint')?.remove();
+    $('#passportFlat').classList.replace('sr-only', 'relative');
+}));
+lazyScene('#luggage', 1600, () => importRetry(loadLuggage).then(m => { renderLuggage = m.initLuggage(); }).catch(() => {
+    $('#luggage3d')?.remove();
+    $('#luggageList').classList.remove('sr-only');
+}));
 
 // ================= PASAPORTE: sello "APROBADO" =================
 new IntersectionObserver((entries, obs) => {
@@ -593,7 +607,10 @@ let last = performance.now();
 })(performance.now());
 
 // La escena 3D entra después del primer pintado y aparece con un fundido cuando sus shaders están listos
-requestAnimationFrame(() => setTimeout(() => {
+let sceneStarted = false;
+function startScene() {
+    if (sceneStarted) return;
+    sceneStarted = true;
     import('./scene.js').then(m => {
         const s3d = m.initScene({ flight, heroSpot, getPlaneW: () => planeW, rebuild });
         ({ resizeRenderer, setCloudTheme, barrelRoll } = s3d);
@@ -602,6 +619,16 @@ requestAnimationFrame(() => setTimeout(() => {
         return s3d.ready.then(() => {
             ({ renderPlane, renderClouds } = s3d);
             requestAnimationFrame(() => document.documentElement.classList.add('scene-ready'));
+            // Con la página tranquila, se descargan de antemano el pasaporte y la maleta
+            const idle = window.requestIdleCallback ? cb => requestIdleCallback(cb, { timeout: 3000 }) : cb => setTimeout(cb, 1500);
+            idle(() => { loadPassport().catch(() => {}); loadLuggage().catch(() => {}); });
+            setTimeout(sceneDone, 150);
         });
-    }).catch(() => $('#planeFallback').classList.remove('hidden'));
-}));
+    }).catch(() => {
+        $('#planeFallback').classList.remove('hidden');
+        sceneDone();
+    });
+}
+requestAnimationFrame(() => setTimeout(startScene, 0));
+// Respaldo: si el navegador no está pintando (pestaña en segundo plano), requestAnimationFrame no llega
+setTimeout(startScene, 400);

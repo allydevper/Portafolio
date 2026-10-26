@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { $, clamp, lerp, ease, reduceMotion, seeded, loadMascot } from './util.js';
+import { $, clamp, lerp, ease, reduceMotion, seeded, loadMascot, shadersReady } from './util.js';
 
 export function initPassport() {
     // ================= PASAPORTE 3D =================
@@ -618,8 +618,8 @@ export function initPassport() {
         new IntersectionObserver(([entry]) => { st.visible = entry.isIntersecting; }, { threshold: 0 }).observe(pCanvas);
 
         // Shaders compilados en paralelo antes del primer frame (sin trabar el scroll)
-        let compiled = false;
-        pr.compileAsync(scene, cam).then(() => { compiled = true; });
+        let compiled = false, shown = false;
+        shadersReady(pr, scene, cam).then(() => { compiled = true; });
         renderPassport = t => {
             if (!st.visible || !compiled) return;
             // El lienzo es más grande que la caja para que la tapa no se corte al levantarse
@@ -710,6 +710,10 @@ export function initPassport() {
             cam.lookAt(st.camX, -.03, 0);
 
             pr.render(scene, cam);
+            if (!shown) {
+                shown = true;
+                box.classList.add('is-ready');
+            }
         };
     })();
     return renderPassport;

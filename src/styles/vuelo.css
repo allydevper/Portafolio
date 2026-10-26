@@ -603,3 +603,34 @@ html.dark #climbChart {
     [fill="#047857"] { fill: #6EE7B7; }
     [stroke="#2B6CB0"] { stroke: #7CC4E8; }
 }
+
+/* ================= Pasaporte y maleta 3D: silueta mientras se arman y entrada suave ================= */
+#passport3d::before, #luggage3d::before {
+    content: '';
+    position: absolute;
+    inset: 8% 16%;
+    border-radius: 22px;
+    background: linear-gradient(100deg, rgba(43, 108, 176, .05) 35%, rgba(43, 108, 176, .12) 50%, rgba(43, 108, 176, .05) 65%) 0 0 / 300% 100%;
+    animation: sceneShimmer 1.8s linear infinite;
+    transition: opacity .5s ease;
+}
+#luggage3d::before { inset: 6% 24%; border-radius: 30px; }
+@media (min-width: 640px) {
+    #passport3d::before { inset: 9% 33%; }   /* la tapa cerrada, antes de abrirse */
+    #luggage3d::before { inset: 5% 34%; }
+}
+html.dark :is(#passport3d, #luggage3d)::before {
+    background-image: linear-gradient(100deg, rgba(255, 255, 255, .03) 35%, rgba(255, 255, 255, .08) 50%, rgba(255, 255, 255, .03) 65%);
+}
+@keyframes sceneShimmer { from { background-position: 100% 0; } to { background-position: -50% 0; } }
+:is(#passport3d, #luggage3d).is-ready::before { opacity: 0; animation: none; }
+#passportCanvas, #luggageCanvas {
+    opacity: 0;
+    transform: translateY(26px) scale(.96);
+    transition: opacity .7s ease, transform 1s cubic-bezier(.2, .8, .2, 1);
+}
+.is-ready > :is(#passportCanvas, #luggageCanvas) { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+    #passport3d::before, #luggage3d::before { animation: none; }
+    #passportCanvas, #luggageCanvas { transform: none; }
+}
