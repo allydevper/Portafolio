@@ -608,7 +608,7 @@ html.dark #climbChart {
 #passport3d::before, #luggage3d::before {
     content: '';
     position: absolute;
-    inset: 8% 16%;
+    inset: 8% 28%;
     border-radius: 22px;
     background: linear-gradient(100deg, rgba(43, 108, 176, .05) 35%, rgba(43, 108, 176, .12) 50%, rgba(43, 108, 176, .05) 65%) 0 0 / 300% 100%;
     animation: sceneShimmer 1.8s linear infinite;
@@ -653,4 +653,9 @@ html.dark :is(#passport3d, #luggage3d)::before {
     }
     #luggage3d::after { left: 26%; right: 26%; bottom: -1%; }
     :is(#passport3d, #luggage3d).is-ready::after { opacity: 1; }
+}
+
+/* En móvil no hay avión: tampoco su lienzo ni la estela punteada que recorre la página */
+@media (max-width: 767px) {
+    #planeCanvas, #flightTrail { display: none; }
 }

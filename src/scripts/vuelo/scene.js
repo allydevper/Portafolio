@@ -1,10 +1,44 @@
-// Avión 3D que recorre la página y nubes de fondo.
+// Avión 3D que recorre la página (no en móvil) y nubes de fondo.
 // Se carga después del primer pintado (ver main.js) para que el texto aparezca sin esperar a Three.js
 import * as THREE from 'three';
 import { mergeVertices, mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { $, clamp, lerp, ease, reduceMotion, seeded, loadMascot, shadersReady, maxDpr, isTouch } from './util.js';
 
-export function initScene({ flight, heroSpot, getPlaneW, rebuild }) {
+// Tamaño de los lienzos fijos. En móvil la barra del navegador cambia la altura al hacer scroll,
+// y redimensionar borra el lienzo (parpadeo): la altura solo crece, salvo que cambie el ancho
+let viewW = 0, viewH = 0;
+// Alto de la pantalla con la barra del navegador escondida (100lvh), para partir ya con el tamaño máximo
+const largeViewportH = () => {
+    const probe = document.createElement('div');
+    probe.style.cssText = 'position:fixed;top:0;width:0;height:100lvh;visibility:hidden;pointer-events:none';
+    document.body.appendChild(probe);
+    const h = probe.offsetHeight;
+    probe.remove();
+    return h;
+};
+const viewSize = () => {
+    const W = document.documentElement.clientWidth;
+    if (W !== viewW) { viewW = W; viewH = Math.max(innerHeight, largeViewportH()); } else viewH = Math.max(viewH, innerHeight);
+    return [viewW, viewH];
+};
+
+
+// En móvil el avión no se arma: initScene recibe withPlane = false y solo quedan las nubes
+export function initScene({ withPlane = true, ...ctx }) {
+    const sky = initClouds();
+    const plane = withPlane ? initPlane(ctx) : { renderPlane() {}, resizeRenderer() {}, barrelRoll() {}, ready: null };
+    return {
+        renderPlane: plane.renderPlane,
+        resizeRenderer: plane.resizeRenderer,
+        barrelRoll: plane.barrelRoll,
+        renderClouds: sky.renderClouds,
+        setCloudTheme: sky.setCloudTheme,
+        // Shaders compilados en paralelo: el primer frame no traba la página
+        ready: Promise.all([plane.ready, sky.ready]),
+    };
+}
+
+function initPlane({ flight, heroSpot, getPlaneW, rebuild }) {
     // ================= AVIÓN 3D =================
     const canvas = $('#planeCanvas');
     let renderer = null;
@@ -21,24 +55,6 @@ export function initScene({ flight, heroSpot, getPlaneW, rebuild }) {
     const sun = new THREE.DirectionalLight(0xffffff, 2.2);
     sun.position.set(.6, 1, 1.2);
     scene.add(sun);
-
-    // Tamaño de los lienzos fijos. En móvil la barra del navegador cambia la altura al hacer scroll,
-    // y redimensionar borra el lienzo (parpadeo): la altura solo crece, salvo que cambie el ancho
-    let viewW = 0, viewH = 0;
-    // Alto de la pantalla con la barra del navegador escondida (100lvh), para partir ya con el tamaño máximo
-    const largeViewportH = () => {
-        const probe = document.createElement('div');
-        probe.style.cssText = 'position:fixed;top:0;width:0;height:100lvh;visibility:hidden;pointer-events:none';
-        document.body.appendChild(probe);
-        const h = probe.offsetHeight;
-        probe.remove();
-        return h;
-    };
-    const viewSize = () => {
-        const W = document.documentElement.clientWidth;
-        if (W !== viewW) { viewW = W; viewH = Math.max(innerHeight, largeViewportH()); } else viewH = Math.max(viewH, innerHeight);
-        return [viewW, viewH];
-    };
 
     function resizeRenderer() {
         if (!renderer) return;
@@ -466,6 +482,10 @@ export function initScene({ flight, heroSpot, getPlaneW, rebuild }) {
         canvas.remove();
     }
 
+    return { renderPlane, resizeRenderer, barrelRoll, ready: renderer ? shadersReady(renderer, scene, camera) : null };
+}
+
+function initClouds() {
     // ================= NUBES 3D DE FONDO =================
     // Nubes ilustradas (esferas fusionadas, sombreado toon y contorno suave) con parallax al hacer scroll
     const cloudCanvas = $('#cloudCanvas');
@@ -570,10 +590,5 @@ export function initScene({ flight, heroSpot, getPlaneW, rebuild }) {
         cloudRenderer.render(cloudScene, cloudCam);
     }
 
-    // Shaders compilados en paralelo: el primer frame no traba la página
-    const ready = Promise.all([
-        renderer ? shadersReady(renderer, scene, camera) : null,
-        cloudRenderer ? shadersReady(cloudRenderer, cloudScene, cloudCam) : null,
-    ]);
-    return { renderPlane, renderClouds, resizeRenderer, setCloudTheme, barrelRoll, ready };
+    return { renderClouds, setCloudTheme, ready: cloudRenderer ? shadersReady(cloudRenderer, cloudScene, cloudCam) : null };
 }

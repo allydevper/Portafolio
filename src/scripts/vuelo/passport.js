@@ -588,7 +588,7 @@ export function initPassport() {
 
         // ---------- Interacción ----------
         const pCanvas = $('#passportCanvas');
-        const st = { open: 0, openTarget: 0, focus: -1, camX: 0, rx: 0, ry: 0, tx: 0, ty: 0, visible: false, single: false, stampT: -1, cw: 0, ch: 0, autoOpened: false };
+        const st = { open: 0, openTarget: 0, camX: 0, rx: 0, ry: 0, tx: 0, ty: 0, visible: false, stampT: -1, cw: 0, ch: 0, autoOpened: false };
         box.addEventListener('pointermove', e => {
             const r = box.getBoundingClientRect();
             st.ty = ((e.clientX - r.left) / r.width - .5) * .1;
@@ -598,7 +598,6 @@ export function initPassport() {
         // Escritorio: clic abre / cierra para volver a ver la portada. Móvil: tocar cambia de página
         box.addEventListener('click', () => {
             st.autoOpened = true;
-            if (st.single && st.openTarget === 1) { st.focus *= -1; return; }
             st.openTarget = st.openTarget ? 0 : 1;
             // Si se cierra con el sello en camino, se cancela; si aún no estampó, volverá a caer al reabrir
             if (st.openTarget === 0 && st.stampT >= 0) {
@@ -632,7 +631,6 @@ export function initPassport() {
                 needsRender = true;
             }
             const w = box.clientWidth, h = box.clientHeight;
-            st.single = w / h < 1.1;
 
             // Se abre solo cuando el pasaporte ya está bien a la vista (centro por encima del 55% de la pantalla)
             if (!st.autoOpened) {
@@ -655,7 +653,7 @@ export function initPassport() {
             tilt.rotation.set(lerp(-.26, .05, o) + st.rx, lerp(-.38, 0, o) + st.ry, lerp(-.05, -.01, o));
 
             // Sello: cuando está abierto (en móvil, al mirar la página de visados)
-            if (!approved && st.stampT < 0 && st.open > .97 && (!st.single || st.focus === 1)) {
+            if (!approved && st.stampT < 0 && st.open > .97) {
                 if (reduceMotion) { approved = true; drawVisaPage(); }
                 else st.stampT = t;
             }
@@ -702,10 +700,9 @@ export function initPassport() {
 
             // Cámara: encuadra la libreta dentro de la caja (el lienzo sobra alrededor)
             const tanH = Math.tan(THREE.MathUtils.degToRad(cam.fov / 2));
-            const needW = st.single ? 1.1 : 2.22, needH = st.single ? 1.45 : 1.58;
+            const needW = 2.22, needH = 1.58;
             const d = ch / (2 * tanH) * Math.max(needH / h, needW / w);
-            const targetX = st.single && st.open > .5 ? st.focus * .5 : 0;
-            st.camX = approach(st.camX, targetX, follow(.08, dt));
+            st.camX = approach(st.camX, 0, follow(.08, dt));
             cam.position.set(st.camX, -.05, d);
             cam.lookAt(st.camX, -.03, 0);
 

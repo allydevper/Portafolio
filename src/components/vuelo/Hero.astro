@@ -78,12 +78,13 @@ import Icon from './Icon.astro';
                         </div>
                     </div>
                 </div>
-                <div class="bp-stub border-t-2 sm:border-t-0 sm:border-l-2 border-dashed border-slate-200 p-5 sm:w-44 flex sm:flex-col items-center justify-between gap-3">
-                    <div class="hidden sm:block w-full">
+                <div class="bp-stub border-t-2 sm:border-t-0 sm:border-l-2 border-dashed border-slate-200 p-5 sm:w-44 flex sm:flex-col items-center justify-between gap-4 sm:gap-3">
+                    <!-- En móvil el código de barras va al lado de los botones, como un talón -->
+                    <div class="w-28 shrink-0 sm:w-full">
                         <div class="barcode w-full"></div>
                         <p class="font-mono text-[10px] text-slate-400 tracking-[0.2em] mt-1.5 text-center">PNR · WALAMA</p>
                     </div>
-                    <div class="flex sm:flex-col gap-2 w-full">
+                    <div class="flex flex-col gap-2 flex-1 sm:flex-none w-full">
                         <button id="boardBtn" class="flex-1 w-full bg-sky-600 hover:bg-sky-700 text-white font-medium px-4 py-3 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-xs">
                             <span>Embarcar</span>
                             <Icon name="arrow-right" class="w-4 h-4" />
@@ -126,8 +127,8 @@ import Icon from './Icon.astro';
             </div>
         </div>
 
-        <!-- Lugar del avión en el hero -->
-        <div class="lg:col-span-5 order-first lg:order-none relative flex flex-col items-center justify-center min-h-[220px] md:min-h-[320px] lg:min-h-[460px]">
+        <!-- Lugar del avión en el hero (en móvil no hay avión) -->
+        <div class="lg:col-span-5 order-first lg:order-none relative hidden md:flex flex-col items-center justify-center min-h-[220px] md:min-h-[320px] lg:min-h-[460px]">
             <div id="heroPlaneSpot" data-waypoint role="button" tabindex="0" aria-label="Avión: clic para hacer un tonel" class="relative w-64 h-40 md:w-96 md:h-60">
                 <!-- Respaldo si el navegador no soporta WebGL -->
                 <svg id="planeFallback" class="hidden w-full h-full" viewBox="0 0 500 300" fill="none" aria-hidden="true">

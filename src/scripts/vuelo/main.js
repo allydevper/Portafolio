@@ -553,9 +553,8 @@ function updateTear() {
         bpStub.style.transform = `translate(${e * 6 + detach * 10}px, ${detach * 8}px) rotate(${e * 3 + detach * 2}deg)`;
         bpMain.style.transform = `rotate(${-e * .5}deg)`;
     } else {
-        // En móvil cae menos para no tapar las métricas de abajo
-        bpStub.style.transform = `translate(${-detach * 4}px, ${e * 5 + detach * 6}px) rotate(${-(e * 1.5 + detach * 1)}deg)`;
-        bpMain.style.transform = `rotate(${e * .4}deg)`;
+        // En móvil (tarjeta en columna) el talón queda en su lugar: al caer se encimaba sobre la tarjeta de millas
+        bpStub.style.transform = bpMain.style.transform = '';
     }
     const s = clamp((p - .7) / .3, 0, 1);
     bpStamp.style.opacity = s * .85;
@@ -618,7 +617,8 @@ function startScene() {
     if (sceneStarted) return;
     sceneStarted = true;
     import('./scene.js').then(m => {
-        const s3d = m.initScene({ flight, heroSpot, getPlaneW: () => planeW, rebuild });
+        // En móvil no hay avión (no se arma ni se dibuja); las nubes sí se quedan
+        const s3d = m.initScene({ withPlane: matchMedia('(min-width: 768px)').matches, flight, heroSpot, getPlaneW: () => planeW, rebuild });
         ({ resizeRenderer, setCloudTheme, barrelRoll } = s3d);
         resizeRenderer();
         setCloudTheme(document.documentElement.classList.contains('dark'));
