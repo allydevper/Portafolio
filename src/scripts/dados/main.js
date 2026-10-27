@@ -126,13 +126,15 @@ function renderTurn() {
     const mine = !!waiting;
     $('#turnPts').textContent = String(game.turnPts + (sel ? sel.points : 0));
     const info = $('#selInfo');
-    if (!game.selected.size) info.textContent = mine ? 'Elige los dados que puntúan' : game.player.ai ? 'Turno del rival' : 'Tirando…';
-    else if (!sel) info.textContent = 'Selección = 0: hay dados que no forman combinación';
+    // Lo guardado en tiradas anteriores de este turno (también antes de unos dados calientes), para que el total se entienda
+    const saved = game.turnPts ? `${game.turnPts} guardados` : '';
+    if (!game.selected.size) info.textContent = saved || (mine ? 'Elige los dados que puntúan' : game.player.ai ? 'Turno del rival' : 'Tirando…');
+    else if (!sel) info.textContent = `${saved ? saved + ' · ' : ''}Selección = 0: hay dados que no forman combinación`;
     else {
         // Los comodines (cabeza de diablo, Balatro) cuentan como el valor que más conviene, no como la cara que muestran
         const jokers = game.rolled.filter(r => r.joker && game.selected.has(r.slot)).length;
         const note = jokers ? ` · ${jokers === 1 ? 'con comodín' : `con ${jokers} comodines`}` : '';
-        info.textContent = `${sel.parts.map(p => p.label).join(' + ')} = ${sel.points}${note}`;
+        info.textContent = `${saved ? saved + ' + ' : ''}${sel.parts.map(p => p.label).join(' + ')} = ${sel.points}${note}`;
     }
     info.classList.toggle('bad', game.selected.size > 0 && !sel);
     $('#btnRoll').disabled = !mine || !sel;

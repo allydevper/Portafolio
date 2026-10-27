@@ -285,13 +285,13 @@ function cupCanvas(seed) {
     c.width = 1024;
     c.height = 512;
     const g = c.getContext('2d');
-    g.fillStyle = '#33251b';
+    g.fillStyle = '#1c130c';
     g.fillRect(0, 0, 1024, 512);
     // Veta: líneas casi verticales, claras y oscuras, que siguen el torneado
     for (let i = 0; i < 260; i++) {
         const x0 = rand() * 1024, amp = 2 + rand() * 7, f = .006 + rand() * .02, ph = rand() * 6;
         const light = rand() < .45;
-        g.strokeStyle = light ? `rgba(160,125,90,${.08 + rand() * .22})` : `rgba(10,6,3,${.15 + rand() * .3})`;
+        g.strokeStyle = light ? `rgba(130,100,70,${.06 + rand() * .14})` : `rgba(6,3,1,${.2 + rand() * .3})`;
         g.lineWidth = .6 + rand() * 2.2;
         g.beginPath();
         for (let y = 0; y <= 512; y += 8) g.lineTo(x0 + Math.sin(y * f + ph) * amp, y);
@@ -376,7 +376,7 @@ export function initTable(canvas, { onPick }) {
     cupTex.colorSpace = THREE.SRGBColorSpace;
     cupTex.anisotropy = maxAniso;
     const cupGeo = new THREE.LatheGeometry(prof, 56);
-    const cupMat = new THREE.MeshStandardMaterial({ map: cupTex, roughness: .5, envMapIntensity: .45, side: THREE.DoubleSide });
+    const cupMat = new THREE.MeshStandardMaterial({ map: cupTex, roughness: .55, envMapIntensity: .3, side: THREE.DoubleSide });
     const cups = new Map([1, -1].map(from => {
         const mesh = new THREE.Mesh(cupGeo, cupMat);
         mesh.castShadow = mesh.receiveShadow = true;

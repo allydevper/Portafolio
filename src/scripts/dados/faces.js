@@ -4,13 +4,14 @@ import { seeded } from '../vuelo/util.js';
 
 // pips: 'hole' agujero taladrado · 'engrave' grabado tono sobre tono · 'ring' anillo con punto (hueso) · 'small' punto chico
 // tint: segundo color en manchas · patina: manchas de cardenillo · wood: vetas · emblem: dibujo en lugar del 1
+// shine: metal pulido (más reflejo del entorno y una capa de barniz)
 export const LOOKS = {
     wood: { base: '#4a2c1c', tint: '#2a170c', pip: '#140904', pips: 'hole', wood: true, rough: .7 },
     oak: { base: '#7a5232', tint: '#4e3220', pip: '#1e1108', pips: 'hole', wood: true, rough: .7 },
     steel: { base: '#4f6f96', tint: '#38557a', pip: '#c3d1e2', pips: 'hole', rough: .55 },
-    gold: { base: '#e0b142', tint: '#b8841c', pip: '#94650f', pips: 'engrave', rough: .32, metal: .55 },
-    devil: { base: '#e0b142', tint: '#b8841c', pip: '#94650f', pips: 'engrave', rough: .32, metal: .55, emblem: 'devil' },
-    paleGold: { base: '#ecd690', tint: '#cdae55', pip: '#a8883a', pips: 'engrave', rough: .4, metal: .25 },
+    gold: { base: '#b98a2c', tint: '#8a6214', pip: '#6e4c0c', pips: 'engrave', rough: .3, metal: .75, shine: true },
+    devil: { base: '#b98a2c', tint: '#8a6214', pip: '#6e4c0c', pips: 'engrave', rough: .3, metal: .75, shine: true, emblem: 'devil' },
+    paleGold: { base: '#c9a95a', tint: '#a4822f', pip: '#7a5c1e', pips: 'engrave', rough: .34, metal: .65, shine: true },
     silver: { base: '#d9dbdc', tint: '#a9adb2', pip: '#7c8188', pips: 'hole', rough: .45, metal: .15 },
     terracotta: { base: '#b45d3c', tint: '#86391f', pip: '#331309', pips: 'hole', rough: .75 },
     moss: { base: '#3f5a2a', tint: '#26391a', pip: '#e0c93c', pips: 'hole', rough: .7 },

@@ -43,7 +43,9 @@ export function applyLook(mesh, lookId) {
         m.metalness = look.metal || 0;
         m.iridescence = look.iridescence || 0;
         m.iridescenceIOR = 1.6;
-        m.clearcoat = look.iridescence ? .6 : 0;
+        m.clearcoat = look.iridescence ? .6 : look.shine ? .15 : 0;
+        m.clearcoatRoughness = .35;
+        m.envMapIntensity = look.shine ? .9 : .7;
         m.needsUpdate = true;
     });
 }
