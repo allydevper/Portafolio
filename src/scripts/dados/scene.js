@@ -5,6 +5,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { seeded, shadersReady, maxDpr, reduceMotion, follow, ease } from '../vuelo/util.js';
 import { TRAY, FACE_VALUES, normalOf, simulateThrow } from './physics.js';
 import { clack } from './sound.js';
+import { LOOKS, paintFace } from './faces.js';
 
 const RIM = .8, RIM_H = .8;
 // Fila donde se apartan los dados guardados, fuera del tablero del lado de quien tira
@@ -51,111 +52,18 @@ function woodCanvas(seed, w, h, light, dark, planks = 0) {
     return c;
 }
 
-const PIPS = {
-    1: [[.5, .5]],
-    2: [[.27, .27], [.73, .73]],
-    3: [[.27, .27], [.5, .5], [.73, .73]],
-    4: [[.27, .27], [.73, .27], [.27, .73], [.73, .73]],
-    5: [[.27, .27], [.73, .27], [.5, .5], [.27, .73], [.73, .73]],
-    6: [[.27, .25], [.73, .25], [.27, .5], [.73, .5], [.27, .75], [.73, .75]],
-};
-
-function devilHead(g, S, color) {
-    g.save();
-    g.translate(S / 2, S / 2 + 8);
-    g.fillStyle = color;
-    // Cuernos
-    for (const s of [-1, 1]) {
-        g.beginPath();
-        g.moveTo(s * 38, -40);
-        g.quadraticCurveTo(s * 70, -70, s * 58, -104);
-        g.quadraticCurveTo(s * 50, -66, s * 18, -54);
-        g.fill();
-    }
-    // Cara
-    g.beginPath();
-    g.moveTo(-54, -44);
-    g.quadraticCurveTo(-60, 30, 0, 66);
-    g.quadraticCurveTo(60, 30, 54, -44);
-    g.quadraticCurveTo(0, -70, -54, -44);
-    g.fill();
-    // Ojos y sonrisa
-    g.fillStyle = '#f2c14e';
-    for (const s of [-1, 1]) {
-        g.beginPath();
-        g.moveTo(s * 10, -14);
-        g.lineTo(s * 40, -24);
-        g.lineTo(s * 30, -4);
-        g.closePath();
-        g.fill();
-    }
-    g.strokeStyle = '#f2c14e';
-    g.lineWidth = 6;
-    g.lineCap = 'round';
-    g.beginPath();
-    g.moveTo(-26, 22);
-    g.quadraticCurveTo(0, 42, 26, 22);
-    g.stroke();
-    g.restore();
-}
-
+// Texturas de cada cara (color y relieve), compartidas por los dados con el mismo aspecto
 const faceCache = new Map();
-function faceTexture(die, value, renderer) {
-    const key = `${die.id}:${value}`;
-    if (faceCache.has(key)) return faceCache.get(key);
-    const S = 256;
-    const c = document.createElement('canvas');
-    c.width = c.height = S;
-    const g = c.getContext('2d');
-    g.fillStyle = die.body;
-    g.fillRect(0, 0, S, S);
-    // Desgaste: un poco más oscuro hacia los bordes
-    const vg = g.createRadialGradient(S / 2, S / 2, S * .2, S / 2, S / 2, S * .75);
-    vg.addColorStop(0, 'rgba(255,255,255,.06)');
-    vg.addColorStop(1, 'rgba(0,0,0,.22)');
-    g.fillStyle = vg;
-    g.fillRect(0, 0, S, S);
-    const rand = seeded(value * 97 + die.id.length * 13);
-    for (let i = 0; i < 400; i++) {
-        g.fillStyle = rand() < .5 ? 'rgba(0,0,0,.05)' : 'rgba(255,255,255,.05)';
-        g.fillRect(rand() * S, rand() * S, 1 + rand() * 2, 1 + rand() * 2);
+function faceTextures(lookId, value, renderer) {
+    const key = `${lookId}:${value}`;
+    if (!faceCache.has(key)) {
+        const color = new THREE.CanvasTexture(paintFace(lookId, value, 512));
+        color.colorSpace = THREE.SRGBColorSpace;
+        const bump = new THREE.CanvasTexture(paintFace(lookId, value, 256, 'bump'));
+        for (const t of [color, bump]) t.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+        faceCache.set(key, { color, bump });
     }
-    if (die.joker === 'one' && value === 1) devilHead(g, S, die.pip);
-    else {
-        const r = value === 1 ? 30 : 22;
-        for (const [x, y] of PIPS[value]) {
-            // Hoyuelo: borde claro abajo, centro oscuro
-            g.fillStyle = 'rgba(255,255,255,.25)';
-            g.beginPath();
-            g.arc(x * S + 1.5, y * S + 2.5, r, 0, 7);
-            g.fill();
-            const pg = g.createRadialGradient(x * S - r * .3, y * S - r * .3, 1, x * S, y * S, r);
-            pg.addColorStop(0, die.pip);
-            pg.addColorStop(1, shade(die.pip, -.35));
-            g.fillStyle = pg;
-            g.beginPath();
-            g.arc(x * S, y * S, r, 0, 7);
-            g.fill();
-        }
-        if (die.joker === 'all') {
-            // Marca de bufón en la esquina
-            g.fillStyle = die.pip;
-            g.font = 'bold 34px serif';
-            g.textAlign = 'center';
-            g.fillText('★', S - 34, S - 18);
-        }
-    }
-    const tex = new THREE.CanvasTexture(c);
-    tex.colorSpace = THREE.SRGBColorSpace;
-    tex.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
-    faceCache.set(key, tex);
-    return tex;
-}
-
-// Aclara (+) u oscurece (-) un color hex
-function shade(hex, k) {
-    const c = new THREE.Color(hex);
-    return k < 0 ? '#' + c.multiplyScalar(1 + k).getHexString() : '#' + c.lerp(new THREE.Color('#fff'), k).getHexString();
+    return faceCache.get(key);
 }
 
 export function initTable(canvas, { onPick }) {
@@ -230,10 +138,15 @@ export function initTable(canvas, { onPick }) {
     }
 
     // ---------- Dados ----------
-    const geo = new RoundedBoxGeometry(1, 1, 1, 5, .14);
+    // Canto redondeado según el aspecto (los de nácar y el celestial son casi bolas)
+    const geos = new Map();
+    const geoFor = r => {
+        if (!geos.has(r)) geos.set(r, new RoundedBoxGeometry(1, 1, 1, 5, r));
+        return geos.get(r);
+    };
     const dice = [...Array(6)].map((_, slot) => {
-        const mats = FACE_VALUES.map(() => new THREE.MeshStandardMaterial({ roughness: .38, metalness: 0, envMapIntensity: .6, emissive: '#000' }));
-        const mesh = new THREE.Mesh(geo, mats);
+        const mats = FACE_VALUES.map(() => new THREE.MeshPhysicalMaterial({ envMapIntensity: .7, emissive: '#000', bumpScale: 1.6 }));
+        const mesh = new THREE.Mesh(geoFor(.14), mats);
         mesh.castShadow = mesh.receiveShadow = true;
         mesh.userData.slot = slot;
         const group = new THREE.Group();
@@ -244,10 +157,21 @@ export function initTable(canvas, { onPick }) {
     });
 
     function setDice(defs) {
-        dice.forEach((dd, i) => dd.mats.forEach((m, k) => {
-            m.map = faceTexture(defs[i], FACE_VALUES[k], renderer);
-            m.needsUpdate = true;
-        }));
+        dice.forEach((dd, i) => {
+            const look = LOOKS[defs[i].look];
+            dd.mesh.geometry = geoFor(look.radius || .14);
+            dd.mats.forEach((m, k) => {
+                const tex = faceTextures(defs[i].look, FACE_VALUES[k], renderer);
+                m.map = tex.color;
+                m.bumpMap = tex.bump;
+                m.roughness = look.rough;
+                m.metalness = look.metal || 0;
+                m.iridescence = look.iridescence || 0;
+                m.iridescenceIOR = 1.6;
+                m.clearcoat = look.iridescence ? .6 : 0;
+                m.needsUpdate = true;
+            });
+        });
     }
 
     function reset() {

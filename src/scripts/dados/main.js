@@ -1,5 +1,6 @@
 // Página /dados: une la preparación, el marcador, la partida y la mesa 3D
-import { DICE, getDie, describeDie, randomRivalSet } from './dice-data.js';
+import { DICE, getDie, randomRivalSet } from './dice-data.js';
+import { cubeIcon } from './faces.js';
 import { Game } from './game.js';
 import { aiDecide } from './ai.js';
 import { initTable } from './scene.js';
@@ -27,16 +28,6 @@ if (!table) $('#noGl').hidden = false;
 table?.setPickable(slot => !!waiting && game.rolled.some(r => r.slot === slot));
 
 // ---------- Utilidades de interfaz ----------
-const swatch = die => {
-    const s = document.createElement('span');
-    s.className = 'swatch';
-    s.style.setProperty('--body', die.body);
-    s.style.setProperty('--pip', die.pip);
-    if (die.joker) s.classList.add('joker');
-    s.title = die.name;
-    return s;
-};
-
 let toastTimer = 0;
 function toast(text, kind = '') {
     const el = $('#toast');
@@ -54,7 +45,7 @@ function renderLoadout() {
         const die = getDie(id);
         const b = document.createElement('button');
         b.className = 'slot' + (i === activeSlot ? ' active' : '');
-        b.append(swatch(die), Object.assign(document.createElement('span'), { textContent: die.name.replace(/ die$/, '') }));
+        b.append(cubeIcon(die), Object.assign(document.createElement('span'), { textContent: die.name.replace(/ die$/, '') }));
         b.onclick = () => {
             if (i === activeSlot) settings.dice[i] = 'ordinary';
             activeSlot = i;
@@ -70,21 +61,10 @@ function renderGrid() {
     $('#diceGrid').replaceChildren(...DICE.filter(d => d.name.toLowerCase().includes(q)).map(die => {
         const card = document.createElement('button');
         card.className = 'die-card';
-        const max = Math.max(...die.weights);
-        const bars = document.createElement('div');
-        bars.className = 'bars';
-        die.weights.forEach((w, i) => {
-            const bar = document.createElement('i');
-            bar.style.height = `${Math.max(4, w / Math.max(max, 30) * 100)}%`;
-            bar.dataset.face = String(i + 1);
-            bar.title = `${i + 1}: ${w}%`;
-            bars.append(bar);
-        });
         const name = Object.assign(document.createElement('strong'), { textContent: die.name });
-        const desc = Object.assign(document.createElement('small'), { textContent: describeDie(die) });
         const used = settings.dice.filter(id => id === die.id).length;
         if (used) card.dataset.used = String(used);
-        card.append(swatch(die), name, desc, bars);
+        card.append(cubeIcon(die), name);
         card.onclick = () => {
             settings.dice[activeSlot] = die.id;
             activeSlot = (activeSlot + 1) % 6;
@@ -135,7 +115,7 @@ function renderHud() {
         plate.classList.toggle('active', game.current === i);
         plate.querySelector('[data-total]').textContent = String(p.total);
         plate.querySelector('[data-bar]').style.width = `${Math.min(100, p.total / game.target * 100)}%`;
-        plate.querySelector('[data-dice]').replaceChildren(...p.dice.map(swatch));
+        plate.querySelector('[data-dice]').replaceChildren(...p.dice.map(cubeIcon));
     });
     renderTurn();
 }
