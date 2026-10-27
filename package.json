@@ -18,6 +18,7 @@
     "arctic": "^3.2.4",
     "astro": "^5.2.5",
     "better-sqlite3": "^11.8.1",
+    "cannon-es": "^0.20.0",
     "lucia": "^3.2.2",
     "lucide": "^0.460.0",
     "react": "^19.0.0",

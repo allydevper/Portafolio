@@ -1,0 +1,135 @@
+---
+// Juego de dados de Kingdom Come: Deliverance II (Farkle) contra la máquina: HTML estático, todo corre en el navegador
+export const prerender = true;
+
+import "../styles/dados.css";
+import { STRAIGHTS, kindPoints } from "../scripts/dados/scoring.js";
+
+const title = "Dados · Kingdom Come: Deliverance II";
+const description = "El juego de dados de KCD2 en el navegador: reglas del Farkle, dados cargados y un rival de taberna.";
+const kinds = [1, 2, 3, 4, 5, 6];
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta name="theme-color" content="#140d08" />
+		<link rel="icon" type="image/svg+xml" href="/images/wilmer-mascot.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,600;0,700;1,400&family=Cinzel:wght@600;700&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+	<body class="dados">
+		<canvas id="board" aria-label="Mesa de dados"></canvas>
+		<div class="vignette" aria-hidden="true"></div>
+
+		<!-- Marcador -->
+		<header class="hud">
+			<div class="plate" id="plate0">
+				<div class="plate-name">Tú</div>
+				<div class="plate-total"><span data-total>0</span></div>
+				<div class="plate-bar"><i data-bar></i></div>
+				<div class="plate-dice" data-dice></div>
+			</div>
+			<div class="goal">
+				<span>Meta</span>
+				<strong id="goal">4000</strong>
+			</div>
+			<div class="plate" id="plate1">
+				<div class="plate-name">Rival</div>
+				<div class="plate-total"><span data-total>0</span></div>
+				<div class="plate-bar"><i data-bar></i></div>
+				<div class="plate-dice" data-dice></div>
+			</div>
+		</header>
+
+		<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+		<!-- Acciones -->
+		<footer class="actions">
+			<div class="turn" id="turnInfo">
+				<div><span class="muted">Turno</span> <strong id="turnPts">0</strong></div>
+				<div class="sel" id="selInfo">Elige los dados que puntúan</div>
+			</div>
+			<div class="buttons">
+				<button class="btn" id="btnRoll" disabled>Tirar de nuevo</button>
+				<button class="btn btn-gold" id="btnBank" disabled>Plantarse</button>
+			</div>
+			<div class="tools">
+				<button class="icon-btn" id="btnHelp" title="Reglas">?</button>
+				<button class="icon-btn" id="btnMute" title="Sonido">♪</button>
+				<button class="icon-btn" id="btnGiveUp" title="Rendirse">⚑</button>
+			</div>
+		</footer>
+
+		<!-- Preparación de la partida -->
+		<div class="modal" id="setup">
+			<div class="parchment setup">
+				<h1>Dados</h1>
+				<p class="lead">Llega primero a la meta. Aparta los dados que puntúan y decide: ¿arriesgas otra tirada o te plantas?</p>
+
+				<h2>Meta de puntos</h2>
+				<div class="chips" id="targets">
+					{[2000, 3000, 4000, 5000, 8000].map(t => <button class="chip" data-target={t}>{t}</button>)}
+				</div>
+
+				<h2>Tus dados <small>toca un hueco y luego un dado; toca de nuevo el hueco para dejarlo normal</small></h2>
+				<div class="loadout" id="loadout"></div>
+				<input class="search" id="diceSearch" type="search" placeholder="Buscar dado…" autocomplete="off" />
+				<div class="dice-grid" id="diceGrid"></div>
+
+				<div class="setup-foot">
+					<button class="btn btn-ghost" id="btnResetDice">Todos normales</button>
+					<button class="btn btn-gold" id="btnStart">Jugar</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Reglas -->
+		<div class="modal" id="help" hidden>
+			<div class="parchment help">
+				<h2>Combinaciones</h2>
+				<table>
+					<tbody>
+						<tr><td>Cada 1</td><td>100</td></tr>
+						<tr><td>Cada 5</td><td>50</td></tr>
+						{kinds.map(f => <tr><td>Tres {f}</td><td>{kindPoints(f, 3)}</td></tr>)}
+						<tr><td>Cuatro / cinco / seis iguales</td><td>×2 / ×4 / ×8 del trío</td></tr>
+						{STRAIGHTS.map(s => <tr><td>Escalera {s.label}</td><td>{s.points}</td></tr>)}
+						<tr><td>Cabeza de diablo</td><td>comodín</td></tr>
+					</tbody>
+				</table>
+				<p>Solo se combinan dados de la misma tirada. Si ningún dado puntúa pierdes lo del turno. Si apartas los seis, vuelves a tirarlos todos (dados calientes).</p>
+				<button class="btn btn-gold" data-close>Entendido</button>
+			</div>
+		</div>
+
+		<!-- Fin -->
+		<div class="modal" id="end" hidden>
+			<div class="parchment end">
+				<h2 id="endTitle"></h2>
+				<p id="endText"></p>
+				<button class="btn btn-gold" id="btnAgain">Otra partida</button>
+			</div>
+		</div>
+
+		<div class="modal" id="noGl" hidden>
+			<div class="parchment end">
+				<h2>Sin 3D</h2>
+				<p>Este navegador no puede mostrar la mesa (WebGL desactivado).</p>
+			</div>
+		</div>
+
+		<script>
+			import "../scripts/dados/main.js";
+		</script>
+	</body>
+</html>
