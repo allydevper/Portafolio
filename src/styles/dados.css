@@ -81,7 +81,7 @@ button:disabled { cursor: default; }
 .plate-total { font-size: 1.9rem; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .plate-bar { height: 4px; background: rgba(255, 255, 255, .1); border-radius: 2px; overflow: hidden; margin: 4px 0 6px; }
 .plate-bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--gold), var(--gold-hi)); transition: width .6s; }
-.plate-dice { display: flex; gap: 2px; pointer-events: auto; }
+.plate-dice { display: flex; gap: 1px; pointer-events: auto; }
 #plate1 .plate-dice { justify-content: flex-end; }
 
 .goal {
@@ -93,33 +93,16 @@ button:disabled { cursor: default; }
 .goal span { display: block; font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--parch-dark); }
 .goal strong { font-size: 1.4rem; color: var(--gold-hi); }
 
-/* Miniatura isométrica de un dado: tres caras con las mismas texturas que en la mesa */
-.cube {
-    --s: 14px;
+/* Miniatura de un dado: render del mismo modelo 3D de la mesa */
+.die-icon {
+    --s: 22px;
     flex: none;
-    display: inline-grid;
-    place-items: center;
-    width: calc(var(--s) * 1.5);
-    height: calc(var(--s) * 1.5);
-}
-.cube b {
-    position: relative;
+    display: block;
     width: var(--s);
     height: var(--s);
-    transform-style: preserve-3d;
-    transform: rotateX(-30deg) rotateY(-45deg);
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .35));
+    transition: transform .15s;
 }
-.cube i {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    border-radius: 14%;
-    backface-visibility: hidden;
-}
-.cube.round i { border-radius: 30%; }
-.cube .t { transform: rotateX(90deg) translateZ(calc(var(--s) / 2)); filter: brightness(1.1); }
-.cube .f { transform: translateZ(calc(var(--s) / 2)); filter: brightness(.85); }
-.cube .r { transform: rotateY(90deg) translateZ(calc(var(--s) / 2)); filter: brightness(.62); }
 
 /* ---------- Avisos ---------- */
 .toast {
@@ -258,7 +241,7 @@ button:disabled { cursor: default; }
     min-width: 0;
 }
 .slot span:last-child { overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
-.slot .cube { --s: 30px; }
+.slot .die-icon { --s: 42px; }
 .slot.active { border-style: solid; border-color: var(--blood); background: rgba(255, 255, 255, .45); }
 
 .search {
@@ -294,7 +277,7 @@ button:disabled { cursor: default; }
     text-align: center;
 }
 .die-card:hover { background: rgba(255, 255, 255, .5); }
-.die-card:hover .cube b { transform: rotateX(-30deg) rotateY(-45deg) scale(1.08); }
+.die-card:hover .die-icon { transform: scale(1.08) rotate(-3deg); }
 .die-card[data-used]::after {
     content: "×" attr(data-used);
     position: absolute;
@@ -303,7 +286,7 @@ button:disabled { cursor: default; }
     font-weight: 700;
     color: var(--blood);
 }
-.die-card .cube { --s: 40px; }
+.die-card .die-icon { --s: 58px; }
 .die-card strong { font-size: .85rem; line-height: 1.15; }
 
 .setup-foot { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
@@ -316,13 +299,14 @@ button:disabled { cursor: default; }
 
 .end { width: min(380px, 100%); text-align: center; }
 .end h2 { font-size: 1.8rem; }
+.modal-buttons { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
 
 /* ---------- Móvil ---------- */
 @media (max-width: 640px) {
     .hud { left: 10px; right: 10px; gap: 6px; }
     .plate { padding: 6px 8px 8px; }
     .plate-total { font-size: 1.4rem; }
-    .plate .cube { --s: 10px; }
+    .plate .die-icon { --s: 15px; }
     .plate-dice { gap: 1px; }
     .goal strong { font-size: 1.1rem; }
 

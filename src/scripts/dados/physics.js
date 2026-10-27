@@ -2,8 +2,10 @@
 // así se sabe qué cara quedó arriba antes de mostrarla y la escena puede ajustar el dado al valor sorteado
 import * as CANNON from 'cannon-es';
 
-// Interior del tablero (unidades = lado del dado)
-export const TRAY = { w: 12, d: 8 };
+// Zona de juego sobre la mesa, con bordes invisibles (unidades = lado del dado)
+export const TRAY = { w: 16, d: 10 };
+// Boca del cubilete: de ahí salen los dados, hacia el centro de la mesa (z se multiplica por from)
+export const POUR = { y: 1.9, z: 3.1 };
 const STEP = 1 / 60;
 const MAX_STEPS = 60 * 7;
 
@@ -46,16 +48,16 @@ function upFace(q) {
 function simulateOnce(count, from, rand) {
     const world = makeWorld();
     const bodies = [];
-    // Salen desde el borde de quien tira (from: 1 = jugador, abajo; -1 = rival, arriba), en una grilla para no encimarse
+    // Salen del cubilete del lado de quien tira (from: 1 = jugador, abajo; -1 = rival, arriba), en una grilla para no encimarse
     for (let i = 0; i < count; i++) {
-        const b = new CANNON.Body({ mass: 1, material: diceMat, shape: boxShape, linearDamping: .08, angularDamping: .08 });
+        const b = new CANNON.Body({ mass: 1, material: diceMat, shape: boxShape, linearDamping: .12, angularDamping: .15 });
         b.sleepSpeedLimit = .18;
         b.sleepTimeLimit = .25;
         const col = i % 3, row = Math.floor(i / 3);
-        b.position.set((col - 1) * 1.35 + (rand() - .5) * .4, 1.2 + row * 1.3, from * (TRAY.d / 2 - .9));
+        b.position.set((col - 1) * 1.04 + (rand() - .5) * .08, POUR.y + (row - .5) * 1.04, from * (POUR.z + (rand() - .5) * .3));
         b.quaternion.setFromEuler(rand() * 6.3, rand() * 6.3, rand() * 6.3);
-        b.velocity.set((rand() - .5) * 7, 2 + rand() * 3, -from * (11 + rand() * 6));
-        b.angularVelocity.set((rand() - .5) * 30, (rand() - .5) * 30, (rand() - .5) * 30);
+        b.velocity.set((col - 1) * .7 + (rand() - .5) * 1.6, rand() * 1.2, -from * (4.5 + rand() * 2.5));
+        b.angularVelocity.set((rand() - .5) * 24, (rand() - .5) * 24, (rand() - .5) * 24);
         world.addBody(b);
         bodies.push(b);
     }

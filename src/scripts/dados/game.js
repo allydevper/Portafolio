@@ -12,6 +12,7 @@ export class Game {
         this.players = players.map(p => ({ ...p, dice: p.dice.map(getDie), total: 0 }));
         this.current = 0;
         this.winner = null;
+        this.gaveUp = false;
         this.startTurn();
     }
 
@@ -71,7 +72,11 @@ export class Game {
 
     loseTurn() { this.turnPts = 0; }
 
-    giveUp() { this.winner = 1 - this.current; }
+    // Se rinde el jugador who (0 = tú) y gana el otro
+    giveUp(who) {
+        this.gaveUp = true;
+        this.winner = 1 - who;
+    }
 
     nextTurn() {
         this.current = 1 - this.current;

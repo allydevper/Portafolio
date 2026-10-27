@@ -363,27 +363,3 @@ const EMBLEMS = {
         g.restore();
     },
 };
-
-// Miniatura isométrica en CSS (tres caras): para el selector y el marcador
-const urls = new Map();
-const faceUrl = (lookId, v) => {
-    const key = `${lookId}:${v}`;
-    if (!urls.has(key)) urls.set(key, paintFace(lookId, v, 96).toDataURL());
-    return urls.get(key);
-};
-export function cubeIcon(die) {
-    const wrap = document.createElement('span');
-    wrap.className = 'cube';
-    wrap.title = die.name;
-    const look = LOOKS[die.look];
-    if (look.radius) wrap.classList.add('round');
-    const body = document.createElement('b');
-    for (const [cls, v] of [['t', 1], ['f', 2], ['r', 3]]) {
-        const f = document.createElement('i');
-        f.className = cls;
-        f.style.backgroundImage = `url(${faceUrl(die.look, v)})`;
-        body.append(f);
-    }
-    wrap.append(body);
-    return wrap;
-}
