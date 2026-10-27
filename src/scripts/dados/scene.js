@@ -2,20 +2,27 @@
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { seeded, shadersReady, maxDpr, reduceMotion, follow, ease } from '../vuelo/util.js';
-import { TRAY, POUR, normalOf, simulateThrow } from './physics.js';
-import { clack } from './sound.js';
+import { TRAY, POUR, CUP_REST, normalOf, simulateThrow } from './physics.js';
+import { clack, rattle, roll } from './sound.js';
 import { makeDieMesh, applyLook } from './dice3d.js';
 
-// Cubilete: alto, sitio de reposo (a un costado de quien tira) y pose volcada con la boca donde nacen los dados
 // Mesa: 34×30 unidades (tablones de ~3.2 de ancho)
 const TABLE_W = 34, TABLE_D = 30;
+
+// Cubilete: el pivote está en la base y la orientación dice hacia dónde mira la boca.
+// Descansa boca abajo a un costado de quien tira; para tirar se vuelca hacia el centro con la boca donde nacen los dados
 const CUP_H = 2.4, POUR_TILT = 105 * Math.PI / 180;
-const cupRest = from => new THREE.Vector3(from * 6.4, 0, from * (TRAY.d / 2 + .6));
+// Altura del eje cuando está acostado: lo más ancho (la boca) toca la mesa
+const CUP_LAY_Y = 1.45;
+const UP = new THREE.Vector3(0, 1, 0);
+const aimAt = axis => new THREE.Quaternion().setFromUnitVectors(UP, axis.clone().normalize());
+const MOUTH_DOWN = aimAt(new THREE.Vector3(0, -1, 0));
+const cupRest = from => ({ pos: new THREE.Vector3(from * CUP_REST.x, CUP_H, from * CUP_REST.z), quat: MOUTH_DOWN.clone() });
 const cupPour = from => {
     const down = POUR_TILT - Math.PI / 2;
     return {
         pos: new THREE.Vector3(0, POUR.y + Math.sin(down) * CUP_H, from * (POUR.z + .2 + Math.cos(down) * CUP_H)),
-        rotX: -from * POUR_TILT,
+        quat: aimAt(new THREE.Vector3(0, -Math.sin(down), -from * Math.cos(down))),
     };
 };
 // Fila donde se apartan los dados guardados, en el borde de la mesa del lado de quien tira
@@ -37,7 +44,7 @@ function tableCanvases(seed, W = 2560, H = 2260) {
     b.fillStyle = '#808080';
     b.fillRect(0, 0, W, H);
     const PLANKS = 9, ph = H / PLANKS;
-    const tones = ['#5b3a20', '#4f321b', '#634026', '#553620', '#4a2e19'];
+    const tones = ['#4d3a29', '#433327', '#55402e', '#3f3024', '#493726'];
     for (let p = 0; p < PLANKS; p++) {
         const y0 = p * ph;
         // Cada tablón está hecho de tramos con su propio tono, unidos a tope en sitios distintos
@@ -95,7 +102,7 @@ function tableCanvases(seed, W = 2560, H = 2260) {
             b.fill();
         }
         // Grietas a lo largo de la veta
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 9; i++) {
             const x = rand() * size, y = y0 + 10 + rand() * (ph - 20), l = 80 + rand() * 320;
             const lw = 1.5 + rand() * 2;
             const pts = [];
@@ -138,7 +145,7 @@ function tableCanvases(seed, W = 2560, H = 2260) {
         }
     }
     // Rayones y golpes de años de uso
-    for (let i = 0; i < 600; i++) {
+    for (let i = 0; i < 1500; i++) {
         const x = rand() * W, y = rand() * H, a = (rand() - .5) * .8 + (rand() < .3 ? 1.57 : 0), l = 6 + rand() * 60;
         g.strokeStyle = `rgba(200,150,100,${.05 + rand() * .12})`;
         g.lineWidth = .7 + rand() * 1.5;
@@ -170,54 +177,139 @@ function tableCanvases(seed, W = 2560, H = 2260) {
             g.fillRect(x - r, y - r, r * 2, r * 2);
         }
     }
-    // Grano fino
-    for (let i = 0; i < 60000; i++) {
+    // ---------- Años de taberna ----------
+    // Cortes de cuchillo: hendidura oscura con el borde levantado más claro
+    for (let i = 0; i < 70; i++) {
+        const x = rand() * W, y = rand() * H, a = rand() * 6.3, l = 20 + rand() * 90;
+        const ex = x + Math.cos(a) * l, ey = y + Math.sin(a) * l;
+        g.strokeStyle = 'rgba(12,6,2,.7)';
+        g.lineWidth = 1.5 + rand() * 1.5;
+        g.beginPath();
+        g.moveTo(x, y);
+        g.lineTo(ex, ey);
+        g.stroke();
+        g.strokeStyle = 'rgba(200,160,115,.18)';
+        g.lineWidth = 1;
+        g.beginPath();
+        g.moveTo(x + 2, y + 2);
+        g.lineTo(ex + 2, ey + 2);
+        g.stroke();
+        b.strokeStyle = '#141414';
+        b.lineWidth = 3;
+        b.beginPath();
+        b.moveTo(x, y);
+        b.lineTo(ex, ey);
+        b.stroke();
+    }
+    // Golpes y astillados: manchones hundidos
+    for (let i = 0; i < 45; i++) {
+        const x = rand() * W, y = rand() * H, r = 4 + rand() * 12;
+        g.fillStyle = 'rgba(15,8,3,.45)';
+        b.fillStyle = '#3a3a3a';
+        for (const ctx of [g, b]) {
+            ctx.beginPath();
+            ctx.ellipse(x, y, r * (1 + rand()), r, rand() * 3, 0, 7);
+            ctx.fill();
+        }
+    }
+    // Agujeros de carcoma en grupos
+    for (let i = 0; i < 10; i++) {
+        const cx = rand() * W, cy = rand() * H;
+        for (let k = 0; k < 6 + rand() * 14; k++) {
+            const x = cx + (rand() - .5) * 90, y = cy + (rand() - .5) * 60, r = 1.5 + rand() * 2;
+            g.fillStyle = '#0b0603';
+            b.fillStyle = '#000';
+            for (const ctx of [g, b]) {
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, 7);
+                ctx.fill();
+            }
+        }
+    }
+    // Quemaduras de vela y de pipa
+    for (let i = 0; i < 5; i++) {
+        const x = rand() * W, y = rand() * H, r = 18 + rand() * 40;
+        const rg = g.createRadialGradient(x, y, 0, x, y, r);
+        rg.addColorStop(0, 'rgba(8,4,2,.85)');
+        rg.addColorStop(.55, 'rgba(25,12,4,.55)');
+        rg.addColorStop(1, 'rgba(40,20,8,0)');
+        g.fillStyle = rg;
+        g.beginPath();
+        g.ellipse(x, y, r * 1.4, r, rand() * 3, 0, 7);
+        g.fill();
+        b.fillStyle = 'rgba(40,40,40,.6)';
+        b.beginPath();
+        b.ellipse(x, y, r * .8, r * .55, 0, 0, 7);
+        b.fill();
+    }
+    // Más aros de jarra y vino derramado
+    for (let i = 0; i < 12; i++) {
+        const x = rand() * W, y = rand() * H, r = 35 + rand() * 30;
+        g.strokeStyle = rand() < .5 ? `rgba(45,10,12,${.18 + rand() * .2})` : `rgba(10,6,2,${.2 + rand() * .2})`;
+        g.lineWidth = 2 + rand() * 5;
+        g.beginPath();
+        g.arc(x, y, r, rand() * 6, 6.3 + rand() * 3);
+        g.stroke();
+    }
+    // Mugre en las ranuras y desgaste: centro más gastado y claro, bordes más sucios
+    const wear = g.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, W * .45);
+    wear.addColorStop(0, 'rgba(170,150,120,.13)');
+    wear.addColorStop(1, 'rgba(170,150,120,0)');
+    g.fillStyle = wear;
+    g.fillRect(0, 0, W, H);
+    for (let i = 0; i < 30; i++) {
+        const x = rand() * W, y = rand() * H, r = 120 + rand() * 260;
+        const rg = g.createRadialGradient(x, y, 0, x, y, r);
+        rg.addColorStop(0, `rgba(10,6,3,${.1 + rand() * .15})`);
+        rg.addColorStop(1, 'rgba(10,6,3,0)');
+        g.fillStyle = rg;
+        g.fillRect(x - r, y - r, r * 2, r * 2);
+    }
+    // Tono gris de madera vieja y seca
+    g.globalCompositeOperation = 'saturation';
+    g.fillStyle = 'rgba(128,128,128,.35)';
+    g.fillRect(0, 0, W, H);
+    g.globalCompositeOperation = 'source-over';
+    // Grano fino y polvo
+    for (let i = 0; i < 90000; i++) {
         g.fillStyle = rand() < .5 ? 'rgba(0,0,0,.08)' : 'rgba(255,220,180,.05)';
         g.fillRect(rand() * W, rand() * H, 1 + rand() * 2, 1);
     }
     return { color, bump };
 }
 
-// Cubilete de cuero con bandas y costura: textura de la vuelta del torno (u alrededor, v a lo alto)
+// Cubilete de madera torneada, teñida oscura: veta a lo largo del eje (u alrededor, v a lo alto)
 function cupCanvas(seed) {
     const rand = seeded(seed);
     const c = document.createElement('canvas');
     c.width = 1024;
     c.height = 512;
     const g = c.getContext('2d');
-    g.fillStyle = '#4a2a16';
+    g.fillStyle = '#33251b';
     g.fillRect(0, 0, 1024, 512);
-    for (let i = 0; i < 60; i++) {
-        const x = rand() * 1024, y = rand() * 512, r = 20 + rand() * 80;
+    // Veta: líneas casi verticales, claras y oscuras, que siguen el torneado
+    for (let i = 0; i < 260; i++) {
+        const x0 = rand() * 1024, amp = 2 + rand() * 7, f = .006 + rand() * .02, ph = rand() * 6;
+        const light = rand() < .45;
+        g.strokeStyle = light ? `rgba(160,125,90,${.08 + rand() * .22})` : `rgba(10,6,3,${.15 + rand() * .3})`;
+        g.lineWidth = .6 + rand() * 2.2;
+        g.beginPath();
+        for (let y = 0; y <= 512; y += 8) g.lineTo(x0 + Math.sin(y * f + ph) * amp, y);
+        g.stroke();
+    }
+    // Manchas del tinte y desgaste más claro en las zonas de agarre
+    for (let i = 0; i < 40; i++) {
+        const x = rand() * 1024, y = rand() * 512, r = 20 + rand() * 70;
         const rg = g.createRadialGradient(x, y, 0, x, y, r);
-        rg.addColorStop(0, rand() < .5 ? 'rgba(20,8,2,.35)' : 'rgba(140,90,50,.22)');
+        rg.addColorStop(0, rand() < .6 ? 'rgba(8,5,2,.3)' : 'rgba(150,115,80,.16)');
         rg.addColorStop(1, 'rgba(0,0,0,0)');
         g.fillStyle = rg;
         g.fillRect(x - r, y - r, r * 2, r * 2);
     }
-    for (let i = 0; i < 9000; i++) {
-        g.fillStyle = rand() < .5 ? 'rgba(0,0,0,.12)' : 'rgba(255,210,170,.05)';
-        g.fillRect(rand() * 1024, rand() * 512, 1 + rand() * 2, 1 + rand() * 2);
+    for (let i = 0; i < 6000; i++) {
+        g.fillStyle = rand() < .5 ? 'rgba(0,0,0,.12)' : 'rgba(255,220,180,.05)';
+        g.fillRect(rand() * 1024, rand() * 512, 1 + rand() * 2, 1 + rand());
     }
-    // Bandas repujadas, pespuntes y costura vertical
-    for (const y of [40, 90, 400, 450]) {
-        g.fillStyle = 'rgba(15,6,2,.55)';
-        g.fillRect(0, y, 1024, 5);
-        g.fillStyle = 'rgba(190,130,80,.18)';
-        g.fillRect(0, y + 5, 1024, 3);
-    }
-    for (let x = 0; x < 1024; x += 26) {
-        g.fillStyle = 'rgba(200,160,110,.4)';
-        g.fillRect(x, 64, 12, 4);
-        g.fillRect(x + 13, 424, 12, 4);
-    }
-    for (let y = 100; y < 400; y += 18) {
-        g.fillStyle = 'rgba(210,170,120,.55)';
-        g.fillRect(508, y, 3, 10);
-        g.fillRect(516, y + 9, 3, 10);
-    }
-    g.fillStyle = 'rgba(10,4,1,.6)';
-    g.fillRect(511, 96, 4, 310);
     return c;
 }
 
@@ -266,32 +358,37 @@ export function initTable(canvas, { onPick }) {
     };
     const table = new THREE.Mesh(
         new THREE.PlaneGeometry(TABLE_W, TABLE_D),
-        new THREE.MeshStandardMaterial({ map: texOf(wood.color, true), bumpMap: texOf(wood.bump, false), bumpScale: 3, roughness: .82, envMapIntensity: .3 }),
+        new THREE.MeshStandardMaterial({ map: texOf(wood.color, true), bumpMap: texOf(wood.bump, false), bumpScale: 4, roughness: .86, envMapIntensity: .3 }),
     );
     table.rotation.x = -Math.PI / 2;
     table.receiveShadow = true;
     scene.add(table);
 
     // ---------- Cubiletes (uno por jugador) ----------
-    // Perfil del torno: base, pared que se abre hacia la boca, labio y vuelta hacia adentro. El pivote queda en la base
-    const prof = [[0, 0], [1.22, 0], [1.3, .08], [1.28, .2], [1.36, CUP_H - .18], [1.46, CUP_H - .1], [1.48, CUP_H], [1.38, CUP_H], [1.27, .22], [0, .22]]
-        .map(([x, y]) => new THREE.Vector2(x, y));
+    // Perfil del torno, como un barril angosto en la cintura con estrías cerca de la base y de la boca
+    const prof = [
+        [0, 0], [1.26, 0], [1.36, .06], [1.4, .18], [1.35, .24], [1.4, .3], [1.35, .36], [1.41, .44],
+        [1.33, 1.2],
+        [1.42, 1.96], [1.37, 2.03], [1.43, 2.1], [1.38, 2.17], [1.45, 2.26], [1.46, 2.36], [1.41, CUP_H],
+        [1.3, CUP_H], [1.24, 1.2], [1.22, .26], [0, .26],
+    ].map(([x, y]) => new THREE.Vector2(x, y));
     const cupTex = new THREE.CanvasTexture(cupCanvas(9));
     cupTex.colorSpace = THREE.SRGBColorSpace;
     cupTex.anisotropy = maxAniso;
-    const cupGeo = new THREE.LatheGeometry(prof, 48);
-    const cupMat = new THREE.MeshStandardMaterial({ map: cupTex, roughness: .6, envMapIntensity: .4, side: THREE.DoubleSide });
+    const cupGeo = new THREE.LatheGeometry(prof, 56);
+    const cupMat = new THREE.MeshStandardMaterial({ map: cupTex, roughness: .5, envMapIntensity: .45, side: THREE.DoubleSide });
     const cups = new Map([1, -1].map(from => {
         const mesh = new THREE.Mesh(cupGeo, cupMat);
         mesh.castShadow = mesh.receiveShadow = true;
-        mesh.rotation.y = from * 2.2;
         scene.add(mesh);
-        const cup = { mesh, from, pos: cupRest(from), rotX: 0, rotZ: 0 };
+        // spin: giro propio sobre su eje (para que los dos no se vean idénticos); wobble: sacudida
+        const spin = new THREE.Quaternion().setFromAxisAngle(UP, from * 2.2);
+        const cup = { mesh, from, ...cupRest(from), spin, wobble: new THREE.Quaternion() };
         return [from, cup];
     }));
     const placeCup = cup => {
         cup.mesh.position.copy(cup.pos);
-        cup.mesh.rotation.set(cup.rotX, cup.from * 2.2, cup.rotZ, 'XZY');
+        cup.mesh.quaternion.copy(cup.wobble).multiply(cup.quat).multiply(cup.spin);
     };
     cups.forEach(placeCup);
 
@@ -336,7 +433,8 @@ export function initTable(canvas, { onPick }) {
             playback = null;
         }
         cups.forEach(cup => {
-            Object.assign(cup, { pos: cupRest(cup.from), rotX: 0, rotZ: 0 });
+            Object.assign(cup, cupRest(cup.from));
+            cup.wobble.identity();
             placeCup(cup);
         });
     }
@@ -362,14 +460,49 @@ export function initTable(canvas, { onPick }) {
         while (pb.hit < pb.sim.hits.length && pb.sim.hits[pb.hit].step <= f) clack(pb.sim.hits[pb.hit++].v);
     }
 
-    // Mueve un cubilete de su pose actual a otra (posición e inclinación)
+    // Mueve un cubilete de su pose actual a otra (posición y orientación)
     function moveCup(cup, dur, to) {
-        const from = { pos: cup.pos.clone(), rotX: cup.rotX };
+        const from = { pos: cup.pos.clone(), quat: cup.quat.clone() };
         return animate(dur, k => {
             const e = ease(k);
             cup.pos.lerpVectors(from.pos, to.pos, e);
-            cup.rotX = from.rotX + (to.rotX - from.rotX) * e;
+            cup.quat.slerpQuaternions(from.quat, to.quat, e);
             placeCup(cup);
+        });
+    }
+
+    // Un dado rueda por la mesa hasta la boca del cubilete acostado y se mete; desaparece ya tapado por el cuerpo
+    function rollInto(dd, mouth, axis) {
+        const p0 = dd.base.clone(), q0 = dd.group.quaternion.clone();
+        const door = new THREE.Vector3(mouth.x, .5, mouth.z), inside = door.clone().addScaledVector(axis, -1.2);
+        const d1 = p0.distanceTo(door), total = d1 + 1.2;
+        const dir = door.clone().sub(p0).setY(0);
+        if (dir.lengthSq() < 1e-6) dir.copy(axis).negate();
+        dir.normalize();
+        // Rodar sin resbalar: gira alrededor del eje horizontal perpendicular al avance
+        const rollAxis = new THREE.Vector3().crossVectors(UP, dir).normalize();
+        const qRoll = new THREE.Quaternion();
+        let landed = false, nextRoll = .4;
+        return animate((240 + total * 70) * .7, k => {
+            // Arranca lento y acelera, como empujado hacia la boca
+            const e = k * k * (1.6 - .6 * k);
+            const s = e * total;
+            if (s < d1) dd.base.lerpVectors(p0, door, s / d1);
+            else dd.base.lerpVectors(door, inside, (s - d1) / 1.2);
+            // Pequeños saltos que se apagan al acercarse
+            dd.base.y = .5 + Math.abs(Math.sin(e * Math.PI * Math.max(1, Math.round(d1 / 1.6)))) * .3 * (1 - e);
+            qRoll.setFromAxisAngle(rollAxis, Math.min(s, d1) / .55);
+            // Roce cada vez que una cara golpea la madera al rodar
+            if (s < d1 && s >= nextRoll) {
+                roll(.8);
+                nextRoll += .8;
+            }
+            dd.group.quaternion.multiplyQuaternions(qRoll, q0);
+            if (!landed && s > d1 + .45) {
+                landed = true;
+                dd.group.visible = false;
+                rattle(.9);
+            }
         });
     }
 
@@ -377,42 +510,75 @@ export function initTable(canvas, { onPick }) {
     async function throwDice(slots, faces, from) {
         const sim = simulateThrow(slots.length, from);
         const my = gen, cut = () => my !== gen;
-        slots.forEach((slot, k) => {
-            const dd = dice[slot];
-            // El dado visual se gira dentro de su cuerpo físico para que la cara sorteada ocupe el lugar de la que quedó arriba
-            dd.mesh.quaternion.setFromUnitVectors(new THREE.Vector3(...normalOf(faces[k])), new THREE.Vector3(...normalOf(sim.up[k])));
-            dd.group.visible = false;
-            dd.liftTo = dd.lift = dd.glowTo = 0;
-        });
-
-        // El cubilete se levanta, se agita y se vuelca hacia el centro de la mesa
         const cup = cups.get(from);
-        const hold = new THREE.Vector3(from * 1.6, 2.8, from * 6);
-        await moveCup(cup, 320, { pos: hold, rotX: 0 });
+        slots.forEach(slot => { dice[slot].liftTo = dice[slot].glowTo = 0; });
+
+        // Los dados que quedaron en la mesa vuelven al cubilete: se acuesta junto a ellos con la boca de frente
+        // y ruedan uno tras otro hasta meterse; el cuerpo del cubilete los tapa al entrar
+        const onTable = slots.filter(slot => dice[slot].group.visible);
+        if (onTable.length) {
+            const c = onTable.reduce((v, slot) => v.add(dice[slot].base), new THREE.Vector3()).divideScalar(onTable.length);
+            c.y = 0;
+            // Se elige el lado (de 8 direcciones) donde ningún dado queda detrás del cubilete,
+            // que entre en la zona visible sin pisar las filas de apartados y que los dados rueden poco
+            let best = null;
+            for (let i = 0; i < 8; i++) {
+                const out = new THREE.Vector3(Math.cos(i * Math.PI / 4), 0, Math.sin(i * Math.PI / 4));
+                const reach = Math.max(0, ...onTable.map(slot => dice[slot].base.clone().sub(c).setY(0).dot(out)));
+                const m = c.clone().addScaledVector(out, reach + 1.3), end = m.clone().addScaledVector(out, CUP_H);
+                const over = p => Math.max(0, Math.abs(p.x) - 6.8) + Math.max(0, Math.abs(p.z) - 3.8);
+                const cost = (over(m) + over(end)) * 10 + reach;
+                if (!best || cost < best.cost) best = { cost, out, mouth: m };
+            }
+            const { out, mouth } = best;
+            mouth.y = CUP_LAY_Y;
+            const axis = out.clone().negate();
+            const lay = { pos: mouth.clone().addScaledVector(axis, -CUP_H), quat: aimAt(axis) };
+            await moveCup(cup, 320, { pos: lay.pos.clone().setY(CUP_LAY_Y + 1.6), quat: lay.quat });
+            if (cut()) return;
+            await moveCup(cup, 150, lay);
+            if (cut()) return;
+            const order = onTable.slice().sort((a, b) => dice[a].base.distanceTo(mouth) - dice[b].base.distanceTo(mouth));
+            await Promise.all(order.map((slot, i) => animate(i * 77, () => {}).then(() => rollInto(dice[slot], mouth, axis))));
+            if (cut()) return;
+        }
+        slots.forEach(slot => { dice[slot].group.visible = false; });
+
+        // Se levanta boca abajo, se agita y se vuelca hacia el centro de la mesa
+        const hold = new THREE.Vector3(from * 1.6, CUP_H + 2, from * 6);
+        await moveCup(cup, 340, { pos: hold, quat: MOUTH_DOWN });
         if (cut()) return;
         let nextRattle = 0;
         await animate(560, k => {
             const t = k * 560;
             cup.pos.set(hold.x + Math.sin(t * .045) * .22, hold.y + Math.abs(Math.sin(t * .033)) * .18, hold.z + Math.sin(t * .029) * .12);
-            cup.rotZ = Math.sin(t * .04) * .14;
+            cup.wobble.setFromEuler(new THREE.Euler(Math.sin(t * .05) * .1, 0, Math.sin(t * .04) * .14));
             placeCup(cup);
             if (t >= nextRattle) {
-                clack(2 + Math.random() * 3);
-                nextRattle = t + 55 + Math.random() * 60;
+                rattle(1);
+                nextRattle = t + 70 + Math.random() * 70;
             }
         });
         if (cut()) return;
-        cup.rotZ = 0;
-        await moveCup(cup, 190, cupPour(from));
+        cup.wobble.identity();
+        await moveCup(cup, 200, cupPour(from));
         if (cut()) return;
 
-        slots.forEach(slot => { dice[slot].group.visible = true; });
+        slots.forEach((slot, k) => {
+            const dd = dice[slot];
+            // Recién ahora, con los dados dentro del cubilete, el dado visual se gira dentro de su cuerpo físico
+            // para que la cara sorteada ocupe el lugar de la que quedó arriba (antes cambiaría la cara que se ve en la mesa)
+            dd.mesh.quaternion.setFromUnitVectors(new THREE.Vector3(...normalOf(faces[k])), new THREE.Vector3(...normalOf(sim.up[k])));
+            dd.lift = 0;
+            dd.group.visible = true;
+        });
         const done = new Promise(resolve => {
             playback = { sim, slots, t: reduceMotion ? 1e9 : 0, hit: 0, resolve };
             applyFrame(playback, playback.t);
         });
-        // Vuelve a su sitio mientras ruedan los dados
-        animate(260, () => {}).then(() => cut() || moveCup(cup, 620, { pos: cupRest(from), rotX: 0 }));
+        rattle(1.2);
+        // Vuelve a su sitio, boca abajo, mientras ruedan los dados
+        animate(260, () => {}).then(() => cut() || moveCup(cup, 620, cupRest(from)));
         return done;
     }
 
@@ -448,7 +614,8 @@ export function initTable(canvas, { onPick }) {
         const r = canvas.getBoundingClientRect();
         ndc.set((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1);
         ray.setFromCamera(ndc, camera);
-        const hit = ray.intersectObjects(dice.filter(dd => dd.group.visible && pickable(dd.slot)).map(dd => dd.mesh), false)[0];
+        // El primer dado bajo el puntero, aunque no se pueda marcar: así un clic no atraviesa un dado para tomar el de atrás
+        const hit = ray.intersectObjects(dice.filter(dd => dd.group.visible).map(dd => dd.mesh), false)[0];
         return hit ? hit.object.userData.slot : null;
     };
     let down = null;
@@ -461,7 +628,8 @@ export function initTable(canvas, { onPick }) {
     });
     canvas.addEventListener('pointermove', e => {
         if (e.pointerType !== 'mouse') return;
-        canvas.style.cursor = pickAt(e) !== null ? 'pointer' : '';
+        const slot = pickAt(e);
+        canvas.style.cursor = slot !== null && pickable(slot) ? 'pointer' : '';
     });
 
     // ---------- Cámara: casi cenital, encuadra la zona de juego, las filas de apartados y los cubiletes ----------

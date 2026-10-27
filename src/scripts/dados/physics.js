@@ -6,6 +6,8 @@ import * as CANNON from 'cannon-es';
 export const TRAY = { w: 16, d: 10 };
 // Boca del cubilete: de ahí salen los dados, hacia el centro de la mesa (z se multiplica por from)
 export const POUR = { y: 1.9, z: 3.1 };
+// Sitio de reposo de cada cubilete (x, z por from): en la física son obstáculos para que ningún dado quede debajo
+export const CUP_REST = { x: 6.4, z: TRAY.d / 2 + .6, r: 1.5, h: 2.4 };
 const STEP = 1 / 60;
 const MAX_STEPS = 60 * 7;
 
@@ -30,6 +32,11 @@ function makeWorld() {
         const wall = new CANNON.Body({ mass: 0, material: tableMat, shape: new CANNON.Box(new CANNON.Vec3(hx, H / 2, hz)) });
         wall.position.set(x, H / 2, z);
         world.addBody(wall);
+    }
+    for (const from of [1, -1]) {
+        const cup = new CANNON.Body({ mass: 0, material: tableMat, shape: new CANNON.Cylinder(CUP_REST.r, CUP_REST.r, CUP_REST.h, 16) });
+        cup.position.set(from * CUP_REST.x, CUP_REST.h / 2, from * CUP_REST.z);
+        world.addBody(cup);
     }
     return world;
 }
@@ -77,14 +84,15 @@ function simulateOnce(count, from, rand) {
         if (bodies.every(b => b.sleepState === CANNON.Body.SLEEPING)) break;
     }
     const ups = bodies.map(b => upFace(b.quaternion));
-    const ok = bodies.every(b => b.sleepState === CANNON.Body.SLEEPING) && ups.every(u => u.flat > .985);
+    // Válida si todos se detuvieron planos y apoyados en la mesa (ninguno montado sobre otro)
+    const ok = bodies.every(b => b.sleepState === CANNON.Body.SLEEPING && b.position.y < .6) && ups.every(u => u.flat > .985);
     return { frames: frames.map(f => new Float32Array(f)), steps: frames[0].length / 7, up: ups.map(u => u.value), hits, ok };
 }
 
 // Graba una tirada de count dados; repite si alguno queda montado o no se detiene
 export function simulateThrow(count, from, rand = Math.random) {
     let sim;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 20; i++) {
         sim = simulateOnce(count, from, rand);
         if (sim.ok) break;
     }

@@ -25,6 +25,7 @@ let game = null;
 let waiting = null; // resolve de la acción del jugador mientras es su turno
 const table = initTable($('#board'), { onPick });
 if (!table) $('#noGl').hidden = false;
+// Se puede tocar cualquier dado de la última tirada
 table?.setPickable(slot => !!waiting && game.rolled.some(r => r.slot === slot));
 
 // ---------- Utilidades de interfaz ----------
@@ -126,8 +127,13 @@ function renderTurn() {
     $('#turnPts').textContent = String(game.turnPts + (sel ? sel.points : 0));
     const info = $('#selInfo');
     if (!game.selected.size) info.textContent = mine ? 'Elige los dados que puntúan' : game.player.ai ? 'Turno del rival' : 'Tirando…';
-    else if (!sel) info.textContent = 'Hay dados marcados que no puntúan';
-    else info.textContent = `${sel.parts.map(p => p.label).join(' + ')} = ${sel.points}`;
+    else if (!sel) info.textContent = 'Selección = 0: hay dados que no forman combinación';
+    else {
+        // Los comodines (cabeza de diablo, Balatro) cuentan como el valor que más conviene, no como la cara que muestran
+        const jokers = game.rolled.filter(r => r.joker && game.selected.has(r.slot)).length;
+        const note = jokers ? ` · ${jokers === 1 ? 'con comodín' : `con ${jokers} comodines`}` : '';
+        info.textContent = `${sel.parts.map(p => p.label).join(' + ')} = ${sel.points}${note}`;
+    }
     info.classList.toggle('bad', game.selected.size > 0 && !sel);
     $('#btnRoll').disabled = !mine || !sel;
     $('#btnBank').disabled = !mine || !sel;
@@ -230,7 +236,8 @@ async function playTurn(g) {
             const lost = g.turnPts;
             g.loseTurn();
             renderTurn();
-            toast(lost ? `¡Nada! Se pierden ${lost}` : '¡Nada puntúa!', 'bad');
+            // Sin combinaciones: se pierde lo del turno y juega el otro
+            toast(`Sin combinaciones${lost ? `: se pierden ${lost}` : ''}. ${ai ? 'Te toca' : 'Turno del rival'}`, 'bad');
             await wait(1700);
             return;
         }

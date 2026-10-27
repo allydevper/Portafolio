@@ -41,6 +41,8 @@ export class Game {
         return scoreSelection(this.rolled.filter(r => this.selected.has(r.slot)).map(valueOf));
     }
 
+    // Marcar o desmarcar un dado de la última tirada, como en el juego: se puede marcar cualquiera,
+    // pero si alguno no puntúa la selección vale 0 y no deja tirar ni plantarse
     toggle(slot) {
         if (!this.rolled.some(r => r.slot === slot)) return;
         this.selected.has(slot) ? this.selected.delete(slot) : this.selected.add(slot);

@@ -134,8 +134,9 @@ function grain(g, rand, color) {
 
 function pip(g, x, y, look, bump, single) {
     const style = look.pips;
-    let r = style === 'small' ? 9 : look.big ? 29 : 21;
-    if (single && style !== 'small') r *= 1.15;
+    // Los puntos chicos de algunos dados se agrandan lo justo para leerse desde arriba
+    let r = style === 'small' ? 15 : look.big ? 29 : 21;
+    if (single) r *= 1.15;
     if (style === 'ring') {
         // Anillo y punto, tallado en hueso
         g.strokeStyle = bump ? '#202020' : look.pip;

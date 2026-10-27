@@ -1,16 +1,16 @@
 // Los 43 dados de Kingdom Come: Deliverance II con la probabilidad (%) de cada cara, del 1 al 6 (wiki Dice/KCD2)
 // look: aspecto según el icono de la wiki (faces.js)
-// joker: 'one' = la cara del 1 es la cabeza del diablo (comodín); 'all' = cualquier cara cuenta como comodín
+// joker: la cara del 1 es una figura (cabeza de diablo, bufón) que hace de comodín
 const D = (id, name, weights, look, extra = {}) => ({ id, name, weights, look, ...extra });
 const FAIR = [16.7, 16.7, 16.7, 16.7, 16.7, 16.7];
 
 export const DICE = [
     D('ordinary', 'Ordinary die', FAIR, 'wood'),
     D('aranka', "Aranka's die", [28.6, 4.8, 28.6, 4.8, 28.6, 4.8], 'peach'),
-    D('balatro', "Balatro's die", FAIR, 'jester', { joker: 'all' }),
+    D('balatro', "Balatro's die", FAIR, 'jester', { joker: true }),
     D('cautious', "Cautious cheater's die", [23.8, 14.3, 9.5, 14.3, 23.8, 14.3], 'peach'),
     D('ci', 'Ci die', [13, 13, 13, 13, 13, 34.8], 'steel'),
-    D('devil', "Devil's head die", FAIR, 'devil', { joker: 'one' }),
+    D('devil', "Devil's head die", FAIR, 'devil', { joker: true }),
     D('misfortune', 'Die of misfortune', [4.5, 22.7, 22.7, 22.7, 22.7, 4.5], 'apricot'),
     D('even', 'Even die', [6.7, 26.7, 6.7, 26.7, 6.7, 26.7], 'paleGold'),
     D('favourable', 'Favourable die', [33.3, 0, 5.6, 5.6, 33.3, 22.2], 'silver'),
@@ -62,7 +62,7 @@ export function rollDie(die, rand = Math.random) {
         r -= die.weights[i];
         if (r < 0) { face = i + 1; break; }
     }
-    const joker = die.joker === 'all' || (die.joker === 'one' && face === 1);
+    const joker = !!die.joker && face === 1;
     return { face, joker };
 }
 
